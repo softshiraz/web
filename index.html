@@ -4,107 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>سایت فیلم و سریال</title>
-    <style>
-        body { 
-            font-family: 'Tahoma', sans-serif; 
-            background: #222; 
-            color: #fff; 
-            margin: 0; 
-            padding: 20px; 
-        }
-        header { 
-            text-align: center; 
-            border-bottom: 1px solid #444; 
-            padding-bottom: 20px; 
-        }
-        h2, h3 { 
-            color: #ff6b6b; 
-        }
-        ul { 
-            list-style: none; 
-            padding: 0; 
-        }
-        li { 
-            background: #333; 
-            margin: 10px 0; 
-            padding: 10px; 
-            border-radius: 5px; 
-        }
-        a { 
-            color: #4ecdc4; 
-            text-decoration: none; 
-            font-weight: bold; 
-        }
-        a:hover { 
-            color: #45b7d1; 
-        }
-        .serial { 
-            margin: 20px 0; 
-            padding: 15px; 
-            background: #333; 
-            border-radius: 8px; 
-        }
-        #comments { 
-            margin-top: 40px; 
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <h1>فیلم و سریال‌های جدید</h1>
+        <h1>سایت فیلم و سریال</h1>
+        <input type="text" id="searchInput" placeholder="جستجو (فارسی یا انگلیسی)">
+        <nav>
+            <a href="movies.html">آرشیو فیلم‌ها</a>
+            <a href="series.html">آرشیو سریال‌ها</a>
+        </nav>
     </header>
-    
-    <main>
-        <!-- لیست قسمت‌های جدید از JSON لود می‌شه -->
-        <section id="new-episodes">
-            <h2>قسمت‌های جدید</h2>
-            <ul id="episode-list"></ul>
-        </section>
-        
-        <!-- مثال یک سریال -->
-        <section class="serial">
-            <h3>سریال نمونه: Stranger Things</h3>
-            <p>قسمت جدید: فصل ۵، قسمت ۱</p>
-            <a href="downloads/episode1.mp4" download>دانلود قسمت</a>
-        </section>
-        
-        <!-- بخش نظرات با Utterances -->
-        <section id="comments">
-            <h2>نظر بده</h2>
-            <script src="https://utteranc.es/client.js"
-                repo="yourusername/film-serial-site"
-                issue-term="pathname"
-                theme="github-dark"
-                crossorigin="anonymous"
-                async>
-            </script>
-        </section>
-    </main>
-    
-    <script>
-        // داده‌های JSON مستقیماً در JS (به جای فایل جداگانه)
-        const data = {
-            "episodes": [
-                {
-                    "title": "Stranger Things - فصل ۵، قسمت ۱",
-                    "date": "2025-10-01",
-                    "download": "downloads/stranger-ep1.mp4"
-                },
-                {
-                    "title": "The Boys - فصل ۴، قسمت ۱۰",
-                    "date": "2025-09-28",
-                    "download": "downloads/boys-ep10.mp4"
-                }
-            ]
-        };
 
-        // لود لیست قسمت‌ها
-        const list = document.getElementById('episode-list');
-        data.episodes.forEach(episode => {
-            const li = document.createElement('li');
-            li.innerHTML = `<strong>${episode.title}</strong> - ${episode.date} <br> <a href="${episode.download}" download>دانلود</a>`;
-            list.appendChild(li);
-        });
-    </script>
+    <section id="carousel">
+        <h2>بنرهای برجسته</h2>
+        <div id="carouselContainer"></div>
+    </section>
+
+    <section id="new-movies">
+        <h2>فیلم‌های به‌روز شده</h2>
+        <div id="newMoviesContainer"></div>
+    </section>
+
+    <section id="new-series">
+        <h2>سریال‌های به‌روز شده</h2>
+        <div id="newSeriesContainer"></div>
+    </section>
+
+    <script src="script.js"></script>
 </body>
 </html>
