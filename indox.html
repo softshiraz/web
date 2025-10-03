@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سایت فیلم و سریال</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>فیلم و سریال‌های جدید</h1>
+    </header>
+    
+    <main>
+        <!-- لیست قسمت‌های جدید از JSON لود می‌شه -->
+        <section id="new-episodes">
+            <h2>قسمت‌های جدید</h2>
+            <ul id="episode-list"></ul>
+        </section>
+        
+        <!-- مثال یک سریال -->
+        <section class="serial">
+            <h3>سریال نمونه: Stranger Things</h3>
+            <p>قسمت جدید: فصل ۵، قسمت ۱</p>
+            <a href="downloads/episode1.mp4" download>دانلود قسمت</a>
+        </section>
+        
+        <!-- بخش نظرات با Utterances -->
+        <section id="comments">
+            <h2>نظر بده</h2>
+            <script src="https://utteranc.es/client.js"
+                repo="yourusername/film-serial-site"
+                issue-term="pathname"
+                theme="github-dark"
+                crossorigin="anonymous"
+                async>
+            </script>
+        </section>
+    </main>
+    
+    <script src="script.js"></script>
+</body>
+</html>
