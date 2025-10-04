@@ -6,28 +6,51 @@
     <title>Soft Shiraz - دانلود فیلم و سریال</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        * {
+            scroll-behavior: smooth;
+        }
         body {
             font-family: 'Tahoma', sans-serif;
-            background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
+            background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 50%, #1e1e1e 100%);
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(255,215,0,0.03) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(255,215,0,0.02) 0%, transparent 50%);
             color: #ffffff;
             margin: 0;
             padding: 0;
             min-height: 100vh;
             text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+            position: relative;
+            overflow-x: hidden;
+        }
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
         }
         header {
-            background: linear-gradient(135deg, rgba(30, 30, 30, 0.9), rgba(45, 45, 45, 0.7));
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            background: linear-gradient(135deg, rgba(30, 30, 30, 0.95), rgba(45, 45, 45, 0.85), rgba(64, 64, 64, 0.75));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid #404040;
-            box-shadow: 0 8px 32px rgba(255,215,0,0.1);
-            padding: 10px 20px;
+            box-shadow: 0 8px 32px rgba(255,215,0,0.15), inset 0 1px 0 rgba(255,215,0,0.1);
+            padding: 15px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: sticky;
             top: 0;
             z-index: 10;
+            transition: all 0.3s ease;
+        }
+        header.scrolled {
+            padding: 10px 20px;
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
         }
         header::before {
             content: '';
@@ -36,8 +59,13 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(90deg, transparent 0%, rgba(255,215,0,0.05) 50%, transparent 100%);
+            background: linear-gradient(90deg, transparent 0%, rgba(255,215,0,0.08) 50%, transparent 100%);
+            animation: shine 3s infinite;
             z-index: -1;
+        }
+        @keyframes shine {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
         }
         .logo {
             font-size: 24px;
@@ -70,15 +98,17 @@
             padding: 8px;
             border: 1px solid #404040;
             border-radius: 5px;
-            background: linear-gradient(135deg, rgba(45, 45, 45, 0.8), rgba(64, 64, 64, 0.6));
+            background: linear-gradient(135deg, rgba(45, 45, 45, 0.9), rgba(64, 64, 64, 0.8));
             color: #ffffff;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             transition: all 0.3s;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
         }
         .search-bar input:focus {
             outline: none;
-            box-shadow: 0 0 10px rgba(255,215,0,0.3);
+            box-shadow: 0 0 15px rgba(255,215,0,0.4);
+            border-color: #ffd700;
         }
         .search-bar button {
             padding: 8px 12px;
@@ -92,11 +122,12 @@
         }
         .search-bar button:hover {
             background-color: #ffeb3b;
-            transform: translateY(-2px);
+            transform: translateY(-2px) scale(1.05);
             box-shadow: 0 6px 12px rgba(255,215,0,0.4);
         }
         main {
             padding: 20px;
+            perspective: 1000px; /* برای 3D */
         }
         .section {
             margin-bottom: 40px;
@@ -106,6 +137,11 @@
             border-bottom: 2px solid #ffd700;
             padding-bottom: 10px;
             text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            animation: glow 2s infinite alternate;
+        }
+        @keyframes glow {
+            from { text-shadow: 0 2px 4px rgba(0,0,0,0.5), 0 0 5px rgba(255,215,0,0.3); }
+            to { text-shadow: 0 2px 4px rgba(0,0,0,0.5), 0 0 10px rgba(255,215,0,0.6); }
         }
         .movies-grid {
             display: grid;
@@ -113,57 +149,52 @@
             gap: 20px;
         }
         .movie-card {
-            background: linear-gradient(135deg, rgba(45, 45, 45, 0.8), rgba(64, 64, 64, 0.6));
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            background: linear-gradient(135deg, rgba(45, 45, 45, 0.9), rgba(64, 64, 64, 0.8), rgba(45, 45, 45, 0.7));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid #404040;
             border-radius: 10px;
             overflow: hidden;
-            transition: all 0.4s ease;
+            transition: all 0.5s ease;
             cursor: pointer;
             position: relative;
-            animation: fadeInUp 0.6s ease forwards;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            transform-style: preserve-3d;
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(50px) rotateY(0deg);
         }
-        .movie-card:nth-child(1) { animation-delay: 0.1s; }
-        .movie-card:nth-child(2) { animation-delay: 0.2s; }
-        .movie-card:nth-child(3) { animation-delay: 0.3s; }
+        .movie-card:hover {
+            transform: rotateY(180deg) scale(1.05);
+            clip-path: polygon(10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0% 50%);
+            box-shadow: 0 15px 50px rgba(255,215,0,0.4), inset 0 0 20px rgba(255,215,0,0.1);
+            border-color: #ffd700;
+        }
         .movie-card::before {
             content: '';
             position: absolute;
             top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #ffd700, transparent);
-            opacity: 0;
-            transition: opacity 0.4s;
-        }
-        .movie-card:hover {
-            transform: scale(1.05) translateY(-5px);
-            box-shadow: 0 12px 40px rgba(255,215,0,0.3);
-            border-color: #ffd700;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,215,0,0.3), transparent);
+            transition: left 0.5s;
+            z-index: 1;
         }
         .movie-card:hover::before {
-            opacity: 1;
+            left: 100%;
         }
         .movie-card img {
             width: 100%;
             height: 300px;
             object-fit: cover;
+            backface-visibility: hidden;
         }
         .movie-info {
             padding: 10px;
+            backface-visibility: hidden;
+            background: rgba(0,0,0,0.5);
         }
-        .movie-title {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 5px;
-            color: #ffffff;
-        }
-        .movie-desc {
-            font-size: 14px;
+        .movie-title, .movie-desc {
             color: #ffffff;
         }
         .loading-spinner {
@@ -171,7 +202,6 @@
             justify-content: center;
             align-items: center;
             height: 200px;
-            font-size: 20px;
             color: #ffd700;
         }
         .spinner {
@@ -180,66 +210,54 @@
             border-radius: 50%;
             width: 40px;
             height: 40px;
-            animation: spin 1s linear infinite, pulse 2s infinite;
-            box-shadow: 0 0 20px rgba(255,215,0,0.5);
+            animation: spin 1s linear infinite, pulse 1.5s infinite;
+            box-shadow: 0 0 20px rgba(255,215,0,0.5), 0 0 40px rgba(255,215,0,0.2);
+            filter: drop-shadow(0 0 10px rgba(255,215,0,0.3));
         }
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
         }
         footer {
-            background: linear-gradient(135deg, rgba(30, 30, 30, 0.9), rgba(45, 45, 45, 0.7));
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            background: linear-gradient(135deg, rgba(30, 30, 30, 0.95), rgba(45, 45, 45, 0.85), rgba(64, 64, 64, 0.75));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-top: 1px solid #404040;
-            box-shadow: 0 -8px 32px rgba(255,215,0,0.1);
+            box-shadow: 0 -8px 32px rgba(255,215,0,0.15);
             text-align: center;
             padding: 20px;
             margin-top: 40px;
             color: #ffffff;
         }
         @media (max-width: 768px) {
-            .hamburger {
-                display: flex;
-            }
+            .hamburger { display: flex; }
             .search-bar {
                 display: none;
                 position: absolute;
-                top: 60px;
+                top: 70px;
                 right: 20px;
-                background: linear-gradient(135deg, rgba(45, 45, 45, 0.9), rgba(64, 64, 64, 0.7));
+                background: linear-gradient(135deg, rgba(45, 45, 45, 0.95), rgba(64, 64, 64, 0.85));
                 padding: 10px;
                 border-radius: 5px;
                 flex-direction: column;
                 width: 200px;
-                backdrop-filter: blur(5px);
-                -webkit-backdrop-filter: blur(5px);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
             }
-            .search-bar.active {
-                display: flex;
-            }
-            .movies-grid {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            }
-            .movie-card {
-                backdrop-filter: blur(5px);
-                -webkit-backdrop-filter: blur(5px);
-            }
+            .search-bar.active { display: flex; }
+            .movies-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+            .movie-card { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+            #particles-canvas { display: none; } /* Particles off on mobile */
         }
     </style>
 </head>
 <body>
-    <header>
+    <canvas id="particles-canvas"></canvas>
+    <header id="header">
         <div class="logo">Soft Shiraz</div>
         <div class="hamburger" onclick="toggleSearch()">
             <span></span>
@@ -253,6 +271,16 @@
     </header>
 
     <main>
+        <section id="latest" class="section">
+            <h2>جدیدترین ها</h2>
+            <div class="loading-spinner" id="latest-loading">
+                <div class="spinner"></div>
+            </div>
+            <div class="movies-grid" id="latest-grid">
+                <!-- کارت‌ها توسط JS ساخته می‌شن -->
+            </div>
+        </section>
+
         <section id="movies" class="section">
             <h2>فیلم‌ها</h2>
             <div class="loading-spinner" id="movies-loading">
@@ -279,52 +307,144 @@
     </footer>
 
     <script>
-        let allMovies = [];
-        let allSeries = [];
+        let allMovies = [], allSeries = [], allLatest = [];
 
-        // لود فیلم‌ها با spinner
+        // Particles system
+        function initParticles() {
+            const canvas = document.getElementById('particles-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            const particles = [];
+            for (let i = 0; i < 50; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5,
+                    radius: Math.random() * 2 + 1,
+                    opacity: Math.random() * 0.5 + 0.2
+                });
+            }
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(255, 215, 0, ${p.opacity})`;
+                    ctx.fill();
+                });
+                requestAnimationFrame(animate);
+            }
+            animate();
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+        }
+        if (window.innerWidth > 768) initParticles();
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) header.classList.add('scrolled');
+            else header.classList.remove('scrolled');
+        });
+
+        // Scroll-triggered animations
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0) rotateY(0deg)';
+                }
+            });
+        });
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.movie-card').forEach(card => observer.observe(card));
+        });
+
+        // لود جدیدترین ها با 3s delay
+        document.getElementById('latest-loading').style.display = 'flex';
+        fetch('latest.json')
+            .then(response => response.json())
+            .then(latest => {
+                allLatest = latest;
+                setTimeout(() => {
+                    const latestGrid = document.getElementById('latest-grid');
+                    latest.forEach((item, index) => {
+                        const card = createCard(item.title, item.poster, item.summary, item.detailPage, index);
+                        card.classList.add('searchable');
+                        latestGrid.appendChild(card);
+                        observer.observe(card);
+                    });
+                    document.getElementById('latest-loading').style.display = 'none';
+                }, 3000);
+            })
+            .catch(error => {
+                console.error('خطا در لود جدیدترین ها:', error);
+                setTimeout(() => {
+                    document.getElementById('latest-loading').innerHTML = '<p>خطا در لود</p>';
+                }, 3000);
+            });
+
+        // لود فیلم‌ها با 3s delay
         document.getElementById('movies-loading').style.display = 'flex';
         fetch('movies.json')
             .then(response => response.json())
             .then(movies => {
                 allMovies = movies;
-                const moviesGrid = document.getElementById('movies-grid');
-                movies.forEach((movie, index) => {
-                    const card = createCard(movie.title, movie.poster, movie.summary, movie.detailPage, index);
-                    card.classList.add('searchable');
-                    moviesGrid.appendChild(card);
-                });
-                document.getElementById('movies-loading').style.display = 'none';
+                setTimeout(() => {
+                    const moviesGrid = document.getElementById('movies-grid');
+                    movies.forEach((movie, index) => {
+                        const card = createCard(movie.title, movie.poster, movie.summary, movie.detailPage, index);
+                        card.classList.add('searchable');
+                        moviesGrid.appendChild(card);
+                        observer.observe(card);
+                    });
+                    document.getElementById('movies-loading').style.display = 'none';
+                }, 3000);
             })
             .catch(error => {
                 console.error('خطا در لود فیلم‌ها:', error);
-                document.getElementById('movies-loading').innerHTML = '<p>خطا در لود</p>';
+                setTimeout(() => {
+                    document.getElementById('movies-loading').innerHTML = '<p>خطا در لود</p>';
+                }, 3000);
             });
 
-        // لود سریال‌ها با spinner
+        // لود سریال‌ها با 3s delay
         document.getElementById('series-loading').style.display = 'flex';
         fetch('series.json')
             .then(response => response.json())
             .then(series => {
                 allSeries = series;
-                const seriesGrid = document.getElementById('series-grid');
-                series.forEach((serie, index) => {
-                    const card = createCard(serie.title, serie.poster, serie.summary, serie.detailPage, index);
-                    card.classList.add('searchable');
-                    seriesGrid.appendChild(card);
-                });
-                document.getElementById('series-loading').style.display = 'none';
+                setTimeout(() => {
+                    const seriesGrid = document.getElementById('series-grid');
+                    series.forEach((serie, index) => {
+                        const card = createCard(serie.title, serie.poster, serie.summary, serie.detailPage, index);
+                        card.classList.add('searchable');
+                        seriesGrid.appendChild(card);
+                        observer.observe(card);
+                    });
+                    document.getElementById('series-loading').style.display = 'none';
+                }, 3000);
             })
             .catch(error => {
                 console.error('خطا در لود سریال‌ها:', error);
-                document.getElementById('series-loading').innerHTML = '<p>خطا در لود</p>';
+                setTimeout(() => {
+                    document.getElementById('series-loading').innerHTML = '<p>خطا در لود</p>';
+                }, 3000);
             });
 
-        // تابع ساخت کارت (با animation-delay)
+        // تابع ساخت کارت
         function createCard(title, poster, summary, detailPage, index) {
             const card = document.createElement('div');
             card.className = 'movie-card';
-            card.style.animationDelay = `${index * 0.1}s`;
+            card.style.animationDelay = `${index * 0.2}s`;
             card.innerHTML = `
                 <img src="${poster}" alt="${title}">
                 <div class="movie-info">
@@ -344,24 +464,47 @@
             const cards = document.querySelectorAll('.searchable');
             cards.forEach(card => {
                 const title = card.querySelector('.movie-title').textContent.toLowerCase();
-                if (title.includes(query)) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
+                card.style.display = title.includes(query) ? 'block' : 'none';
             });
         }
 
         // Hamburger toggle
         function toggleSearch() {
-            const searchBar = document.getElementById('search-bar');
-            searchBar.classList.toggle('active');
+            document.getElementById('search-bar').classList.toggle('active');
         }
 
         // سرچ با Enter
-        document.getElementById('search-input').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                searchMovies();
+        document.getElementById('search-input').addEventListener('keypress', e => {
+            if (e.key === 'Enter') searchMovies();
+        });
+
+        // Ripple effect for buttons (global)
+        document.addEventListener('click', e => {
+            if (e.target.tagName === 'BUTTON') {
+                const ripple = document.createElement('span');
+                const rect = e.target.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                ripple.style.cssText = `
+                    position: absolute;
+                    border-radius: 50%;
+                    background: rgba(255, 255, 255, 0.6);
+                    transform: scale(0);
+                    animation: ripple 0.6s linear;
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${x}px;
+                    top: ${y}px;
+                `;
+                const rippleAnim = `@keyframes ripple { to { transform: scale(4); opacity: 0; } }`;
+                if (!document.styleSheets[0].insertRule) {
+                    const style = document.createElement('style');
+                    style.textContent = rippleAnim;
+                    document.head.appendChild(style);
+                }
+                e.target.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 600);
             }
         });
     </script>
