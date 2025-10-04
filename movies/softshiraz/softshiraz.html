@@ -54,19 +54,6 @@
             font-weight: bold;
             color: #ffd700;
         }
-        .search-toggle {
-            background: none;
-            border: none;
-            color: #ffd700;
-            font-size: 20px;
-            cursor: pointer;
-            display: none;
-            padding: 5px;
-            transition: color 0.4s ease-out;
-        }
-        .search-toggle:hover {
-            color: #ffeb3b;
-        }
         .back-link {
             color: #ffd700;
             text-decoration: none;
@@ -311,15 +298,13 @@
         footer a {
             color: #ffd700;
             text-decoration: none;
-            transition: color 0.3s;
+            transition: all 0.3s;
         }
         footer a:hover {
-            color: #ffeb3b;
+            text-decoration: underline;
+            text-shadow: 0 0 5px rgba(255,215,0,0.5);
         }
         @media (max-width: 768px) {
-            .search-toggle {
-                display: block;
-            }
             .info, .download-section, .trailer {
                 backdrop-filter: blur(10px);
                 -webkit-backdrop-filter: blur(10px);
@@ -330,7 +315,6 @@
 <body>
     <header>
         <div class="logo">Soft Shiraz</div>
-        <button class="search-toggle" onclick="toggleSearch()"><i class="fas fa-search"></i></button>
         <a href="../index.html" class="back-link"><i class="fas fa-arrow-left"></i> برگشت به خانه</a>
     </header>
 
@@ -386,11 +370,6 @@
                 saveBtn.classList.add('saved');
             }
         });
-
-        // Toggle search
-        function toggleSearch() {
-            document.getElementById('search-bar').classList.toggle('active');
-        }
 
         // Ripple effect (smooth, 0.8s)
         document.addEventListener('click', e => {
