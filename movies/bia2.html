@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فیلم دوم من - Soft Shiraz</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { scroll-behavior: smooth; }
+        body {
+            font-family: 'Tahoma', sans-serif;
+            background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 50%, #1e1e1e 100%);
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(255,215,0,0.03) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(255,215,0,0.02) 0%, transparent 50%);
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+            position: relative;
+            overflow-x: hidden;
+        }
+        header {
+            background: linear-gradient(135deg, rgba(30, 30, 30, 0.95), rgba(45, 45, 45, 0.85), rgba(64, 64, 64, 0.75));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid #404040;
+            box-shadow: 0 8px 32px rgba(255,215,0,0.15), inset 0 1px 0 rgba(255,215,0,0.1);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,215,0,0.08) 50%, transparent 100%);
+            animation: shine 3s infinite;
+            z-index: -1;
+        }
+        @keyframes shine {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffd700;
+        }
+        .back-link {
+            color: #ffd700;
+            text-decoration: none;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+            color: #ffeb3b;
+            transform: translateX(-5px);
+        }
+        main {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            perspective: 1000px;
+        }
+        .poster {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #404040;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            transition: transform 0.3s;
+        }
+        .poster:hover {
+            transform: scale(1.02);
+        }
+        .info {
+            background: linear-gradient(135deg, rgba(45, 45, 45, 0.9), rgba(64, 64, 64, 0.8), rgba(45, 45, 45, 0.7));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid #404040;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(255,215,0,0.15);
+            position: relative;
+            overflow: hidden;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            transition: clip-path 0.5s;
+        }
+        .info:hover {
+            clip-path: polygon(5% 0%, 95% 0%, 100% 50%, 95% 100%, 5% 100%, 0% 50%);
+        }
+        .info::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,215,0,0.08) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s;
+            z-index: -1;
+        }
+        .info:hover::before {
+            opacity: 1;
+        }
+        .info h1 {
+            color: #ffd700;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+            animation: glow 2s infinite alternate;
+        }
+        @keyframes glow {
+            from { text-shadow: 0 0 5px rgba(255,215,0,0.3); }
+            to { text-shadow: 0 0 10px rgba(255,215,0,0.6); }
+        }
+        .info p {
+            color: #ffffff;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        .buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #ffd700;
+            border: none;
+            border-radius: 5px;
+            color: #000;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 4px 8px rgba(255,215,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        button:hover {
+            background-color: #ffeb3b;
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 12px rgba(255,215,0,0.4);
+        }
+        .save-btn.saved {
+            background-color: #4CAF50;
+            color: #fff;
+        }
+        .trailer {
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, rgba(45, 45, 45, 0.9), rgba(64, 64, 64, 0.8));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid #404040;
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 8px 32px rgba(255,215,0,0.15);
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            transition: clip-path 0.5s;
+        }
+        .trailer:hover {
+            clip-path: polygon(5% 0%, 95% 0%, 100% 50%, 95% 100%, 5% 100%, 0% 50%);
+        }
+        .trailer h2 {
+            color: #ffd700;
+            margin-bottom: 10px;
+        }
+        .trailer iframe {
+            width: 100%;
+            height: 300px;
+            border-radius: 10px;
+            border: 1px solid #404040;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+        }
+        .download-section {
+            background: linear-gradient(135deg, rgba(45, 45, 45, 0.9), rgba(64, 64, 64, 0.8), rgba(45, 45, 45, 0.7));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid #404040;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 8px 32px rgba(255,215,0,0.15);
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            transition: clip-path 0.5s;
+        }
+        .download-section:hover {
+            clip-path: polygon(5% 0%, 95% 0%, 100% 50%, 95% 100%, 5% 100%, 0% 50%);
+        }
+        .download-section h2 {
+            color: #ffd700;
+            margin-bottom: 15px;
+            animation: glow 2s infinite alternate;
+        }
+        .download-options {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .download-btn {
+            background-color: #ffd700;
+            padding: 8px 15px;
+            font-size: 14px;
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(255,215,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .download-btn:hover {
+            background-color: #ffeb3b;
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 12px rgba(255,215,0,0.4);
+        }
+        footer {
+            background: linear-gradient(135deg, rgba(30, 30, 30, 0.95), rgba(45, 45, 45, 0.85), rgba(64, 64, 64, 0.75));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid #404040;
+            box-shadow: 0 -8px 32px rgba(255,215,0,0.15);
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            color: #ffffff;
+        }
+        @media (max-width: 768px) {
+            .info, .download-section, .trailer {
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">Soft Shiraz</div>
+        <a href="../index.html" class="back-link"><i class="fas fa-arrow-left"></i> برگشت به خانه</a>
+    </header>
+
+    <main>
+        <img src="../images/poster2.jpg" alt="پوستر فیلم" class="poster">
+        <div class="info">
+            <h1>فیلم دوم من</h1>
+            <p><strong>ژانر:</strong> کمدی، رمانتیک</p>
+            <p><strong>سال:</strong> 2022</p>
+            <p><strong>امتیاز:</strong> 7.8/10</p>
+            <p><strong>خلاصه:</strong> داستانی خنده‌دار و عاشقانه با بازیگران معروف.</p>
+        </div>
+
+        <div class="buttons">
+            <button id="save-btn" class="save-btn"><i class="fas fa-star"></i> سیو کن</button>
+        </div>
+
+        <div class="trailer">
+            <h2>تریلر</h2>
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
+        </div>
+
+        <div class="download-section">
+            <h2>دانلود</h2>
+            <div class="download-options">
+                <a href="https://example.com/download/bia2-sub" target="_blank"><button class="download-btn"><i class="fas fa-download"></i> زیرنویس</button></a>
+                <a href="https://example.com/download/bia2-dub" target="_blank"><button class="download-btn"><i class="fas fa-download"></i> دوبله</button></a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Soft Shiraz.</p>
+    </footer>
+
+    <script>
+        const saveBtn = document.getElementById('save-btn');
+        const movieId = 'bia2';
+
+        if (localStorage.getItem(movieId)) {
+            saveBtn.innerHTML = '<i class="fas fa-star"></i> حذف از سیوها';
+            saveBtn.classList.add('saved');
+        }
+
+        saveBtn.addEventListener('click', () => {
+            if (localStorage.getItem(movieId)) {
+                localStorage.removeItem(movieId);
+                saveBtn.innerHTML = '<i class="fas fa-star"></i> سیو کن';
+                saveBtn.classList.remove('saved');
+            } else {
+                localStorage.setItem(movieId, 'saved');
+                saveBtn.innerHTML = '<i class="fas fa-star"></i> حذف از سیوها';
+                saveBtn.classList.add('saved');
+            }
+        });
+
+        // Ripple effect (same as index)
+        document.addEventListener('click', e => {
+            if (e.target.tagName === 'BUTTON') {
+                const ripple = document.createElement('span');
+                const rect = e.target.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                ripple.style.cssText = `
+                    position: absolute;
+                    border-radius: 50%;
+                    background: rgba(255, 255, 255, 0.6);
+                    transform: scale(0);
+                    animation: ripple 0.6s linear;
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${x}px;
+                    top: ${y}px;
+                `;
+                const rippleAnim = `@keyframes ripple { to { transform: scale(4); opacity: 0; } }`;
+                if (!document.styleSheets[0].insertRule) {
+                    const style = document.createElement('style');
+                    style.textContent = rippleAnim;
+                    document.head.appendChild(style);
+                }
+                e.target.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 600);
+            }
+        });
+    </script>
+</body>
+</html>
