@@ -1,0 +1,20 @@
+[
+  {
+    "title": "جدیدترین فیلم",
+    "poster": "images/latest1.jpg",
+    "summary": "فیلم جدید اکشن: هیجان بی‌پایان.",
+    "detailPage": "movies/film1.html"
+  },
+  {
+    "title": "سریال تازه",
+    "poster": "images/latest2.jpg",
+    "summary": "سریال جدید درام: فصل اول.",
+    "detailPage": "series/series1.html"
+  },
+  {
+    "title": "فیلم برتر هفته",
+    "poster": "images/latest3.jpg",
+    "summary": "کمدی جدید: خنده تا اشک.",
+    "detailPage": "movies/bia2.html"
+  }
+]
