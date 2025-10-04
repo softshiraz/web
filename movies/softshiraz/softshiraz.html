@@ -54,6 +54,19 @@
             font-weight: bold;
             color: #ffd700;
         }
+        .search-toggle {
+            background: none;
+            border: none;
+            color: #ffd700;
+            font-size: 20px;
+            cursor: pointer;
+            display: none;
+            padding: 5px;
+            transition: color 0.4s ease-out;
+        }
+        .search-toggle:hover {
+            color: #ffeb3b;
+        }
         .back-link {
             color: #ffd700;
             text-decoration: none;
@@ -298,12 +311,15 @@
         footer a {
             color: #ffd700;
             text-decoration: none;
-            transition: text-decoration 0.3s;
+            transition: color 0.3s;
         }
         footer a:hover {
-            text-decoration: underline;
+            color: #ffeb3b;
         }
         @media (max-width: 768px) {
+            .search-toggle {
+                display: block;
+            }
             .info, .download-section, .trailer {
                 backdrop-filter: blur(10px);
                 -webkit-backdrop-filter: blur(10px);
@@ -314,6 +330,7 @@
 <body>
     <header>
         <div class="logo">Soft Shiraz</div>
+        <button class="search-toggle" onclick="toggleSearch()"><i class="fas fa-search"></i></button>
         <a href="../index.html" class="back-link"><i class="fas fa-arrow-left"></i> برگشت به خانه</a>
     </header>
 
@@ -370,7 +387,12 @@
             }
         });
 
-        // Ripple effect
+        // Toggle search
+        function toggleSearch() {
+            document.getElementById('search-bar').classList.toggle('active');
+        }
+
+        // Ripple effect (smooth, 0.8s)
         document.addEventListener('click', e => {
             if (e.target.tagName === 'BUTTON') {
                 const ripple = document.createElement('span');
