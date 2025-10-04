@@ -11,8 +11,7 @@
         }
         body {
             font-family: 'Tahoma', sans-serif;
-            background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 50%, #1e1e1e 100%);
-            background-image: #000000;
+            background-color: #1a1a1a;
             color: #ffffff;
             margin: 0;
             padding: 0;
@@ -43,7 +42,8 @@
             position: sticky;
             top: 0;
             z-index: 10;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease-out;
+            will-change: transform;
         }
         header.scrolled {
             padding: 10px 20px;
@@ -58,7 +58,7 @@
             right: 0;
             bottom: 0;
             background: linear-gradient(90deg, transparent 0%, rgba(255,215,0,0.08) 50%, transparent 100%);
-            animation: shine 3s infinite;
+            animation: shine 4s infinite ease-out;
             z-index: -1;
         }
         @keyframes shine {
@@ -83,7 +83,7 @@
             height: 3px;
             background: #ffd700;
             margin: 3px 0;
-            transition: 0.3s;
+            transition: 0.4s ease-out;
             box-shadow: 0 2px 4px rgba(255,215,0,0.3);
         }
         .search-bar {
@@ -100,7 +100,7 @@
             color: #ffffff;
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-            transition: all 0.3s;
+            transition: all 0.4s ease-out;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
         }
         .search-bar input:focus {
@@ -115,17 +115,17 @@
             border-radius: 5px;
             color: #000;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.4s ease-out;
             box-shadow: 0 4px 8px rgba(255,215,0,0.2);
+            will-change: transform;
         }
         .search-bar button:hover {
             background-color: #ffeb3b;
-            transform: translateY(-2px) scale(1.05);
+            transform: translateY(-2px);
             box-shadow: 0 6px 12px rgba(255,215,0,0.4);
         }
         main {
             padding: 20px;
-            perspective: 1000px; /* برای 3D */
         }
         .section {
             margin-bottom: 40px;
@@ -135,7 +135,7 @@
             border-bottom: 2px solid #ffd700;
             padding-bottom: 10px;
             text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-            animation: glow 2s infinite alternate;
+            animation: glow 2s infinite alternate ease-out;
         }
         @keyframes glow {
             from { text-shadow: 0 2px 4px rgba(0,0,0,0.5), 0 0 5px rgba(255,215,0,0.3); }
@@ -151,20 +151,18 @@
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid #404040;
-            border-radius: 10px;
+            border-radius: 20px;
             overflow: hidden;
-            transition: all 0.5s ease;
+            transition: all 0.4s ease-out;
             cursor: pointer;
             position: relative;
-            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-            transform-style: preserve-3d;
             opacity: 0;
-            transform: translateY(50px) rotateY(0deg);
+            transform: translateY(30px);
+            will-change: transform, opacity;
         }
         .movie-card:hover {
-            transform: rotateY(180deg) scale(1.05);
-            clip-path: polygon(10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0% 50%);
-            box-shadow: 0 15px 50px rgba(255,215,0,0.4), inset 0 0 20px rgba(255,215,0,0.1);
+            transform: scale(1.05) translateY(-5px);
+            box-shadow: 0 12px 40px rgba(255,215,0,0.3), inset 0 0 20px rgba(255,215,0,0.1);
             border-color: #ffd700;
         }
         .movie-card::before {
@@ -175,7 +173,7 @@
             width: 100%;
             height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255,215,0,0.3), transparent);
-            transition: left 0.5s;
+            transition: left 0.8s ease-out;
             z-index: 1;
         }
         .movie-card:hover::before {
@@ -185,11 +183,9 @@
             width: 100%;
             height: 300px;
             object-fit: cover;
-            backface-visibility: hidden;
         }
         .movie-info {
             padding: 10px;
-            backface-visibility: hidden;
             background: rgba(0,0,0,0.5);
         }
         .movie-title, .movie-desc {
@@ -208,7 +204,7 @@
             border-radius: 50%;
             width: 40px;
             height: 40px;
-            animation: spin 1s linear infinite, pulse 1.5s infinite;
+            animation: spin 1s linear infinite, pulse 2s infinite ease-out;
             box-shadow: 0 0 20px rgba(255,215,0,0.5), 0 0 40px rgba(255,215,0,0.2);
             filter: drop-shadow(0 0 10px rgba(255,215,0,0.3));
         }
@@ -218,7 +214,7 @@
         }
         @keyframes pulse {
             0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.7; transform: scale(1.1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
         }
         footer {
             background: linear-gradient(135deg, rgba(30, 30, 30, 0.95), rgba(45, 45, 45, 0.85), rgba(64, 64, 64, 0.75));
@@ -249,7 +245,7 @@
             .search-bar.active { display: flex; }
             .movies-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
             .movie-card { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
-            #particles-canvas { display: none; } /* Particles off on mobile */
+            #particles-canvas { display: none; }
         }
     </style>
 </head>
@@ -307,21 +303,21 @@
     <script>
         let allMovies = [], allSeries = [], allLatest = [];
 
-        // Particles system
+        // Particles system (smooth)
         function initParticles() {
             const canvas = document.getElementById('particles-canvas');
             const ctx = canvas.getContext('2d');
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
             const particles = [];
-            for (let i = 0; i < 50; i++) {
+            for (let i = 0; i < 30; i++) { // کمتر برای smoothness
                 particles.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
-                    vx: (Math.random() - 0.5) * 0.5,
-                    vy: (Math.random() - 0.5) * 0.5,
-                    radius: Math.random() * 2 + 1,
-                    opacity: Math.random() * 0.5 + 0.2
+                    vx: (Math.random() - 0.5) * 0.3, // کندتر
+                    vy: (Math.random() - 0.5) * 0.3,
+                    radius: Math.random() * 1.5 + 0.5,
+                    opacity: Math.random() * 0.3 + 0.1
                 });
             }
             function animate() {
@@ -353,20 +349,18 @@
             else header.classList.remove('scrolled');
         });
 
-        // Scroll-triggered animations
+        // Smooth scroll-triggered animations
         const observer = new IntersectionObserver(entries => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
+                    entry.target.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
                     entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0) rotateY(0deg)';
+                    entry.target.style.transform = 'translateY(0)';
                 }
             });
         });
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.movie-card').forEach(card => observer.observe(card));
-        });
 
-        // لود جدیدترین ها با 3s delay
+        // لود جدیدترین ها با 2s delay
         document.getElementById('latest-loading').style.display = 'flex';
         fetch('latest.json')
             .then(response => response.json())
@@ -381,16 +375,16 @@
                         observer.observe(card);
                     });
                     document.getElementById('latest-loading').style.display = 'none';
-                }, 3000);
+                }, 2000);
             })
             .catch(error => {
                 console.error('خطا در لود جدیدترین ها:', error);
                 setTimeout(() => {
                     document.getElementById('latest-loading').innerHTML = '<p>خطا در لود</p>';
-                }, 3000);
+                }, 2000);
             });
 
-        // لود فیلم‌ها با 3s delay
+        // لود فیلم‌ها با 2s delay
         document.getElementById('movies-loading').style.display = 'flex';
         fetch('movies.json')
             .then(response => response.json())
@@ -405,16 +399,16 @@
                         observer.observe(card);
                     });
                     document.getElementById('movies-loading').style.display = 'none';
-                }, 3000);
+                }, 2000);
             })
             .catch(error => {
                 console.error('خطا در لود فیلم‌ها:', error);
                 setTimeout(() => {
                     document.getElementById('movies-loading').innerHTML = '<p>خطا در لود</p>';
-                }, 3000);
+                }, 2000);
             });
 
-        // لود سریال‌ها با 3s delay
+        // لود سریال‌ها با 2s delay
         document.getElementById('series-loading').style.display = 'flex';
         fetch('series.json')
             .then(response => response.json())
@@ -429,20 +423,19 @@
                         observer.observe(card);
                     });
                     document.getElementById('series-loading').style.display = 'none';
-                }, 3000);
+                }, 2000);
             })
             .catch(error => {
                 console.error('خطا در لود سریال‌ها:', error);
                 setTimeout(() => {
                     document.getElementById('series-loading').innerHTML = '<p>خطا در لود</p>';
-                }, 3000);
+                }, 2000);
             });
 
         // تابع ساخت کارت
         function createCard(title, poster, summary, detailPage, index) {
             const card = document.createElement('div');
             card.className = 'movie-card';
-            card.style.animationDelay = `${index * 0.2}s`;
             card.innerHTML = `
                 <img src="${poster}" alt="${title}">
                 <div class="movie-info">
@@ -476,7 +469,7 @@
             if (e.key === 'Enter') searchMovies();
         });
 
-        // Ripple effect for buttons (global)
+        // Ripple effect for buttons (smooth)
         document.addEventListener('click', e => {
             if (e.target.tagName === 'BUTTON') {
                 const ripple = document.createElement('span');
@@ -489,7 +482,7 @@
                     border-radius: 50%;
                     background: rgba(255, 255, 255, 0.6);
                     transform: scale(0);
-                    animation: ripple 0.6s linear;
+                    animation: ripple 0.8s ease-out;
                     width: ${size}px;
                     height: ${size}px;
                     left: ${x}px;
@@ -502,7 +495,7 @@
                     document.head.appendChild(style);
                 }
                 e.target.appendChild(ripple);
-                setTimeout(() => ripple.remove(), 600);
+                setTimeout(() => ripple.remove(), 800);
             }
         });
     </script>
