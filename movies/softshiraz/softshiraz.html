@@ -295,6 +295,14 @@
             margin-top: 40px;
             color: #ffffff;
         }
+        footer a {
+            color: #ffd700;
+            text-decoration: none;
+            transition: text-decoration 0.3s;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
         @media (max-width: 768px) {
             .info, .download-section, .trailer {
                 backdrop-filter: blur(10px);
@@ -338,7 +346,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2025 Soft Shiraz.</p>
+        <p>طراحی و کدنویسی توسط <a href="https://t.me/FLOKI000" target="_blank">FLOKI</a></p>
     </footer>
 
     <script>
@@ -362,7 +370,7 @@
             }
         });
 
-        // Ripple effect (smooth, 0.8s)
+        // Ripple effect
         document.addEventListener('click', e => {
             if (e.target.tagName === 'BUTTON') {
                 const ripple = document.createElement('span');
