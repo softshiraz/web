@@ -1,0 +1,14 @@
+[
+  {
+    "title": "فیلم اول من",
+    "poster": "images/poster1.jpg",
+    "summary": "خلاصه کوتاه فیلم اول: داستانی هیجان‌انگیز.",
+    "detailPage": "movies/film1.html"
+  },
+  {
+    "title": "فیلم دوم من",
+    "poster": "https://filmkio.run/wp-content/uploads/2025/09/the-naked-gun-main-poster.jpg",
+    "summary": "خلاصه کوتاه فیلم دوم: کمدی رمانتیک.",
+    "detailPage": "movies/bia2.html"
+  }
+]
