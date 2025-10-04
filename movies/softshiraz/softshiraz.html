@@ -9,10 +9,7 @@
         * { scroll-behavior: smooth; }
         body {
             font-family: 'Tahoma', sans-serif;
-            background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 50%, #1e1e1e 100%);
-            background-image: 
-                radial-gradient(circle at 25% 25%, rgba(255,215,0,0.03) 0%, transparent 50%),
-                radial-gradient(circle at 75% 75%, rgba(255,215,0,0.02) 0%, transparent 50%);
+            background-color: #1a1a1a;
             color: #ffffff;
             margin: 0;
             padding: 0;
@@ -34,7 +31,8 @@
             position: sticky;
             top: 0;
             z-index: 10;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease-out;
+            will-change: transform;
         }
         header::before {
             content: '';
@@ -44,7 +42,7 @@
             right: 0;
             bottom: 0;
             background: linear-gradient(90deg, transparent 0%, rgba(255,215,0,0.08) 50%, transparent 100%);
-            animation: shine 3s infinite;
+            animation: shine 4s infinite ease-out;
             z-index: -1;
         }
         @keyframes shine {
@@ -63,7 +61,7 @@
             display: flex;
             align-items: center;
             gap: 5px;
-            transition: all 0.3s;
+            transition: all 0.4s ease-out;
         }
         .back-link:hover {
             text-decoration: underline;
@@ -74,17 +72,16 @@
             padding: 20px;
             max-width: 800px;
             margin: 0 auto;
-            perspective: 1000px;
         }
         .poster {
             width: 100%;
             height: 400px;
             object-fit: cover;
-            border-radius: 10px;
+            border-radius: 20px;
             margin-bottom: 20px;
             border: 1px solid #404040;
             box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-            transition: transform 0.3s;
+            transition: transform 0.4s ease-out;
         }
         .poster:hover {
             transform: scale(1.02);
@@ -95,38 +92,39 @@
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid #404040;
             padding: 20px;
-            border-radius: 10px;
+            border-radius: 20px;
             margin-bottom: 20px;
             box-shadow: 0 8px 32px rgba(255,215,0,0.15);
             position: relative;
             overflow: hidden;
-            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-            transition: clip-path 0.5s;
+            transition: all 0.4s ease-out;
+            will-change: transform;
         }
         .info:hover {
-            clip-path: polygon(5% 0%, 95% 0%, 100% 50%, 95% 100%, 5% 100%, 0% 50%);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(255,215,0,0.3);
+            border-color: #ffd700;
         }
         .info::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,215,0,0.08) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.5s;
-            z-index: -1;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,215,0,0.3), transparent);
+            transition: left 0.8s ease-out;
+            z-index: 1;
         }
         .info:hover::before {
-            opacity: 1;
+            left: 100%;
         }
         .info h1 {
             color: #ffd700;
             margin-bottom: 10px;
             position: relative;
             z-index: 1;
-            animation: glow 2s infinite alternate;
+            animation: glow 2s infinite alternate ease-out;
         }
         @keyframes glow {
             from { text-shadow: 0 0 5px rgba(255,215,0,0.3); }
@@ -152,17 +150,18 @@
             border-radius: 5px;
             color: #000;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.4s ease-out;
             display: flex;
             align-items: center;
             gap: 5px;
             box-shadow: 0 4px 8px rgba(255,215,0,0.2);
             position: relative;
             overflow: hidden;
+            will-change: transform;
         }
         button:hover {
             background-color: #ffeb3b;
-            transform: translateY(-2px) scale(1.05);
+            transform: translateY(-2px);
             box-shadow: 0 6px 12px rgba(255,215,0,0.4);
         }
         .save-btn.saved {
@@ -175,18 +174,38 @@
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid #404040;
-            border-radius: 10px;
+            border-radius: 20px;
             padding: 10px;
             box-shadow: 0 8px 32px rgba(255,215,0,0.15);
-            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-            transition: clip-path 0.5s;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease-out;
+            will-change: transform;
         }
         .trailer:hover {
-            clip-path: polygon(5% 0%, 95% 0%, 100% 50%, 95% 100%, 5% 100%, 0% 50%);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(255,215,0,0.3);
+            border-color: #ffd700;
+        }
+        .trailer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,215,0,0.3), transparent);
+            transition: left 0.8s ease-out;
+            z-index: 1;
+        }
+        .trailer:hover::before {
+            left: 100%;
         }
         .trailer h2 {
             color: #ffd700;
             margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
         }
         .trailer iframe {
             width: 100%;
@@ -194,6 +213,8 @@
             border-radius: 10px;
             border: 1px solid #404040;
             box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+            position: relative;
+            z-index: 1;
         }
         .download-section {
             background: linear-gradient(135deg, rgba(45, 45, 45, 0.9), rgba(64, 64, 64, 0.8), rgba(45, 45, 45, 0.7));
@@ -201,23 +222,45 @@
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid #404040;
             padding: 20px;
-            border-radius: 10px;
+            border-radius: 20px;
             box-shadow: 0 8px 32px rgba(255,215,0,0.15);
-            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-            transition: clip-path 0.5s;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease-out;
+            will-change: transform;
         }
         .download-section:hover {
-            clip-path: polygon(5% 0%, 95% 0%, 100% 50%, 95% 100%, 5% 100%, 0% 50%);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(255,215,0,0.3);
+            border-color: #ffd700;
+        }
+        .download-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,215,0,0.3), transparent);
+            transition: left 0.8s ease-out;
+            z-index: 1;
+        }
+        .download-section:hover::before {
+            left: 100%;
         }
         .download-section h2 {
             color: #ffd700;
             margin-bottom: 15px;
-            animation: glow 2s infinite alternate;
+            position: relative;
+            z-index: 1;
+            animation: glow 2s infinite alternate ease-out;
         }
         .download-options {
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
         }
         .download-btn {
             background-color: #ffd700;
@@ -230,14 +273,15 @@
             display: flex;
             align-items: center;
             gap: 5px;
-            transition: all 0.3s;
+            transition: all 0.4s ease-out;
             box-shadow: 0 4px 8px rgba(255,215,0,0.2);
             position: relative;
             overflow: hidden;
+            will-change: transform;
         }
         .download-btn:hover {
             background-color: #ffeb3b;
-            transform: translateY(-2px) scale(1.05);
+            transform: translateY(-2px);
             box-shadow: 0 6px 12px rgba(255,215,0,0.4);
         }
         footer {
@@ -318,7 +362,7 @@
             }
         });
 
-        // Ripple effect (same as index)
+        // Ripple effect (smooth, 0.8s)
         document.addEventListener('click', e => {
             if (e.target.tagName === 'BUTTON') {
                 const ripple = document.createElement('span');
@@ -331,7 +375,7 @@
                     border-radius: 50%;
                     background: rgba(255, 255, 255, 0.6);
                     transform: scale(0);
-                    animation: ripple 0.6s linear;
+                    animation: ripple 0.8s ease-out;
                     width: ${size}px;
                     height: ${size}px;
                     left: ${x}px;
@@ -344,7 +388,7 @@
                     document.head.appendChild(style);
                 }
                 e.target.appendChild(ripple);
-                setTimeout(() => ripple.remove(), 600);
+                setTimeout(() => ripple.remove(), 800);
             }
         });
     </script>
