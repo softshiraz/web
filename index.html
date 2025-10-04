@@ -1,217 +1,58 @@
-<!doctype html>
-
+<!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Filmkio - قالب نمایشی</title>
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-jQDF5b7k6+g6gV6q8F6oZ0mX+6+QxvQH1g1P0Q2VwqZc1y6q9Y1+ZQdQf0yZfQ9pQ+2r9g==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
-  <meta name="description" content="قالب نمونه فیلمکیو برای گیت‌هاب پیجز - طراحی تیره و راست‌چین">
-  <style>
-    :root{
-      --bg:#0b0b0d;
-      --card:#0f1113;
-      --muted:#9b9b9b;
-      --accent:#f2a900;
-      --glass: rgba(255,255,255,0.03);
-      --radius:16px;
-      font-family: 'Vazirmatn', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%;}
-    body{
-      margin:0;
-      background: linear-gradient(180deg,#071018 0%, #0b0b0d 100%);
-      color:#fff;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      direction:rtl;
-      padding-bottom:88px; /* for bottom nav */
-    }/* Header */
-.header{
-  display:flex;align-items:center;gap:16px;padding:18px 20px;position:sticky;top:0;background:linear-gradient(180deg, rgba(11,11,13,0.9), rgba(11,11,13,0.3));backdrop-filter: blur(6px);z-index:40
-}
-.logo{display:flex;align-items:center;gap:8px;font-weight:800;font-size:22px;color:#fff}
-.logo .accent{color:var(--accent)}
-.header .search, .header .menu{font-size:20px;opacity:.95}
-.spacer{flex:1}
-
-/* Hero carousel */
-.hero{
-  padding:12px 18px 6px;
-}
-.hero-track{display:flex;gap:18px;overflow-x:auto;padding-bottom:12px;scroll-snap-type:x mandatory}
-.hero-card{min-width:210px;flex:0 0 auto;scroll-snap-align:center;border-radius:18px;overflow:hidden;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));box-shadow:0 6px 18px rgba(0,0,0,0.6);position:relative}
-.hero-card img{width:100%;height:300px;object-fit:cover;display:block}
-.hero-title{font-size:20px;text-align:center;margin-top:10px;font-weight:700}
-.rating{color:var(--accent);font-weight:800;margin-top:6px;text-align:center}
-
-/* sections */
-.section{padding:18px}
-.section h2{margin:0 0 12px;font-size:20px}
-
-.row{display:flex;gap:12px;overflow-x:auto;padding-bottom:8px}
-.card{min-width:160px;flex:0 0 auto;background:var(--card);border-radius:12px;padding:10px;overflow:hidden}
-.card img{width:100%;height:120px;object-fit:cover;border-radius:8px}
-.card .meta{margin-top:8px}
-.card .meta .title{font-weight:700}
-.pill{display:inline-block;padding:6px 10px;border-radius:999px;background:var(--glass);color:var(--muted);font-size:13px;margin-right:8px}
-
-/* Genre chips */
-.chips{display:flex;gap:12px;flex-wrap:nowrap;overflow-x:auto;padding:10px}
-.chip{min-width:100px;text-align:center;padding:12px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));}
-.chip .count{display:block;font-size:12px;color:var(--accent);margin-top:6px}
-
-/* big banner */
-.banner{display:flex;gap:12px;background:linear-gradient(90deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));padding:14px;border-radius:16px;align-items:center}
-.banner img{width:160px;height:90px;border-radius:10px;object-fit:cover}
-.banner .info{flex:1}
-.badge{display:inline-block;background:var(--accent);color:#000;padding:6px 10px;border-radius:10px;font-weight:700;margin-left:8px}
-
-/* bottom nav */
-.bottom-nav{position:fixed;left:0;right:0;bottom:0;background:linear-gradient(180deg, rgba(11,11,13,0.8), rgba(11,11,13,1));height:72px;display:flex;align-items:center;justify-content:space-around;padding:0 22px;border-top:1px solid rgba(255,255,255,0.04)}
-.nav-item{display:flex;flex-direction:column;align-items:center;color:var(--muted);font-size:13px}
-.nav-item.active{color:var(--accent)}
-
-/* scrollbar hide for nice UX */
-.hero-track::-webkit-scrollbar, .row::-webkit-scrollbar, .chips::-webkit-scrollbar{height:8px}
-.hero-track::-webkit-scrollbar-thumb, .row::-webkit-scrollbar-thumb, .chips::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.06);border-radius:999px}
-
-/* responsive */
-@media(min-width:900px){
-  body{padding-bottom:28px}
-  .hero-card img{height:380px}
-  .card img{height:150px}
-}
-
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>وب‌سایت فیلم و سریال</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="header">
-    <div class="menu"><i class="fa fa-bars"></i></div>
-    <div class="logo">film<span class="accent">kio</span></div>
-    <div class="spacer"></div>
-    <div class="search"><i class="fa fa-search"></i></div>
-  </header>  <main>
-    <!-- hero -->
-    <section class="hero">
-      <div class="hero-track" id="hero">
-        <!-- hero cards -->
-        <div class="hero-card">
-          <img src="https://picsum.photos/420/600?random=101" alt="hero1"/>
-          <div style="padding:12px">
-            <div class="hero-title">Invasion</div>
-            <div class="rating">6.2</div>
-          </div>
+    <header>
+        <div class="logo">فیلم و سریال</div>
+        <div class="search-bar">
+            <input type="text" id="search" placeholder="جستجو (فارسی/انگلیسی)" dir="auto">
+            <i class="fas fa-search"></i>
         </div>
-        <div class="hero-card">
-          <img src="https://picsum.photos/420/600?random=102" alt="hero2"/>
-          <div style="padding:12px">
-            <div class="hero-title">Only Murders</div>
-            <div class="rating">8.1</div>
-          </div>
+        <nav>
+            <a href="index.html">خانه</a>
+            <a href="movie-archive.html">آرشیو فیلم</a>
+            <a href="series-archive.html">آرشیو سریال</a>
+        </nav>
+    </header>
+
+    <section id="slider">
+        <div class="slides">
+            <img src="https://via.placeholder.com/1200x600?text=Image1" alt="Slide 1" class="active">
+            <img src="https://via.placeholder.com/1200x600?text=Image2" alt="Slide 2">
+            <img src="https://via.placeholder.com/1200x600?text=Image3" alt="Slide 3">
         </div>
-        <div class="hero-card">
-          <img src="https://picsum.photos/420/600?random=103" alt="hero3"/>
-          <div style="padding:12px">
-            <div class="hero-title">Monster: The Ed Gein Story</div>
-            <div class="rating">7.3</div>
-          </div>
+    </section>
+
+    <section id="updated-series">
+        <h2>سریال‌های به‌روزرسانی‌شده</h2>
+        <div class="cards">
+            <div class="card" onclick="openDetails('series1')">
+                <img src="https://via.placeholder.com/200x300?text=Series1" alt="Series 1">
+                <h3>سریال ۱ (Series 1)</h3>
+            </div>
+            <!-- اضافه کن موارد بیشتر -->
         </div>
-      </div>
-    </section><!-- featured series -->
-<section class="section">
-  <h2>سریال های بروز شده</h2>
-  <div class="row" aria-label="featured-series">
-    <div class="card" style="min-width:320px;display:flex;gap:12px;align-items:center;padding:12px">
-      <img src="https://picsum.photos/320/180?random=201" alt="banner" style="width:140px;height:90px"/>
-      <div class="meta">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-          <span class="badge">قسمت 4</span>
-          <span class="pill">فصل 3</span>
+    </section>
+
+    <section id="updated-movies">
+        <h2>فیلم‌های به‌روزرسانی‌شده</h2>
+        <div class="cards">
+            <div class="card" onclick="openDetails('movie1')">
+                <img src="https://via.placeholder.com/200x300?text=Movie1" alt="Movie 1">
+                <h3>فیلم ۱ (Movie 1)</h3>
+            </div>
+            <!-- اضافه کن موارد بیشتر -->
         </div>
-        <div style="font-weight:800;font-size:18px">Monster: The Ed Gein Story</div>
-      </div>
-    </div>
-  </div>
+    </section>
 
-  <div style="height:10px"></div>
-
-  <div class="chips">
-    <div class="chip">
-      <div style="font-weight:700">درام</div>
-      <div class="count">7218 عنوان</div>
-    </div>
-    <div class="chip">
-      <div style="font-weight:700">کمدی</div>
-      <div class="count">3810 عنوان</div>
-    </div>
-    <div class="chip">
-      <div style="font-weight:700">اکشن</div>
-      <div class="count">3276 عنوان</div>
-    </div>
-    <div class="chip">
-      <div style="font-weight:700">هیجان انگیز</div>
-      <div class="count">278</div>
-    </div>
-  </div>
-</section>
-
-<!-- newest movies -->
-<section class="section">
-  <h2>جدیدترین فیلم ها</h2>
-  <div class="row">
-    <div class="card">
-      <img src="https://picsum.photos/200/300?random=301" alt="f1"/>
-      <div class="meta">
-        <div class="title">Rabbit Trap</div>
-        <div class="pill">فیلم جدید</div>
-      </div>
-    </div>
-    <div class="card">
-      <img src="https://picsum.photos/200/300?random=302" alt="f2"/>
-      <div class="meta">
-        <div class="title">Tom and Jerry</div>
-        <div class="pill">پویانمایی</div>
-      </div>
-    </div>
-    <div class="card">
-      <img src="https://picsum.photos/200/300?random=303" alt="f3"/>
-      <div class="meta">
-        <div class="title">The Old Man</div>
-        <div class="pill">درام</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-  </main>  <!-- bottom navigation -->  <nav class="bottom-nav">
-    <div class="nav-item active">
-      <i class="fa fa-home" style="font-size:20px"></i>
-      <div>خانه</div>
-    </div>
-    <div class="nav-item">
-      <i class="fa fa-film" style="font-size:20px"></i>
-      <div>آرشیو</div>
-    </div>
-    <div class="nav-item">
-      <i class="fa fa-list" style="font-size:20px"></i>
-      <div>لیست‌ها</div>
-    </div>
-    <div class="nav-item">
-      <i class="fa fa-user" style="font-size:20px"></i>
-      <div>پروفایل</div>
-    </div>
-  </nav>  <script>
-    // small enhancement: make hero cards center on click and snap
-    document.querySelectorAll('.hero-card').forEach(card=>{
-      card.addEventListener('click', ()=>{
-        card.scrollIntoView({behavior:'smooth',inline:'center'})
-      })
-    })
-
-    // You can expand this script to fetch real data from an API later.
-
-  </script></body>
+    <footer>© 2025 فیلم و سریال</footer>
+    <script src="script.js"></script>
+</body>
 </html>
