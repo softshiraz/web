@@ -1,8 +1,8 @@
 [
   {
     "title": "Soft Shiraz",
-    "poster": "images/softshiraz.jpg",
+    "poster": "movies/softshiraz/softshiraz.jpg",
     "summary": "",
-    "detailPage": "movies/softshiraz.html"
+    "detailPage": "movies/softshiraz/softshiraz.html"
   }
 ]
