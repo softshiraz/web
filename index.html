@@ -3,272 +3,367 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>وب سایت فیلم و سریال</title>
+    <title>Soft Shiraz - دانلود فیلم و سریال</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* تم کلی: خاکستری پایه با 5 رنگ اکسنت: آبی (#007bff), قرمز (#dc3545), سبز (#28a745), زرد (#ffc107), بنفش (#6f42c1) */
         body {
             font-family: 'Tahoma', sans-serif;
-            background-color: #f8f9fa; /* خاکستری روشن */
-            color: #333;
+            background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
+            color: #ffffff;
             margin: 0;
             padding: 0;
-            direction: rtl;
-            text-align: right;
+            min-height: 100vh;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
         }
         header {
-            background-color: #343a40; /* خاکستری تیره */
-            color: white;
-            padding: 10px;
-            text-align: center;
+            background: linear-gradient(135deg, rgba(30, 30, 30, 0.9), rgba(45, 45, 45, 0.7));
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid #404040;
+            box-shadow: 0 8px 32px rgba(255,215,0,0.1);
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
-        #slideshow {
-            position: relative;
-            height: 400px;
-            overflow: hidden;
-            background-size: cover;
-            background-position: center;
-            transition: background-image 1s ease-in-out;
-        }
-        .slide {
+        header::before {
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-            background-size: cover;
-            background-position: center;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,215,0,0.05) 50%, transparent 100%);
+            z-index: -1;
         }
-        .slide.active {
-            opacity: 1;
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffd700;
+            position: relative;
+            z-index: 1;
         }
-        section {
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            color: #ffd700;
+        }
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #ffd700;
+            margin: 3px 0;
+            transition: 0.3s;
+            box-shadow: 0 2px 4px rgba(255,215,0,0.3);
+        }
+        .search-bar {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            position: relative;
+        }
+        .search-bar input {
+            padding: 8px;
+            border: 1px solid #404040;
+            border-radius: 5px;
+            background: linear-gradient(135deg, rgba(45, 45, 45, 0.8), rgba(64, 64, 64, 0.6));
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+        .search-bar input:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(255,215,0,0.3);
+        }
+        .search-bar button {
+            padding: 8px 12px;
+            background-color: #ffd700;
+            border: none;
+            border-radius: 5px;
+            color: #000;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(255,215,0,0.2);
+        }
+        .search-bar button:hover {
+            background-color: #ffeb3b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(255,215,0,0.4);
+        }
+        main {
             padding: 20px;
         }
-        .grid {
+        .section {
+            margin-bottom: 40px;
+        }
+        .section h2 {
+            color: #ffd700;
+            border-bottom: 2px solid #ffd700;
+            padding-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+        .movies-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 20px;
         }
-        .item {
-            background-color: white;
-            border: 1px solid #dee2e6; /* خاکستری روشن */
-            border-radius: 8px; /* گوشه‌های گرد برای بهبود UI */
-            padding: 10px;
-            text-align: center;
+        .movie-card {
+            background: linear-gradient(135deg, rgba(45, 45, 45, 0.8), rgba(64, 64, 64, 0.6));
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid #404040;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.4s ease;
             cursor: pointer;
-            transition: transform 0.3s; /* انیمیشن hover */
+            position: relative;
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+            transform: translateY(20px);
         }
-        .item:hover {
-            transform: scale(1.05); /* زوم هنگام hover برای بهبود تعامل */
+        .movie-card:nth-child(1) { animation-delay: 0.1s; }
+        .movie-card:nth-child(2) { animation-delay: 0.2s; }
+        .movie-card:nth-child(3) { animation-delay: 0.3s; }
+        .movie-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ffd700, transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
         }
-        .item img {
+        .movie-card:hover {
+            transform: scale(1.05) translateY(-5px);
+            box-shadow: 0 12px 40px rgba(255,215,0,0.3);
+            border-color: #ffd700;
+        }
+        .movie-card:hover::before {
+            opacity: 1;
+        }
+        .movie-card img {
             width: 100%;
-            height: auto;
-            border-radius: 8px;
+            height: 300px;
+            object-fit: cover;
         }
-        #search {
-            width: 100%;
+        .movie-info {
             padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ced4da;
-            border-radius: 4px;
-            font-size: 16px;
         }
-        #archive-tabs {
+        .movie-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #ffffff;
+        }
+        .movie-desc {
+            font-size: 14px;
+            color: #ffffff;
+        }
+        .loading-spinner {
             display: flex;
             justify-content: center;
-            margin-bottom: 20px;
-        }
-        .tab {
-            padding: 10px 20px;
-            background-color: #6c757d; /* خاکستری متوسط */
-            color: white;
-            cursor: pointer;
-            margin: 0 5px;
-            border-radius: 4px;
-        }
-        .tab.active {
-            background-color: #007bff; /* آبی اکسنت */
-        }
-        .filters {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-        select {
-            padding: 10px;
-            margin: 0 10px;
-            border: 1px solid #ced4da;
-            border-radius: 4px;
-        }
-        #detail {
-            display: none;
-            background-color: white;
-            border: 1px solid #dee2e6;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 20px;
-        }
-        .icon {
+            align-items: center;
+            height: 200px;
             font-size: 20px;
-            margin-right: 5px;
+            color: #ffd700;
         }
-        /* پیشنهادهای بهبود UI:
-        - استفاده از آیکون‌های Font Awesome برای دکمه‌ها (مثل دانلود، تریلر، ذخیره).
-        - کادرها با گوشه‌های گرد و سایه برای عمق بیشتر.
-        - انیمیشن‌های نرم برای hover و transitions.
-        - رنگ‌های اکسنت برای برجسته کردن عناصر: آبی برای لینک‌ها، قرمز برای هشدارها، سبز برای موفقیت، زرد برای توجه، بنفش برای خلاقیت.
-        - جستجوی responsive برای موبایل.
-        - اضافه کردن tooltip روی آیکون‌ها برای توضیح.
-        */
+        .spinner {
+            border: 4px solid rgba(64,64,64,0.3);
+            border-top: 4px solid #ffd700;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite, pulse 2s infinite;
+            box-shadow: 0 0 20px rgba(255,215,0,0.5);
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        footer {
+            background: linear-gradient(135deg, rgba(30, 30, 30, 0.9), rgba(45, 45, 45, 0.7));
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-top: 1px solid #404040;
+            box-shadow: 0 -8px 32px rgba(255,215,0,0.1);
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            color: #ffffff;
+        }
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            .search-bar {
+                display: none;
+                position: absolute;
+                top: 60px;
+                right: 20px;
+                background: linear-gradient(135deg, rgba(45, 45, 45, 0.9), rgba(64, 64, 64, 0.7));
+                padding: 10px;
+                border-radius: 5px;
+                flex-direction: column;
+                width: 200px;
+                backdrop-filter: blur(5px);
+                -webkit-backdrop-filter: blur(5px);
+            }
+            .search-bar.active {
+                display: flex;
+            }
+            .movies-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            .movie-card {
+                backdrop-filter: blur(5px);
+                -webkit-backdrop-filter: blur(5px);
+            }
+        }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
     <header>
-        <h1>وب سایت فیلم و سریال</h1>
-        <input type="text" id="search" placeholder="جستجو (انگلیسی یا فارسی)...">
+        <div class="logo">Soft Shiraz</div>
+        <div class="hamburger" onclick="toggleSearch()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="search-bar" id="search-bar">
+            <input type="text" id="search-input" placeholder="جستجو...">
+            <button onclick="searchMovies()"><i class="fas fa-search"></i></button>
+        </div>
     </header>
 
-    <section id="slideshow">
-        <!-- اسلایدشو با انیمیشن هر 10 ثانیه، پس‌زمینه بر اساس عکس -->
-        <div class="slide" style="background-image: url('https://via.placeholder.com/800x400?text=Slide1');"></div>
-        <div class="slide" style="background-image: url('https://via.placeholder.com/800x400?text=Slide2');"></div>
-        <div class="slide" style="background-image: url('https://via.placeholder.com/800x400?text=Slide3');"></div>
-    </section>
-
-    <section id="updated-series">
-        <h2>سریال‌های به‌روز شده</h2>
-        <div class="grid">
-            <div class="item" data-type="series" data-title="Breaking Bad" data-title-fa="شکستن بد" data-genre="درام,جنایی" data-summary="داستان یک معلم شیمی که مبتلا به سرطان می‌شود." data-seasons="5" data-episodes="62" data-country="USA" data-language="English">
-                <img src="https://via.placeholder.com/200?text=Breaking+Bad" alt="Breaking Bad">
-                <p>شکستن بد</p>
+    <main>
+        <section id="movies" class="section">
+            <h2>فیلم‌ها</h2>
+            <div class="loading-spinner" id="movies-loading">
+                <div class="spinner"></div>
             </div>
-            <!-- اضافه کردن موارد بیشتر به صورت دستی -->
-        </div>
-    </section>
-
-    <section id="updated-movies">
-        <h2>فیلم‌های به‌روز شده</h2>
-        <div class="grid">
-            <div class="item" data-type="movie" data-title="Inception" data-title-fa="تلقین" data-genre="علمی-تخیلی,اکشن" data-summary="داستان دزدی از ذهن." data-seasons="N/A" data-episodes="N/A" data-country="USA" data-language="English">
-                <img src="https://via.placeholder.com/200?text=Inception" alt="Inception">
-                <p>تلقین</p>
+            <div class="movies-grid" id="movies-grid">
+                <!-- کارت‌ها توسط JS ساخته می‌شن -->
             </div>
-            <!-- اضافه کردن موارد بیشتر -->
-        </div>
-    </section>
+        </section>
 
-    <section id="archive">
-        <h2>آرشیو</h2>
-        <div id="archive-tabs">
-            <div class="tab active" data-tab="movies">فیلم</div>
-            <div class="tab" data-tab="series">سریال</div>
-        </div>
-        <div class="filters">
-            <select id="sort">
-                <option value="newest">جدیدترین</option>
-                <option value="popular">محبوب‌ترین</option>
-            </select>
-            <select id="genre">
-                <option value="all">همه ژانرها</option>
-                <option value="drama">درام</option>
-                <option value="action">اکشن</option>
-            </select>
-        </div>
-        <div id="archive-content" class="grid">
-            <!-- محتوا بر اساس تب بارگذاری می‌شود -->
-        </div>
-    </section>
+        <section id="series" class="section">
+            <h2>سریال‌ها</h2>
+            <div class="loading-spinner" id="series-loading">
+                <div class="spinner"></div>
+            </div>
+            <div class="movies-grid" id="series-grid">
+                <!-- کارت‌ها توسط JS ساخته می‌شن -->
+            </div>
+        </section>
+    </main>
 
-    <section id="detail">
-        <h2 id="detail-title"></h2>
-        <img id="detail-img" src="" alt="">
-        <p>نام انگلیسی: <span id="detail-title-en"></span></p>
-        <p>ژانرها: <span id="detail-genre"></span></p>
-        <p>خلاصه: <span id="detail-summary"></span></p>
-        <p>تعداد فصل‌ها: <span id="detail-seasons"></span></p>
-        <p>تعداد قسمت‌ها: <span id="detail-episodes"></span></p>
-        <p>کشور: <span id="detail-country"></span></p>
-        <p>زبان: <span id="detail-language"></span></p>
-        <button><i class="fas fa-download icon"></i> دانلود</button>
-        <button><i class="fas fa-video icon"></i> تریلر</button>
-        <button><i class="fas fa-save icon"></i> ذخیره</button>
-    </section>
+    <footer>
+        <p>&copy; 2025 Soft Shiraz. همه حقوق محفوظ است.</p>
+    </footer>
 
     <script>
-        // اسلایدشو با چرخش مداوم هر 10 ثانیه
-        const slides = document.querySelectorAll('.slide');
-        let currentSlide = 0;
-        function nextSlide() {
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (currentSlide + 1) % slides.length;
-            slides[currentSlide].classList.add('active');
-            document.getElementById('slideshow').style.backgroundImage = slides[currentSlide].style.backgroundImage;
+        let allMovies = [];
+        let allSeries = [];
+
+        // لود فیلم‌ها با spinner
+        document.getElementById('movies-loading').style.display = 'flex';
+        fetch('movies.json')
+            .then(response => response.json())
+            .then(movies => {
+                allMovies = movies;
+                const moviesGrid = document.getElementById('movies-grid');
+                movies.forEach((movie, index) => {
+                    const card = createCard(movie.title, movie.poster, movie.summary, movie.detailPage, index);
+                    card.classList.add('searchable');
+                    moviesGrid.appendChild(card);
+                });
+                document.getElementById('movies-loading').style.display = 'none';
+            })
+            .catch(error => {
+                console.error('خطا در لود فیلم‌ها:', error);
+                document.getElementById('movies-loading').innerHTML = '<p>خطا در لود</p>';
+            });
+
+        // لود سریال‌ها با spinner
+        document.getElementById('series-loading').style.display = 'flex';
+        fetch('series.json')
+            .then(response => response.json())
+            .then(series => {
+                allSeries = series;
+                const seriesGrid = document.getElementById('series-grid');
+                series.forEach((serie, index) => {
+                    const card = createCard(serie.title, serie.poster, serie.summary, serie.detailPage, index);
+                    card.classList.add('searchable');
+                    seriesGrid.appendChild(card);
+                });
+                document.getElementById('series-loading').style.display = 'none';
+            })
+            .catch(error => {
+                console.error('خطا در لود سریال‌ها:', error);
+                document.getElementById('series-loading').innerHTML = '<p>خطا در لود</p>';
+            });
+
+        // تابع ساخت کارت (با animation-delay)
+        function createCard(title, poster, summary, detailPage, index) {
+            const card = document.createElement('div');
+            card.className = 'movie-card';
+            card.style.animationDelay = `${index * 0.1}s`;
+            card.innerHTML = `
+                <img src="${poster}" alt="${title}">
+                <div class="movie-info">
+                    <div class="movie-title">${title}</div>
+                    <div class="movie-desc">${summary}</div>
+                </div>
+            `;
+            card.addEventListener('click', () => {
+                window.location.href = detailPage;
+            });
+            return card;
         }
-        slides[0].classList.add('active');
-        setInterval(nextSlide, 10000);
 
-        // کلیک روی آیتم‌ها برای نمایش جزئیات
-        document.querySelectorAll('.item').forEach(item => {
-            item.addEventListener('click', () => {
-                document.getElementById('detail').style.display = 'block';
-                document.getElementById('detail-title').textContent = item.dataset.titleFa;
-                document.getElementById('detail-title-en').textContent = item.dataset.title;
-                document.getElementById('detail-img').src = item.querySelector('img').src;
-                document.getElementById('detail-genre').textContent = item.dataset.genre;
-                document.getElementById('detail-summary').textContent = item.dataset.summary;
-                document.getElementById('detail-seasons').textContent = item.dataset.seasons;
-                document.getElementById('detail-episodes').textContent = item.dataset.episodes;
-                document.getElementById('detail-country').textContent = item.dataset.country;
-                document.getElementById('detail-language').textContent = item.dataset.language;
-            });
-        });
-
-        // جستجو (ساپورت انگلیسی و فارسی)
-        const searchInput = document.getElementById('search');
-        searchInput.addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase();
-            document.querySelectorAll('.item').forEach(item => {
-                const title = (item.dataset.title + item.dataset.titleFa).toLowerCase();
-                item.style.display = title.includes(query) ? 'block' : 'none';
-            });
-        });
-
-        // تب‌های آرشیو
-        const tabs = document.querySelectorAll('.tab');
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                tabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                // بارگذاری محتوا بر اساس تب (اینجا استاتیک، می‌توانید داده اضافه کنید)
-                const content = document.getElementById('archive-content');
-                content.innerHTML = ''; // پاک کردن
-                if (tab.dataset.tab === 'movies') {
-                    // اضافه کردن فیلم‌ها
-                    const movieItem = document.createElement('div');
-                    movieItem.className = 'item';
-                    movieItem.innerHTML = '<img src="https://via.placeholder.com/200?text=Movie" alt="Movie"><p>فیلم نمونه</p>';
-                    content.appendChild(movieItem);
+        // جستجوی واقعی
+        function searchMovies() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const cards = document.querySelectorAll('.searchable');
+            cards.forEach(card => {
+                const title = card.querySelector('.movie-title').textContent.toLowerCase();
+                if (title.includes(query)) {
+                    card.style.display = 'block';
                 } else {
-                    // اضافه کردن سریال‌ها
-                    const seriesItem = document.createElement('div');
-                    seriesItem.className = 'item';
-                    seriesItem.innerHTML = '<img src="https://via.placeholder.com/200?text=Series" alt="Series"><p>سریال نمونه</p>';
-                    content.appendChild(seriesItem);
+                    card.style.display = 'none';
                 }
             });
-        });
-
-        // فیلترها (مرتب‌سازی و ژانر) - اینجا ساده، می‌توانید گسترش دهید
-        document.getElementById('sort').addEventListener('change', filterArchive);
-        document.getElementById('genre').addEventListener('change', filterArchive);
-        function filterArchive() {
-            // منطق فیلتر - اینجا placeholder
-            console.log('فیلتر اعمال شد');
         }
+
+        // Hamburger toggle
+        function toggleSearch() {
+            const searchBar = document.getElementById('search-bar');
+            searchBar.classList.toggle('active');
+        }
+
+        // سرچ با Enter
+        document.getElementById('search-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchMovies();
+            }
+        });
     </script>
 </body>
 </html>
