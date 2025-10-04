@@ -3,56 +3,272 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>وب‌سایت فیلم و سریال</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <title>وب سایت فیلم و سریال</title>
+    <style>
+        /* تم کلی: خاکستری پایه با 5 رنگ اکسنت: آبی (#007bff), قرمز (#dc3545), سبز (#28a745), زرد (#ffc107), بنفش (#6f42c1) */
+        body {
+            font-family: 'Tahoma', sans-serif;
+            background-color: #f8f9fa; /* خاکستری روشن */
+            color: #333;
+            margin: 0;
+            padding: 0;
+            direction: rtl;
+            text-align: right;
+        }
+        header {
+            background-color: #343a40; /* خاکستری تیره */
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        #slideshow {
+            position: relative;
+            height: 400px;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+            transition: background-image 1s ease-in-out;
+        }
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            background-size: cover;
+            background-position: center;
+        }
+        .slide.active {
+            opacity: 1;
+        }
+        section {
+            padding: 20px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .item {
+            background-color: white;
+            border: 1px solid #dee2e6; /* خاکستری روشن */
+            border-radius: 8px; /* گوشه‌های گرد برای بهبود UI */
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s; /* انیمیشن hover */
+        }
+        .item:hover {
+            transform: scale(1.05); /* زوم هنگام hover برای بهبود تعامل */
+        }
+        .item img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        #search {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        #archive-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .tab {
+            padding: 10px 20px;
+            background-color: #6c757d; /* خاکستری متوسط */
+            color: white;
+            cursor: pointer;
+            margin: 0 5px;
+            border-radius: 4px;
+        }
+        .tab.active {
+            background-color: #007bff; /* آبی اکسنت */
+        }
+        .filters {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        select {
+            padding: 10px;
+            margin: 0 10px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+        }
+        #detail {
+            display: none;
+            background-color: white;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px;
+        }
+        .icon {
+            font-size: 20px;
+            margin-right: 5px;
+        }
+        /* پیشنهادهای بهبود UI:
+        - استفاده از آیکون‌های Font Awesome برای دکمه‌ها (مثل دانلود، تریلر، ذخیره).
+        - کادرها با گوشه‌های گرد و سایه برای عمق بیشتر.
+        - انیمیشن‌های نرم برای hover و transitions.
+        - رنگ‌های اکسنت برای برجسته کردن عناصر: آبی برای لینک‌ها، قرمز برای هشدارها، سبز برای موفقیت، زرد برای توجه، بنفش برای خلاقیت.
+        - جستجوی responsive برای موبایل.
+        - اضافه کردن tooltip روی آیکون‌ها برای توضیح.
+        */
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
     <header>
-        <div class="logo">فیلم و سریال</div>
-        <div class="search-bar">
-            <input type="text" id="search" placeholder="جستجو (فارسی/انگلیسی)" dir="auto">
-            <i class="fas fa-search"></i>
-        </div>
-        <nav>
-            <a href="index.html">خانه</a>
-            <a href="movie-archive.html">آرشیو فیلم</a>
-            <a href="series-archive.html">آرشیو سریال</a>
-        </nav>
+        <h1>وب سایت فیلم و سریال</h1>
+        <input type="text" id="search" placeholder="جستجو (انگلیسی یا فارسی)...">
     </header>
 
-    <section id="slider">
-        <div class="slides">
-            <img src="https://via.placeholder.com/1200x600?text=Image1" alt="Slide 1" class="active">
-            <img src="https://via.placeholder.com/1200x600?text=Image2" alt="Slide 2">
-            <img src="https://via.placeholder.com/1200x600?text=Image3" alt="Slide 3">
-        </div>
+    <section id="slideshow">
+        <!-- اسلایدشو با انیمیشن هر 10 ثانیه، پس‌زمینه بر اساس عکس -->
+        <div class="slide" style="background-image: url('https://via.placeholder.com/800x400?text=Slide1');"></div>
+        <div class="slide" style="background-image: url('https://via.placeholder.com/800x400?text=Slide2');"></div>
+        <div class="slide" style="background-image: url('https://via.placeholder.com/800x400?text=Slide3');"></div>
     </section>
 
     <section id="updated-series">
-        <h2>سریال‌های به‌روزرسانی‌شده</h2>
-        <div class="cards">
-            <div class="card" onclick="openDetails('series1')">
-                <img src="https://via.placeholder.com/200x300?text=Series1" alt="Series 1">
-                <h3>سریال ۱ (Series 1)</h3>
+        <h2>سریال‌های به‌روز شده</h2>
+        <div class="grid">
+            <div class="item" data-type="series" data-title="Breaking Bad" data-title-fa="شکستن بد" data-genre="درام,جنایی" data-summary="داستان یک معلم شیمی که مبتلا به سرطان می‌شود." data-seasons="5" data-episodes="62" data-country="USA" data-language="English">
+                <img src="https://via.placeholder.com/200?text=Breaking+Bad" alt="Breaking Bad">
+                <p>شکستن بد</p>
             </div>
-            <!-- اضافه کن موارد بیشتر -->
+            <!-- اضافه کردن موارد بیشتر به صورت دستی -->
         </div>
     </section>
 
     <section id="updated-movies">
-        <h2>فیلم‌های به‌روزرسانی‌شده</h2>
-        <div class="cards">
-            <div class="card" onclick="openDetails('movie1')">
-                <img src="https://via.placeholder.com/200x300?text=Movie1" alt="Movie 1">
-                <h3>فیلم ۱ (Movie 1)</h3>
+        <h2>فیلم‌های به‌روز شده</h2>
+        <div class="grid">
+            <div class="item" data-type="movie" data-title="Inception" data-title-fa="تلقین" data-genre="علمی-تخیلی,اکشن" data-summary="داستان دزدی از ذهن." data-seasons="N/A" data-episodes="N/A" data-country="USA" data-language="English">
+                <img src="https://via.placeholder.com/200?text=Inception" alt="Inception">
+                <p>تلقین</p>
             </div>
-            <!-- اضافه کن موارد بیشتر -->
+            <!-- اضافه کردن موارد بیشتر -->
         </div>
     </section>
 
-    <footer>© 2025 فیلم و سریال</footer>
-    <script src="script.js"></script>
+    <section id="archive">
+        <h2>آرشیو</h2>
+        <div id="archive-tabs">
+            <div class="tab active" data-tab="movies">فیلم</div>
+            <div class="tab" data-tab="series">سریال</div>
+        </div>
+        <div class="filters">
+            <select id="sort">
+                <option value="newest">جدیدترین</option>
+                <option value="popular">محبوب‌ترین</option>
+            </select>
+            <select id="genre">
+                <option value="all">همه ژانرها</option>
+                <option value="drama">درام</option>
+                <option value="action">اکشن</option>
+            </select>
+        </div>
+        <div id="archive-content" class="grid">
+            <!-- محتوا بر اساس تب بارگذاری می‌شود -->
+        </div>
+    </section>
+
+    <section id="detail">
+        <h2 id="detail-title"></h2>
+        <img id="detail-img" src="" alt="">
+        <p>نام انگلیسی: <span id="detail-title-en"></span></p>
+        <p>ژانرها: <span id="detail-genre"></span></p>
+        <p>خلاصه: <span id="detail-summary"></span></p>
+        <p>تعداد فصل‌ها: <span id="detail-seasons"></span></p>
+        <p>تعداد قسمت‌ها: <span id="detail-episodes"></span></p>
+        <p>کشور: <span id="detail-country"></span></p>
+        <p>زبان: <span id="detail-language"></span></p>
+        <button><i class="fas fa-download icon"></i> دانلود</button>
+        <button><i class="fas fa-video icon"></i> تریلر</button>
+        <button><i class="fas fa-save icon"></i> ذخیره</button>
+    </section>
+
+    <script>
+        // اسلایدشو با چرخش مداوم هر 10 ثانیه
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+            document.getElementById('slideshow').style.backgroundImage = slides[currentSlide].style.backgroundImage;
+        }
+        slides[0].classList.add('active');
+        setInterval(nextSlide, 10000);
+
+        // کلیک روی آیتم‌ها برای نمایش جزئیات
+        document.querySelectorAll('.item').forEach(item => {
+            item.addEventListener('click', () => {
+                document.getElementById('detail').style.display = 'block';
+                document.getElementById('detail-title').textContent = item.dataset.titleFa;
+                document.getElementById('detail-title-en').textContent = item.dataset.title;
+                document.getElementById('detail-img').src = item.querySelector('img').src;
+                document.getElementById('detail-genre').textContent = item.dataset.genre;
+                document.getElementById('detail-summary').textContent = item.dataset.summary;
+                document.getElementById('detail-seasons').textContent = item.dataset.seasons;
+                document.getElementById('detail-episodes').textContent = item.dataset.episodes;
+                document.getElementById('detail-country').textContent = item.dataset.country;
+                document.getElementById('detail-language').textContent = item.dataset.language;
+            });
+        });
+
+        // جستجو (ساپورت انگلیسی و فارسی)
+        const searchInput = document.getElementById('search');
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            document.querySelectorAll('.item').forEach(item => {
+                const title = (item.dataset.title + item.dataset.titleFa).toLowerCase();
+                item.style.display = title.includes(query) ? 'block' : 'none';
+            });
+        });
+
+        // تب‌های آرشیو
+        const tabs = document.querySelectorAll('.tab');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                // بارگذاری محتوا بر اساس تب (اینجا استاتیک، می‌توانید داده اضافه کنید)
+                const content = document.getElementById('archive-content');
+                content.innerHTML = ''; // پاک کردن
+                if (tab.dataset.tab === 'movies') {
+                    // اضافه کردن فیلم‌ها
+                    const movieItem = document.createElement('div');
+                    movieItem.className = 'item';
+                    movieItem.innerHTML = '<img src="https://via.placeholder.com/200?text=Movie" alt="Movie"><p>فیلم نمونه</p>';
+                    content.appendChild(movieItem);
+                } else {
+                    // اضافه کردن سریال‌ها
+                    const seriesItem = document.createElement('div');
+                    seriesItem.className = 'item';
+                    seriesItem.innerHTML = '<img src="https://via.placeholder.com/200?text=Series" alt="Series"><p>سریال نمونه</p>';
+                    content.appendChild(seriesItem);
+                }
+            });
+        });
+
+        // فیلترها (مرتب‌سازی و ژانر) - اینجا ساده، می‌توانید گسترش دهید
+        document.getElementById('sort').addEventListener('change', filterArchive);
+        document.getElementById('genre').addEventListener('change', filterArchive);
+        function filterArchive() {
+            // منطق فیلتر - اینجا placeholder
+            console.log('فیلتر اعمال شد');
+        }
+    </script>
 </body>
 </html>
