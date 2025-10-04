@@ -29,6 +29,64 @@
             z-index: -1;
             pointer-events: none;
         }
+        /* Loading Screen - 3s */
+        #preload {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #1a1a1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out;
+        }
+        #preload.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .boxLoading {  
+            width: 50px;
+            height: 50px;
+            margin: auto;
+            position: relative;
+        }
+        .boxLoading::before {
+            content: '';
+            width: 50px;
+            height: 5px;
+            background: #404040;
+            opacity: 0.5;
+            position: absolute;
+            top: 59px;
+            left: 0;
+            border-radius: 50%;
+            animation: shadow .5s linear infinite;
+        }
+        .boxLoading::after {
+            content: '';
+            width: 50px;
+            height: 50px;
+            background: #ffd700;
+            animation: animate .5s linear infinite;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius: 3px;
+        }
+        @keyframes animate {
+            17% { border-bottom-right-radius: 3px; }
+            25% { transform: translateY(9px) rotate(22.5deg); }
+            50% { transform: translateY(18px) scale(1, .9) rotate(45deg); border-bottom-right-radius: 40px; }
+            75% { transform: translateY(9px) rotate(67.5deg); }
+            100% { transform: translateY(0) rotate(90deg); }
+        }
+        @keyframes shadow {
+            0%, 100% { transform: scale(1, 1); }
+            50% { transform: scale(1.2, 1); }
+        }
         header {
             background: linear-gradient(135deg, rgba(30, 30, 30, 0.95), rgba(45, 45, 45, 0.85), rgba(64, 64, 64, 0.75));
             backdrop-filter: blur(20px);
@@ -77,7 +135,6 @@
             flex-direction: column;
             cursor: pointer;
             color: #ffd700;
-            z-index: 11;
         }
         .hamburger span {
             width: 25px;
@@ -92,7 +149,6 @@
             gap: 10px;
             align-items: center;
             position: relative;
-            transition: transform 0.3s ease-out;
         }
         .search-bar input {
             padding: 8px;
@@ -145,19 +201,25 @@
         }
         .movies-grid {
             display: flex;
-            flex-direction: row;
             overflow-x: auto;
             gap: 20px;
             scroll-snap-type: x mandatory;
             padding-bottom: 10px;
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none; /* IE/Edge */
+            scrollbar-width: thin;
+            scrollbar-color: #ffd700 #404040;
         }
         .movies-grid::-webkit-scrollbar {
-            display: none; /* Chrome/Safari */
+            height: 8px;
+        }
+        .movies-grid::-webkit-scrollbar-track {
+            background: #404040;
+            border-radius: 10px;
+        }
+        .movies-grid::-webkit-scrollbar-thumb {
+            background: #ffd700;
+            border-radius: 10px;
         }
         .movie-card {
-            flex: 0 0 250px;
             background: linear-gradient(135deg, rgba(45, 45, 45, 0.9), rgba(64, 64, 64, 0.8), rgba(45, 45, 45, 0.7));
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
@@ -167,8 +229,10 @@
             transition: all 0.4s ease-out;
             cursor: pointer;
             position: relative;
-            scroll-snap-align: start;
+            width: 250px;
             height: 350px;
+            flex-shrink: 0;
+            scroll-snap-align: start;
             opacity: 0;
             transform: translateY(30px);
             will-change: transform, opacity;
@@ -194,18 +258,20 @@
         }
         .movie-card img {
             width: 100%;
-            height: 280px;
+            height: 200px;
             object-fit: cover;
         }
         .movie-info {
             padding: 15px;
-            background: rgba(0,0,0,0.6);
-            border-radius: 0 0 20px 20px;
-            text-align: center;
-            height: auto;
+            background: rgba(0,0,0,0.5);
+            height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
         .movie-title {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: bold;
             margin-bottom: 5px;
             color: #ffffff;
@@ -215,6 +281,7 @@
             font-size: 14px;
             color: #ffffff;
             text-align: center;
+            line-height: 1.4;
         }
         .loading-spinner {
             display: flex;
@@ -222,66 +289,24 @@
             align-items: center;
             height: 200px;
             color: #ffd700;
-            position: relative;
         }
-        .boxLoading {  
-            width: 50px;
-            height: 50px;
-            margin: auto;
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 0;
-            bottom: 0;
-        }
-        .boxLoading::before {
-            content: '';
-            width: 50px;
-            height: 5px;
-            background: #404040;
-            opacity: 0.1;
-            position: absolute;
-            top: 59px;
-            left: 0;
+        .spinner {
+            border: 4px solid rgba(64,64,64,0.3);
+            border-top: 4px solid #ffd700;
             border-radius: 50%;
-            animation: shadow .5s linear infinite;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite, pulse 2s infinite ease-out;
+            box-shadow: 0 0 20px rgba(255,215,0,0.5), 0 0 40px rgba(255,215,0,0.2);
+            filter: drop-shadow(0 0 10px rgba(255,215,0,0.3));
         }
-        .boxLoading::after {
-            content: '';
-            width: 50px;
-            height: 50px;
-            background: #ffd700;
-            animation: animate .5s linear infinite;
-            position: absolute;
-            top: 0;
-            left: 0;
-            border-radius: 3px;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
-        @keyframes animate {
-            17% {
-                border-bottom-right-radius: 3px;
-            }
-            25% {
-                transform: translateY(9px) rotate(22.5deg);
-            }
-            50% {
-                transform: translateY(18px) scale(1, .9) rotate(45deg);
-                border-bottom-right-radius: 40px;
-            }
-            75% {
-                transform: translateY(9px) rotate(67.5deg);
-            }
-            100% {
-                transform: translateY(0) rotate(90deg);
-            }
-        }
-        @keyframes shadow {
-            0%, 100% {
-                transform: scale(1, 1);
-            }
-            50% {
-                transform: scale(1.2, 1);
-            }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
         }
         footer {
             background: linear-gradient(135deg, rgba(30, 30, 30, 0.95), rgba(45, 45, 45, 0.85), rgba(64, 64, 64, 0.75));
@@ -297,11 +322,10 @@
         footer a {
             color: #ffd700;
             text-decoration: none;
-            transition: all 0.3s;
+            transition: color 0.3s;
         }
         footer a:hover {
-            text-decoration: underline;
-            text-shadow: 0 0 5px rgba(255,215,0,0.5);
+            color: #ffeb3b;
         }
         @media (max-width: 768px) {
             .hamburger { display: flex; }
@@ -309,7 +333,7 @@
                 display: none;
                 position: absolute;
                 top: 70px;
-                right: 20px;
+                right: 0;
                 background: linear-gradient(135deg, rgba(45, 45, 45, 0.95), rgba(64, 64, 64, 0.85));
                 padding: 10px;
                 border-radius: 5px;
@@ -317,29 +341,31 @@
                 width: 200px;
                 backdrop-filter: blur(10px);
                 -webkit-backdrop-filter: blur(10px);
-                transform: translateX(100%);
+                z-index: 11;
             }
-            .search-bar.active { 
-                display: flex; 
-                transform: translateX(0);
-            }
+            .search-bar.active { display: flex; }
             .movies-grid { 
-                gap: 15px; 
+                grid-template-columns: none; /* برای سازگاری */
+                scroll-snap-type: x proximity; /* آسان‌تر در موبایل */
             }
             .movie-card { 
-                flex: 0 0 200px; 
+                width: 200px; 
                 height: 300px; 
                 backdrop-filter: blur(10px); 
                 -webkit-backdrop-filter: blur(10px); 
             }
-            .movie-card img { height: 230px; }
-            .movie-info { padding: 10px; }
-            .movie-title { font-size: 18px; }
+            .movie-card img { height: 150px; }
+            .movie-info { height: 150px; padding: 10px; }
             #particles-canvas { display: none; }
         }
     </style>
 </head>
 <body>
+    <!-- Loading Screen -->
+    <div id="preload">
+        <div class="boxLoading"></div>
+    </div>
+
     <canvas id="particles-canvas"></canvas>
     <header id="header">
         <div class="logo">Soft Shiraz</div>
@@ -358,7 +384,7 @@
         <section id="latest" class="section">
             <h2>جدیدترین ها</h2>
             <div class="loading-spinner" id="latest-loading">
-                <div class="boxLoading"></div>
+                <div class="spinner"></div>
             </div>
             <div class="movies-grid" id="latest-grid">
                 <!-- کارت‌ها توسط JS ساخته می‌شن -->
@@ -368,7 +394,7 @@
         <section id="movies" class="section">
             <h2>فیلم‌ها</h2>
             <div class="loading-spinner" id="movies-loading">
-                <div class="boxLoading"></div>
+                <div class="spinner"></div>
             </div>
             <div class="movies-grid" id="movies-grid">
                 <!-- کارت‌ها توسط JS ساخته می‌شن -->
@@ -378,7 +404,7 @@
         <section id="series" class="section">
             <h2>سریال‌ها</h2>
             <div class="loading-spinner" id="series-loading">
-                <div class="boxLoading"></div>
+                <div class="spinner"></div>
             </div>
             <div class="movies-grid" id="series-grid">
                 <!-- کارت‌ها توسط JS ساخته می‌شن -->
@@ -392,6 +418,11 @@
 
     <script>
         let allMovies = [], allSeries = [], allLatest = [];
+
+        // Loading Screen - 3s
+        setTimeout(() => {
+            document.getElementById('preload').classList.add('hidden');
+        }, 3000);
 
         // Particles system (smooth)
         function initParticles() {
@@ -549,7 +580,7 @@
             });
         }
 
-        // Hamburger toggle (slide-in در موبایل)
+        // Hamburger toggle (فقط سرچ در موبایل)
         function toggleSearch() {
             document.getElementById('search-bar').classList.toggle('active');
         }
