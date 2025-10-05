@@ -11,7 +11,7 @@
         }
         body {
             font-family: 'Tahoma', sans-serif;
-            background-color: #1a1a1a;
+            background-color: #0a0a0a;
             color: #ffffff;
             margin: 0;
             padding: 0;
@@ -36,7 +36,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: #1a1a1a;
+            background-color: #0a0a0a;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -69,7 +69,7 @@
             content: '';
             width: 50px;
             height: 50px;
-            background: #ffd700;
+            background: #ff6b35;
             animation: animate .5s linear infinite;
             position: absolute;
             top: 0;
@@ -88,11 +88,11 @@
             50% { transform: scale(1.2, 1); }
         }
         header {
-            background: linear-gradient(135deg, rgba(30, 30, 30, 0.95), rgba(45, 45, 45, 0.85), rgba(64, 64, 64, 0.75));
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: linear-gradient(135deg, rgba(10, 10, 10, 0.95), rgba(26, 26, 26, 0.85), rgba(64, 64, 64, 0.75));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border-bottom: 1px solid #404040;
-            box-shadow: 0 8px 32px rgba(255,215,0,0.15), inset 0 1px 0 rgba(255,215,0,0.1);
+            box-shadow: 0 8px 32px rgba(255,107,53,0.15), inset 0 1px 0 rgba(255,107,53,0.1);
             padding: 15px 20px;
             display: flex;
             justify-content: space-between;
@@ -100,13 +100,13 @@
             position: sticky;
             top: 0;
             z-index: 10;
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             will-change: transform;
         }
         header.scrolled {
             padding: 10px 20px;
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
         }
         header::before {
             content: '';
@@ -115,8 +115,8 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(90deg, transparent 0%, rgba(255,215,0,0.08) 50%, transparent 100%);
-            animation: shine 5s infinite ease-out;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,107,53,0.08) 50%, transparent 100%);
+            animation: shine 4s infinite cubic-bezier(0.25, 0.46, 0.45, 0.94);
             z-index: -1;
         }
         @keyframes shine {
@@ -126,28 +126,27 @@
         .logo {
             font-size: 24px;
             font-weight: bold;
-            color: #ffd700;
+            color: #ff6b35;
             position: relative;
             z-index: 1;
-            text-decoration: none;
-            transition: color 0.3s ease-in-out;
+            cursor: pointer;
+            transition: color 0.3s;
         }
         .logo:hover {
-            color: #ffed4a;
-            text-decoration: underline;
+            color: #fff;
         }
         .search-icon {
             font-size: 20px;
-            color: #ffd700;
+            color: #ff6b35;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             padding: 5px;
             border-radius: 50%;
-            background: rgba(255,215,0,0.1);
+            background: rgba(255,107,53,0.1);
         }
         .search-icon:hover {
-            color: #ffed4a;
-            background: rgba(255,215,0,0.2);
+            color: #fff;
+            background: rgba(255,107,53,0.2);
             transform: scale(1.1);
         }
         .search-bar {
@@ -161,33 +160,33 @@
             padding: 8px;
             border: 1px solid #404040;
             border-radius: 5px;
-            background: linear-gradient(135deg, rgba(45, 45, 45, 0.9), rgba(64, 64, 64, 0.8));
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.9), rgba(64, 64, 64, 0.8));
             color: #ffffff;
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
         }
         .search-bar input:focus {
             outline: none;
-            box-shadow: 0 0 15px rgba(255,215,0,0.4);
-            border-color: #ffd700;
+            box-shadow: 0 0 15px rgba(255,107,53,0.4);
+            border-color: #ff6b35;
         }
         .search-bar button {
             padding: 8px 12px;
-            background-color: #ffd700;
+            background-color: #ff6b35;
             border: none;
             border-radius: 5px;
             color: #000;
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            box-shadow: 0 4px 8px rgba(255,215,0,0.2);
+            box-shadow: 0 4px 8px rgba(255,107,53,0.2);
             will-change: transform;
         }
         .search-bar button:hover {
-            background-color: #ffed4a;
+            background-color: #fff;
             transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(255,215,0,0.4);
+            box-shadow: 0 6px 12px rgba(255,107,53,0.4);
         }
         main {
             padding: 20px;
@@ -196,15 +195,15 @@
             margin-bottom: 40px;
         }
         .section h2 {
-            color: #ffd700;
-            border-bottom: 2px solid #ffd700;
+            color: #ff6b35;
+            border-bottom: 2px solid #ff6b35;
             padding-bottom: 10px;
             text-shadow: 0 2px 4px rgba(0,0,0,0.5);
             animation: glow 2s infinite alternate cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         @keyframes glow {
-            from { text-shadow: 0 2px 4px rgba(0,0,0,0.5), 0 0 5px rgba(255,215,0,0.3); }
-            to { text-shadow: 0 2px 4px rgba(0,0,0,0.5), 0 0 10px rgba(255,215,0,0.6); }
+            from { text-shadow: 0 2px 4px rgba(0,0,0,0.5), 0 0 5px rgba(255,107,53,0.2); }
+            to { text-shadow: 0 2px 4px rgba(0,0,0,0.5), 0 0 10px rgba(255,107,53,0.4); }
         }
         .movies-grid {
             display: flex;
@@ -221,13 +220,13 @@
             display: none;
         }
         .movie-card {
-            background: linear-gradient(135deg, rgba(45, 45, 45, 0.9), rgba(64, 64, 64, 0.8), rgba(45, 45, 45, 0.7));
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.9), rgba(64, 64, 64, 0.8), rgba(26, 26, 26, 0.7));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border: 1px solid #404040;
             border-radius: 20px;
             overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             cursor: pointer;
             position: relative;
             width: 250px;
@@ -239,8 +238,8 @@
         }
         .movie-card:hover {
             transform: scale(1.05) translateY(-5px);
-            box-shadow: 0 12px 40px rgba(255,215,0,0.3), inset 0 0 20px rgba(255,215,0,0.1);
-            border-color: #ffd700;
+            box-shadow: 0 12px 40px rgba(255,107,53,0.15), inset 0 0 20px rgba(255,107,53,0.1);
+            border-color: #ff6b35;
         }
         .movie-card::before {
             content: '';
@@ -249,7 +248,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,215,0,0.3), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,107,53,0.2), transparent);
             transition: left 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             z-index: 1;
         }
@@ -293,17 +292,17 @@
             justify-content: center;
             align-items: center;
             height: 200px;
-            color: #ffd700;
+            color: #ff6b35;
         }
         .spinner {
             border: 4px solid rgba(64,64,64,0.3);
-            border-top: 4px solid #ffd700;
+            border-top: 4px solid #ff6b35;
             border-radius: 50%;
             width: 40px;
             height: 40px;
             animation: spin 1s linear infinite, pulse 2s infinite cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            box-shadow: 0 0 20px rgba(255,215,0,0.5), 0 0 40px rgba(255,215,0,0.2);
-            filter: drop-shadow(0 0 10px rgba(255,215,0,0.3));
+            box-shadow: 0 0 20px rgba(255,107,53,0.15), 0 0 40px rgba(255,107,53,0.1);
+            filter: drop-shadow(0 0 10px rgba(255,107,53,0.15));
         }
         @keyframes spin {
             0% { transform: rotate(0deg); }
@@ -332,40 +331,41 @@
             height: 50px;
             border-radius: 50%;
             border: 2px solid #404040;
-            background: linear-gradient(135deg, rgba(45, 45, 45, 0.9), rgba(64, 64, 64, 0.8));
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.9), rgba(64, 64, 64, 0.8));
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             font-size: 20px;
             color: #ffffff;
             text-decoration: none;
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
             tabindex="0";
             role="button";
+            aria-label="شبکه‌های اجتماعی";
         }
         .social-icon:hover {
-            border-color: #ffd700;
+            border-color: #ff6b35;
             transform: scale(1.1) rotate(360deg);
-            box-shadow: 0 0 25px rgba(255,215,0,0.5);
-            background: linear-gradient(135deg, rgba(255,215,0,0.1), rgba(64, 64, 64, 0.8));
+            box-shadow: 0 0 25px rgba(255,107,53,0.15);
+            background: linear-gradient(135deg, rgba(255,107,53,0.1), rgba(64, 64, 64, 0.8));
         }
         .social-icon i {
             transition: color 0.3s;
         }
         .social-icon:hover i {
-            color: #ffd700;
+            color: #ff6b35;
         }
         footer a {
-            color: #ffd700;
+            color: #ff6b35;
             text-decoration: none;
             transition: color 0.3s;
         }
         footer a:hover {
-            color: #ffed4a;
+            color: #fff;
         }
         @media (max-width: 768px) {
             .search-icon { display: block; }
@@ -374,14 +374,14 @@
                 position: absolute;
                 top: 70px;
                 right: 10px;
-                background: linear-gradient(135deg, rgba(45, 45, 45, 0.95), rgba(64, 64, 64, 0.85));
+                background: linear-gradient(135deg, rgba(26, 26, 26, 0.95), rgba(64, 64, 64, 0.85));
                 padding: 10px;
                 border-radius: 10px;
                 flex-direction: row;
                 width: auto;
                 min-width: 250px;
-                backdrop-filter: blur(15px);
-                -webkit-backdrop-filter: blur(15px);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
                 z-index: 11;
                 box-shadow: 0 8px 32px rgba(0,0,0,0.5);
                 transform: translateX(100%);
@@ -397,8 +397,8 @@
             }
             .movie-card { 
                 width: 180px; 
-                backdrop-filter: blur(10px); 
-                -webkit-backdrop-filter: blur(10px); 
+                backdrop-filter: blur(5px); 
+                -webkit-backdrop-filter: blur(5px); 
             }
             .movie-card img { height: 200px; }
             .movie-info { min-height: 50px; padding: 6px; }
@@ -418,7 +418,7 @@
 
     <canvas id="particles-canvas"></canvas>
     <header id="header">
-        <a href="https://softshiraz.github.io/web/" class="logo">Soft Shiraz</a>
+        <div class="logo" onclick="window.location.href='https://softshiraz.github.io/web/'" style="cursor: pointer;">Soft Shiraz</div>
         <i class="fas fa-search search-icon" onclick="toggleSearch()" aria-label="جستجو" role="button" tabindex="0"></i>
         <div class="search-bar" id="search-bar">
             <input type="text" id="search-input" placeholder="جستجو..." list="suggestions" aria-label="جستجو">
@@ -477,7 +477,7 @@
             document.getElementById('preload').classList.add('hidden');
         }, 3000);
 
-        // Particles system
+        // Particles system (optimized)
         function initParticles() {
             const canvas = document.getElementById('particles-canvas');
             const ctx = canvas.getContext('2d');
@@ -503,7 +503,7 @@
                     if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
                     ctx.beginPath();
                     ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(255, 215, 0, ${p.opacity})`;
+                    ctx.fillStyle = `rgba(255, 107, 53, ${p.opacity})`;
                     ctx.fill();
                 });
                 requestAnimationFrame(animate);
@@ -600,4 +600,95 @@
                 updateSuggestions();
                 setTimeout(() => {
                     const seriesGrid = document.getElementById('series-grid');
-                    series.forEach((serie,
+                    series.forEach((serie, index) => {
+                        const card = createCard(serie.title, serie.poster, serie.summary, serie.detailPage, index);
+                        card.classList.add('searchable');
+                        seriesGrid.appendChild(card);
+                        observer.observe(card);
+                    });
+                    document.getElementById('series-loading').style.display = 'none';
+                }, 2000);
+            })
+            .catch(error => {
+                console.error('خطا در لود سریال‌ها:', error);
+                setTimeout(() => {
+                    document.getElementById('series-loading').innerHTML = '<p>خطا در لود</p>';
+                }, 2000);
+            });
+
+        // تابع ساخت کارت
+        function createCard(title, poster, summary, detailPage, index) {
+            const card = document.createElement('div');
+            card.className = 'movie-card';
+            card.setAttribute('tabindex', '0');
+            card.setAttribute('role', 'button');
+            card.setAttribute('aria-label', `کارت ${title}`);
+            card.innerHTML = `
+                <img src="${poster}" alt="${title}" loading="lazy" />
+                <div class="movie-info">
+                    <div class="movie-title">${title}</div>
+                    <div class="movie-desc">${summary}</div>
+                </div>
+            `;
+            card.addEventListener('click', () => window.location.href = detailPage);
+            card.addEventListener('keydown', e => { if (e.key === 'Enter') window.location.href = detailPage; });
+            return card;
+        }
+
+        // جستجوی واقعی (real-time)
+        function searchMovies() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const cards = document.querySelectorAll('.searchable');
+            cards.forEach(card => {
+                const title = card.querySelector('.movie-title').textContent.toLowerCase();
+                card.style.display = title.includes(query) ? 'block' : 'none';
+            });
+        }
+
+        // Toggle search bar (slide-in for mobile)
+        function toggleSearch() {
+            const searchBar = document.getElementById('search-bar');
+            searchBar.classList.toggle('active');
+            if (searchBar.classList.contains('active')) {
+                document.getElementById('search-input').focus();
+            }
+        }
+
+        // سرچ با Enter و input real-time
+        document.getElementById('search-input').addEventListener('input', searchMovies);
+        document.getElementById('search-input').addEventListener('keypress', e => {
+            if (e.key === 'Enter') searchMovies();
+        });
+
+        // Ripple effect for buttons (smooth)
+        document.addEventListener('click', e => {
+            if (e.target.tagName === 'BUTTON') {
+                const ripple = document.createElement('span');
+                const rect = e.target.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                ripple.style.cssText = `
+                    position: absolute;
+                    border-radius: 50%;
+                    background: rgba(255, 255, 255, 0.6);
+                    transform: scale(0);
+                    animation: ripple 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${x}px;
+                    top: ${y}px;
+                `;
+                const rippleAnim = `@keyframes ripple { to { transform: scale(4); opacity: 0; } }`;
+                if (!document.styleSheets[0].insertRule) {
+                    const style = document.createElement('style');
+                    style.textContent = rippleAnim;
+                    document.head.appendChild(style);
+                }
+                e.target.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 800);
+            }
+        });
+    </script>
+</body>
+</html>
