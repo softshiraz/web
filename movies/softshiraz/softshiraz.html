@@ -100,11 +100,6 @@
             transition: all 0.4s ease-out;
             will-change: transform;
         }
-        .info:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(255,215,0,0.3);
-            border-color: #ffd700;
-        }
         .info::before {
             content: '';
             position: absolute;
@@ -136,86 +131,6 @@
             position: relative;
             z-index: 1;
         }
-        .buttons {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            position: relative;
-            z-index: 1;
-        }
-        button {
-            padding: 10px 20px;
-            background-color: #ffd700;
-            border: none;
-            border-radius: 5px;
-            color: #000;
-            cursor: pointer;
-            transition: all 0.4s ease-out;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            box-shadow: 0 4px 8px rgba(255,215,0,0.2);
-            position: relative;
-            overflow: hidden;
-            will-change: transform;
-        }
-        button:hover {
-            background-color: #ffeb3b;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(255,215,0,0.4);
-        }
-        .save-btn.saved {
-            background-color: #4CAF50;
-            color: #fff;
-        }
-        .trailer {
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, rgba(45, 45, 45, 0.9), rgba(64, 64, 64, 0.8));
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid #404040;
-            border-radius: 20px;
-            padding: 10px;
-            box-shadow: 0 8px 32px rgba(255,215,0,0.15);
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s ease-out;
-            will-change: transform;
-        }
-        .trailer:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(255,215,0,0.3);
-            border-color: #ffd700;
-        }
-        .trailer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,215,0,0.3), transparent);
-            transition: left 0.8s ease-out;
-            z-index: 1;
-        }
-        .trailer:hover::before {
-            left: 100%;
-        }
-        .trailer h2 {
-            color: #ffd700;
-            margin-bottom: 10px;
-            position: relative;
-            z-index: 1;
-        }
-        .trailer iframe {
-            width: 100%;
-            height: 300px;
-            border-radius: 10px;
-            border: 1px solid #404040;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
-            position: relative;
-            z-index: 1;
-        }
         .download-section {
             background: linear-gradient(135deg, rgba(45, 45, 45, 0.9), rgba(64, 64, 64, 0.8), rgba(45, 45, 45, 0.7));
             backdrop-filter: blur(20px);
@@ -228,11 +143,6 @@
             overflow: hidden;
             transition: all 0.4s ease-out;
             will-change: transform;
-        }
-        .download-section:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(255,215,0,0.3);
-            border-color: #ffd700;
         }
         .download-section::before {
             content: '';
@@ -255,12 +165,46 @@
             z-index: 1;
             animation: glow 2s infinite alternate ease-out;
         }
+        .accordion {
+            margin-bottom: 10px;
+            border: 1px solid #333;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .accordion-header {
+            background: rgba(64, 64, 64, 0.8);
+            padding: 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+            font-weight: bold;
+            color: #ffd700;
+        }
+        .accordion-header:hover {
+            background: rgba(64, 64, 64, 1);
+        }
+        .accordion-toggle {
+            font-size: 18px;
+            transition: transform 0.3s;
+        }
+        .accordion.open .accordion-toggle {
+            transform: rotate(45deg);
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background: rgba(45, 45, 45, 0.8);
+        }
+        .accordion.open .accordion-content {
+            max-height: 100px;
+        }
         .download-options {
             display: flex;
             gap: 10px;
-            flex-wrap: wrap;
-            position: relative;
-            z-index: 1;
+            padding: 10px;
         }
         .download-btn {
             background-color: #ffd700;
@@ -278,6 +222,7 @@
             position: relative;
             overflow: hidden;
             will-change: transform;
+            flex: 1;
         }
         .download-btn:hover {
             background-color: #ffeb3b;
@@ -285,27 +230,59 @@
             box-shadow: 0 6px 12px rgba(255,215,0,0.4);
         }
         footer {
-            background: linear-gradient(135deg, rgba(30, 30, 30, 0.95), rgba(45, 45, 45, 0.85), rgba(64, 64, 64, 0.75));
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-top: 1px solid #404040;
-            box-shadow: 0 -8px 32px rgba(255,215,0,0.15);
             text-align: center;
             padding: 20px;
             margin-top: 40px;
             color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        footer p {
+            margin: 0;
+        }
+        .social-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid #404040;
+            background: linear-gradient(135deg, rgba(45, 45, 45, 0.9), rgba(64, 64, 64, 0.8));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.4s ease-out;
+            font-size: 20px;
+            color: #ffffff;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        .social-icon:hover {
+            border-color: #ffd700;
+            transform: scale(1.1) rotate(360deg);
+            box-shadow: 0 0 25px rgba(255,215,0,0.5);
+            background: linear-gradient(135deg, rgba(255,215,0,0.1), rgba(64, 64, 64, 0.8));
+        }
+        .social-icon i {
+            transition: color 0.3s;
+        }
+        .social-icon:hover i {
+            color: #ffd700;
         }
         footer a {
             color: #ffd700;
             text-decoration: none;
-            transition: all 0.3s;
+            transition: color 0.3s;
         }
         footer a:hover {
-            text-decoration: underline;
-            text-shadow: 0 0 5px rgba(255,215,0,0.5);
+            color: #ffeb3b;
         }
         @media (max-width: 768px) {
-            .info, .download-section, .trailer {
+            .info, .download-section {
                 backdrop-filter: blur(10px);
                 -webkit-backdrop-filter: blur(10px);
             }
@@ -328,50 +305,50 @@
             <p><strong>خلاصه:</strong> داستانی خنده‌دار و عاشقانه با بازیگران معروف.</p>
         </div>
 
-        <div class="buttons">
-            <button id="save-btn" class="save-btn"><i class="fas fa-star"></i> سیو کن</button>
-        </div>
-
-        <div class="trailer">
-            <h2>تریلر</h2>
-            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
-        </div>
-
         <div class="download-section">
             <h2>دانلود</h2>
-            <div class="download-options">
-                <a href="https://example.com/download/bia2-sub" target="_blank"><button class="download-btn"><i class="fas fa-download"></i> زیرنویس</button></a>
-                <a href="https://example.com/download/bia2-dub" target="_blank"><button class="download-btn"><i class="fas fa-download"></i> دوبله</button></a>
+            <div class="accordion" id="subtitle-accordion">
+                <div class="accordion-header" onclick="toggleAccordion('subtitle')">
+                    <span>زیرنویس</span>
+                    <i class="fas fa-plus accordion-toggle"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="download-options">
+                        <a href="https://example.com/download/bia2-sub" target="_blank"><button class="download-btn"><i class="fas fa-download"></i> دانلود</button></a>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion" id="dubbed-accordion">
+                <div class="accordion-header" onclick="toggleAccordion('dubbed')">
+                    <span>دوبله</span>
+                    <i class="fas fa-plus accordion-toggle"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="download-options">
+                        <a href="https://example.com/download/bia2-dub" target="_blank"><button class="download-btn"><i class="fas fa-download"></i> دانلود</button></a>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
 
     <footer>
+        <a href="https://t.me/softshiraz" target="_blank" class="social-icon" title="تلگرام">
+            <i class="fab fa-telegram"></i>
+        </a>
         <p>طراحی و کدنویسی توسط <a href="https://t.me/FLOKI000" target="_blank">FLOKI</a></p>
+        <a href="https://instagram.com/softshiraz" target="_blank" class="social-icon" title="اینستاگرام">
+            <i class="fab fa-instagram"></i>
+        </a>
     </footer>
 
     <script>
-        const saveBtn = document.getElementById('save-btn');
-        const movieId = 'bia2';
-
-        if (localStorage.getItem(movieId)) {
-            saveBtn.innerHTML = '<i class="fas fa-star"></i> حذف از سیوها';
-            saveBtn.classList.add('saved');
+        function toggleAccordion(id) {
+            const accordion = document.getElementById(id + '-accordion');
+            accordion.classList.toggle('open');
         }
 
-        saveBtn.addEventListener('click', () => {
-            if (localStorage.getItem(movieId)) {
-                localStorage.removeItem(movieId);
-                saveBtn.innerHTML = '<i class="fas fa-star"></i> سیو کن';
-                saveBtn.classList.remove('saved');
-            } else {
-                localStorage.setItem(movieId, 'saved');
-                saveBtn.innerHTML = '<i class="fas fa-star"></i> حذف از سیوها';
-                saveBtn.classList.add('saved');
-            }
-        });
-
-        // Ripple effect (smooth, 0.8s)
+        // Ripple effect
         document.addEventListener('click', e => {
             if (e.target.tagName === 'BUTTON') {
                 const ripple = document.createElement('span');
