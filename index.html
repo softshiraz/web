@@ -130,19 +130,14 @@
             position: relative;
             z-index: 1;
         }
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
+        .search-icon {
+            font-size: 20px;
             color: #ffd700;
+            cursor: pointer;
+            transition: color 0.3s ease-out;
         }
-        .hamburger span {
-            width: 25px;
-            height: 3px;
-            background: #ffd700;
-            margin: 3px 0;
-            transition: 0.4s ease-out;
-            box-shadow: 0 2px 4px rgba(255,215,0,0.3);
+        .search-icon:hover {
+            color: #ffeb3b;
         }
         .search-bar {
             display: flex;
@@ -204,20 +199,13 @@
             overflow-x: auto;
             gap: 20px;
             scroll-snap-type: x mandatory;
+            scroll-padding-left: 20px;
             padding-bottom: 10px;
-            scrollbar-width: thin;
-            scrollbar-color: #ffd700 #404040;
+            scrollbar-width: none; /* بدون نوار اسکرول */
+            -ms-overflow-style: none; /* IE/Edge */
         }
         .movies-grid::-webkit-scrollbar {
-            height: 8px;
-        }
-        .movies-grid::-webkit-scrollbar-track {
-            background: #404040;
-            border-radius: 10px;
-        }
-        .movies-grid::-webkit-scrollbar-thumb {
-            background: #ffd700;
-            border-radius: 10px;
+            display: none; /* Chrome/Safari */
         }
         .movie-card {
             background: linear-gradient(135deg, rgba(45, 45, 45, 0.9), rgba(64, 64, 64, 0.8), rgba(45, 45, 45, 0.7));
@@ -258,13 +246,13 @@
         }
         .movie-card img {
             width: 100%;
-            height: 200px;
+            height: 250px;
             object-fit: cover;
         }
         .movie-info {
-            padding: 15px;
+            padding: 10px;
             background: rgba(0,0,0,0.5);
-            height: 150px;
+            height: 100px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -281,7 +269,7 @@
             font-size: 14px;
             color: #ffffff;
             text-align: center;
-            line-height: 1.4;
+            line-height: 1.3;
         }
         .loading-spinner {
             display: flex;
@@ -309,15 +297,43 @@
             50% { opacity: 0.7; transform: scale(1.05); }
         }
         footer {
-            background: linear-gradient(135deg, rgba(30, 30, 30, 0.95), rgba(45, 45, 45, 0.85), rgba(64, 64, 64, 0.75));
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-top: 1px solid #404040;
-            box-shadow: 0 -8px 32px rgba(255,215,0,0.15);
             text-align: center;
             padding: 20px;
             margin-top: 40px;
             color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        footer p {
+            margin: 0;
+        }
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid #404040;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.4s ease-out;
+            font-size: 18px;
+            color: #ffffff;
+            text-decoration: none;
+        }
+        .social-icon:hover {
+            border-color: #ffd700;
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(255,215,0,0.5);
+        }
+        .social-icon i {
+            transition: color 0.3s;
+        }
+        .social-icon:hover i {
+            color: #ffd700;
         }
         footer a {
             color: #ffd700;
@@ -328,7 +344,7 @@
             color: #ffeb3b;
         }
         @media (max-width: 768px) {
-            .hamburger { display: flex; }
+            .search-icon { display: block; } /* همیشه visible در موبایل */
             .search-bar {
                 display: none;
                 position: absolute;
@@ -345,7 +361,6 @@
             }
             .search-bar.active { display: flex; }
             .movies-grid { 
-                grid-template-columns: none; /* برای سازگاری */
                 scroll-snap-type: x proximity; /* آسان‌تر در موبایل */
             }
             .movie-card { 
@@ -354,9 +369,13 @@
                 backdrop-filter: blur(10px); 
                 -webkit-backdrop-filter: blur(10px); 
             }
-            .movie-card img { height: 150px; }
-            .movie-info { height: 150px; padding: 10px; }
+            .movie-card img { height: 200px; }
+            .movie-info { height: 100px; padding: 8px; }
             #particles-canvas { display: none; }
+        }
+        @media (min-width: 769px) {
+            .search-bar { display: flex; } /* همیشه visible در دسکتاپ */
+            .search-icon { display: none; }
         }
     </style>
 </head>
@@ -369,11 +388,7 @@
     <canvas id="particles-canvas"></canvas>
     <header id="header">
         <div class="logo">Soft Shiraz</div>
-        <div class="hamburger" onclick="toggleSearch()">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
+        <i class="fas fa-search search-icon" onclick="toggleSearch()"></i>
         <div class="search-bar" id="search-bar">
             <input type="text" id="search-input" placeholder="جستجو...">
             <button onclick="searchMovies()"><i class="fas fa-search"></i></button>
@@ -413,7 +428,13 @@
     </main>
 
     <footer>
+        <a href="https://instagram.com/softshiraz" target="_blank" class="social-icon" title="اینستاگرام">
+            <i class="fab fa-instagram"></i>
+        </a>
         <p>طراحی و کدنویسی توسط <a href="https://t.me/FLOKI000" target="_blank">FLOKI</a></p>
+        <a href="https://t.me/softshiraz" target="_blank" class="social-icon" title="تلگرام">
+            <i class="fab fa-telegram"></i>
+        </a>
     </footer>
 
     <script>
@@ -580,7 +601,7 @@
             });
         }
 
-        // Hamburger toggle (فقط سرچ در موبایل)
+        // Toggle search bar
         function toggleSearch() {
             document.getElementById('search-bar').classList.toggle('active');
         }
