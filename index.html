@@ -134,16 +134,22 @@
             font-size: 20px;
             color: #ffd700;
             cursor: pointer;
-            transition: color 0.3s ease-out;
+            transition: all 0.3s ease-out;
+            padding: 5px;
+            border-radius: 50%;
+            background: rgba(255,215,0,0.1);
         }
         .search-icon:hover {
             color: #ffeb3b;
+            background: rgba(255,215,0,0.2);
+            transform: scale(1.1);
         }
         .search-bar {
             display: flex;
             gap: 10px;
             align-items: center;
             position: relative;
+            transition: all 0.3s ease-out;
         }
         .search-bar input {
             padding: 8px;
@@ -201,11 +207,12 @@
             scroll-snap-type: x mandatory;
             scroll-padding-left: 20px;
             padding-bottom: 10px;
-            scrollbar-width: none; /* بدون نوار اسکرول */
-            -ms-overflow-style: none; /* IE/Edge */
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            touch-action: pan-x; /* smooth touch in mobile */
         }
         .movies-grid::-webkit-scrollbar {
-            display: none; /* Chrome/Safari */
+            display: none;
         }
         .movie-card {
             background: linear-gradient(135deg, rgba(45, 45, 45, 0.9), rgba(64, 64, 64, 0.8), rgba(45, 45, 45, 0.7));
@@ -218,7 +225,6 @@
             cursor: pointer;
             position: relative;
             width: 250px;
-            height: 350px;
             flex-shrink: 0;
             scroll-snap-align: start;
             opacity: 0;
@@ -250,26 +256,30 @@
             object-fit: cover;
         }
         .movie-info {
-            padding: 10px;
+            padding: 8px;
             background: rgba(0,0,0,0.5);
-            height: 100px;
+            min-height: 60px;
+            height: auto;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            line-height: 1.2;
         }
         .movie-title {
             font-size: 18px;
             font-weight: bold;
-            margin-bottom: 5px;
+            margin-bottom: 3px;
             color: #ffffff;
             text-align: center;
+            word-break: break-word;
         }
         .movie-desc {
             font-size: 14px;
             color: #ffffff;
             text-align: center;
-            line-height: 1.3;
+            line-height: 1.2;
+            word-break: break-word;
         }
         .loading-spinner {
             display: flex;
@@ -311,23 +321,28 @@
             margin: 0;
         }
         .social-icon {
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             border: 2px solid #404040;
+            background: linear-gradient(135deg, rgba(45, 45, 45, 0.9), rgba(64, 64, 64, 0.8));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
             transition: all 0.4s ease-out;
-            font-size: 18px;
+            font-size: 20px;
             color: #ffffff;
             text-decoration: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
         .social-icon:hover {
             border-color: #ffd700;
-            transform: scale(1.1);
-            box-shadow: 0 0 20px rgba(255,215,0,0.5);
+            transform: scale(1.1) rotate(360deg);
+            box-shadow: 0 0 25px rgba(255,215,0,0.5);
+            background: linear-gradient(135deg, rgba(255,215,0,0.1), rgba(64, 64, 64, 0.8));
         }
         .social-icon i {
             transition: color 0.3s;
@@ -344,37 +359,44 @@
             color: #ffeb3b;
         }
         @media (max-width: 768px) {
-            .search-icon { display: block; } /* همیشه visible در موبایل */
+            .search-icon { display: block; }
             .search-bar {
                 display: none;
                 position: absolute;
                 top: 70px;
-                right: 0;
+                right: 10px;
                 background: linear-gradient(135deg, rgba(45, 45, 45, 0.95), rgba(64, 64, 64, 0.85));
                 padding: 10px;
-                border-radius: 5px;
-                flex-direction: column;
-                width: 200px;
-                backdrop-filter: blur(10px);
-                -webkit-backdrop-filter: blur(10px);
+                border-radius: 10px;
+                flex-direction: row;
+                width: auto;
+                min-width: 250px;
+                backdrop-filter: blur(15px);
+                -webkit-backdrop-filter: blur(15px);
                 z-index: 11;
+                box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+                transform: translateX(100%);
+                transition: transform 0.3s ease-out;
             }
-            .search-bar.active { display: flex; }
+            .search-bar.active { 
+                display: flex; 
+                transform: translateX(0);
+            }
             .movies-grid { 
-                scroll-snap-type: x proximity; /* آسان‌تر در موبایل */
+                scroll-snap-type: x proximity;
+                gap: 15px;
             }
             .movie-card { 
-                width: 200px; 
-                height: 300px; 
+                width: 180px; 
                 backdrop-filter: blur(10px); 
                 -webkit-backdrop-filter: blur(10px); 
             }
             .movie-card img { height: 200px; }
-            .movie-info { height: 100px; padding: 8px; }
+            .movie-info { min-height: 50px; padding: 6px; }
             #particles-canvas { display: none; }
         }
         @media (min-width: 769px) {
-            .search-bar { display: flex; } /* همیشه visible در دسکتاپ */
+            .search-bar { display: flex; }
             .search-icon { display: none; }
         }
     </style>
@@ -428,12 +450,12 @@
     </main>
 
     <footer>
-        <a href="https://instagram.com/softshiraz" target="_blank" class="social-icon" title="اینستاگرام">
-            <i class="fab fa-instagram"></i>
-        </a>
-        <p>طراحی و کدنویسی توسط <a href="https://t.me/FLOKI000" target="_blank">FLOKI</a></p>
         <a href="https://t.me/softshiraz" target="_blank" class="social-icon" title="تلگرام">
             <i class="fab fa-telegram"></i>
+        </a>
+        <p>طراحی و کدنویسی توسط <a href="https://t.me/FLOKI000" target="_blank">FLOKI</a></p>
+        <a href="https://instagram.com/softshiraz" target="_blank" class="social-icon" title="اینستاگرام">
+            <i class="fab fa-instagram"></i>
         </a>
     </footer>
 
@@ -445,21 +467,21 @@
             document.getElementById('preload').classList.add('hidden');
         }, 3000);
 
-        // Particles system (smooth)
+        // Particles system (optimized, 20 particles)
         function initParticles() {
             const canvas = document.getElementById('particles-canvas');
             const ctx = canvas.getContext('2d');
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
             const particles = [];
-            for (let i = 0; i < 30; i++) {
+            for (let i = 0; i < 20; i++) {
                 particles.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
-                    vx: (Math.random() - 0.5) * 0.3,
-                    vy: (Math.random() - 0.5) * 0.3,
-                    radius: Math.random() * 1.5 + 0.5,
-                    opacity: Math.random() * 0.3 + 0.1
+                    vx: (Math.random() - 0.5) * 0.2,
+                    vy: (Math.random() - 0.5) * 0.2,
+                    radius: Math.random() * 1 + 0.5,
+                    opacity: Math.random() * 0.2 + 0.1
                 });
             }
             function animate() {
@@ -491,7 +513,7 @@
             else header.classList.remove('scrolled');
         });
 
-        // Smooth scroll-triggered animations
+        // Smooth scroll-triggered animations (threshold 0.1 for faster trigger)
         const observer = new IntersectionObserver(entries => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -500,7 +522,7 @@
                     entry.target.style.transform = 'translateY(0)';
                 }
             });
-        });
+        }, { threshold: 0.1 });
 
         // لود جدیدترین ها با 2s delay
         document.getElementById('latest-loading').style.display = 'flex';
@@ -601,9 +623,13 @@
             });
         }
 
-        // Toggle search bar
+        // Toggle search bar (slide-in for mobile)
         function toggleSearch() {
-            document.getElementById('search-bar').classList.toggle('active');
+            const searchBar = document.getElementById('search-bar');
+            searchBar.classList.toggle('active');
+            if (searchBar.classList.contains('active')) {
+                document.getElementById('search-input').focus();
+            }
         }
 
         // سرچ با Enter
