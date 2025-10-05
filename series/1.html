@@ -6,7 +6,6 @@
     <title>سریال اول من - Soft Shiraz</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* CSS مشابه bia2.html، فقط برای فصل‌ها accordion بیشتر */
         * { scroll-behavior: smooth; }
         body {
             font-family: 'Tahoma', sans-serif;
@@ -24,7 +23,7 @@
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid #404040;
-            box-shadow: 0 8px 32px rgba(255,215,0,0.15), inset 0 1px 0 rgba(255,215,0,0.1);
+            box-shadow: 0 8px 32px rgba(255,237,74,0.15), inset 0 1px 0 rgba(255,237,74,0.1);
             padding: 15px 20px;
             display: flex;
             justify-content: space-between;
@@ -42,7 +41,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(90deg, transparent 0%, rgba(255,215,0,0.08) 50%, transparent 100%);
+            background: linear-gradient(90deg, transparent 0%, rgba(255,237,74,0.08) 50%, transparent 100%);
             animation: shine 4s infinite ease-out;
             z-index: -1;
         }
@@ -53,10 +52,10 @@
         .logo {
             font-size: 24px;
             font-weight: bold;
-            color: #ffd700;
+            color: #ffed4a;
         }
         .back-link {
-            color: #ffd700;
+            color: #ffed4a;
             text-decoration: none;
             font-size: 16px;
             display: flex;
@@ -66,7 +65,7 @@
         }
         .back-link:hover {
             text-decoration: underline;
-            color: #ffeb3b;
+            color: #fff;
             transform: translateX(-5px);
         }
         main {
@@ -83,6 +82,7 @@
             border: 1px solid #404040;
             box-shadow: 0 8px 32px rgba(0,0,0,0.3);
             transition: transform 0.4s ease-out;
+            loading: lazy;
         }
         .poster:hover {
             transform: scale(1.02);
@@ -95,7 +95,7 @@
             padding: 20px;
             border-radius: 20px;
             margin-bottom: 20px;
-            box-shadow: 0 8px 32px rgba(255,215,0,0.15);
+            box-shadow: 0 8px 32px rgba(255,237,74,0.15);
             position: relative;
             overflow: hidden;
             transition: all 0.4s ease-out;
@@ -108,7 +108,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,215,0,0.3), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,237,74,0.2), transparent);
             transition: left 0.8s ease-out;
             z-index: 1;
         }
@@ -116,15 +116,15 @@
             left: 100%;
         }
         .info h1 {
-            color: #ffd700;
+            color: #ffed4a;
             margin-bottom: 10px;
             position: relative;
             z-index: 1;
             animation: glow 2s infinite alternate ease-out;
         }
         @keyframes glow {
-            from { text-shadow: 0 0 5px rgba(255,215,0,0.3); }
-            to { text-shadow: 0 0 10px rgba(255,215,0,0.6); }
+            from { text-shadow: 0 0 5px rgba(255,237,74,0.2); }
+            to { text-shadow: 0 0 10px rgba(255,237,74,0.4); }
         }
         .info p {
             color: #ffffff;
@@ -139,7 +139,7 @@
             border: 1px solid #404040;
             padding: 20px;
             border-radius: 20px;
-            box-shadow: 0 8px 32px rgba(255,215,0,0.15);
+            box-shadow: 0 8px 32px rgba(255,237,74,0.15);
             position: relative;
             overflow: hidden;
             transition: all 0.4s ease-out;
@@ -152,7 +152,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,215,0,0.3), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,237,74,0.2), transparent);
             transition: left 0.8s ease-out;
             z-index: 1;
         }
@@ -160,7 +160,7 @@
             left: 100%;
         }
         .download-section h2 {
-            color: #ffd700;
+            color: #ffed4a;
             margin-bottom: 15px;
             position: relative;
             z-index: 1;
@@ -181,7 +181,10 @@
             align-items: center;
             transition: background 0.3s;
             font-weight: bold;
-            color: #ffd700;
+            color: #ffed4a;
+            tabindex="0";
+            role="button";
+            aria-expanded="false";
         }
         .accordion-header:hover {
             background: rgba(64, 64, 64, 1);
@@ -193,6 +196,10 @@
         .accordion.open .accordion-toggle {
             transform: rotate(45deg);
         }
+        .accordion[aria-expanded="true"] .accordion-header {
+            background: #ffed4a;
+            color: #000;
+        }
         .accordion-content {
             max-height: 0;
             overflow: hidden;
@@ -200,7 +207,7 @@
             background: rgba(45, 45, 45, 0.8);
         }
         .accordion.open .accordion-content {
-            max-height: 100px;
+            max-height: 200px; /* برای nested */
         }
         .download-options {
             display: flex;
@@ -208,7 +215,7 @@
             padding: 10px;
         }
         .download-btn {
-            background-color: #ffd700;
+            background-color: #ffed4a;
             padding: 8px 15px;
             font-size: 14px;
             color: #000;
@@ -219,16 +226,18 @@
             align-items: center;
             gap: 5px;
             transition: all 0.4s ease-out;
-            box-shadow: 0 4px 8px rgba(255,215,0,0.2);
+            box-shadow: 0 4px 8px rgba(255,237,74,0.2);
             position: relative;
             overflow: hidden;
             will-change: transform;
             flex: 1;
+            tabindex="0";
+            role="button";
         }
         .download-btn:hover {
-            background-color: #ffeb3b;
+            background-color: #fff;
             transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(255,215,0,0.4);
+            box-shadow: 0 6px 12px rgba(255,237,74,0.4);
         }
         footer {
             text-align: center;
@@ -261,26 +270,28 @@
             color: #ffffff;
             text-decoration: none;
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            tabindex="0";
+            role="button";
         }
         .social-icon:hover {
-            border-color: #ffd700;
+            border-color: #ffed4a;
             transform: scale(1.1) rotate(360deg);
-            box-shadow: 0 0 25px rgba(255,215,0,0.5);
-            background: linear-gradient(135deg, rgba(255,215,0,0.1), rgba(64, 64, 64, 0.8));
+            box-shadow: 0 0 25px rgba(255,237,74,0.2);
+            background: linear-gradient(135deg, rgba(255,237,74,0.1), rgba(64, 64, 64, 0.8));
         }
         .social-icon i {
             transition: color 0.3s;
         }
         .social-icon:hover i {
-            color: #ffd700;
+            color: #ffed4a;
         }
         footer a {
-            color: #ffd700;
+            color: #ffed4a;
             text-decoration: none;
             transition: color 0.3s;
         }
         footer a:hover {
-            color: #ffeb3b;
+            color: #fff;
         }
         @media (max-width: 768px) {
             .info, .download-section {
@@ -293,11 +304,11 @@
 <body>
     <header>
         <div class="logo">Soft Shiraz</div>
-        <a href="../index.html" class="back-link"><i class="fas fa-arrow-left"></i> برگشت به خانه</a>
+        <a href="../index.html" class="back-link" aria-label="برگشت" role="button" tabindex="0"><i class="fas fa-arrow-left"></i> برگشت به خانه</a>
     </header>
 
     <main>
-        <img src="../images/series1.jpg" alt="پوستر سریال" class="poster">
+        <img src="../images/series1.jpg" alt="پوستر سریال" class="poster" loading="lazy">
         <div class="info">
             <h1>سریال اول من</h1>
             <p><strong>ژانر:</strong> درام، معمایی</p>
@@ -309,26 +320,62 @@
         <div class="download-section">
             <h2>دانلود فصل‌ها</h2>
             <div class="accordion" id="season1-accordion">
-                <div class="accordion-header" onclick="toggleAccordion('season1')">
+                <div class="accordion-header" onclick="toggleAccordion('season1')" aria-expanded="false" role="button" tabindex="0">
                     <span>فصل 1</span>
                     <i class="fas fa-plus accordion-toggle"></i>
                 </div>
                 <div class="accordion-content">
-                    <div class="download-options">
-                        <a href="https://example.com/download/series1-season1-sub" target="_blank"><button class="download-btn"><i class="fas fa-download"></i> زیرنویس</button></a>
-                        <a href="https://example.com/download/series1-season1-dub" target="_blank"><button class="download-btn"><i class="fas fa-download"></i> دوبله</button></a>
+                    <div class="accordion" id="season1-sub-accordion">
+                        <div class="accordion-header" onclick="toggleAccordion('season1-sub')" aria-expanded="false" role="button" tabindex="0">
+                            <span>زیرنویس</span>
+                            <i class="fas fa-plus accordion-toggle"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="download-options">
+                                <a href="https://example.com/download/series1-season1-sub" target="_blank"><button class="download-btn" aria-label="دانلود زیرنویس فصل 1" role="button" tabindex="0"><i class="fas fa-download"></i> دانلود</button></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion" id="season1-dub-accordion">
+                        <div class="accordion-header" onclick="toggleAccordion('season1-dub')" aria-expanded="false" role="button" tabindex="0">
+                            <span>دوبله</span>
+                            <i class="fas fa-plus accordion-toggle"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="download-options">
+                                <a href="https://example.com/download/series1-season1-dub" target="_blank"><button class="download-btn" aria-label="دانلود دوبله فصل 1" role="button" tabindex="0"><i class="fas fa-download"></i> دانلود</button></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="accordion" id="season2-accordion">
-                <div class="accordion-header" onclick="toggleAccordion('season2')">
+                <div class="accordion-header" onclick="toggleAccordion('season2')" aria-expanded="false" role="button" tabindex="0">
                     <span>فصل 2</span>
                     <i class="fas fa-plus accordion-toggle"></i>
                 </div>
                 <div class="accordion-content">
-                    <div class="download-options">
-                        <a href="https://example.com/download/series1-season2-sub" target="_blank"><button class="download-btn"><i class="fas fa-download"></i> زیرنویس</button></a>
-                        <a href="https://example.com/download/series1-season2-dub" target="_blank"><button class="download-btn"><i class="fas fa-download"></i> دوبله</button></a>
+                    <div class="accordion" id="season2-sub-accordion">
+                        <div class="accordion-header" onclick="toggleAccordion('season2-sub')" aria-expanded="false" role="button" tabindex="0">
+                            <span>زیرنویس</span>
+                            <i class="fas fa-plus accordion-toggle"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="download-options">
+                                <a href="https://example.com/download/series1-season2-sub" target="_blank"><button class="download-btn" aria-label="دانلود زیرنویس فصل 2" role="button" tabindex="0"><i class="fas fa-download"></i> دانلود</button></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion" id="season2-dub-accordion">
+                        <div class="accordion-header" onclick="toggleAccordion('season2-dub')" aria-expanded="false" role="button" tabindex="0">
+                            <span>دوبله</span>
+                            <i class="fas fa-plus accordion-toggle"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="download-options">
+                                <a href="https://example.com/download/series1-season2-dub" target="_blank"><button class="download-btn" aria-label="دانلود دوبله فصل 2" role="button" tabindex="0"><i class="fas fa-download"></i> دانلود</button></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -336,11 +383,11 @@
     </main>
 
     <footer>
-        <a href="https://t.me/softshiraz" target="_blank" class="social-icon" title="تلگرام">
+        <a href="https://t.me/softshiraz" target="_blank" class="social-icon" title="تلگرام" aria-label="تلگرام" role="button" tabindex="0">
             <i class="fab fa-telegram"></i>
         </a>
         <p>طراحی و کدنویسی توسط <a href="https://t.me/FLOKI000" target="_blank">FLOKI</a></p>
-        <a href="https://instagram.com/softshiraz" target="_blank" class="social-icon" title="اینستاگرام">
+        <a href="https://instagram.com/softshiraz" target="_blank" class="social-icon" title="اینستاگرام" aria-label="اینستاگرام" role="button" tabindex="0">
             <i class="fab fa-instagram"></i>
         </a>
     </footer>
@@ -348,6 +395,8 @@
     <script>
         function toggleAccordion(id) {
             const accordion = document.getElementById(id + '-accordion');
+            const expanded = accordion.getAttribute('aria-expanded') === 'true';
+            accordion.setAttribute('aria-expanded', !expanded);
             accordion.classList.toggle('open');
         }
 
