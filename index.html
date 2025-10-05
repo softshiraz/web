@@ -46,7 +46,6 @@
         #preload.hidden {
             opacity: 0;
             pointer-events: none;
-            display: none; /* کامل پاک برای performance */
         }
         .boxLoading {  
             width: 50px;
@@ -70,7 +69,7 @@
             content: '';
             width: 50px;
             height: 50px;
-            background: #ff6b35;
+            background: #ffd700;
             animation: animate .5s linear infinite;
             position: absolute;
             top: 0;
@@ -90,10 +89,10 @@
         }
         header {
             background: linear-gradient(135deg, rgba(30, 30, 30, 0.95), rgba(45, 45, 45, 0.85), rgba(64, 64, 64, 0.75));
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid #404040;
-            box-shadow: 0 8px 32px rgba(255,107,53,0.15), inset 0 1px 0 rgba(255,107,53,0.1);
+            box-shadow: 0 8px 32px rgba(255,215,0,0.15), inset 0 1px 0 rgba(255,215,0,0.1);
             padding: 15px 20px;
             display: flex;
             justify-content: space-between;
@@ -101,13 +100,13 @@
             position: sticky;
             top: 0;
             z-index: 10;
-            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             will-change: transform;
         }
         header.scrolled {
             padding: 10px 20px;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
         }
         header::before {
             content: '';
@@ -116,8 +115,8 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(90deg, transparent 0%, rgba(255,107,53,0.08) 50%, transparent 100%);
-            animation: shine 4s infinite ease-out;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,215,0,0.08) 50%, transparent 100%);
+            animation: shine 5s infinite ease-out;
             z-index: -1;
         }
         @keyframes shine {
@@ -127,27 +126,28 @@
         .logo {
             font-size: 24px;
             font-weight: bold;
-            color: #ff6b35;
+            color: #ffd700;
             position: relative;
             z-index: 1;
-            cursor: pointer;
-            transition: color 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            text-decoration: none;
+            transition: color 0.3s ease-in-out;
         }
         .logo:hover {
-            color: #ff8a65;
+            color: #ffed4a;
+            text-decoration: underline;
         }
         .search-icon {
             font-size: 20px;
-            color: #ff6b35;
+            color: #ffd700;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             padding: 5px;
             border-radius: 50%;
-            background: rgba(255,107,53,0.1);
+            background: rgba(255,215,0,0.1);
         }
         .search-icon:hover {
-            color: #ff8a65;
-            background: rgba(255,107,53,0.2);
+            color: #ffed4a;
+            background: rgba(255,215,0,0.2);
             transform: scale(1.1);
         }
         .search-bar {
@@ -161,4 +161,443 @@
             padding: 8px;
             border: 1px solid #404040;
             border-radius: 5px;
-            background: linear-gradient(135deg, rgba(45, 45, 45
+            background: linear-gradient(135deg, rgba(45, 45, 45, 0.9), rgba(64, 64, 64, 0.8));
+            color: #ffffff;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+        .search-bar input:focus {
+            outline: none;
+            box-shadow: 0 0 15px rgba(255,215,0,0.4);
+            border-color: #ffd700;
+        }
+        .search-bar button {
+            padding: 8px 12px;
+            background-color: #ffd700;
+            border: none;
+            border-radius: 5px;
+            color: #000;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 4px 8px rgba(255,215,0,0.2);
+            will-change: transform;
+        }
+        .search-bar button:hover {
+            background-color: #ffed4a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(255,215,0,0.4);
+        }
+        main {
+            padding: 20px;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        .section h2 {
+            color: #ffd700;
+            border-bottom: 2px solid #ffd700;
+            padding-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            animation: glow 2s infinite alternate cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        @keyframes glow {
+            from { text-shadow: 0 2px 4px rgba(0,0,0,0.5), 0 0 5px rgba(255,215,0,0.3); }
+            to { text-shadow: 0 2px 4px rgba(0,0,0,0.5), 0 0 10px rgba(255,215,0,0.6); }
+        }
+        .movies-grid {
+            display: flex;
+            overflow-x: auto;
+            gap: 20px;
+            scroll-snap-type: x mandatory;
+            scroll-padding-left: 20px;
+            padding-bottom: 10px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            touch-action: pan-x;
+        }
+        .movies-grid::-webkit-scrollbar {
+            display: none;
+        }
+        .movie-card {
+            background: linear-gradient(135deg, rgba(45, 45, 45, 0.9), rgba(64, 64, 64, 0.8), rgba(45, 45, 45, 0.7));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid #404040;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
+            position: relative;
+            width: 250px;
+            flex-shrink: 0;
+            scroll-snap-align: start;
+            opacity: 0;
+            transform: translateY(30px);
+            will-change: transform, opacity;
+        }
+        .movie-card:hover {
+            transform: scale(1.05) translateY(-5px);
+            box-shadow: 0 12px 40px rgba(255,215,0,0.3), inset 0 0 20px rgba(255,215,0,0.1);
+            border-color: #ffd700;
+        }
+        .movie-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,215,0,0.3), transparent);
+            transition: left 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 1;
+        }
+        .movie-card:hover::before {
+            left: 100%;
+        }
+        .movie-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            loading: lazy;
+        }
+        .movie-info {
+            padding: 8px;
+            background: rgba(0,0,0,0.5);
+            min-height: 60px;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            line-height: 1.2;
+        }
+        .movie-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 3px;
+            color: #ffffff;
+            text-align: center;
+            word-break: break-word;
+        }
+        .movie-desc {
+            font-size: 14px;
+            color: #ffffff;
+            text-align: center;
+            line-height: 1.2;
+            word-break: break-word;
+        }
+        .loading-spinner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+            color: #ffd700;
+        }
+        .spinner {
+            border: 4px solid rgba(64,64,64,0.3);
+            border-top: 4px solid #ffd700;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite, pulse 2s infinite cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 0 20px rgba(255,215,0,0.5), 0 0 40px rgba(255,215,0,0.2);
+            filter: drop-shadow(0 0 10px rgba(255,215,0,0.3));
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        footer p {
+            margin: 0;
+        }
+        .social-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid #404040;
+            background: linear-gradient(135deg, rgba(45, 45, 45, 0.9), rgba(64, 64, 64, 0.8));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            font-size: 20px;
+            color: #ffffff;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            tabindex="0";
+            role="button";
+        }
+        .social-icon:hover {
+            border-color: #ffd700;
+            transform: scale(1.1) rotate(360deg);
+            box-shadow: 0 0 25px rgba(255,215,0,0.5);
+            background: linear-gradient(135deg, rgba(255,215,0,0.1), rgba(64, 64, 64, 0.8));
+        }
+        .social-icon i {
+            transition: color 0.3s;
+        }
+        .social-icon:hover i {
+            color: #ffd700;
+        }
+        footer a {
+            color: #ffd700;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        footer a:hover {
+            color: #ffed4a;
+        }
+        @media (max-width: 768px) {
+            .search-icon { display: block; }
+            .search-bar {
+                display: none;
+                position: absolute;
+                top: 70px;
+                right: 10px;
+                background: linear-gradient(135deg, rgba(45, 45, 45, 0.95), rgba(64, 64, 64, 0.85));
+                padding: 10px;
+                border-radius: 10px;
+                flex-direction: row;
+                width: auto;
+                min-width: 250px;
+                backdrop-filter: blur(15px);
+                -webkit-backdrop-filter: blur(15px);
+                z-index: 11;
+                box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+                transform: translateX(100%);
+                transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            }
+            .search-bar.active { 
+                display: flex; 
+                transform: translateX(0);
+            }
+            .movies-grid { 
+                scroll-snap-type: x proximity;
+                gap: 15px;
+            }
+            .movie-card { 
+                width: 180px; 
+                backdrop-filter: blur(10px); 
+                -webkit-backdrop-filter: blur(10px); 
+            }
+            .movie-card img { height: 200px; }
+            .movie-info { min-height: 50px; padding: 6px; }
+            #particles-canvas { display: none; }
+        }
+        @media (min-width: 769px) {
+            .search-bar { display: flex; }
+            .search-icon { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="preload">
+        <div class="boxLoading"></div>
+    </div>
+
+    <canvas id="particles-canvas"></canvas>
+    <header id="header">
+        <a href="https://softshiraz.github.io/web/" class="logo">Soft Shiraz</a>
+        <i class="fas fa-search search-icon" onclick="toggleSearch()" aria-label="جستجو" role="button" tabindex="0"></i>
+        <div class="search-bar" id="search-bar">
+            <input type="text" id="search-input" placeholder="جستجو..." list="suggestions" aria-label="جستجو">
+            <datalist id="suggestions"></datalist>
+            <button onclick="searchMovies()" aria-label="جستجو" role="button" tabindex="0"><i class="fas fa-search"></i></button>
+        </div>
+    </header>
+
+    <main>
+        <section id="latest" class="section">
+            <h2>جدیدترین ها</h2>
+            <div class="loading-spinner" id="latest-loading">
+                <div class="spinner"></div>
+            </div>
+            <div class="movies-grid" id="latest-grid">
+                <!-- کارت‌ها توسط JS ساخته می‌شن -->
+            </div>
+        </section>
+
+        <section id="movies" class="section">
+            <h2>فیلم‌ها</h2>
+            <div class="loading-spinner" id="movies-loading">
+                <div class="spinner"></div>
+            </div>
+            <div class="movies-grid" id="movies-grid">
+                <!-- کارت‌ها توسط JS ساخته می‌شن -->
+            </div>
+        </section>
+
+        <section id="series" class="section">
+            <h2>سریال‌ها</h2>
+            <div class="loading-spinner" id="series-loading">
+                <div class="spinner"></div>
+            </div>
+            <div class="movies-grid" id="series-grid">
+                <!-- کارت‌ها توسط JS ساخته می‌شن -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <a href="https://t.me/softshiraz" target="_blank" class="social-icon" title="تلگرام" aria-label="تلگرام" role="button" tabindex="0">
+            <i class="fab fa-telegram"></i>
+        </a>
+        <p>طراحی و کدنویسی توسط <a href="https://t.me/FLOKI000" target="_blank">FLOKI</a></p>
+        <a href="https://instagram.com/softshiraz" target="_blank" class="social-icon" title="اینستاگرام" aria-label="اینستاگرام" role="button" tabindex="0">
+            <i class="fab fa-instagram"></i>
+        </a>
+    </footer>
+
+    <script>
+        let allMovies = [], allSeries = [], allLatest = [];
+
+        // Loading Screen - 3s
+        setTimeout(() => {
+            document.getElementById('preload').classList.add('hidden');
+        }, 3000);
+
+        // Particles system
+        function initParticles() {
+            const canvas = document.getElementById('particles-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            const particles = [];
+            for (let i = 0; i < 20; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.2,
+                    vy: (Math.random() - 0.5) * 0.2,
+                    radius: Math.random() * 1 + 0.5,
+                    opacity: Math.random() * 0.2 + 0.1
+                });
+            }
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(255, 215, 0, ${p.opacity})`;
+                    ctx.fill();
+                });
+                requestAnimationFrame(animate);
+            }
+            animate();
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+        }
+        if (window.innerWidth > 768) initParticles();
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) header.classList.add('scrolled');
+            else header.classList.remove('scrolled');
+        });
+
+        // Smooth scroll-triggered animations
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.transition = 'opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        // Autocomplete suggestions
+        function updateSuggestions() {
+            const datalist = document.getElementById('suggestions');
+            const titles = [...allLatest, ...allMovies, ...allSeries].map(item => item.title);
+            datalist.innerHTML = titles.map(title => `<option value="${title}">`).join('');
+        }
+
+        // لود جدیدترین ها
+        document.getElementById('latest-loading').style.display = 'flex';
+        fetch('latest.json')
+            .then(response => response.json())
+            .then(latest => {
+                allLatest = latest;
+                updateSuggestions();
+                setTimeout(() => {
+                    const latestGrid = document.getElementById('latest-grid');
+                    latest.forEach((item, index) => {
+                        const card = createCard(item.title, item.poster, item.summary, item.detailPage, index);
+                        card.classList.add('searchable');
+                        latestGrid.appendChild(card);
+                        observer.observe(card);
+                    });
+                    document.getElementById('latest-loading').style.display = 'none';
+                }, 2000);
+            })
+            .catch(error => {
+                console.error('خطا در لود جدیدترین ها:', error);
+                setTimeout(() => {
+                    document.getElementById('latest-loading').innerHTML = '<p>خطا در لود</p>';
+                }, 2000);
+            });
+
+        // لود فیلم‌ها
+        document.getElementById('movies-loading').style.display = 'flex';
+        fetch('movies.json')
+            .then(response => response.json())
+            .then(movies => {
+                allMovies = movies;
+                updateSuggestions();
+                setTimeout(() => {
+                    const moviesGrid = document.getElementById('movies-grid');
+                    movies.forEach((movie, index) => {
+                        const card = createCard(movie.title, movie.poster, movie.summary, movie.detailPage, index);
+                        card.classList.add('searchable');
+                        moviesGrid.appendChild(card);
+                        observer.observe(card);
+                    });
+                    document.getElementById('movies-loading').style.display = 'none';
+                }, 2000);
+            })
+            .catch(error => {
+                console.error('خطا در لود فیلم‌ها:', error);
+                setTimeout(() => {
+                    document.getElementById('movies-loading').innerHTML = '<p>خطا در لود</p>';
+                }, 2000);
+            });
+
+        // لود سریال‌ها
+        document.getElementById('series-loading').style.display = 'flex';
+        fetch('series.json')
+            .then(response => response.json())
+            .then(series => {
+                allSeries = series;
+                updateSuggestions();
+                setTimeout(() => {
+                    const seriesGrid = document.getElementById('series-grid');
+                    series.forEach((serie,
