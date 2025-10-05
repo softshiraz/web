@@ -46,6 +46,7 @@
         #preload.hidden {
             opacity: 0;
             pointer-events: none;
+            display: none; /* کامل پاک برای performance */
         }
         .boxLoading {  
             width: 50px;
@@ -69,7 +70,7 @@
             content: '';
             width: 50px;
             height: 50px;
-            background: #ffed4a;
+            background: #ff6b35;
             animation: animate .5s linear infinite;
             position: absolute;
             top: 0;
@@ -92,7 +93,7 @@
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             border-bottom: 1px solid #404040;
-            box-shadow: 0 8px 32px rgba(255,237,74,0.15), inset 0 1px 0 rgba(255,237,74,0.1);
+            box-shadow: 0 8px 32px rgba(255,107,53,0.15), inset 0 1px 0 rgba(255,107,53,0.1);
             padding: 15px 20px;
             display: flex;
             justify-content: space-between;
@@ -115,7 +116,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(90deg, transparent 0%, rgba(255,237,74,0.08) 50%, transparent 100%);
+            background: linear-gradient(90deg, transparent 0%, rgba(255,107,53,0.08) 50%, transparent 100%);
             animation: shine 4s infinite ease-out;
             z-index: -1;
         }
@@ -126,27 +127,27 @@
         .logo {
             font-size: 24px;
             font-weight: bold;
-            color: #ffed4a;
+            color: #ff6b35;
             position: relative;
             z-index: 1;
             cursor: pointer;
             transition: color 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         .logo:hover {
-            color: #fff;
+            color: #ff8a65;
         }
         .search-icon {
             font-size: 20px;
-            color: #ffed4a;
+            color: #ff6b35;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             padding: 5px;
             border-radius: 50%;
-            background: rgba(255,237,74,0.1);
+            background: rgba(255,107,53,0.1);
         }
         .search-icon:hover {
-            color: #fff;
-            background: rgba(255,237,74,0.2);
+            color: #ff8a65;
+            background: rgba(255,107,53,0.2);
             transform: scale(1.1);
         }
         .search-bar {
