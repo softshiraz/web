@@ -69,7 +69,7 @@
             content: '';
             width: 50px;
             height: 50px;
-            background: #d0c140;
+            background: #ff6b35;
             animation: animate .5s linear infinite;
             position: absolute;
             top: 0;
@@ -89,10 +89,10 @@
         }
         header {
             background: linear-gradient(135deg, rgba(30, 30, 30, 0.95), rgba(45, 45, 45, 0.85), rgba(64, 64, 64, 0.75));
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             border-bottom: 1px solid #404040;
-            box-shadow: 0 8px 32px rgba(255,237,74,0.15), inset 0 1px 0 rgba(255,237,74,0.1);
+            box-shadow: 0 8px 32px rgba(255,107,53,0.15), inset 0 1px 0 rgba(255,107,53,0.1);
             padding: 15px 20px;
             display: flex;
             justify-content: space-between;
@@ -100,13 +100,13 @@
             position: sticky;
             top: 0;
             z-index: 10;
-            transition: all 0.4s ease-out;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             will-change: transform;
         }
         header.scrolled {
             padding: 10px 20px;
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
         }
         header::before {
             content: '';
@@ -115,7 +115,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(90deg, transparent 0%, rgba(255,237,74,0.08) 50%, transparent 100%);
+            background: linear-gradient(90deg, transparent 0%, rgba(255,107,53,0.08) 50%, transparent 100%);
             animation: shine 4s infinite ease-out;
             z-index: -1;
         }
@@ -126,22 +126,27 @@
         .logo {
             font-size: 24px;
             font-weight: bold;
-            color: #ffed4a;
+            color: #ff6b35;
             position: relative;
             z-index: 1;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .logo:hover {
+            color: #ff8a65;
         }
         .search-icon {
             font-size: 20px;
-            color: #ffed4a;
+            color: #ff6b35;
             cursor: pointer;
-            transition: all 0.3s ease-out;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             padding: 5px;
             border-radius: 50%;
-            background: rgba(255,237,74,0.1);
+            background: rgba(255,107,53,0.1);
         }
         .search-icon:hover {
-            color: #fff;
-            background: rgba(255,237,74,0.2);
+            color: #ff8a65;
+            background: rgba(255,107,53,0.2);
             transform: scale(1.1);
         }
         .search-bar {
@@ -149,7 +154,7 @@
             gap: 10px;
             align-items: center;
             position: relative;
-            transition: all 0.3s ease-out;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         .search-bar input {
             padding: 8px;
@@ -159,29 +164,29 @@
             color: #ffffff;
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-            transition: all 0.4s ease-out;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
         }
         .search-bar input:focus {
             outline: none;
-            box-shadow: 0 0 15px rgba(255,237,74,0.4);
-            border-color: #ffed4a;
+            box-shadow: 0 0 15px rgba(255,107,53,0.4);
+            border-color: #ff6b35;
         }
         .search-bar button {
             padding: 8px 12px;
-            background-color: #ffed4a;
+            background-color: #ff6b35;
             border: none;
             border-radius: 5px;
             color: #000;
             cursor: pointer;
-            transition: all 0.4s ease-out;
-            box-shadow: 0 4px 8px rgba(255,237,74,0.2);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 4px 8px rgba(255,107,53,0.2);
             will-change: transform;
         }
         .search-bar button:hover {
-            background-color: #fff;
+            background-color: #ff8a65;
             transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(255,237,74,0.4);
+            box-shadow: 0 6px 12px rgba(255,107,53,0.4);
         }
         main {
             padding: 20px;
@@ -190,15 +195,15 @@
             margin-bottom: 40px;
         }
         .section h2 {
-            color: #ffed4a;
-            border-bottom: 2px solid #ffed4a;
+            color: #ff6b35;
+            border-bottom: 2px solid #ff6b35;
             padding-bottom: 10px;
             text-shadow: 0 2px 4px rgba(0,0,0,0.5);
             animation: glow 2s infinite alternate ease-out;
         }
         @keyframes glow {
-            from { text-shadow: 0 2px 4px rgba(0,0,0,0.5), 0 0 5px rgba(255,237,74,0.2); }
-            to { text-shadow: 0 2px 4px rgba(0,0,0,0.5), 0 0 10px rgba(255,237,74,0.4); }
+            from { text-shadow: 0 2px 4px rgba(0,0,0,0.5), 0 0 5px rgba(255,107,53,0.2); }
+            to { text-shadow: 0 2px 4px rgba(0,0,0,0.5), 0 0 10px rgba(255,107,53,0.4); }
         }
         .movies-grid {
             display: flex;
@@ -216,12 +221,12 @@
         }
         .movie-card {
             background: linear-gradient(135deg, rgba(45, 45, 45, 0.9), rgba(64, 64, 64, 0.8), rgba(45, 45, 45, 0.7));
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             border: 1px solid #404040;
             border-radius: 20px;
             overflow: hidden;
-            transition: all 0.4s ease-out;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             cursor: pointer;
             position: relative;
             width: 250px;
@@ -233,8 +238,8 @@
         }
         .movie-card:hover {
             transform: scale(1.05) translateY(-5px);
-            box-shadow: 0 12px 40px rgba(255,237,74,0.2), inset 0 0 20px rgba(255,237,74,0.1);
-            border-color: #ffed4a;
+            box-shadow: 0 12px 40px rgba(255,107,53,0.2), inset 0 0 20px rgba(255,107,53,0.1);
+            border-color: #ff6b35;
         }
         .movie-card::before {
             content: '';
@@ -243,8 +248,8 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,237,74,0.2), transparent);
-            transition: left 0.8s ease-out;
+            background: linear-gradient(90deg, transparent, rgba(255,107,53,0.2), transparent);
+            transition: left 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             z-index: 1;
         }
         .movie-card:hover::before {
@@ -287,17 +292,17 @@
             justify-content: center;
             align-items: center;
             height: 200px;
-            color: #ffed4a;
+            color: #ff6b35;
         }
         .spinner {
             border: 4px solid rgba(64,64,64,0.3);
-            border-top: 4px solid #ffed4a;
+            border-top: 4px solid #ff6b35;
             border-radius: 50%;
             width: 40px;
             height: 40px;
-            animation: spin 1s linear infinite, pulse 2s infinite ease-out;
-            box-shadow: 0 0 20px rgba(255,237,74,0.2), 0 0 40px rgba(255,237,74,0.1);
-            filter: drop-shadow(0 0 10px rgba(255,237,74,0.2));
+            animation: spin 1s linear infinite, pulse 2s infinite cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 0 20px rgba(255,107,53,0.2), 0 0 40px rgba(255,107,53,0.1);
+            filter: drop-shadow(0 0 10px rgba(255,107,53,0.2));
         }
         @keyframes spin {
             0% { transform: rotate(0deg); }
@@ -333,7 +338,7 @@
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            transition: all 0.4s ease-out;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             font-size: 20px;
             color: #ffffff;
             text-decoration: none;
@@ -343,24 +348,24 @@
             aria-label="شبکه‌های اجتماعی";
         }
         .social-icon:hover {
-            border-color: #ffed4a;
+            border-color: #ff6b35;
             transform: scale(1.1) rotate(360deg);
-            box-shadow: 0 0 25px rgba(255,237,74,0.2);
-            background: linear-gradient(135deg, rgba(255,237,74,0.1), rgba(64, 64, 64, 0.8));
+            box-shadow: 0 0 25px rgba(255,107,53,0.2);
+            background: linear-gradient(135deg, rgba(255,107,53,0.1), rgba(64, 64, 64, 0.8));
         }
         .social-icon i {
             transition: color 0.3s;
         }
         .social-icon:hover i {
-            color: #ffed4a;
+            color: #ff6b35;
         }
         footer a {
-            color: #ffed4a;
+            color: #ff6b35;
             text-decoration: none;
             transition: color 0.3s;
         }
         footer a:hover {
-            color: #fff;
+            color: #ff8a65;
         }
         @media (max-width: 768px) {
             .search-icon { display: block; }
@@ -380,7 +385,7 @@
                 z-index: 11;
                 box-shadow: 0 8px 32px rgba(0,0,0,0.5);
                 transform: translateX(100%);
-                transition: transform 0.3s ease-out;
+                transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             }
             .search-bar.active { 
                 display: flex; 
@@ -413,7 +418,7 @@
 
     <canvas id="particles-canvas"></canvas>
     <header id="header">
-        <div class="logo">Soft Shiraz</div>
+        <div class="logo" onclick="goHome()" style="cursor: pointer;">Soft Shiraz</div>
         <i class="fas fa-search search-icon" onclick="toggleSearch()" aria-label="جستجو" role="button" tabindex="0"></i>
         <div class="search-bar" id="search-bar">
             <input type="text" id="search-input" placeholder="جستجو..." list="suggestions" aria-label="جستجو">
@@ -467,6 +472,11 @@
     <script>
         let allMovies = [], allSeries = [], allLatest = [];
 
+        // Go Home on Logo Click
+        function goHome() {
+            window.location.href = 'https://softshiraz.github.io/web/';
+        }
+
         // Loading Screen - 3s
         setTimeout(() => {
             document.getElementById('preload').classList.add('hidden');
@@ -498,7 +508,7 @@
                     if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
                     ctx.beginPath();
                     ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(255, 237, 74, ${p.opacity})`;
+                    ctx.fillStyle = `rgba(255, 107, 53, ${p.opacity})`;
                     ctx.fill();
                 });
                 requestAnimationFrame(animate);
@@ -522,7 +532,7 @@
         const observer = new IntersectionObserver(entries => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+                    entry.target.style.transition = 'opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
                     entry.target.style.opacity = '1';
                     entry.target.style.transform = 'translateY(0)';
                 }
@@ -611,7 +621,7 @@
                 }, 2000);
             });
 
-        // تابع ساخت کارت (بدون stars)
+        // تابع ساخت کارت
         function createCard(title, poster, summary, detailPage, index) {
             const card = document.createElement('div');
             card.className = 'movie-card';
@@ -668,22 +678,6 @@
                     border-radius: 50%;
                     background: rgba(255, 255, 255, 0.6);
                     transform: scale(0);
-                    animation: ripple 0.8s ease-out;
+                    animation: ripple 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
                     width: ${size}px;
-                    height: ${size}px;
-                    left: ${x}px;
-                    top: ${y}px;
-                `;
-                const rippleAnim = `@keyframes ripple { to { transform: scale(4); opacity: 0; } }`;
-                if (!document.styleSheets[0].insertRule) {
-                    const style = document.createElement('style');
-                    style.textContent = rippleAnim;
-                    document.head.appendChild(style);
-                }
-                e.target.appendChild(ripple);
-                setTimeout(() => ripple.remove(), 800);
-            }
-        });
-    </script>
-</body>
-</html>
+                    height
