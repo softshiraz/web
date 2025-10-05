@@ -9,7 +9,7 @@
         * { scroll-behavior: smooth; }
         body {
             font-family: 'Tahoma', sans-serif;
-            background-color: #1a1a1a;
+            background-color: #0a0a0a;
             color: #ffffff;
             margin: 0;
             padding: 0;
@@ -19,11 +19,11 @@
             overflow-x: hidden;
         }
         header {
-            background: linear-gradient(135deg, rgba(30, 30, 30, 0.95), rgba(45, 45, 45, 0.85), rgba(64, 64, 64, 0.75));
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: linear-gradient(135deg, rgba(10, 10, 10, 0.95), rgba(26, 26, 26, 0.85), rgba(64, 64, 64, 0.75));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border-bottom: 1px solid #404040;
-            box-shadow: 0 8px 32px rgba(255,237,74,0.15), inset 0 1px 0 rgba(255,237,74,0.1);
+            box-shadow: 0 8px 32px rgba(255,107,53,0.15), inset 0 1px 0 rgba(255,107,53,0.1);
             padding: 15px 20px;
             display: flex;
             justify-content: space-between;
@@ -31,7 +31,7 @@
             position: sticky;
             top: 0;
             z-index: 10;
-            transition: all 0.4s ease-out;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             will-change: transform;
         }
         header::before {
@@ -41,8 +41,8 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(90deg, transparent 0%, rgba(255,237,74,0.08) 50%, transparent 100%);
-            animation: shine 4s infinite ease-out;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,107,53,0.08) 50%, transparent 100%);
+            animation: shine 4s infinite cubic-bezier(0.25, 0.46, 0.45, 0.94);
             z-index: -1;
         }
         @keyframes shine {
@@ -52,16 +52,16 @@
         .logo {
             font-size: 24px;
             font-weight: bold;
-            color: #ffed4a;
+            color: #ff6b35;
         }
         .back-link {
-            color: #ffed4a;
+            color: #ff6b35;
             text-decoration: none;
             font-size: 16px;
             display: flex;
             align-items: center;
             gap: 5px;
-            transition: all 0.4s ease-out;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         .back-link:hover {
             text-decoration: underline;
@@ -81,24 +81,24 @@
             margin-bottom: 20px;
             border: 1px solid #404040;
             box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-            transition: transform 0.4s ease-out;
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             loading: lazy;
         }
         .poster:hover {
             transform: scale(1.02);
         }
         .info {
-            background: linear-gradient(135deg, rgba(45, 45, 45, 0.9), rgba(64, 64, 64, 0.8), rgba(45, 45, 45, 0.7));
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.9), rgba(64, 64, 64, 0.8), rgba(26, 26, 26, 0.7));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border: 1px solid #404040;
             padding: 20px;
             border-radius: 20px;
             margin-bottom: 20px;
-            box-shadow: 0 8px 32px rgba(255,237,74,0.15);
+            box-shadow: 0 8px 32px rgba(255,107,53,0.15);
             position: relative;
             overflow: hidden;
-            transition: all 0.4s ease-out;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             will-change: transform;
         }
         .info::before {
@@ -108,23 +108,23 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,237,74,0.2), transparent);
-            transition: left 0.8s ease-out;
+            background: linear-gradient(90deg, transparent, rgba(255,107,53,0.2), transparent);
+            transition: left 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             z-index: 1;
         }
         .info:hover::before {
             left: 100%;
         }
         .info h1 {
-            color: #ffed4a;
+            color: #ff6b35;
             margin-bottom: 10px;
             position: relative;
             z-index: 1;
-            animation: glow 2s infinite alternate ease-out;
+            animation: glow 2s infinite alternate cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         @keyframes glow {
-            from { text-shadow: 0 0 5px rgba(255,237,74,0.2); }
-            to { text-shadow: 0 0 10px rgba(255,237,74,0.4); }
+            from { text-shadow: 0 0 5px rgba(255,107,53,0.2); }
+            to { text-shadow: 0 0 10px rgba(255,107,53,0.4); }
         }
         .info p {
             color: #ffffff;
@@ -133,16 +133,16 @@
             z-index: 1;
         }
         .download-section {
-            background: linear-gradient(135deg, rgba(45, 45, 45, 0.9), rgba(64, 64, 64, 0.8), rgba(45, 45, 45, 0.7));
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.9), rgba(64, 64, 64, 0.8), rgba(26, 26, 26, 0.7));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border: 1px solid #404040;
             padding: 20px;
             border-radius: 20px;
-            box-shadow: 0 8px 32px rgba(255,237,74,0.15);
+            box-shadow: 0 8px 32px rgba(255,107,53,0.15);
             position: relative;
             overflow: hidden;
-            transition: all 0.4s ease-out;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             will-change: transform;
         }
         .download-section::before {
@@ -152,19 +152,19 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,237,74,0.2), transparent);
-            transition: left 0.8s ease-out;
+            background: linear-gradient(90deg, transparent, rgba(255,107,53,0.2), transparent);
+            transition: left 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             z-index: 1;
         }
         .download-section:hover::before {
             left: 100%;
         }
         .download-section h2 {
-            color: #ffed4a;
+            color: #ff6b35;
             margin-bottom: 15px;
             position: relative;
             z-index: 1;
-            animation: glow 2s infinite alternate ease-out;
+            animation: glow 2s infinite alternate cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         .accordion {
             margin-bottom: 10px;
@@ -179,9 +179,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: background 0.3s;
+            transition: background 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             font-weight: bold;
-            color: #ffed4a;
+            color: #ff6b35;
             tabindex="0";
             role="button";
             aria-expanded="false";
@@ -191,19 +191,19 @@
         }
         .accordion-toggle {
             font-size: 18px;
-            transition: transform 0.3s;
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         .accordion.open .accordion-toggle {
             transform: rotate(45deg);
         }
         .accordion[aria-expanded="true"] .accordion-header {
-            background: #ffed4a;
+            background: #ff6b35;
             color: #000;
         }
         .accordion-content {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease-out;
+            transition: max-height 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             background: rgba(45, 45, 45, 0.8);
         }
         .accordion.open .accordion-content {
@@ -215,7 +215,7 @@
             padding: 10px;
         }
         .download-btn {
-            background-color: #ffed4a;
+            background-color: #ff6b35;
             padding: 8px 15px;
             font-size: 14px;
             color: #000;
@@ -225,8 +225,8 @@
             display: flex;
             align-items: center;
             gap: 5px;
-            transition: all 0.4s ease-out;
-            box-shadow: 0 4px 8px rgba(255,237,74,0.2);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 4px 8px rgba(255,107,53,0.2);
             position: relative;
             overflow: hidden;
             will-change: transform;
@@ -237,7 +237,7 @@
         .download-btn:hover {
             background-color: #fff;
             transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(255,237,74,0.4);
+            box-shadow: 0 6px 12px rgba(255,107,53,0.4);
         }
         footer {
             text-align: center;
@@ -258,14 +258,14 @@
             height: 50px;
             border-radius: 50%;
             border: 2px solid #404040;
-            background: linear-gradient(135deg, rgba(45, 45, 45, 0.9), rgba(64, 64, 64, 0.8));
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.9), rgba(64, 64, 64, 0.8));
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            transition: all 0.4s ease-out;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             font-size: 20px;
             color: #ffffff;
             text-decoration: none;
@@ -274,19 +274,19 @@
             role="button";
         }
         .social-icon:hover {
-            border-color: #ffed4a;
+            border-color: #ff6b35;
             transform: scale(1.1) rotate(360deg);
-            box-shadow: 0 0 25px rgba(255,237,74,0.2);
-            background: linear-gradient(135deg, rgba(255,237,74,0.1), rgba(64, 64, 64, 0.8));
+            box-shadow: 0 0 25px rgba(255,107,53,0.15);
+            background: linear-gradient(135deg, rgba(255,107,53,0.1), rgba(64, 64, 64, 0.8));
         }
         .social-icon i {
             transition: color 0.3s;
         }
         .social-icon:hover i {
-            color: #ffed4a;
+            color: #ff6b35;
         }
         footer a {
-            color: #ffed4a;
+            color: #ff6b35;
             text-decoration: none;
             transition: color 0.3s;
         }
@@ -295,8 +295,8 @@
         }
         @media (max-width: 768px) {
             .info, .download-section {
-                backdrop-filter: blur(10px);
-                -webkit-backdrop-filter: blur(10px);
+                backdrop-filter: blur(5px);
+                -webkit-backdrop-filter: blur(5px);
             }
         }
     </style>
@@ -304,7 +304,7 @@
 <body>
     <header>
         <div class="logo">Soft Shiraz</div>
-        <a href="../index.html" class="back-link" aria-label="برگشت" role="button" tabindex="0"><i class="fas fa-arrow-left"></i> برگشت به خانه</a>
+        <a href="https://softshiraz.github.io/web/" class="back-link" aria-label="برگشت به خانه" role="button" tabindex="0"><i class="fas fa-arrow-left"></i> برگشت به خانه</a>
     </header>
 
     <main>
@@ -319,12 +319,14 @@
 
         <div class="download-section">
             <h2>دانلود فصل‌ها</h2>
+            <!-- فصل 1 - بسته پیش‌فرض -->
             <div class="accordion" id="season1-accordion">
                 <div class="accordion-header" onclick="toggleAccordion('season1')" aria-expanded="false" role="button" tabindex="0">
                     <span>فصل 1</span>
                     <i class="fas fa-plus accordion-toggle"></i>
                 </div>
                 <div class="accordion-content">
+                    <!-- زیرنویس فصل 1 - بسته پیش‌فرض -->
                     <div class="accordion" id="season1-sub-accordion">
                         <div class="accordion-header" onclick="toggleAccordion('season1-sub')" aria-expanded="false" role="button" tabindex="0">
                             <span>زیرنویس</span>
@@ -336,6 +338,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- دوبله فصل 1 - بسته پیش‌فرض -->
                     <div class="accordion" id="season1-dub-accordion">
                         <div class="accordion-header" onclick="toggleAccordion('season1-dub')" aria-expanded="false" role="button" tabindex="0">
                             <span>دوبله</span>
@@ -349,12 +352,14 @@
                     </div>
                 </div>
             </div>
+            <!-- فصل 2 - بسته پیش‌فرض -->
             <div class="accordion" id="season2-accordion">
                 <div class="accordion-header" onclick="toggleAccordion('season2')" aria-expanded="false" role="button" tabindex="0">
                     <span>فصل 2</span>
                     <i class="fas fa-plus accordion-toggle"></i>
                 </div>
                 <div class="accordion-content">
+                    <!-- زیرنویس فصل 2 - بسته پیش‌فرض -->
                     <div class="accordion" id="season2-sub-accordion">
                         <div class="accordion-header" onclick="toggleAccordion('season2-sub')" aria-expanded="false" role="button" tabindex="0">
                             <span>زیرنویس</span>
@@ -362,73 +367,4 @@
                         </div>
                         <div class="accordion-content">
                             <div class="download-options">
-                                <a href="https://example.com/download/series1-season2-sub" target="_blank"><button class="download-btn" aria-label="دانلود زیرنویس فصل 2" role="button" tabindex="0"><i class="fas fa-download"></i> دانلود</button></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion" id="season2-dub-accordion">
-                        <div class="accordion-header" onclick="toggleAccordion('season2-dub')" aria-expanded="false" role="button" tabindex="0">
-                            <span>دوبله</span>
-                            <i class="fas fa-plus accordion-toggle"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <div class="download-options">
-                                <a href="https://example.com/download/series1-season2-dub" target="_blank"><button class="download-btn" aria-label="دانلود دوبله فصل 2" role="button" tabindex="0"><i class="fas fa-download"></i> دانلود</button></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <footer>
-        <a href="https://t.me/softshiraz" target="_blank" class="social-icon" title="تلگرام" aria-label="تلگرام" role="button" tabindex="0">
-            <i class="fab fa-telegram"></i>
-        </a>
-        <p>طراحی و کدنویسی توسط <a href="https://t.me/FLOKI000" target="_blank">FLOKI</a></p>
-        <a href="https://instagram.com/softshiraz" target="_blank" class="social-icon" title="اینستاگرام" aria-label="اینستاگرام" role="button" tabindex="0">
-            <i class="fab fa-instagram"></i>
-        </a>
-    </footer>
-
-    <script>
-        function toggleAccordion(id) {
-            const accordion = document.getElementById(id + '-accordion');
-            const expanded = accordion.getAttribute('aria-expanded') === 'true';
-            accordion.setAttribute('aria-expanded', !expanded);
-            accordion.classList.toggle('open');
-        }
-
-        // Ripple effect
-        document.addEventListener('click', e => {
-            if (e.target.tagName === 'BUTTON') {
-                const ripple = document.createElement('span');
-                const rect = e.target.getBoundingClientRect();
-                const size = Math.max(rect.width, rect.height);
-                const x = e.clientX - rect.left - size / 2;
-                const y = e.clientY - rect.top - size / 2;
-                ripple.style.cssText = `
-                    position: absolute;
-                    border-radius: 50%;
-                    background: rgba(255, 255, 255, 0.6);
-                    transform: scale(0);
-                    animation: ripple 0.8s ease-out;
-                    width: ${size}px;
-                    height: ${size}px;
-                    left: ${x}px;
-                    top: ${y}px;
-                `;
-                const rippleAnim = `@keyframes ripple { to { transform: scale(4); opacity: 0; } }`;
-                if (!document.styleSheets[0].insertRule) {
-                    const style = document.createElement('style');
-                    style.textContent = rippleAnim;
-                    document.head.appendChild(style);
-                }
-                e.target.appendChild(ripple);
-                setTimeout(() => ripple.remove(), 800);
-            }
-        });
-    </script>
-</body>
-</html>
+                                <a href="https://example
