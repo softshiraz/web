@@ -3,69 +3,49 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>برنامه اکران | @softshiraz</title>
+  <title>اکران‌های سریال | @softshiraz</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
   <style>
-    body { background: #000; margin: 0; padding: 20px 0; font-family: 'Vazirmatn', sans-serif; }
-    .scroll-container {
-      overflow-x: auto;
-      scrollbar-width: thin;
-      scrollbar-color: #ec4899 #1a1a2e;
-    }
-    .scroll-container::-webkit-scrollbar { height: 8px; }
-    .scroll-container::-webkit-scrollbar-track { background: #1a1a2e; border-radius: 4px; }
-    .scroll-container::-webkit-scrollbar-thumb { background: #ec4899; border-radius: 4px; }
+    body { background: #0a0a0a; color: white; font-family: 'Vazirmatn', sans-serif; }
+    .card { aspect-ratio: 2/3; } /* عمودی مثل سریال‌ها */
+    .overlay { background: linear-gradient(transparent, rgba(0,0,0,0.8)); }
   </style>
 </head>
-<body>
+<body class="p-4 md:p-8">
 
-  <!-- یک ردیف افقی طولانی -->
-  <div class="scroll-container">
-    <div class="flex gap-6 px-8 min-w-max">
+  <!-- Grid عمودی برای 12 کارت -->
+  <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    
+    <!-- ترتیب عمودی 1 تا 12 -->
+    <div data-card="1"></div>
+    <div data-card="2"></div>
+    <div data-card="3"></div>
+    <div data-card="4"></div>
+    <div data-card="5"></div>
+    <div data-card="6"></div>
+    <div data-card="7"></div>
+    <div data-card="8"></div>
+    <div data-card="9"></div>
+    <div data-card="10"></div>
+    <div data-card="11"></div>
+    <div data-card="12"></div>
 
-      <!-- ترتیب دقیق از 4.1 تا آخر -->
-      <div data-card="4.1"></div>
-      <div data-card="4.2"></div>
-      <div data-card="4.3"></div>
-      <div data-card="5.1"></div>
-      <div data-card="5.2"></div>
-      <div data-card="5.3"></div>
-      <div data-card="7.1"></div>
-      <div data-card="7.2"></div>
-      <div data-card="7.3"></div>
-      <div data-card="40.1"></div>
-      <div data-card="40.2"></div>
-      <div data-card="40.3"></div>
-      <!-- تا هر کجا که بخوای ادامه بده، مثلاً: -->
-      <!-- <div data-card="41.1"></div> -->
-      <!-- <div data-card="7000.5"></div> -->
-
-    </div>
   </div>
 
   <script>
-    // لیست تمام کدهای ممکن (می‌تونی تا 10000 تا هم اضافه کنی)
-    const codes = [
-      "4.1","4.2","4.3",
-      "5.1","5.2","5.3",
-      "7.1","7.2","7.3",
-      "40.1","40.2","40.3"
-      // هر کد جدیدی اینجا اضافه کن
-    ];
-
-    codes.forEach(code => {
-      const container = document.querySelector(`[data-card="${code}"]`);
-      if (!container) return;
-
+    // لود 12 کارت به ترتیب
+    for (let i = 1; i <= 12; i++) {
+      const container = document.querySelector(`[data-card="${i}"]`);
+      const code = i;
       fetch(`cards/${code}.html`)
         .then(r => r.ok ? r.text() : Promise.reject())
         .then(html => {
           if (html.includes("ندارد")) return; // اگر "ندارد" بود → نشون نده
           container.innerHTML = html;
         })
-        .catch(() => {}); // فایل نبود → هیچی نشون نده
-    });
+        .catch(() => {}); // فایل نبود → خالی بذار
+    }
   </script>
 </body>
 </html>
