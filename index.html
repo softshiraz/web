@@ -6,78 +6,48 @@
   <title>اکران‌های سینما | @softshiraz</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" />
-  
   <style>
-    body { font-family: 'Vazirmatn', sans-serif; background: #0f001a; color: white; }
-    .divider { width: 2px; background: linear-gradient(to bottom, transparent, #6366f1, transparent); opacity: 0.5; }
-    .card-container:empty { display: none; }
+    body { background: #000; color: white; font-family: 'Vazirmatn', sans-serif; }
+    .card { 
+      aspect-ratio: 16/9; /* کاملاً افقی و کشیده */
+      display: block;
+    }
   </style>
 </head>
-<body class="min-h-screen py-10 px-4">
+<body class="p-4 md:p-8">
 
-  <!-- ۱۲ بخش افقی با جداکننده عمودی -->
-  <div class="max-w-7xl mx-auto">
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-8 items-start">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    
+    <!-- فقط این ۱۲ تا رو نگه دار، بقیه رو پاک کن اگه نمی‌خوای -->
+    <div data-card="4.1"></div>
+    <div data-card="4.2"></div>
+    <div data-card="4.3"></div>
+    <div data-card="5.1"></div>
+    <div data-card="5.2"></div>
+    <div data-card="5.3"></div>
+    <div data-card="7.1"></div>
+    <div data-card="7.2"></div>
+    <div data-card="7.3"></div>
+    <div data-card="40.1"></div>
+    <div data-card="40.2"></div>
+    <div data-card="40.3"></div>
 
-      <!-- بخش ۱ تا ۱۲ -->
-      <div class="card-container" data-card="4.1"></div>
-      <div class="divider hidden xl:block"></div>
-
-      <div class="card-container" data-card="4.2"></div>
-      <div class="divider hidden xl:block"></div>
-
-      <div class="card-container" data-card="4.3"></div>
-      <div class="divider hidden xl:block"></div>
-
-      <div class="card-container" data-card="5.1"></div>
-      <div class="divider hidden xl:block"></div>
-
-      <div class="card-container" data-card="5.2"></div>
-      <div class="divider hidden xl:block"></div>
-
-      <div class="card-container" data-card="5.3"></div>
-      <div class="divider hidden xl:block"></div>
-
-      <div class="card-container" data-card="7.1"></div>
-      <div class="divider hidden xl:block"></div>
-
-      <div class="card-container" data-card="7.2"></div>
-      <div class="divider hidden xl:block"></div>
-
-      <div class="card-container" data-card="7.3"></div>
-      <div class="divider hidden xl:block"></div>
-
-      <div class="card-container" data-card="40.1"></div>
-      <div class="divider hidden xl:block"></div>
-
-      <div class="card-container" data-card="40.2"></div>
-      <div class="divider hidden xl:block"></div>
-
-      <div class="card-container" data-card="40.3"></div>
-
-    </div>
   </div>
 
-  <!-- جاوااسکریپت: فقط اگر فایل وجود داشت، نمایش بده -->
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      document.querySelectorAll("[data-card]").forEach(container => {
-        const code = container.getAttribute("data-card");
-        const path = `cards/${code}.html`;
-
-        fetch(path, { method: 'GET' })
-          .then(res => {
-            if (res.ok) return res.text();
-            else throw new Error("Not found");
-          })
-          .then(html => {
-            container.innerHTML = html;
-          })
-          .catch(() => {
-            // اگر فایل وجود نداشت → هیچ چیزی نمایش نده (کاملاً خالی)
-            container.innerHTML = "";
-          });
-      });
+    document.querySelectorAll('[data-card]').forEach(el => {
+      const code = el.getAttribute('data-card');
+      fetch(`cards/${code}.html`)
+        .then(r => r.ok ? r.text() : Promise.reject())
+        .then(html => {
+          // اگه توی فایل کارت کلمه "ندارد" باشه → نشون نده
+          if (html.includes('ندارد')) {
+            el.innerHTML = '';
+            return;
+          }
+          el.innerHTML = html;
+        })
+        .catch(() => { el.innerHTML = ''; }); // فایل نبود → هیچی نشون نده
     });
   </script>
 </body>
