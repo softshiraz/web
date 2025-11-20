@@ -1,0 +1,125 @@
+<!--
+This canvas contains your full website structure with all core files.
+Each section shows the file path + its content.
+Copy these files into your GitHub repository exactly as shown.
+-->
+
+<!-- ======================= index.html ======================= -->
+
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>برنامه اکران‌ها</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>برنامه هفتگی اکران‌ها</h1>
+
+    <div class="day-list">
+        <h2>هفته ۱</h2>
+        <a href="ekr/4.1.html">4.1 چهارشنبه سانس ۱</a>
+        <a href="ekr/4.2.html">4.2 چهارشنبه سانس ۲</a>
+        <a href="ekr/4.3.html">4.3 چهارشنبه سانس ۳</a>
+
+        <a href="ekr/5.1.html">5.1 پنجشنبه سانس ۱</a>
+        <a href="ekr/5.2.html">5.2 پنجشنبه سانس ۲</a>
+        <a href="ekr/5.3.html">5.3 پنجشنبه سانس ۳</a>
+
+        <a href="ekr/7.1.html">7.1 جمعه سانس ۱</a>
+        <a href="ekr/7.2.html">7.2 جمعه سانس ۲</a>
+        <a href="ekr/7.3.html">7.3 جمعه سانس ۳</a>
+    </div>
+
+    <div class="day-list">
+        <h2>هفته ۲</h2>
+        <a href="ekr/40.1.html">40.1 چهارشنبه سانس ۱</a>
+        <a href="ekr/40.2.html">40.2 چهارشنبه سانس ₂</a>
+        <a href="ekr/40.3.html">40.3 چهارشنبه سانس ۳</a>
+
+        <a href="ekr/50.1.html">50.1 پنجشنبه سانس ۱</a>
+        <a href="ekr/50.2.html">50.2 پنجشنبه سانس ۲</a>
+        <a href="ekr/50.3.html">50.3 پنجشنبه سانس ۳</a>
+
+        <a href="ekr/70.1.html">70.1 جمعه سانس ۱</a>
+        <a href="ekr/70.2.html">70.2 جمعه سانس ₂</a>
+        <a href="ekr/70.3.html">70.3 جمعه سانس ۳</a>
+    </div>
+</body>
+</html>
+
+
+
+<!-- ======================= style.css ======================= -->
+
+/* style.css */
+body {
+    background: #f8f8f8;
+    font-family: sans-serif;
+    padding: 20px;
+}
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+.day-list {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    box-shadow: 0 0 10px #ddd;
+}
+.day-list a {
+    display: block;
+    padding: 8px 0;
+    color: #0077cc;
+    text-decoration: none;
+}
+.day-list a:hover {
+    text-decoration: underline;
+}
+.card {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px #ddd;
+    width: 300px;
+}
+.card img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+
+
+<!-- ======================= TEMPLATE FOR EACH SCREENING FILE ======================= -->
+
+<!-- Copy/paste this template for every file inside /ekr/ -->
+
+<!-- ekr/4.1.html -->
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>4.1 چهارشنبه سانس ۱</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <h1>4.1 چهارشنبه – سانس ۱</h1>
+
+    <div class="card">
+        <img src="../images/sample.jpg">
+        <p><strong>ساعت:</strong> 18:00</p>
+        <p><strong>نام فیلم:</strong> اینجا وارد می‌کنی</p>
+        <p><strong>توضیحات:</strong> متن دلخواه</p>
+    </div>
+
+    <br>
+    <a href="../index.html">بازگشت</a>
+</body>
+</html>
+
+
+<!-- Repeat same template for: -->
+<!-- 4.2.html / 4.3.html / 5.1.html / 5.2.html / 5.3.html / 7.1.html / ... -->
