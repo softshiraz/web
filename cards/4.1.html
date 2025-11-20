@@ -1,71 +1,13 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>برنامه اکران | @softshiraz</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
-  <style>
-    body { background: #000; margin: 0; padding: 20px 0; font-family: 'Vazirmatn', sans-serif; }
-    .scroll-container {
-      overflow-x: auto;
-      scrollbar-width: thin;
-      scrollbar-color: #ec4899 #1a1a2e;
-    }
-    .scroll-container::-webkit-scrollbar { height: 8px; }
-    .scroll-container::-webkit-scrollbar-track { background: #1a1a2e; border-radius: 4px; }
-    .scroll-container::-webkit-scrollbar-thumb { background: #ec4899; border-radius: 4px; }
-  </style>
-</head>
-<body>
+<div class="relative w-96 h-56 rounded-2xl overflow-hidden shadow-2xl flex-shrink-0 transform transition-all duration-500 hover:scale-105 hover:z-10">
+  <img src="../png/4.2.png" class="w-full h-full object-cover">
 
-  <!-- یک ردیف افقی طولانی -->
-  <div class="scroll-container">
-    <div class="flex gap-6 px-8 min-w-max">
+  <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
 
-      <!-- ترتیب دقیق از 4.1 تا آخر -->
-      <div data-card="4.1"></div>
-      <div data-card="4.2"></div>
-      <div data-card="4.3"></div>
-      <div data-card="5.1"></div>
-      <div data-card="5.2"></div>
-      <div data-card="5.3"></div>
-      <div data-card="7.1"></div>
-      <div data-card="7.2"></div>
-      <div data-card="7.3"></div>
-      <div data-card="40.1"></div>
-      <div data-card="40.2"></div>
-      <div data-card="40.3"></div>
-      <!-- تا هر کجا که بخوای ادامه بده، مثلاً: -->
-      <!-- <div data-card="41.1"></div> -->
-      <!-- <div data-card="7000.5"></div> -->
-
-    </div>
+  <div class="absolute bottom-0 p-5 text-right w-full">
+    <h3 class="text-2xl font-bold text-white drop-shadow-xl">جوکرووو ۲</h3>
+    <p class="text-lg text-pink-400 font-bold mt-1">چهارشنبه ۵ آذر - ساعت ۱۵:۰۰</p>
+    <a href="https://t.me/softshiraz" target="_blank" class="mt-3 inline-block bg-pink-600 hover:bg-pink-500 text-white px-7 py-2.5 rounded-full font-bold text-sm transition">
+      رزرو بلیط
+    </a>
   </div>
-
-  <script>
-    // لیست تمام کدهای ممکن (می‌تونی تا 10000 تا هم اضافه کنی)
-    const codes = [
-      "4.1","4.2","4.3",
-      "5.1","5.2","5.3",
-      "7.1","7.2","7.3",
-      "40.1","40.2","40.3"
-      // هر کد جدیدی اینجا اضافه کن
-    ];
-
-    codes.forEach(code => {
-      const container = document.querySelector(`[data-card="${code}"]`);
-      if (!container) return;
-
-      fetch(`cards/${code}.html`)
-        .then(r => r.ok ? r.text() : Promise.reject())
-        .then(html => {
-          if (html.includes("ندارد")) return; // اگر "ندارد" بود → نشون نده
-          container.innerHTML = html;
-        })
-        .catch(() => {}); // فایل نبود → هیچی نشون نده
-    });
-  </script>
-</body>
-</html>
+</div>
