@@ -3,95 +3,79 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>اکران‌های سینما شیراز | @softshiraz</title>
-
-  <!-- Tailwind + Vazir Font -->
+  <title>اکران‌های سینما | @softshiraz</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" />
-
+  
   <style>
-    body { font-family: 'Vazirmatn', sans-serif; background: linear-gradient(135deg, #0a001f 0%, #1a0033 100%); min-height: 100vh; color: white; }
-    .day-title { @apply text-4xl md:text-5xl font-extrabold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500; }
-    .card-placeholder { min-height: 520px; display: flex; align-items: center; justify-content: center; }
-    .loading { animation: pulse 2s infinite; }
-    @keyframes pulse { 0%,100% { opacity: 0.6; } 50% { opacity: 1; } }
+    body { font-family: 'Vazirmatn', sans-serif; background: #0f001a; color: white; }
+    .divider { width: 2px; background: linear-gradient(to bottom, transparent, #6366f1, transparent); opacity: 0.5; }
+    .card-container:empty { display: none; }
   </style>
 </head>
-<body class="text-white">
+<body class="min-h-screen py-10 px-4">
 
-  <!-- دکمه تم (اختیاری) -->
-  <button onclick="document.documentElement.classList.toggle('dark')" class="fixed top-5 left-5 z-50 p-4 rounded-full bg-white/10 backdrop-blur border border-white/20 hover:bg-white/20 transition text-2xl">Night Mode</button>
+  <!-- ۱۲ بخش افقی با جداکننده عمودی -->
+  <div class="max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-8 items-start">
 
-  <div class="container mx-auto px-4 py-12 max-w-7xl">
+      <!-- بخش ۱ تا ۱۲ -->
+      <div class="card-container" data-card="4.1"></div>
+      <div class="divider hidden xl:block"></div>
 
-    <h1 class="text-center text-5xl md:text-7xl font-extrabold mb-16 bg-clip-text text-transparent bg-gradient-to-r from-pink-400 via-purple-500 to-cyan-400">
-      برنامه اکران این هفته
-    </h1>
+      <div class="card-container" data-card="4.2"></div>
+      <div class="divider hidden xl:block"></div>
 
-    <!-- چهارشنبه -->
-    <section class="mb-20">
-      <h2 class="day-title">چهارشنبه</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div class="card-placeholder"><div data-card="4.1"></div></div>
-        <div class="card-placeholder"><div data-card="4.2"></div></div>
-        <div class="card-placeholder"><div data-card="4.3"></div></div>
-      </div>
-    </section>
+      <div class="card-container" data-card="4.3"></div>
+      <div class="divider hidden xl:block"></div>
 
-    <!-- پنجشنبه -->
-    <section class="mb-20">
-      <h2 class="day-title">پنجشنبه</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div class="card-placeholder"><div data-card="5.1"></div></div>
-        <div class="card-placeholder"><div data-card="5.2"></div></div>
-        <div class="card-placeholder"><div data-card="5.3"></div></div>
-      </div>
-    </section>
+      <div class="card-container" data-card="5.1"></div>
+      <div class="divider hidden xl:block"></div>
 
-    <!-- جمعه -->
-    <section class="mb-20">
-      <h2 class="day-title">جمعه</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div class="card-placeholder"><div data-card="7.1"></div></div>
-        <div class="card-placeholder"><div data-card="7.2"></div></div>
-        <div class="card-placeholder"><div data-card="7.3"></div></div>
-      </div>
-    </section>
+      <div class="card-container" data-card="5.2"></div>
+      <div class="divider hidden xl:block"></div>
 
-    <!-- هفته بعد (مثال) -->
-    <!-- <section class="mb-20">
-      <h2 class="day-title">هفته آینده</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div class="card-placeholder"><div data-card="40.1"></div></div>
-      </div>
-    </section> -->
+      <div class="card-container" data-card="5.3"></div>
+      <div class="divider hidden xl:block"></div>
 
+      <div class="card-container" data-card="7.1"></div>
+      <div class="divider hidden xl:block"></div>
+
+      <div class="card-container" data-card="7.2"></div>
+      <div class="divider hidden xl:block"></div>
+
+      <div class="card-container" data-card="7.3"></div>
+      <div class="divider hidden xl:block"></div>
+
+      <div class="card-container" data-card="40.1"></div>
+      <div class="divider hidden xl:block"></div>
+
+      <div class="card-container" data-card="40.2"></div>
+      <div class="divider hidden xl:block"></div>
+
+      <div class="card-container" data-card="40.3"></div>
+
+    </div>
   </div>
 
-  <!-- تمام جاوااسکریپت داخل همین فایل -->
+  <!-- جاوااسکریپت: فقط اگر فایل وجود داشت، نمایش بده -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       document.querySelectorAll("[data-card]").forEach(container => {
         const code = container.getAttribute("data-card");
-        const cardPath = `cards/${code}.html`;
+        const path = `cards/${code}.html`;
 
-        container.innerHTML = `<div class="loading text-2xl">در حال بارگذاری ${code}...</div>`;
-
-        fetch(cardPath)
+        fetch(path, { method: 'GET' })
           .then(res => {
-            if (!res.ok) throw new Error("Not found");
-            return res.text();
+            if (res.ok) return res.text();
+            else throw new Error("Not found");
           })
           .then(html => {
             container.innerHTML = html;
           })
-          .catch(err => {
-            container.innerHTML = `
-              <div class="bg-red-900/50 border border-red-500 rounded-2xl p-10 text-center">
-                <p class="text-2xl font-bold text-red-300">کارت ${code} پیدا نشد!</p>
-                <p class="text-sm mt-2">فایل زیر را در پوشه cards بسازید:</p>
-                <code class="bg-black/50 px-3 py-1 rounded text-pink-300">${code}.html</code>
-              </div>`;
+          .catch(() => {
+            // اگر فایل وجود نداشت → هیچ چیزی نمایش نده (کاملاً خالی)
+            container.innerHTML = "";
           });
       });
     });
