@@ -1,122 +1,108 @@
-<!-- Full Modern Cinema Screening Website with Stylish Frontend -->
-
-<!-- ======================= index.html ======================= -->
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <title>برنامه اکران‌ها</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>اکران‌های این هفته</title>
+  
+  <!-- Tailwind CSS CDN (مدرن‌ترین و زیباترین) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { vazir: ['Vazir', 'sans-serif'] },
+          animation: { 'fade-in': 'fadeIn 0.8s ease-out forwards' },
+          keyframes: { fadeIn: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } } }
+        }
+      }
+    }
+  </script>
+  <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+  <style>
+    body { font-family: 'Vazirmatn', sans-serif; background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%); min-height: 100vh; }
+    .day-title { @apply text-3xl md:text-4xl font-bold text-white mb-8 tracking-wider; }
+  </style>
 </head>
-<body>
-    <header>
-        <h1>🎬 برنامه هفتگی اکران‌ها</h1>
-        <p>به سایت رسمی برنامه اکران سینما خوش آمدید</p>
-    </header>
+<body class="text-white">
 
-    <main>
-        <section class="week-container">
-            <h2>هفته ۱</h2>
-            <div class="cards-grid">
-                <a class="card" href="ekr/4.1.html">4.1<br>چهارشنبه سانس ۱</a>
-                <a class="card" href="ekr/4.2.html">4.2<br>چهارشنبه سانس ۲</a>
-                <a class="card" href="ekr/4.3.html">4.3<br>چهارشنبه سانس ۳</a>
+  <!-- دکمه تغییر تم -->
+  <div class="fixed top-5 left-5 z-50">
+    <button id="themeToggle" class="p-3 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 hover:bg-white/20 transition">
+      🌙
+    </button>
+  </div>
 
-                <a class="card" href="ekr/5.1.html">5.1<br>پنجشنبه سانس ۱</a>
-                <a class="card" href="ekr/5.2.html">5.2<br>پنجشنبه سانس ۲</a>
-                <a class="card" href="ekr/5.3.html">5.3<br>پنجشنبه سانس ۳</a>
+  <div class="container mx-auto px-4 py-12 max-w-7xl">
 
-                <a class="card" href="ekr/7.1.html">7.1<br>جمعه سانس ۱</a>
-                <a class="card" href="ekr/7.2.html">7.2<br>جمعه سانس ۲</a>
-                <a class="card" href="ekr/7.3.html">7.3<br>جمعه سانس ۳</a>
-            </div>
-        </section>
+    <h1 class="text-center text-5xl md:text-6xl font-extrabold mb-16 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">
+      برنامه اکران این هفته
+    </h1>
 
-        <section class="week-container">
-            <h2>هفته ۲</h2>
-            <div class="cards-grid">
-                <a class="card" href="ekr/40.1.html">40.1<br>چهارشنبه سانس ۱</a>
-                <a class="card" href="ekr/40.2.html">40.2<br>چهارشنبه سانس ۲</a>
-                <a class="card" href="ekr/40.3.html">40.3<br>چهارشنبه سانس ۳</a>
+    <!-- روز چهارشنبه -->
+    <section class="mb-20">
+      <h2 class="day-title text-center">چهارشنبه - ۴</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="animate-fade-in" style="animation-delay: 0.1s"><div data-screen="4.1"></div></div>
+        <div class="animate-fade-in" style="animation-delay: 0.2s"><div data-screen="4.2"></div></div>
+        <div class="animate-fade-in" style="animation-delay: 0.3s"><div data-screen="4.3"></div></div>
+      </div>
+    </section>
 
-                <a class="card" href="ekr/50.1.html">50.1<br>پنجشنبه سانس ۱</a>
-                <a class="card" href="ekr/50.2.html">50.2<br>پنجشنبه سانس ۲</a>
-                <a class="card" href="ekr/50.3.html">50.3<br>پنجشنبه سانس ۳</a>
+    <!-- روز پنجشنبه -->
+    <section class="mb-20">
+      <h2 class="day-title text-center">پنجشنبه - ۵</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="animate-fade-in" style="animation-delay: 0.1s"><div data-screen="5.1"></div></div>
+        <div class="animate-fade-in" style="animation-delay: 0.2s"><div data-screen="5.2"></div></div>
+        <div class="animate-fade-in" style="animation-delay: 0.3s"><div data-screen="5.3"></div></div>
+      </div>
+    </section>
 
-                <a class="card" href="ekr/70.1.html">70.1<br>جمعه سانس ۱</a>
-                <a class="card" href="ekr/70.2.html">70.2<br>جمعه سانس ۲</a>
-                <a class="card" href="ekr/70.3.html">70.3<br>جمعه سانس ۳</a>
-            </div>
-        </section>
-    </main>
+    <!-- روز جمعه -->
+    <section class="mb-20">
+      <h2 class="day-title text-center">جمعه - ۷</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="animate-fade-in" style="animation-delay: 0.1s"><div data-screen="7.1"></div></div>
+        <div class="animate-fade-in" style="animation-delay: 0.2s"><div data-screen="7.2"></div></div>
+        <div class="animate-fade-in" style="animation-delay: 0.3s"><div data-screen="7.3"></div></div>
+      </div>
+    </section>
 
-    <footer>
-        <p>© 2025 Cinema Schedule | همه حقوق محفوظ است</p>
-    </footer>
+    <!-- هفته دوم (مثال) -->
+    <section class="mb-20">
+      <h2 class="day-title text-center">هفته بعد - مثال</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="animate-fade-in"><div data-screen="40.1"></div></div>
+        <div class="animate-fade-in"><div data-screen="40.2"></div></div>
+        <!-- بقیه رو خودت اضافه کن -->
+      </div>
+    </section>
+
+  </div>
+
+  <!-- کارت قالب -->
+  <template id="screenTemplate">
+    <div class="group relative overflow-hidden rounded-2xl shadow-2xl transition-all duration-500 hover:scale-105 hover:shadow-pink-500/50">
+      <img src="" alt="" class="card-img w-full h-96 object-cover transition-transform duration-700 group-hover:scale-110">
+      <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
+      <img src="" alt="" class="poster-img absolute bottom-4 right-4 w-32 h-48 object-cover rounded-lg shadow-2xl border-4 border-white/30">
+      <div class="absolute bottom-0 left-0 right-0 p-6 text-right">
+        <h3 class="text-2xl font-bold mb-2 poster-title">نام فیلم</h3>
+        <p class="text-lg text-pink-300 time">ساعت: --:--</p>
+      </div>
+    </div>
+  </template>
+
+  <script src="assets/script.js"></script>
+  <script>
+    // تغییر تم تاریک/روشن
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+      const isDark = document.documentElement.classList.contains('dark');
+      document.getElementById('themeToggle').textContent = isDark ? '☀️' : '🌙';
+    });
+  </script>
 </body>
 </html>
-
-
-<!-- ======================= style.css ======================= -->
-body {
-    font-family: 'Vazirmatn', sans-serif;
-    margin: 0;
-    background: linear-gradient(to bottom, #1c1c1c, #2b2b2b);
-    color: #fff;
-}
-header {
-    text-align: center;
-    padding: 40px 20px;
-    background: linear-gradient(90deg, #ff416c, #ff4b2b);
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-}
-header h1 {
-    margin: 0;
-    font-size: 2.5em;
-}
-header p {
-    margin-top: 10px;
-    font-size: 1.2em;
-}
-main {
-    padding: 40px 20px;
-}
-.week-container {
-    margin-bottom: 50px;
-}
-.week-container h2 {
-    margin-bottom: 20px;
-    font-size: 2em;
-    border-left: 5px solid #ff416c;
-    padding-left: 10px;
-}
-.cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-}
-.card {
-    background: #333;
-    padding: 20px;
-    border-radius: 15px;
-    text-align: center;
-    font-weight: bold;
-    font-size: 1.2em;
-    color: #fff;
-    text-decoration: none;
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-.card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(255, 65, 108, 0.5);
-}
-footer {
-    text-align: center;
-    padding: 20px;
-    background: #111;
-    font-size: 0.9em;
-    margin-top: 50px;
-    color: #ccc;
-}
