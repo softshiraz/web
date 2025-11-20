@@ -1,53 +1,70 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>اکران‌های سینما | @softshiraz</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>برنامه اکران | @softshiraz</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
   <style>
-    body { background: #000; color: white; font-family: 'Vazirmatn', sans-serif; }
-    .card { 
-      aspect-ratio: 16/9; /* کاملاً افقی و کشیده */
-      display: block;
+    body { background: #000; margin: 0; padding: 20px 0; font-family: 'Vazirmatn', sans-serif; }
+    .scroll-container {
+      overflow-x: auto;
+      scrollbar-width: thin;
+      scrollbar-color: #ec4899 #1a1a2e;
     }
+    .scroll-container::-webkit-scrollbar { height: 8px; }
+    .scroll-container::-webkit-scrollbar-track { background: #1a1a2e; border-radius: 4px; }
+    .scroll-container::-webkit-scrollbar-thumb { background: #ec4899; border-radius: 4px; }
   </style>
 </head>
-<body class="p-4 md:p-8">
+<body>
 
-  <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-    
-    <!-- فقط این ۱۲ تا رو نگه دار، بقیه رو پاک کن اگه نمی‌خوای -->
-    <div data-card="4.1"></div>
-    <div data-card="4.2"></div>
-    <div data-card="4.3"></div>
-    <div data-card="5.1"></div>
-    <div data-card="5.2"></div>
-    <div data-card="5.3"></div>
-    <div data-card="7.1"></div>
-    <div data-card="7.2"></div>
-    <div data-card="7.3"></div>
-    <div data-card="40.1"></div>
-    <div data-card="40.2"></div>
-    <div data-card="40.3"></div>
+  <!-- یک ردیف افقی طولانی -->
+  <div class="scroll-container">
+    <div class="flex gap-6 px-8 min-w-max">
 
+      <!-- ترتیب دقیق از 4.1 تا آخر -->
+      <div data-card="4.1"></div>
+      <div data-card="4.2"></div>
+      <div data-card="4.3"></div>
+      <div data-card="5.1"></div>
+      <div data-card="5.2"></div>
+      <div data-card="5.3"></div>
+      <div data-card="7.1"></div>
+      <div data-card="7.2"></div>
+      <div data-card="7.3"></div>
+      <div data-card="40.1"></div>
+      <div data-card="40.2"></div>
+      <div data-card="40.3"></div>
+      <!-- تا هر کجا که بخوای ادامه بده، مثلاً: -->
+      <!-- <div data-card="41.1"></div> -->
+      <!-- <div data-card="7000.5"></div> -->
+
+    </div>
   </div>
 
   <script>
-    document.querySelectorAll('[data-card]').forEach(el => {
-      const code = el.getAttribute('data-card');
+    // لیست تمام کدهای ممکن (می‌تونی تا 10000 تا هم اضافه کنی)
+    const codes = [
+      "4.1","4.2","4.3",
+      "5.1","5.2","5.3",
+      "7.1","7.2","7.3",
+      "40.1","40.2","40.3"
+      // هر کد جدیدی اینجا اضافه کن
+    ];
+
+    codes.forEach(code => {
+      const container = document.querySelector(`[data-card="${code}"]`);
+      if (!container) return;
+
       fetch(`cards/${code}.html`)
         .then(r => r.ok ? r.text() : Promise.reject())
         .then(html => {
-          // اگه توی فایل کارت کلمه "ندارد" باشه → نشون نده
-          if (html.includes('ندارد')) {
-            el.innerHTML = '';
-            return;
-          }
-          el.innerHTML = html;
+          if (html.includes("ندارد")) return; // اگر "ندارد" بود → نشون نده
+          container.innerHTML = html;
         })
-        .catch(() => { el.innerHTML = ''; }); // فایل نبود → هیچی نشون نده
+        .catch(() => {}); // فایل نبود → هیچی نشون نده
     });
   </script>
 </body>
