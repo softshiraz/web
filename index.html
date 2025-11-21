@@ -3,132 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> سافت شیراز -  اکران‌های بعدی</title>
+    <title>سافت شیراز - اکران‌های بعدی</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/b-koodak-bold@v1.0/font-face.css" rel="stylesheet">
     <style>
         * { margin:0; padding:0; box-sizing:border-box; }
         body {
             font-family: 'B Koodak Bold', sans-serif !important;
-            background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 100%);
+            background: #0a0a1a;
             color: #fff;
             min-height: 100vh;
         }
         header {
-            background: rgba(15,15,30,0.96);
+            background: rgba(10,10,26,0.95);
             backdrop-filter: blur(16px);
-            padding: 16px 25px;
+            padding: 18px 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: sticky;
             top: 0;
             z-index: 1000;
-            border-bottom: 1px solid #404060;
-            box-shadow: 0 6px 25px rgba(0,0,0,0.5);
+            border-bottom: 2px solid #ffd700;
         }
-        .logo-fa { font-size: 27px; font-weight: bold; color: #ffd700; }
-        .logo-en { font-size: 29px; font-weight: bold; color: #ffd700; }
+        .logo-fa { font-size: 28px; font-weight: bold; color: #ffd700; }
+        .logo-en { font-size: 30px; font-weight: bold; color: #ffd700; }
 
-        main { padding: 20px 10px 80px; }
+        main { padding: 30px 15px; }
         .section h2 {
-            color: #ffd700; font-size: 34px; text-align: center;
-            margin: 25px auto 45px; padding-bottom: 10px;
-            border-bottom: 5px solid #ffd700; width: fit-content;
-            border-radius: 5px; box-shadow: 0 4px 15px rgba(255,215,0,0.3);
+            color: #ffd700; font-size: 36px; text-align: center;
+            margin-bottom: 50px; padding-bottom: 12px;
+            border-bottom: 6px solid #ffd700; width: fit-content;
+            margin-left: auto; margin-right: auto;
+            border-radius: 8px;
         }
 
         .movies-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 26px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
             max-width: 1400px;
             margin: 0 auto;
         }
+
         .movie-card {
-            background: rgba(25,25,50,0.92);
-            border-radius: 22px;
+            background: #111;
             overflow: hidden;
-            border: 1px solid #404060;
-            transition: all 0.35s ease;
-            animation: cardIn 0.7s ease-out forwards;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            transition: all 0.4s ease;
+            animation: fadeIn 0.8s ease-out forwards;
             opacity: 0;
-            transform: translateY(30px);
-            position: relative;
         }
-        .movie-card:hover {
-            transform: translateY(-14px) scale(1.07);
-            box-shadow: 0 25px 50px rgba(255,215,0,0.45);
-            border-color: #ffd700;
+        .movie-card:hover { transform: translateY(-15px); box-shadow: 0 25px 50px rgba(255,215,0,0.4); }
+
+        /* قرمز - عکس */
+        .card-img { 
+            width: 100%; 
+            height: 420px; 
+            object-fit: cover; 
+            background: #300; 
         }
-        .movie-card img {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-        }
-        .movie-date {
-            position: absolute;
-            top: 12px;
-            left: 12px;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(10px);
-            padding: 10px 16px;
-            border-radius: 14px;
-            font-size: 16px;
+
+        /* آبی - تاریخ و ساعت */
+        .card-date {
+            background: linear-gradient(135deg, #0077ff, #00aaff);
+            padding: 16px;
+            text-align: center;
+            font-size: 20px;
             font-weight: bold;
-            color: #fff;
-            border: 1px solid rgba(255,215,0,0.4);
+            color: white;
         }
-        .movie-info {
+
+        /* سبز - اسم فیلم */
+        .card-title {
+            background: linear-gradient(135deg, #00c851, #00f27c);
             padding: 18px;
             text-align: center;
-        }
-        .movie-title {
-            font-size: 21px;
+            font-size: 26px;
             font-weight: bold;
-            color: #ffd700;
-            margin-bottom: 16px;
+            color: white;
+        }
+
+        /* زرد - دکمه رزرو */
+        .card-btn {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            padding: 20px;
+            text-align: center;
         }
         .reserve-btn {
-            background: linear-gradient(45deg, #ffd700, #ffeb3b);
-            color: #000;
+            background: #000;
+            color: #ffd700;
             font-weight: bold;
-            padding: 12px 38px;
+            padding: 14px 40px;
             border-radius: 50px;
-            font-size: 15px;
+            font-size: 18px;
+            display: inline-block;
             transition: all 0.3s;
-            box-shadow: 0 5px 18px rgba(255,215,0,0.45);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.5);
         }
         .reserve-btn:hover {
-            transform: scale(1.12);
-            box-shadow: 0 10px 30px rgba(255,215,0,0.65);
+            transform: scale(1.1);
+            background: #ffd700;
+            color: #000;
         }
-        footer {
-            background: rgba(15,15,30,0.98);
-            backdrop-filter: blur(16px);
-            padding: 35px 20px;
-            margin-top: 70px;
-            border-top: 1px solid #404060;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .social-icons a {
-            width: 52px; height: 52px; background: rgba(255,255,255,0.12);
-            backdrop-filter: blur(12px); border-radius: 50%;
-            font-size: 25px; color: #ffd700; margin: 0 12px;
-            display: inline-flex; align-items: center; justify-content: center;
-            transition: all 0.4s;
-        }
-        .social-icons a:hover {
-            background: #ffd700; color: #000; transform: translateY(-6px) scale(1.2);
-        }
-        @keyframes cardIn { to { opacity: 1; transform: translateY(0); } }
-        @media (max-width: 768px) {
-            .movies-grid { grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 18px; }
-            .movie-card img { height: 230px; }
-            .movie-date { font-size: 13px; padding: 7px 10px; }
+
+        @keyframes fadeIn { to { opacity: 1; } }
+
+        /* موبایل: یک کارت در هر ردیف */
+        @media (max-width: 992px) {
+            .movies-grid { grid-template-columns: 1fr; }
+            .card-img { height: 500px; }
+            .card-title { font-size: 30px; padding: 25px; }
+            .card-date { font-size: 24px; padding: 20px; }
+            .reserve-btn { padding: 16px 50px; font-size: 20px; }
         }
     </style>
 </head>
@@ -141,56 +128,39 @@
 
     <main>
         <section class="section">
-            <h2>  اکران‌های بعدی  </h2>
+            <h2>اکران‌های بعدی</h2>
             <div class="movies-grid" id="cards-container"></div>
         </section>
     </main>
 
-    <footer>
-        <div class="social-icons">
-            <a href="https://t.me/softshiraz" target="_blank"><i class="fab fa-telegram"></i></a>
-            <a href="https://instagram.com/softshiraz" target="_blank"><i class="fab fa-instagram"></i></a>
-        </div>
-        <div style="color:#aaa; font-size:16px;">softshiraz</div>
-    </footer>
-
     <script>
         const container = document.getElementById('cards-container');
 
-        // اول سعی کن ترتیب رو از order.txt بخونه
-        fetch('order.txt')
-            .then(r => r.ok ? r.text() : Promise.reject())
-            .then(text => text.trim().split('\n').map(x => x.trim()).filter(x => x))
-            .catch(() => [1,2,3,4,5,6,7,8,9,10,11,12]) // اگه نبود، ترتیب عادی
-            .then(orderList => {
-                let loaded = 0;
-                orderList.forEach((num, index) => {
-                    const n = num.trim();
-                    fetch(`cards/${n}.html`, { cache: "no-store" })
-                        .then(r => r.ok ? r.text() : Promise.reject())
-                        .then(html => {
-                            if (html.includes('ندارد')) return;
+        // ترتیب دقیقاً طبق خواسته‌ت: 3,7,1,12,5,9
+        const order = [3, 7, 1, 12, 5, 9];
 
-                            const card = document.createElement('div');
-                            card.className = 'movie-card';
-                            card.innerHTML = html;
-                            card.style.animationDelay = `${index * 0.1}s`;
-                            container.appendChild(card);
+        order.forEach((num, index) => {
+            fetch(`cards/${num}.html`, { cache: "no-store" })
+                .then(r => r.ok ? r.text() : Promise.reject())
+                .then(html => {
+                    if (html.includes('ندارد')) return;
 
-                            // دکمه رزرو
-                            if (!card.querySelector('.reserve-btn')) {
-                                const info = card.querySelector('.movie-info') || card;
-                                info.insertAdjacentHTML('beforeend', 
-                                    `<a href="https://t.me/softshiraz" target="_blank" class="reserve-btn">رزرو بلیط</a>`
-                                );
-                            }
-                        })
-                        .catch(() => {}) // اگه فایل نبود، هیچی نشون نده
-                        .finally(() => {
-                            loaded++;
-                        });
-                });
-            });
+                    const card = document.createElement('div');
+                    card.className = 'movie-card';
+                    card.style.animationDelay = `${index * 0.2}s`;
+                    card.innerHTML = html;
+
+                    // اگه دکمه نبود اضافه کن
+                    if (!card.querySelector('.reserve-btn')) {
+                        const btnDiv = card.querySelector('.card-btn') || card;
+                        btnDiv.insertAdjacentHTML('beforeend', 
+                            `<a href="https://t.me/softshiraz" target="_blank" class="reserve-btn">رزرو بلیط</a>`
+                        );
+                    }
+                    container.appendChild(card);
+                })
+                .catch(() => console.log(`کارت ${num} پیدا نشد`));
+        });
     </script>
 </body>
 </html>
