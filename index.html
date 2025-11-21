@@ -5,21 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>سافت شیراز - اکران‌های بعدی</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <!-- فونت واقعی کودک (B Koodak Bold) -->
+    <!-- فونت کودک واقعی -->
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/b-koodak-bold@v1.0/font-face.css" rel="stylesheet">
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'B Koodak Bold', sans-serif !important;
             background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 100%);
-            color: #ffffff;
-            margin: 0;
-            padding: 0;
+            color: #fff;
             min-height: 100vh;
         }
         header {
-            background: rgba(15, 15, 30, 0.96);
+            background: rgba(15,15,30,0.96);
             backdrop-filter: blur(16px);
-            border-bottom: 1px solid #404060;
             padding: 16px 25px;
             display: flex;
             justify-content: space-between;
@@ -27,12 +25,13 @@
             position: sticky;
             top: 0;
             z-index: 1000;
+            border-bottom: 1px solid #404060;
             box-shadow: 0 6px 25px rgba(0,0,0,0.5);
         }
-        .logo-en { font-size: 29px; font-weight: bold; color: #ffd700; }
         .logo-fa { font-size: 27px; font-weight: bold; color: #ffd700; }
+        .logo-en { font-size: 29px; font-weight: bold; color: #ffd700; }
 
-        main { padding: 15px 10px 60px; }
+        main { padding: 20px 10px 80px; }
         .section h2 {
             color: #ffd700;
             font-size: 34px;
@@ -53,7 +52,7 @@
             margin: 0 auto;
         }
         .movie-card {
-            background: rgba(25, 25, 50, 0.92);
+            background: rgba(25,25,50,0.92);
             border-radius: 22px;
             overflow: hidden;
             border: 1px solid #404060;
@@ -62,11 +61,17 @@
             opacity: 0;
             transform: translateY(25px);
             position: relative;
+            display: flex;
+            flex-direction: column;
         }
         .movie-card:hover {
             transform: translateY(-14px) scale(1.07);
             box-shadow: 0 25px 50px rgba(255,215,0,0.45);
             border-color: #ffd700;
+        }
+        .card-img-wrapper {
+            position: relative;
+            width: 100%;
         }
         .movie-card img {
             width: 100%;
@@ -74,36 +79,39 @@
             object-fit: cover;
             display: block;
         }
-        /* تاریخ و ساعت بالای عکس */
         .movie-date {
             position: absolute;
             top: 12px;
             left: 12px;
-            background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(8px);
-            padding: 8px 14px;
-            border-radius: 12px;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(10px);
+            padding: 10px 16px;
+            border-radius: 14px;
             font-size: 16px;
             font-weight: bold;
             color: #fff;
-            border: 1px solid rgba(255,215,0,0.3);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,215,0,0.4);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
         }
         .movie-info {
-            padding: 16px;
+            padding: 18px 14px;
             text-align: center;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
         .movie-title {
             font-size: 21px;
             font-weight: bold;
             color: #ffd700;
-            margin-bottom: 14px;
+            margin-bottom: 16px;
         }
         .reserve-btn {
             background: linear-gradient(45deg, #ffd700, #ffeb3b);
             color: #000;
             font-weight: bold;
-            padding: 11px 36px;
+            padding: 12px 38px;
             border-radius: 50px;
             font-size: 15px;
             display: inline-block;
@@ -116,7 +124,7 @@
         }
 
         footer {
-            background: rgba(15, 15, 30, 0.98);
+            background: rgba(15,15,30,0.98);
             backdrop-filter: blur(16px);
             padding: 35px 20px;
             margin-top: 70px;
@@ -125,8 +133,6 @@
             flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
-            font-size: 15px;
-            color: #ccc;
         }
         .social-icons a {
             display: inline-flex;
@@ -150,18 +156,12 @@
         }
         .footer-text { font-size: 16px; color: #aaa; }
 
-        @keyframes cardIn {
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes cardIn { to { opacity: 1; transform: translateY(0); } }
 
-        /* موبایل: عکس کامل و زیبا */
         @media (max-width: 768px) {
-            .movies-grid {
-                grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
-                gap: 18px;
-            }
+            .movies-grid { grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 18px; }
             .movie-card img { height: 240px; }
-            .movie-date { font-size: 14px; padding: 6px 10px; top: 8px; left: 8px; }
+            .movie-date { font-size: 14px; padding: 8px 12px; top: 8px; left: 8px; }
             .section h2 { font-size: 28px; margin: 20px auto 35px; }
             footer { flex-direction: column; gap: 20px; text-align: center; }
         }
@@ -192,7 +192,7 @@
     <script>
         const container = document.getElementById('cards-container');
 
-        // فقط تا ۱۰۰۰ تا (کافیه برای ۱۲ یا ۱۰۰۰ تا!)
+        // فقط تا ۱۰۰۰ تا
         for (let i = 1; i <= 1000; i++) {
             const div = document.createElement('div');
             div.setAttribute('data-card', i);
@@ -206,7 +206,7 @@
                 const res = await fetch(`cards/${num}.html`, { cache: "no-store" });
                 if (!res.ok) throw 0;
                 const html = await res.text().trim();
-                if (html === 'ندارد' || html.includes('ندارد')) throw 0;
+                if (html === '' || html === 'ندارد' || html.includes('ندارد')) throw 0;
 
                 el.innerHTML = html;
 
@@ -219,7 +219,7 @@
                         );
                     }
                 }
-            } catch {
+            } catch (err) {
                 el.remove();
             }
         });
