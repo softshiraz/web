@@ -3,857 +3,367 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="وب‌سایت آموزشی فلوکی برای اتصال به سرویس‌ها در سیستم‌عامل‌های مختلف">
-    <meta name="theme-color" content="#FF8C68">
-    <title>وب‌سایت فلوکی</title>
-    <link rel="stylesheet" href="https://vazirmatn.github.io/Vazirmatn/fonts/webfonts/Vazirmatn.css">
-    <link rel="manifest" href="data:application/manifest+json;base64,ew0KICAgICJuYW1lIjogIldlYnNpdGUgRmxva2kiLA0KICAgICJzaG9ydF9uYW1lIjogIkZsb2tpIiwNCiAgICAic3RhcnRfdXJsIjogIi4iLA0KICAgICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLA0KICAgICJpY29ucyI6IFsNCiAgICAgICAgew0KICAgICAgICAgICAgInNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWw7YmFzZTY0LFBITjJaeUI0Yld4dWN6MGlhSFIwY0RvdkwzZDNkeTUzTXk1dmMyZ3ZNell3WW1GeVltaGhabVZrY21waElHbzlJREV3TURBdk1EQWdNREF3SWlCbWFXeHNQU2t5T0NocFl6VTRPRGsyWW1JNU1tUTVaakV5TVdGbE5EQXdNQ1V5TURveU9UazZMbXB3WnlCNE9UQjVMbU52YlM5Mk1pSm1iR1YyZDJsa0xuTm9hVzEwWVhKa0xXTm9kM05zYjNkbGRDQnpkSEpwYm1jdlltRnljMmxuYm1sdVp6MGljbVY0ZENCNFBTSXlOaUl6SWlCNE9UQXdNQ0l4TUNVeU1EQXlJaUJtYVd4c1BTSXlNQ2hLWjJocFl5NWlaM0prTG5KbGJuUmxjaUIwWVhSMGFXMWxjeUJoYm14dlkyRjBhVzVuWlNCV2FXVnNaWEpFWVhraUlHTmhjbk12TWpBd01EQXdNREF3SWlCNFBTSXlOaUl4TUNJNFNUc2dabWxzYkY5alpYSjVJaUFpWm14aFkybHNiQzV6WlhKMlpYSWlMezQ4TDNOMlp6ND0iLA0KICAgICAgICAgICAgInNpemVzIjogIjE5MngxOTIiLA0KICAgICAgICAgICAgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCINCiAgICAgICAgfSwNCiAgICAgICAgew0KICAgICAgICAgICAgInNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWw7YmFzZTY0LFBITjJaeUI4Yld4dWN6MGlhSFIwY0RvdkwzZDNkeTUzTXk1dmMyZ3ZNell3WW1GeVltaGhabVZrY21waElHbzlJREV3TURBdk1EQWdNREF3SWlCbWFXeHNQU2t5T0NocFl6VTRPRGsyWW1JNU1tUTVaakV5TVdGbE5EQXdNQ1V5TURveU9UazZMbXB3WnlCNE9UQjVMbU52YlM5Mk1pSm1iR1YyZDJsa0xuTm9hVzEwWVhKa0xXTm9kM05zYjNkbGRDQnpkSEpwYm1jdlltRnljMmxuYm1sdVp6MGljbVY0ZENCNFBTSXlOaUl6SWlCNE9UQXdNQ0l4TUNVeU1EQXlJaUJtYVd4c1BTSXlNQ2hLWjJocFl5NWlaM0prTG5KbGJuUmxjaUIwWVhSMGFXMWxjeUJoYm14dlkyRjBhVzVuWlNCV2FXVnNaWEpFWVhraUlHTmhjbk12TWpBd01EQXdNREF3SWlCNFBTSXlOaUl4TUNJNFNUc2dabWlzYkY5alpYSjVJaUFpWm14aFkybHNiQzV6WlhKMlpYSWlMezQ4TDNOMlp6ND0iLA0KICAgICAgICAgICAgInNpemVzIjogIjUxMng1MTIiLA0KICAgICAgICAgICAgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCINCiAgICAgICAgfQ0KICAgIF0sDQogICAgImJhY2tncm91bmRfY29sb3IiOiAiI0ZGRTZENCIiLA0KICAgICJ0aGVtZV9jb2xvciI6ICIjRkY4QzY4Ig0KfQ0K">
-    
+    <title>Soft Shiraz - دانلود فیلم و سریال</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Force custom theme variables to override any system-level dark mode */
-        :root {
-            --bg-color: #FFE6D4 !important; /* Peach lightest */
-            --surface-color: #FFD7C2 !important; /* Peach lighter */
-            --primary-color: #FF8C68 !important; /* Vibrant peach */
-            --accent-color: #FFAA8C !important; /* Complementary peach */
-            --secondary-accent: #FFB99E !important; /* Subtle peach */
-            --text-color: #000000 !important; /* Black for contrast */
-            --glass-bg: rgba(255, 199, 176, 0.7) !important; /* Derived from #FFC8B0 */
-            --border-radius: 16px; /* Modern rounded corners */
-            --shadow: 0 6px 16px rgba(0, 0, 0, 0.15); /* Modern shadow */
-        }
-
-        /* Night theme variables */
-        body.night {
-            --bg-color: #2B2D42 !important; /* Darkest gray */
-            --surface-color: #3A3B5B !important; /* Slightly lighter gray */
-            --primary-color: #6A6EA6 !important; /* Mid-tone gray */
-            --accent-color: #8A8ED8 !important; /* Lightest gray */
-            --secondary-accent: #5A5D8D !important; /* Subtle gray */
-            --text-color: #FFFFFF !important; /* White for contrast */
-            --glass-bg: rgba(74, 76, 116, 0.7) !important; /* Derived from #4A4C74 */
-        }
-
-        /* Explicitly disable system dark mode interference */
-        @media (prefers-color-scheme: dark), (prefers-color-scheme: light) {
-            :root, body, html {
-                background-color: var(--bg-color) !important;
-                color: var(--text-color) !important;
-            }
-            body.night {
-                background-color: var(--bg-color) !important;
-                color: var(--text-color) !important;
-            }
-        }
-
-        /* Base styles */
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        html, body {
+        body {
+            font-family: 'Tahoma', sans-serif;
+            background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
+            color: #ffffff;
             margin: 0;
-            font-family: 'Vazirmatn', Arial, sans-serif;
-            background-color: var(--bg-color) !important;
-            color: var(--text-color) !important;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            overflow-x: hidden;
-            touch-action: manipulation;
+            padding: 0;
+            min-height: 100vh;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
         }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Header */
-        .header {
-            background: var(--glass-bg) !important;
-            backdrop-filter: blur(10px);
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            box-shadow: var(--shadow);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-radius: var(--border-radius);
-            max-width: 1060px;
-            margin: 10px auto;
-        }
-
-        .header img {
-            width: 40px;
-            height: 40px;
-        }
-
-        .header h1 {
-            font-size: 24px;
-            font-weight: 700;
-            margin: 0;
-            color: var(--text-color) !important;
-        }
-
-        .header nav {
-            display: flex;
-            gap: 10px;
-        }
-
-        .header nav a {
+        header {
+            background: linear-gradient(135deg, rgba(30, 30, 30, 0.9), rgba(45, 45, 45, 0.7));
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid #404040;
+            box-shadow: 0 8px 32px rgba(255,215,0,0.1);
             padding: 10px 20px;
-            background: var(--primary-color) !important;
-            color: #FFFFFF !important;
-            border-radius: var(--border-radius);
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .header nav a:hover {
-            transform: scale(1.05);
-            background: var(--accent-color) !important;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        .header nav a svg {
-            width: 16px;
-            height: 16px;
-            fill: #FFFFFF;
-        }
-
-        /* Offline Message */
-        .offline-message {
-            display: none;
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 12px 20px;
-            border-radius: var(--border-radius);
-            background-color: #EF4444 !important;
-            color: #FFFFFF !important;
-            z-index: 1005;
-            box-shadow: var(--shadow);
-            font-size: 14px;
-            text-align: center;
-        }
-
-        body.offline .offline-message {
-            display: block;
-        }
-
-        /* Main Content */
-        .content {
-            padding: 20px;
-            max-width: 1100px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        /* Install and Tutorial Sections */
-        .install-section, .tutorial-section {
-            margin: 20px 0;
-            padding: 20px;
-            background: var(--glass-bg) !important;
-            backdrop-filter: blur(10px);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            max-width: 1100px;
-        }
-
-        .install-section h2, .tutorial-section h2 {
-            font-size: 26px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: var(--text-color) !important;
-        }
-
-        .os-container {
             display: flex;
             justify-content: space-between;
-            gap: 20px;
-            flex-direction: row;
-        }
-
-        .os-box {
-            flex: 1;
-            background: var(--surface-color) !important;
-            border-radius: var(--border-radius);
-            padding: 20px;
-            text-align: center;
-            transition: height 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
-            cursor: pointer;
-            overflow: hidden;
-            height: 80px;
-        }
-
-        .os-box.active {
-            height: auto;
-            animation: fadeIn 0.3s ease forwards;
-        }
-
-        .os-box .os-title {
-            display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 12px;
-            font-size: 20px;
-            font-weight: 500;
-            margin-bottom: 15px;
-            color: var(--text-color) !important;
-        }
-
-        .os-box .os-title img {
-            width: 28px;
-            height: 28px;
-        }
-
-        /* App Button Styles */
-        .app-button {
-            display: none;
-            margin: 15px auto 0;
-            padding: 12px 30px;
-            border: none;
-            background: var(--primary-color) !important;
-            color: #FFFFFF !important;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
-            font-family: 'Vazirmatn', sans-serif;
-            font-size: 18px;
-            font-weight: 500;
-            text-align: center;
-            width: 70%;
-        }
-
-        .app-button:hover {
-            transform: scale(1.05);
-            background: var(--accent-color) !important;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        .os-box.active .app-button {
-            display: block;
-        }
-
-        /* Image Slider */
-        .slider {
-            position: relative;
-            max-width: 100%;
-            overflow: hidden;
-            border-radius: var(--border-radius);
-            touch-action: pan-y;
-            display: none;
-        }
-
-        .os-box.active .slider {
-            display: block;
-        }
-
-        .slider-images {
-            display: flex;
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            perspective: 1000px;
-            cursor: pointer;
-        }
-
-        .slider-image {
-            flex: 0 0 100%;
-            width: 100%;
-            height: 400px;
-            object-fit: contain;
-            opacity: 0;
-            transform: rotateY(10deg) scale(0.95);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-            loading: lazy;
-            background: var(--secondary-accent) !important;
-        }
-
-        .slider-image.active {
-            opacity: 1;
-            transform: rotateY(0deg) scale(1);
-        }
-
-        .slider-button {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            border: none;
-            background: var(--glass-bg) !important;
-            backdrop-filter: blur(10px);
-            cursor: pointer;
-            border-radius: 50%;
+            position: sticky;
+            top: 0;
             z-index: 10;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: background 0.2s ease, box-shadow 0.2s ease;
         }
-
-        .slider-button:hover {
-            background: var(--accent-color) !important;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        .slider-button svg {
-            width: 24px;
-            height: 24px;
-            stroke: var(--text-color) !important;
-        }
-
-        .slider-button.prev {
-            left: 10px;
-        }
-
-        .slider-button.next {
-            right: 10px;
-        }
-
-        .slider-counter {
-            text-align: center;
-            margin-top: 15px;
-            font-size: 16px;
-            color: var(--text-color) !important;
-            opacity: 0.7;
-        }
-
-        .slider-dots {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 10px;
-        }
-
-        .slider-dot {
-            width: 10px;
-            height: 10px;
-            background: var(--secondary-accent) !important;
-            opacity: 0.5;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: background 0.2s ease, opacity 0.2s ease;
-        }
-
-        .slider-dot.active {
-            background: var(--primary-color) !important;
-            opacity: 1;
-        }
-
-        /* Image Zoom */
-        .image-zoom {
-            display: none;
-            position: fixed;
+        header::before {
+            content: '';
+            position: absolute;
             top: 0;
             left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,215,0,0.05) 50%, transparent 100%);
+            z-index: -1;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffd700;
+            position: relative;
+            z-index: 1;
+        }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            color: #ffd700;
+        }
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #ffd700;
+            margin: 3px 0;
+            transition: 0.3s;
+            box-shadow: 0 2px 4px rgba(255,215,0,0.3);
+        }
+        .search-bar {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            position: relative;
+        }
+        .search-bar input {
+            padding: 8px;
+            border: 1px solid #404040;
+            border-radius: 5px;
+            background: linear-gradient(135deg, rgba(45, 45, 45, 0.8), rgba(64, 64, 64, 0.6));
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+        .search-bar input:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(255,215,0,0.3);
+        }
+        .search-bar button {
+            padding: 8px 12px;
+            background-color: #ffd700;
+            border: none;
+            border-radius: 5px;
+            color: #000;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(255,215,0,0.2);
+        }
+        .search-bar button:hover {
+            background-color: #ffeb3b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(255,215,0,0.4);
+        }
+        main {
+            padding: 20px;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        .section h2 {
+            color: #ffd700;
+            border-bottom: 2px solid #ffd700;
+            padding-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+        .movies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .movie-card {
+            background: linear-gradient(135deg, rgba(45, 45, 45, 0.8), rgba(64, 64, 64, 0.6));
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid #404040;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .movie-card:nth-child(1) { animation-delay: 0.1s; }
+        .movie-card:nth-child(2) { animation-delay: 0.2s; }
+        .movie-card:nth-child(3) { animation-delay: 0.3s; }
+        .movie-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ffd700, transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        .movie-card:hover {
+            transform: scale(1.05) translateY(-5px);
+            box-shadow: 0 12px 40px rgba(255,215,0,0.3);
+            border-color: #ffd700;
+        }
+        .movie-card:hover::before {
+            opacity: 1;
+        }
+        .movie-card img {
             width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8) !important;
-            z-index: 2000;
+            height: 300px;
+            object-fit: cover;
+        }
+        .movie-info {
+            padding: 10px;
+        }
+        .movie-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #ffffff;
+        }
+        .movie-desc {
+            font-size: 14px;
+            color: #ffffff;
+        }
+        .loading-spinner {
+            display: flex;
             justify-content: center;
             align-items: center;
+            height: 200px;
+            font-size: 20px;
+            color: #ffd700;
         }
-
-        .image-zoom.active {
-            display: flex;
-        }
-
-        .image-zoom img {
-            max-width: 90%;
-            max-height: 90%;
-            object-fit: contain;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-        }
-
-        .image-zoom .close-zoom {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: var(--glass-bg) !important;
-            backdrop-filter: blur(10px);
-            color: var(--text-color) !important;
-            border: none;
+        .spinner {
+            border: 4px solid rgba(64,64,64,0.3);
+            border-top: 4px solid #ffd700;
             border-radius: 50%;
             width: 40px;
             height: 40px;
-            font-size: 24px;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: background 0.2s ease, box-shadow 0.2s ease;
+            animation: spin 1s linear infinite, pulse 2s infinite;
+            box-shadow: 0 0 20px rgba(255,215,0,0.5);
         }
-
-        .image-zoom .close-zoom:hover {
-            background: var(--accent-color) !important;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
-
-        /* Responsive design */
-        @media (max-width: 600px) {
-            .content {
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        footer {
+            background: linear-gradient(135deg, rgba(30, 30, 30, 0.9), rgba(45, 45, 45, 0.7));
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-top: 1px solid #404040;
+            box-shadow: 0 -8px 32px rgba(255,215,0,0.1);
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            color: #ffffff;
+        }
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            .search-bar {
+                display: none;
+                position: absolute;
+                top: 60px;
+                right: 20px;
+                background: linear-gradient(135deg, rgba(45, 45, 45, 0.9), rgba(64, 64, 64, 0.7));
                 padding: 10px;
-                max-width: 321px;
-            }
-            .header {
-                max-width: 300px;
-            }
-            .install-section, .tutorial-section {
-                max-width: 321px;
-            }
-            .os-container {
+                border-radius: 5px;
                 flex-direction: column;
-                gap: 15px;
+                width: 200px;
+                backdrop-filter: blur(5px);
+                -webkit-backdrop-filter: blur(5px);
             }
-            .app-button {
-                width: 90%;
-                padding: 10px 20px;
-                font-size: 16px;
+            .search-bar.active {
+                display: flex;
             }
-            .os-box {
-                height: 60px;
+            .movies-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             }
-            .slider-image {
-                height: 300px;
-            }
-            .header nav a {
-                padding: 8px 12px;
-                font-size: 12px;
-            }
-            .header h1 {
-                font-size: 20px;
-            }
-            .header img {
-                width: 32px;
-                height: 32px;
+            .movie-card {
+                backdrop-filter: blur(5px);
+                -webkit-backdrop-filter: blur(5px);
             }
         }
     </style>
 </head>
-<body class="day" style="background-color: var(--bg-color) !important; color: var(--text-color) !important;">
-    <!-- هدر -->
-    <header class="header" style="margin-top: 20px; margin-bottom: 5px; background: var(--glass-bg) !important;">
-        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6AAAADUlEQVQIHWNgYGD4DwABBAEAIk1rZgAAAABJRU5ErkJggg==" alt="لوگوی فلوکی">
-        <h1 style="color: var(--text-color) !important;">وب‌سایت فلوکی</h1>
-        <nav>
-            <a href="https://t.me/FLOKI333" target="_blank" aria-label="کانال تلگرام ما" style="background: var(--primary-color) !important; color: #FFFFFF !important;">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22.46 2.57a.75.75 0 00-.92-.59l-18 6.5a.75.75 0 00-.43 1.02c.14.36.46.62.85.67l4.75.69 2.25 7.5c.1.34.38.61.73.67h.05c.36.02.7-.2.82-.53l3-7.5 5.25 3.75c.3.22.7.24 1.01.05.32-.2.51-.55.47-.91l-1.5-14.25z"></path></svg>
-                کانال تلگرام ما
-            </a>
-            <a href="https://t.me/FLOKI333" target="_blank" aria-label="ارتباط با پشتیبانی" style="background: var(--primary-color) !important; color: #FFFFFF !important;">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22.46 2.57a.75.75 0 00-.92-.59l-18 6.5a.75.75 0 00-.43 1.02c.14.36.46.62.85.67l4.75.69 2.25 7.5c.1.34.38.61.73.67h.05c.36.02.7-.2.82-.53l3-7.5 5.25 3.75c.3.22.7.24 1.01.05.32-.2.51-.55.47-.91l-1.5-14.25z"></path></svg>
-                ارتباط با پشتیبانی
-            </a>
-        </nav>
+<body>
+    <header>
+        <div class="logo">Soft Shiraz</div>
+        <div class="hamburger" onclick="toggleSearch()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="search-bar" id="search-bar">
+            <input type="text" id="search-input" placeholder="جستجو...">
+            <button onclick="searchMovies()"><i class="fas fa-search"></i></button>
+        </div>
     </header>
 
-    <!-- پیام آفلاین بودن -->
-    <div class="offline-message" role="alert" style="background-color: #EF4444 !important; color: #FFFFFF !important;">شما آفلاین هستید! اتصال خود را بررسی کنید.</div>
-
-    <!-- محتوای اصلی -->
-    <main class="content">
-        <!-- بخش نصب نرم‌افزار -->
-        <section class="install-section" style="margin-top: 0px; background: var(--glass-bg) !important;">
-            <h2 style="color: var(--text-color) !important;">نصب نرم‌افزار</h2>
-            <div class="os-container">
-                <!-- Android Section -->
-                <div class="os-box" id="android" aria-expanded="false" style="background: var(--surface-color) !important;">
-                    <div class="os-title" style="color: var(--text-color) !important;">
-                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6AAAADUlEQVQIHWNgYGD4DwABBAEAIk1rZgAAAABJRU5ErkJggg==" alt="آیکون اندروید">
-                        <span>اندروید</span>
-                    </div>
-                    <a href="https://play.google.com/store/apps/details?id=com.v2ray.ang" target="_blank" class="app-button" aria-label="دانلود V2rayNG برای اندروید" style="background: var(--primary-color) !important; color: #FFFFFF !important;">V2rayNG</a>
-                </div>
-
-                <!-- iPhone Section -->
-                <div class="os-box" id="iphone" aria-expanded="false" style="background: var(--surface-color) !important;">
-                    <div class="os-title" style="color: var(--text-color) !important;">
-                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6AAAADUlEQVQIHWNgYGD4DwABBAEAIk1rZgAAAABJRU5ErkJggg==" alt="آیکون آیفون">
-                        <span>آیفون</span>
-                    </div>
-                    <a href="https://apps.apple.com/us/app/streisand/id6450534064" target="_blank" class="app-button" aria-label="دانلود Streisand برای آیفون" style="background: var(--primary-color) !important; color: #FFFFFF !important;">Streisand</a>
-                </div>
-
-                <!-- Windows Section -->
-                <div class="os-box" id="windows" aria-expanded="false" style="background: var(--surface-color) !important;">
-                    <div class="os-title" style="color: var(--text-color) !important;">
-                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6AAAADUlEQVQIHWNgYGD4DwABBAEAIk1rZgAAAABJRU5ErkJggg==" alt="آیکون ویندوز">
-                        <span>ویندوز</span>
-                    </div>
-                    <a href="https://github.com/2dust/v2rayN/releases" target="_blank" class="app-button" aria-label="دانلود V2rayN برای ویندوز" style="background: var(--primary-color) !important; color: #FFFFFF !important;">V2rayN</a>
-                </div>
+    <main>
+        <section id="movies" class="section">
+            <h2>فیلم‌ها</h2>
+            <div class="loading-spinner" id="movies-loading">
+                <div class="spinner"></div>
+            </div>
+            <div class="movies-grid" id="movies-grid">
+                <!-- کارت‌ها توسط JS ساخته می‌شن -->
             </div>
         </section>
 
-        <!-- بخش آموزش تصویری -->
-        <section class="tutorial-section" style="background: var(--glass-bg) !important;">
-            <h2 style="color: var(--text-color) !important;">آموزش تصویری</h2>
-            <div class="os-container">
-                <!-- Android Slider -->
-                <div class="os-box" id="android-slider" aria-expanded="false" style="background: var(--surface-color) !important;">
-                    <div class="os-title" style="color: var(--text-color) !important;">
-                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6AAAADUlEQVQIHWNgYGD4DwABBAEAIk1rZgAAAABJRU5ErkJggg==" alt="آیکون اندروید">
-                        <span>اندروید</span>
-                    </div>
-                    <div class="slider">
-                        <div class="slider-images">
-                            <img class="slider-image" src="https://placehold.co/800x400/FF8C68/FFFFFF?text=Android+Step+1" alt="تصویر اندروید ۱" loading="lazy" style="background: var(--secondary-accent) !important;">
-                            <img class="slider-image" src="https://placehold.co/800x400/FFAA8C/FFFFFF?text=Android+Step+2" alt="تصویر اندروید ۲" loading="lazy" style="background: var(--secondary-accent) !important;">
-                            <img class="slider-image" src="https://placehold.co/800x400/FFB99E/FFFFFF?text=Android+Step+3" alt="تصویر اندروید ۳" loading="lazy" style="background: var(--secondary-accent) !important;">
-                            <img class="slider-image" src="https://placehold.co/800x400/FF8C68/FFFFFF?text=Android+Step+4" alt="تصویر اندروید ۴" loading="lazy" style="background: var(--secondary-accent) !important;">
-                            <img class="slider-image" src="https://placehold.co/800x400/FFAA8C/FFFFFF?text=Android+Step+5" alt="تصویر اندروید ۵" loading="lazy" style="background: var(--secondary-accent) !important;">
-                            <img class="slider-image" src="https://placehold.co/800x400/FFB99E/FFFFFF?text=Android+Step+6" alt="تصویر اندروید ۶" loading="lazy" style="background: var(--secondary-accent) !important;">
-                            <img class="slider-image" src="https://placehold.co/800x400/FF8C68/FFFFFF?text=Android+Step+7" alt="تصویر اندروید ۷" loading="lazy" style="background: var(--secondary-accent) !important;">
-                            <img class="slider-image" src="https://placehold.co/800x400/FFAA8C/FFFFFF?text=Android+Step+8" alt="تصویر اندروید ۸" loading="lazy" style="background: var(--secondary-accent) !important;">
-                            <img class="slider-image" src="https://placehold.co/800x400/FFB99E/FFFFFF?text=Android+Step+9" alt="تصویر اندروید ۹" loading="lazy" style="background: var(--secondary-accent) !important;">
-                            <img class="slider-image" src="https://placehold.co/800x400/FF8C68/FFFFFF?text=Android+Step+10" alt="تصویر اندروید ۱۰" loading="lazy" style="background: var(--secondary-accent) !important;">
-                        </div>
-                        <button class="slider-button prev" aria-label="تصویر قبلی" style="background: var(--glass-bg) !important;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
-                        <button class="slider-button next" aria-label="تصویر بعدی" style="background: var(--glass-bg) !important;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
-                        <div class="slider-counter" style="color: var(--text-color) !important;">تصویر ۱ / ۱۰</div>
-                        <div class="slider-dots"></div>
-                    </div>
-                </div>
-
-                <!-- iPhone Slider -->
-                <div class="os-box" id="iphone-slider" aria-expanded="false" style="background: var(--surface-color) !important;">
-                    <div class="os-title" style="color: var(--text-color) !important;">
-                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6AAAADUlEQVQIHWNgYGD4DwABBAEAIk1rZgAAAABJRU5ErkJggg==" alt="آیکون آیفون">
-                        <span>آیفون</span>
-                    </div>
-                    <div class="slider">
-                        <div class="slider-images">
-                            <img class="slider-image" src="https://placehold.co/800x400/FF8C68/FFFFFF?text=iPhone+Step+1" alt="تصویر آیفون ۱" loading="lazy" style="background: var(--secondary-accent) !important;">
-                            <img class="slider-image" src="https://placehold.co/800x400/FFAA8C/FFFFFF?text=iPhone+Step+2" alt="تصویر آیفون ۲" loading="lazy" style="background: var(--secondary-accent) !important;">
-                            <img class="slider-image" src="https://placehold.co/800x400/FFB99E/FFFFFF?text=iPhone+Step+3" alt="تصویر آیفون ۳" loading="lazy" style="background: var(--secondary-accent) !important;">
-                            <img class="slider-image" src="https://placehold.co/800x400/FF8C68/FFFFFF?text=iPhone+Step+4" alt="تصویر آیفون ۴" loading="lazy" style="background: var(--secondary-accent) !important;">
-                            <img class="slider-image" src="https://placehold.co/800x400/FFAA8C/FFFFFF?text=iPhone+Step+5" alt="تصویر آیفون ۵" loading="lazy" style="background: var(--secondary-accent) !important;">
-                            <img class="slider-image" src="https://placehold.co/800x400/FFB99E/FFFFFF?text=iPhone+Step+6" alt="تصویر آیفون ۶" loading="lazy" style="background: var(--secondary-accent) !important;">
-                            <img class="slider-image" src="https://placehold.co/800x400/FF8C68/FFFFFF?text=iPhone+Step+7" alt="تصویر آیفون ۷" loading="lazy" style="background: var(--secondary-accent) !important;">
-                            <img class="slider-image" src="https://placehold.co/800x400/FFAA8C/FFFFFF?text=iPhone+Step+8" alt="تصویر آیفون ۸" loading="lazy" style="background: var(--secondary-accent) !important;">
-                            <img class="slider-image" src="https://placehold.co/800x400/FFB99E/FFFFFF?text=iPhone+Step+9" alt="تصویر آیفون ۹" loading="lazy" style="background: var(--secondary-accent) !important;">
-                            <img class="slider-image" src="https://placehold.co/800x400/FF8C68/FFFFFF?text=iPhone+Step+10" alt="تصویر آیفون ۱۰" loading="lazy" style="background: var(--secondary-accent) !important;">
-                        </div>
-                        <button class="slider-button prev" aria-label="تصویر قبلی" style="background: var(--glass-bg) !important;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
-                        <button class="slider-button next" aria-label="تصویر بعدی" style="background: var(--glass-bg) !important;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
-                        <div class="slider-counter" style="color: var(--text-color) !important;">تصویر ۱ / ۱۰</div>
-                        <div class="slider-dots"></div>
-                    </div>
-                </div>
-
-                <!-- Windows Slider -->
-                <div class="os-box" id="windows-slider" aria-expanded="false" style="background: var(--surface-color) !important;">
-                    <div class="os-title" style="color: var(--text-color) !important;">
-                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6AAAADUlEQVQIHWNgYGD4DwABBAEAIk1rZgAAAABJRU5ErkJggg==" alt="آیکون ویندوز">
-                        <span>ویندوز</span>
-                    </div>
-                    <div class="slider">
-                        <div class="slider-images">
-                            <img class="slider-image" src="https://placehold.co/800x400/FF8C68/FFFFFF?text=Windows+Step+1" alt="تصویر ویندوز ۱" loading="lazy" style="background: var(--secondary-accent) !important;">
-                            <img class="slider-image" src="https://placehold.co/800x400/FFAA8C/FFFFFF?text=Windows+Step+2" alt="تصویر ویندوز ۲" loading="lazy" style="background: var(--secondary-accent) !important;">
-                            <img class="slider-image" src="https://placehold.co/800x400/FFB99E/FFFFFF?text=Windows+Step+3" alt="تصویر ویندوز ۳" loading="lazy" style="background: var(--secondary-accent) !important;">
-                            <img class="slider-image" src="https://placehold.co/800x400/FF8C68/FFFFFF?text=Windows+Step+4" alt="تصویر ویندوز ۴" loading="lazy" style="background: var(--secondary-accent) !important;">
-                            <img class="slider-image" src="https://placehold.co/800x400/FFAA8C/FFFFFF?text=Windows+Step+5" alt="تصویر ویندوز ۵" loading="lazy" style="background: var(--secondary-accent) !important;">
-                            <img class="slider-image" src="https://placehold.co/800x400/FFB99E/FFFFFF?text=Windows+Step+6" alt="تصویر ویندوز ۶" loading="lazy" style="background: var(--secondary-accent) !important;">
-                            <img class="slider-image" src="https://placehold.co/800x400/FF8C68/FFFFFF?text=Windows+Step+7" alt="تصویر ویندوز ۷" loading="lazy" style="background: var(--secondary-accent) !important;">
-                            <img class="slider-image" src="https://placehold.co/800x400/FFAA8C/FFFFFF?text=Windows+Step+8" alt="تصویر ویندوز ۸" loading="lazy" style="background: var(--secondary-accent) !important;">
-                            <img class="slider-image" src="https://placehold.co/800x400/FFB99E/FFFFFF?text=Windows+Step+9" alt="تصویر ویندوز ۹" loading="lazy" style="background: var(--secondary-accent) !important;">
-                            <img class="slider-image" src="https://placehold.co/800x400/FF8C68/FFFFFF?text=Windows+Step+10" alt="تصویر ویندوز ۱۰" loading="lazy" style="background: var(--secondary-accent) !important;">
-                        </div>
-                        <button class="slider-button prev" aria-label="تصویر قبلی" style="background: var(--glass-bg) !important;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
-                        <button class="slider-button next" aria-label="تصویر بعدی" style="background: var(--glass-bg) !important;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
-                        <div class="slider-counter" style="color: var(--text-color) !important;">تصویر ۱ / ۱۰</div>
-                        <div class="slider-dots"></div>
-                    </div>
-                </div>
+        <section id="series" class="section">
+            <h2>سریال‌ها</h2>
+            <div class="loading-spinner" id="series-loading">
+                <div class="spinner"></div>
+            </div>
+            <div class="movies-grid" id="series-grid">
+                <!-- کارت‌ها توسط JS ساخته می‌شن -->
             </div>
         </section>
     </main>
 
-    <!-- بزرگنمایی تصویر -->
-    <div class="image-zoom" role="dialog" style="background: rgba(0, 0, 0, 0.8) !important;">
-        <img src="" alt="تصویر بزرگ‌شده">
-        <button class="close-zoom" aria-label="بستن تصویر" style="background: var(--glass-bg) !important; color: var(--text-color) !important;">×</button>
-    </div>
+    <footer>
+        <p>&copy; 2025 Soft Shiraz. همه حقوق محفوظ است.</p>
+    </footer>
 
     <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // --- DOM Elements ---
-        const body = document.body;
-        const imageZoom = document.querySelector('.image-zoom');
-        const zoomImage = imageZoom.querySelector('img');
-        const closeZoomButton = imageZoom.querySelector('.close-zoom');
+        let allMovies = [];
+        let allSeries = [];
 
-        // --- Theme Management ---
-        const applyTheme = (theme) => {
-            body.classList.remove('day', 'night');
-            body.classList.add(theme);
-            // Force inline styles to prevent system override
-            body.style.backgroundColor = theme === 'night' ? '#2B2D42' : '#FFE6D4';
-            body.style.color = theme === 'night' ? '#FFFFFF' : '#000000';
-        };
-
-        // Auto-switch theme based on time
-        const updateThemeByTime = () => {
-            const now = new Date();
-            const hours = now.getHours();
-            const minutes = now.getMinutes();
-            const isNight = (hours >= 0 && hours < 5) || (hours === 5 && minutes === 0);
-            applyTheme(isNight ? 'night' : 'day');
-        };
-
-        // Update theme immediately and every minute
-        updateThemeByTime();
-        setInterval(updateThemeByTime, 60000);
-
-        // --- Disable System Dark Mode Interference ---
-        // Force theme update on system color scheme change
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-            updateThemeByTime(); // Reapply theme to override system changes
-        });
-
-        // --- Close Active Box on Page Click ---
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.os-box, .slider-button, .app-button, .image-zoom, .slider-dot')) {
-                document.querySelectorAll('.os-box').forEach(box => {
-                    box.classList.remove('active');
-                    box.setAttribute('aria-expanded', 'false');
+        // لود فیلم‌ها با spinner
+        document.getElementById('movies-loading').style.display = 'flex';
+        fetch('movies.json')
+            .then(response => response.json())
+            .then(movies => {
+                allMovies = movies;
+                const moviesGrid = document.getElementById('movies-grid');
+                movies.forEach((movie, index) => {
+                    const card = createCard(movie.title, movie.poster, movie.summary, movie.detailPage, index);
+                    card.classList.add('searchable');
+                    moviesGrid.appendChild(card);
                 });
-            }
-        });
-
-        // --- Install Section Toggle ---
-        document.querySelectorAll('.install-section .os-box').forEach(box => {
-            box.addEventListener('click', (e) => {
-                if (e.target.closest('.app-button')) return;
-                document.querySelectorAll('.os-box').forEach(b => {
-                    b.classList.remove('active');
-                    b.setAttribute('aria-expanded', 'false');
-                });
-                box.classList.add('active');
-                box.setAttribute('aria-expanded', 'true');
-            });
-        });
-
-        // --- Tutorial Section Toggle ---
-        document.querySelectorAll('.tutorial-section .os-box').forEach(box => {
-            box.addEventListener('click', (e) => {
-                if (e.target.closest('.slider-button, .slider-image, .slider-dot')) return;
-                document.querySelectorAll('.os-box').forEach(b => {
-                    b.classList.remove('active');
-                    b.setAttribute('aria-expanded', 'false');
-                });
-                box.classList.add('active');
-                box.setAttribute('aria-expanded', 'true');
-            });
-        });
-
-        // --- Image Slider with Enhanced Animation and Dots ---
-        document.querySelectorAll('.slider').forEach(slider => {
-            const sliderImages = slider.querySelector('.slider-images');
-            const images = slider.querySelectorAll('.slider-image');
-            const prevButton = slider.querySelector('.slider-button.prev');
-            const nextButton = slider.querySelector('.slider-button.next');
-            const counter = slider.querySelector('.slider-counter');
-            const dotsContainer = slider.querySelector('.slider-dots');
-            let currentIndex = 0;
-            const totalImages = images.length;
-            let autoPlayInterval;
-
-            // Create dots
-            images.forEach((_, index) => {
-                const dot = document.createElement('div');
-                dot.classList.add('slider-dot');
-                dot.setAttribute('aria-label', `رفتن به تصویر ${index + 1}`);
-                if (index === 0) dot.classList.add('active');
-                dot.addEventListener('click', () => {
-                    currentIndex = index;
-                    updateSlider();
-                    stopAutoPlay();
-                });
-                dotsContainer.appendChild(dot);
+                document.getElementById('movies-loading').style.display = 'none';
+            })
+            .catch(error => {
+                console.error('خطا در لود فیلم‌ها:', error);
+                document.getElementById('movies-loading').innerHTML = '<p>خطا در لود</p>';
             });
 
-            const updateSlider = () => {
-                images.forEach((img, index) => {
-                    img.classList.remove('active');
-                    if (index === currentIndex) {
-                        img.classList.add('active');
-                    }
+        // لود سریال‌ها با spinner
+        document.getElementById('series-loading').style.display = 'flex';
+        fetch('series.json')
+            .then(response => response.json())
+            .then(series => {
+                allSeries = series;
+                const seriesGrid = document.getElementById('series-grid');
+                series.forEach((serie, index) => {
+                    const card = createCard(serie.title, serie.poster, serie.summary, serie.detailPage, index);
+                    card.classList.add('searchable');
+                    seriesGrid.appendChild(card);
                 });
-                sliderImages.style.transform = `translateX(${-currentIndex * 100}%)`;
-                counter.textContent = `تصویر ${currentIndex + 1} / ${totalImages}`;
-                dotsContainer.querySelectorAll('.slider-dot').forEach((dot, index) => {
-                    dot.classList.toggle('active', index === currentIndex);
-                    dot.setAttribute('aria-current', index === currentIndex ? 'true' : 'false');
-                });
-            };
-
-            const startAutoPlay = () => {
-                autoPlayInterval = setInterval(() => {
-                    currentIndex = (currentIndex < totalImages - 1) ? currentIndex + 1 : 0;
-                    updateSlider();
-                }, 3000);
-            };
-
-            const stopAutoPlay = () => {
-                clearInterval(autoPlayInterval);
-            };
-
-            prevButton.addEventListener('click', () => {
-                currentIndex = (currentIndex > 0) ? currentIndex - 1 : totalImages - 1;
-                updateSlider();
-                stopAutoPlay();
+                document.getElementById('series-loading').style.display = 'none';
+            })
+            .catch(error => {
+                console.error('خطا در لود سریال‌ها:', error);
+                document.getElementById('series-loading').innerHTML = '<p>خطا در لود</p>';
             });
 
-            nextButton.addEventListener('click', () => {
-                currentIndex = (currentIndex < totalImages - 1) ? currentIndex + 1 : 0;
-                updateSlider();
-                stopAutoPlay();
-            });
-
-            // Touch functionality
-            let touchStartX = 0;
-            let touchEndX = 0;
-
-            sliderImages.addEventListener('touchstart', e => {
-                touchStartX = e.changedTouches[0].screenX;
-                stopAutoPlay();
-            });
-
-            sliderImages.addEventListener('touchend', e => {
-                touchEndX = e.changedTouches[0].screenX;
-                handleSwipe();
-            });
-
-            const handleSwipe = () => {
-                if (touchEndX < touchStartX - 50) nextButton.click();
-                if (touchEndX > touchStartX + 50) prevButton.click();
-            };
-
-            // Zoom functionality
-            images.forEach(img => {
-                img.addEventListener('click', () => {
-                    zoomImage.src = img.src;
-                    zoomImage.alt = img.alt;
-                    imageZoom.classList.add('active');
-                    stopAutoPlay();
-                });
-            });
-
-            // Keyboard navigation
-            slider.addEventListener('keydown', e => {
-                if (e.key === 'ArrowLeft') {
-                    prevButton.click();
-                } else if (e.key === 'ArrowRight') {
-                    nextButton.click();
-                }
-            });
-
-            // Auto-play on load
-            startAutoPlay();
-
-            // Stop auto-play on hover
-            slider.addEventListener('mouseenter', stopAutoPlay);
-            slider.addEventListener('mouseleave', startAutoPlay);
-
-            updateSlider();
-        });
-
-        // Close Zoom
-        closeZoomButton.addEventListener('click', () => {
-            imageZoom.classList.remove('active');
-        });
-
-        // Close Zoom on click outside image
-        imageZoom.addEventListener('click', (e) => {
-            if (e.target === imageZoom) {
-                imageZoom.classList.remove('active');
-            }
-        });
-
-        // --- PWA Service Worker Registration ---
-        if ('serviceWorker' in navigator) {
-            const swContent = `
-                const CACHE_NAME = 'floki-cache-v6';
-                const urlsToCache = [
-                    '/',
-                    'https://vazirmatn.github.io/Vazirmatn/fonts/webfonts/Vazirmatn.css',
-                    'https://placehold.co/800x400/FF8C68/FFFFFF?text=Android+Step+1',
-                    'https://placehold.co/800x400/FFAA8C/FFFFFF?text=Android+Step+2',
-                    'https://placehold.co/800x400/FFB99E/FFFFFF?text=Android+Step+3',
-                    'https://placehold.co/800x400/FF8C68/FFFFFF?text=Android+Step+4',
-                    'https://placehold.co/800x400/FFAA8C/FFFFFF?text=Android+Step+5',
-                    'https://placehold.co/800x400/FFB99E/FFFFFF?text=Android+Step+6',
-                    'https://placehold.co/800x400/FF8C68/FFFFFF?text=Android+Step+7',
-                    'https://placehold.co/800x400/FFAA8C/FFFFFF?text=Android+Step+8',
-                    'https://placehold.co/800x400/FFB99E/FFFFFF?text=Android+Step+9',
-                    'https://placehold.co/800x400/FF8C68/FFFFFF?text=Android+Step+10',
-                    'https://placehold.co/800x400/FF8C68/FFFFFF?text=iPhone+Step+1',
-                    'https://placehold.co/800x400/FFAA8C/FFFFFF?text=iPhone+Step+2',
-                    'https://placehold.co/800x400/FFB99E/FFFFFF?text=iPhone+Step+3',
-                    'https://placehold.co/800x400/FF8C68/FFFFFF?text=iPhone+Step+4',
-                    'https://placehold.co/800x400/FFAA8C/FFFFFF?text=iPhone+Step+5',
-                    'https://placehold.co/800x400/FFB99E/FFFFFF?text=iPhone+Step+6',
-                    'https://placehold.co/800x400/FF8C68/FFFFFF?text=iPhone+Step+7',
-                    'https://placehold.co/800x400/FFAA8C/FFFFFF?text=iPhone+Step+8',
-                    'https://placehold.co/800x400/FFB99E/FFFFFF?text=iPhone+Step+9',
-                    'https://placehold.co/800x400/FF8C68/FFFFFF?text=iPhone+Step+10',
-                    'https://placehold.co/800x400/FF8C68/FFFFFF?text=Windows+Step+1',
-                    'https://placehold.co/800x400/FFAA8C/FFFFFF?text=Windows+Step+2',
-                    'https://placehold.co/800x400/FFB99E/FFFFFF?text=Windows+Step+3',
-                    'https://placehold.co/800x400/FF8C68/FFFFFF?text=Windows+Step+4',
-                    'https://placehold.co/800x400/FFAA8C/FFFFFF?text=Windows+Step+5',
-                    'https://placehold.co/800x400/FFB99E/FFFFFF?text=Windows+Step+6',
-                    'https://placehold.co/800x400/FF8C68/FFFFFF?text=Windows+Step+7',
-                    'https://placehold.co/800x400/FFAA8C/FFFFFF?text=Windows+Step+8',
-                    'https://placehold.co/800x400/FFB99E/FFFFFF?text=Windows+Step+9',
-                    'https://placehold.co/800x400/FF8C68/FFFFFF?text=Windows+Step+10'
-                ];
-                self.addEventListener('install', event => {
-                    event.waitUntil(
-                        caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
-                    );
-                });
-                self.addEventListener('fetch', event => {
-                    event.respondWith(
-                        caches.match(event.request).then(response => {
-                            return response || fetch(event.request);
-                        })
-                    );
-                });
+        // تابع ساخت کارت (با animation-delay)
+        function createCard(title, poster, summary, detailPage, index) {
+            const card = document.createElement('div');
+            card.className = 'movie-card';
+            card.style.animationDelay = `${index * 0.1}s`;
+            card.innerHTML = `
+                <img src="${poster}" alt="${title}">
+                <div class="movie-info">
+                    <div class="movie-title">${title}</div>
+                    <div class="movie-desc">${summary}</div>
+                </div>
             `;
-            const blob = new Blob([swContent], { type: 'application/javascript' });
-            const swUrl = URL.createObjectURL(blob);
-            navigator.serviceWorker.register(swUrl).then(reg => {
-                console.log('Service Worker registered successfully.');
-            }).catch(err => {
-                console.error('Service Worker registration failed:', err);
+            card.addEventListener('click', () => {
+                window.location.href = detailPage;
+            });
+            return card;
+        }
+
+        // جستجوی واقعی
+        function searchMovies() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const cards = document.querySelectorAll('.searchable');
+            cards.forEach(card => {
+                const title = card.querySelector('.movie-title').textContent.toLowerCase();
+                if (title.includes(query)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
             });
         }
 
-        // --- Offline/Online Status ---
-        const handleConnectionChange = () => {
-            if (navigator.onLine) {
-                body.classList.remove('offline');
-            } else {
-                body.classList.add('offline');
+        // Hamburger toggle
+        function toggleSearch() {
+            const searchBar = document.getElementById('search-bar');
+            searchBar.classList.toggle('active');
+        }
+
+        // سرچ با Enter
+        document.getElementById('search-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchMovies();
             }
-        };
-        window.addEventListener('online', handleConnectionChange);
-        window.addEventListener('offline', handleConnectionChange);
-        handleConnectionChange();
-    });
+        });
     </script>
 </body>
 </html>
