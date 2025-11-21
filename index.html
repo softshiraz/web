@@ -5,19 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>سافت شیراز - اکران‌های بعدی</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <!-- فونت کودک واقعی -->
+    <!-- فونت واقعی کودک (B Koodak Bold) - معروف و فوق‌العاده جذاب -->
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/b-koodak-bold@v1.0/font-face.css" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'B Koodak Bold', sans-serif !important;
             background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 100%);
-            color: #fff;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
             min-height: 100vh;
+            line-height: 1.6;
         }
         header {
-            background: rgba(15,15,30,0.96);
+            background: rgba(15, 15, 30, 0.96);
             backdrop-filter: blur(16px);
+            border-bottom: 1px solid #404060;
             padding: 16px 25px;
             display: flex;
             justify-content: space-between;
@@ -25,18 +28,17 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            border-bottom: 1px solid #404060;
             box-shadow: 0 6px 25px rgba(0,0,0,0.5);
         }
+        .logo-en { font-size: 29px; font-weight: bold; color: #ffd700; letter-spacing: 1px; }
         .logo-fa { font-size: 27px; font-weight: bold; color: #ffd700; }
-        .logo-en { font-size: 29px; font-weight: bold; color: #ffd700; }
 
-        main { padding: 20px 10px 80px; }
+        main { padding: 15px 10px 50px; }
         .section h2 {
             color: #ffd700;
             font-size: 34px;
             text-align: center;
-            margin: 25px auto 45px;
+            margin: 25px auto 40px;
             padding-bottom: 10px;
             border-bottom: 5px solid #ffd700;
             width: fit-content;
@@ -47,71 +49,55 @@
         .movies-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-            gap: 26px;
+            gap: 24px;
             max-width: 1400px;
             margin: 0 auto;
         }
         .movie-card {
-            background: rgba(25,25,50,0.92);
-            border-radius: 22px;
+            background: rgba(25, 25, 50, 0.9);
+            border-radius: 20px;
             overflow: hidden;
             border: 1px solid #404060;
             transition: all 0.35s ease;
-            animation: cardIn 0.7s ease-out forwards;
+            animation: cardIn 0.65s ease-out forwards;
             opacity: 0;
             transform: translateY(25px);
-            position: relative;
-            display: flex;
-            flex-direction: column;
         }
         .movie-card:hover {
             transform: translateY(-14px) scale(1.07);
-            box-shadow: 0 25px 50px rgba(255,215,0,0.45);
+            box-shadow: 0 25px 50px rgba(255,215,0,0.4);
             border-color: #ffd700;
-        }
-        .card-img-wrapper {
-            position: relative;
-            width: 100%;
         }
         .movie-card img {
             width: 100%;
-            height: 320px;
+            height: 310px;
             object-fit: cover;
-            display: block;
+            transition: transform 0.6s ease;
+        }
+        .movie-card:hover img { transform: scale(1.14); }
+
+        .movie-info {
+            padding: 16px;
+            text-align: center;
         }
         .movie-date {
-            position: absolute;
-            top: 12px;
-            left: 12px;
-            background: rgba(0,0,0,0.75);
-            backdrop-filter: blur(10px);
-            padding: 10px 16px;
-            border-radius: 14px;
-            font-size: 16px;
+            font-size: 18px;
             font-weight: bold;
-            color: #fff;
-            border: 1px solid rgba(255,215,0,0.4);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-        }
-        .movie-info {
-            padding: 18px 14px;
-            text-align: center;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            color: #ffffff;
+            margin-bottom: 10px;
+            text-shadow: 0 1px 4px #000;
         }
         .movie-title {
             font-size: 21px;
             font-weight: bold;
             color: #ffd700;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
         .reserve-btn {
             background: linear-gradient(45deg, #ffd700, #ffeb3b);
             color: #000;
             font-weight: bold;
-            padding: 12px 38px;
+            padding: 10px 32px;
             border-radius: 50px;
             font-size: 15px;
             display: inline-block;
@@ -120,58 +106,60 @@
         }
         .reserve-btn:hover {
             transform: scale(1.12);
-            box-shadow: 0 10px 30px rgba(255,215,0,0.65);
+            box-shadow: 0 10px 30px rgba(255,215,0,0.6);
         }
 
         footer {
-            background: rgba(15,15,30,0.98);
+            background: rgba(15, 15, 30, 0.98);
             backdrop-filter: blur(16px);
-            padding: 35px 20px;
-            margin-top: 70px;
+            padding: 30px 20px;
+            margin-top: 60px;
             border-top: 1px solid #404060;
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
+            font-size: 15px;
+            color: #ccc;
         }
         .social-icons a {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 52px;
-            height: 52px;
-            background: rgba(255,255,255,0.12);
-            backdrop-filter: blur(12px);
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
             border-radius: 50%;
-            font-size: 25px;
+            font-size: 24px;
             color: #ffd700;
-            margin: 0 12px;
+            margin: 0 10px;
             transition: all 0.4s;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
         .social-icons a:hover {
+            transform: translateY(-5px) scale(1.15);
             background: #ffd700;
             color: #000;
-            transform: translateY(-6px) scale(1.2);
         }
-        .footer-text { font-size: 16px; color: #aaa; }
+        .footer-text { font-size: 15px; color: #aaa; }
 
-        @keyframes cardIn { to { opacity: 1; transform: translateY(0); } }
-
+        @keyframes cardIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
         @media (max-width: 768px) {
-            .movies-grid { grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 18px; }
-            .movie-card img { height: 240px; }
-            .movie-date { font-size: 14px; padding: 8px 12px; top: 8px; left: 8px; }
+            .movies-grid { grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); gap: 18px; }
+            .movie-card img { height: 250px; }
             .section h2 { font-size: 28px; margin: 20px auto 35px; }
-            footer { flex-direction: column; gap: 20px; text-align: center; }
+            footer { flex-direction: column; text-align: center; gap: 20px; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo-fa">سافت شیراز</div>
         <div class="logo-en">Soft Shiraz</div>
+        <div class="logo-fa">سافت شیراز</div>
     </header>
 
     <main>
@@ -192,25 +180,26 @@
     <script>
         const container = document.getElementById('cards-container');
 
-        // فقط تا ۱۰۰۰ تا
+        // فقط ۱۰۰۰ کارت (کافیه برای ۱۲ تا یا ۱۰۰۰ تا!)
         for (let i = 1; i <= 1000; i++) {
             const div = document.createElement('div');
             div.setAttribute('data-card', i);
-            div.style.animationDelay = `${(i % 25) * 0.03}s`;
+            div.style.animationDelay = `${(i % 25) * 0.03}s`; // انیمیشن فوق‌العاده نرم
             container.appendChild(div);
         }
 
+        // لود سریع و هوشمند
         document.querySelectorAll('[data-card]').forEach(async (el) => {
             const num = el.getAttribute('data-card');
             try {
                 const res = await fetch(`cards/${num}.html`, { cache: "no-store" });
                 if (!res.ok) throw 0;
-                const html = await res.text().trim();
-                if (html === '' || html === 'ندارد' || html.includes('ندارد')) throw 0;
+                const html = await res.text();
+                if (html.trim() === 'ندارد' || html.includes('ندارد')) throw 0;
 
                 el.innerHTML = html;
 
-                // اضافه کردن دکمه رزرو
+                // دکمه رزرو (اگر نبود اضافه کن)
                 if (!el.querySelector('.reserve-btn')) {
                     const info = el.querySelector('.movie-info');
                     if (info) {
@@ -219,7 +208,7 @@
                         );
                     }
                 }
-            } catch (err) {
+            } catch {
                 el.remove();
             }
         });
