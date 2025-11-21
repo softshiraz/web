@@ -3,134 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سافت شیراز - اکران و دانلود فیلم</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+    <title>سافت شیراز - اکران‌های بعدی</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- فونت کودک (ایران یکتا) - فوق‌العاده زیبا و خوانا -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/iran-yekan@v1.0/font-face.css" rel="stylesheet">
     <style>
         body {
-            font-family: 'Vazirmatn', Tahoma, sans-serif;
-            background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
-            color: #ffffff;
+            font-family: 'IRANYekan', Tahoma, sans-serif !important;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
             margin: 0;
             padding: 0;
             min-height: 100vh;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+            overflow-x: hidden;
         }
         header {
-            background: linear-gradient(135deg, rgba(30, 30, 30, 0.95), rgba(45, 45, 45, 0.8));
+            background: rgba(20, 20, 40, 0.95);
             backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-bottom: 1px solid #404040;
-            box-shadow: 0 8px 32px rgba(255,215,0,0.15);
-            padding: 15px 20px;
+            border-bottom: 1px solid #404060;
+            padding: 16px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: sticky;
             top: 0;
             z-index: 1000;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
         }
-        header::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,215,0,0.08), transparent);
-            z-index: -1;
-        }
-        .logo-en { font-size: 26px; font-weight: bold; color: #ffd700; letter-spacing: 1px; }
-        .logo-fa { font-size: 24px; font-weight: bold; color: #ffd700; }
-        main { padding: 30px 20px; }
+        .logo-en { font-size: 28px; font-weight: 900; color: #ffd700; letter-spacing: 1px; }
+        .logo-fa { font-size: 26px; font-weight: 900; color: #ffd700; }
+
+        main { padding: 20px 15px 40px; }
         .section h2 {
             color: #ffd700;
-            border-bottom: 3px solid #ffd700;
-            padding-bottom: 12px;
-            font-size: 28px;
+            font-size: 32px;
             text-align: center;
-            margin-bottom: 30px;
-            text-shadow: 0 2px 6px rgba(255,215,0,0.3);
+            margin: 20px 0 35px;
+            padding-bottom: 10px;
+            border-bottom: 4px solid #ffd700;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+            position: relative;
         }
+
         .movies-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 24px;
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+            gap: 22px;
             max-width: 1400px;
             margin: 0 auto;
         }
         .movie-card {
-            background: linear-gradient(135deg, rgba(45,45,45,0.9), rgba(64,64,64,0.7));
-            backdrop-filter: blur(15px);
-            border: 1px solid #404040;
-            border-radius: 14px;
+            background: rgba(30, 30, 60, 0.85);
+            border-radius: 18px;
             overflow: hidden;
-            transition: all 0.4s ease;
-            cursor: pointer;
-            position: relative;
-            animation: fadeInUp 0.7s ease forwards;
+            border: 1px solid #404060;
+            transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+            animation: cardAppear 0.6s ease-out forwards;
             opacity: 0;
             transform: translateY(30px);
         }
         .movie-card:hover {
-            transform: scale(1.07) translateY(-10px);
-            box-shadow: 0 20px 50px rgba(255,215,0,0.35);
+            transform: translateY(-12px) scale(1.06);
+            box-shadow: 0 20px 40px rgba(255, 215, 0, 0.35);
             border-color: #ffd700;
         }
-        .movie-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, #ffd700, transparent);
-            opacity: 0;
-            transition: opacity 0.4s;
-        }
-        .movie-card:hover::before { opacity: 1; }
         .movie-card img {
             width: 100%;
-            height: 300px;
+            height: 310px;
             object-fit: cover;
-            transition: transform 0.7s ease;
+            transition: transform 0.6s ease;
         }
-        .movie-card:hover img { transform: scale(1.15); }
+        .movie-card:hover img { transform: scale(1.12); }
+
         .movie-info {
             padding: 14px;
             text-align: center;
         }
-        .movie-title {
-            font-size: 18px;
+        .movie-date {
+            font-size: 16px;
             font-weight: bold;
+            color: #ffffff;
             margin-bottom: 8px;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+        }
+        .movie-title {
+            font-size: 19px;
+            font-weight: 900;
             color: #ffd700;
+            margin-bottom: 12px;
         }
         .reserve-btn {
-            margin-top: 10px;
             background: linear-gradient(45deg, #ffd700, #ffeb3b);
             color: #000;
-            padding: 10px 20px;
-            border-radius: 50px;
             font-weight: bold;
-            transition: all 0.3s;
+            padding: 11px 28px;
+            border-radius: 50px;
+            font-size: 15px;
             display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255,215,0,0.4);
         }
         .reserve-btn:hover {
             transform: scale(1.1);
-            box-shadow: 0 8px 20px rgba(255,215,0,0.5);
+            box-shadow: 0 8px 25px rgba(255,215,0,0.6);
         }
+
         footer {
-            background: linear-gradient(135deg, rgba(30,30,30,0.95), rgba(45,45,45,0.8));
+            background: rgba(20, 20, 40, 0.98);
             backdrop-filter: blur(15px);
-            border-top: 1px solid #404040;
-            text-align: center;
             padding: 25px;
-            margin-top: 60px;
-            color: #ccc;
-            font-size: 14px;
+            text-align: center;
+            margin-top: 50px;
+            border-top: 1px solid #404060;
         }
-        @keyframes fadeInUp {
+        .social-links a {
+            color: #ffd700;
+            font-size: 22px;
+            margin: 0 15px;
+            transition: all 0.3s;
+        }
+        .social-links a:hover { transform: scale(1.3); }
+
+        @keyframes cardAppear {
             to { opacity: 1; transform: translateY(0); }
         }
         @media (max-width: 768px) {
-            .movies-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 18px; }
-            .movie-card img { height: 240px; }
+            .movies-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 18px; }
+            .movie-card img { height: 250px; }
+            .section h2 { font-size: 28px; margin: 15px 0 30px; }
         }
     </style>
 </head>
@@ -143,51 +145,52 @@
 
     <main>
         <section class="section">
-            <h2>اکران‌های امروز</h2>
-            <div class="movies-grid" id="cards-container">
-                <!-- کارت‌ها خودکار از پوشه cards/ لود میشن -->
-            </div>
+            <h2>اکران‌های بعدی</h2>
+            <div class="movies-grid" id="cards-container"></div>
         </section>
     </main>
 
     <footer>
-        <p>© 2025 سافت شیراز - تمامی حقوق محفوظ است</p>
+        <div class="social-links">
+            <a href="https://t.me/softshiraz" target="_blank"><i class="fab fa-telegram"></i> Soft Shiraz</a>
+            <a href="https://instagram.com/softshiraz" target="_blank"><i class="fab fa-instagram"></i> Soft Shiraz</a>
+        </div>
+        <p style="margin-top: 15px; color: #aaa; font-size: 14px;">
+            © ۱۴۰۴ سافت شیراز | تجربه‌ای متفاوت از سینما و دانلود
+        </p>
     </footer>
 
     <script>
         const container = document.getElementById('cards-container');
 
-        // ساخت 9999 کارت خالی (همه به ترتیب)
+        // ساخت کارت‌های 1 تا 9999 با انیمیشن فوق‌العاده نرم
         for (let i = 1; i <= 9999; i++) {
             const div = document.createElement('div');
             div.setAttribute('data-card', i);
-            div.style.animationDelay = `${(i % 20) * 0.05}s`; // انیمیشن ورود زیبا
+            div.style.animationDelay = `${(i % 30) * 0.04}s`;
             container.appendChild(div);
         }
 
-        // لود کارت‌ها به ترتیب عددی
-        document.querySelectorAll('[data-card]').forEach(async (cardDiv) => {
-            const num = cardDiv.getAttribute('data-card');
-            const filePath = `cards/${num}.html`;
-
+        // لود سریع و هوشمند کارت‌ها
+        document.querySelectorAll('[data-card]').forEach(async (el) => {
+            const num = el.getAttribute('data-card');
             try {
-                const res = await fetch(filePath);
-                if (!res.ok) throw new Error();
+                const res = await fetch(`cards/${num}.html?t=${Date.now()}`, { cache: "no-store" });
+                if (!res.ok) throw 0;
                 const html = await res.text();
+                if (html.includes('ندارد')) throw 0;
 
-                if (html.includes('ندارد')) throw new Error();
+                el.innerHTML = html;
 
-                cardDiv.innerHTML = html;
-
-                // اضافه کردن دکمه رزرو به همه کارت‌ها
-                const reserveBtn = document.createElement('div');
-                reserveBtn.innerHTML = `
-                    <a href="https://t.me/softshiraz" target="_blank" class="reserve-btn">
-                        رزرو بلیط
-                    </a>`;
-                cardDiv.querySelector('.movie-info')?.appendChild(reserveBtn);
+                // اضافه کردن دکمه رزرو (اگر هنوز نباشه)
+                if (!el.querySelector('.reserve-btn')) {
+                    const info = el.querySelector('.movie-info') || el;
+                    const btn = document.createElement('div');
+                    btn.innerHTML = `<a href="https://t.me/softshiraz" target="_blank" class="reserve-btn">رزرو بلیط</a>`;
+                    info.appendChild(btn.firstChild);
+                }
             } catch {
-                cardDiv.remove(); // فایل نبود یا "ندارد" بود → حذف کامل
+                el.remove();
             }
         });
     </script>
