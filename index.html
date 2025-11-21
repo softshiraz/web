@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soft Shiraz - دانلود فیلم و سریال</title>
+    <title>سافت شیراز - اکران و دانلود فیلم</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
     <style>
         body {
-            font-family: 'Tahoma', sans-serif;
+            font-family: 'Vazirmatn', Tahoma, sans-serif;
             background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
             color: #ffffff;
             margin: 0;
@@ -16,352 +17,177 @@
             text-shadow: 0 1px 2px rgba(0,0,0,0.5);
         }
         header {
-            background: linear-gradient(135deg, rgba(30, 30, 30, 0.9), rgba(45, 45, 45, 0.7));
+            background: linear-gradient(135deg, rgba(30, 30, 30, 0.95), rgba(45, 45, 45, 0.8));
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             border-bottom: 1px solid #404040;
-            box-shadow: 0 8px 32px rgba(255,215,0,0.1);
-            padding: 10px 20px;
+            box-shadow: 0 8px 32px rgba(255,215,0,0.15);
+            padding: 15px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: sticky;
             top: 0;
-            z-index: 10;
+            z-index: 1000;
         }
         header::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, transparent 0%, rgba(255,215,0,0.05) 50%, transparent 100%);
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,215,0,0.08), transparent);
             z-index: -1;
         }
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: #ffd700;
-            position: relative;
-            z-index: 1;
-        }
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            color: #ffd700;
-        }
-        .hamburger span {
-            width: 25px;
-            height: 3px;
-            background: #ffd700;
-            margin: 3px 0;
-            transition: 0.3s;
-            box-shadow: 0 2px 4px rgba(255,215,0,0.3);
-        }
-        .search-bar {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            position: relative;
-        }
-        .search-bar input {
-            padding: 8px;
-            border: 1px solid #404040;
-            border-radius: 5px;
-            background: linear-gradient(135deg, rgba(45, 45, 45, 0.8), rgba(64, 64, 64, 0.6));
-            color: #ffffff;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            transition: all 0.3s;
-        }
-        .search-bar input:focus {
-            outline: none;
-            box-shadow: 0 0 10px rgba(255,215,0,0.3);
-        }
-        .search-bar button {
-            padding: 8px 12px;
-            background-color: #ffd700;
-            border: none;
-            border-radius: 5px;
-            color: #000;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 8px rgba(255,215,0,0.2);
-        }
-        .search-bar button:hover {
-            background-color: #ffeb3b;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(255,215,0,0.4);
-        }
-        main {
-            padding: 20px;
-        }
-        .section {
-            margin-bottom: 40px;
-        }
+        .logo-en { font-size: 26px; font-weight: bold; color: #ffd700; letter-spacing: 1px; }
+        .logo-fa { font-size: 24px; font-weight: bold; color: #ffd700; }
+        main { padding: 30px 20px; }
         .section h2 {
             color: #ffd700;
-            border-bottom: 2px solid #ffd700;
-            padding-bottom: 10px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            border-bottom: 3px solid #ffd700;
+            padding-bottom: 12px;
+            font-size: 28px;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 0 2px 6px rgba(255,215,0,0.3);
         }
         .movies-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
+            gap: 24px;
+            max-width: 1400px;
+            margin: 0 auto;
         }
         .movie-card {
-            background: linear-gradient(135deg, rgba(45, 45, 45, 0.8), rgba(64, 64, 64, 0.6));
+            background: linear-gradient(135deg, rgba(45,45,45,0.9), rgba(64,64,64,0.7));
             backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
             border: 1px solid #404040;
-            border-radius: 10px;
+            border-radius: 14px;
             overflow: hidden;
             transition: all 0.4s ease;
             cursor: pointer;
             position: relative;
-            animation: fadeInUp 0.6s ease forwards;
+            animation: fadeInUp 0.7s ease forwards;
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(30px);
         }
-        .movie-card:nth-child(1) { animation-delay: 0.1s; }
-        .movie-card:nth-child(2) { animation-delay: 0.2s; }
-        .movie-card:nth-child(3) { animation-delay: 0.3s; }
+        .movie-card:hover {
+            transform: scale(1.07) translateY(-10px);
+            box-shadow: 0 20px 50px rgba(255,215,0,0.35);
+            border-color: #ffd700;
+        }
         .movie-card::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
+            top: 0; left: 0; right: 0;
+            height: 3px;
             background: linear-gradient(90deg, transparent, #ffd700, transparent);
             opacity: 0;
             transition: opacity 0.4s;
         }
-        .movie-card:hover {
-            transform: scale(1.05) translateY(-5px);
-            box-shadow: 0 12px 40px rgba(255,215,0,0.3);
-            border-color: #ffd700;
-        }
-        .movie-card:hover::before {
-            opacity: 1;
-        }
+        .movie-card:hover::before { opacity: 1; }
         .movie-card img {
             width: 100%;
             height: 300px;
             object-fit: cover;
+            transition: transform 0.7s ease;
         }
+        .movie-card:hover img { transform: scale(1.15); }
         .movie-info {
-            padding: 10px;
+            padding: 14px;
+            text-align: center;
         }
         .movie-title {
             font-size: 18px;
             font-weight: bold;
-            margin-bottom: 5px;
-            color: #ffffff;
-        }
-        .movie-desc {
-            font-size: 14px;
-            color: #ffffff;
-        }
-        .loading-spinner {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 200px;
-            font-size: 20px;
+            margin-bottom: 8px;
             color: #ffd700;
         }
-        .spinner {
-            border: 4px solid rgba(64,64,64,0.3);
-            border-top: 4px solid #ffd700;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite, pulse 2s infinite;
-            box-shadow: 0 0 20px rgba(255,215,0,0.5);
+        .reserve-btn {
+            margin-top: 10px;
+            background: linear-gradient(45deg, #ffd700, #ffeb3b);
+            color: #000;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: inline-block;
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .reserve-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(255,215,0,0.5);
         }
         footer {
-            background: linear-gradient(135deg, rgba(30, 30, 30, 0.9), rgba(45, 45, 45, 0.7));
+            background: linear-gradient(135deg, rgba(30,30,30,0.95), rgba(45,45,45,0.8));
             backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
             border-top: 1px solid #404040;
-            box-shadow: 0 -8px 32px rgba(255,215,0,0.1);
             text-align: center;
-            padding: 20px;
-            margin-top: 40px;
-            color: #ffffff;
+            padding: 25px;
+            margin-top: 60px;
+            color: #ccc;
+            font-size: 14px;
+        }
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
         }
         @media (max-width: 768px) {
-            .hamburger {
-                display: flex;
-            }
-            .search-bar {
-                display: none;
-                position: absolute;
-                top: 60px;
-                right: 20px;
-                background: linear-gradient(135deg, rgba(45, 45, 45, 0.9), rgba(64, 64, 64, 0.7));
-                padding: 10px;
-                border-radius: 5px;
-                flex-direction: column;
-                width: 200px;
-                backdrop-filter: blur(5px);
-                -webkit-backdrop-filter: blur(5px);
-            }
-            .search-bar.active {
-                display: flex;
-            }
-            .movies-grid {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            }
-            .movie-card {
-                backdrop-filter: blur(5px);
-                -webkit-backdrop-filter: blur(5px);
-            }
+            .movies-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 18px; }
+            .movie-card img { height: 240px; }
         }
     </style>
 </head>
 <body>
+
     <header>
-        <div class="logo">Soft Shiraz</div>
-        <div class="hamburger" onclick="toggleSearch()">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <div class="search-bar" id="search-bar">
-            <input type="text" id="search-input" placeholder="جستجو...">
-            <button onclick="searchMovies()"><i class="fas fa-search"></i></button>
-        </div>
+        <div class="logo-en">Soft Shiraz</div>
+        <div class="logo-fa">سافت شیراز</div>
     </header>
 
     <main>
-        <section id="movies" class="section">
-            <h2>فیلم‌ها</h2>
-            <div class="loading-spinner" id="movies-loading">
-                <div class="spinner"></div>
-            </div>
-            <div class="movies-grid" id="movies-grid">
-                <!-- کارت‌ها توسط JS ساخته می‌شن -->
-            </div>
-        </section>
-
-        <section id="series" class="section">
-            <h2>سریال‌ها</h2>
-            <div class="loading-spinner" id="series-loading">
-                <div class="spinner"></div>
-            </div>
-            <div class="movies-grid" id="series-grid">
-                <!-- کارت‌ها توسط JS ساخته می‌شن -->
+        <section class="section">
+            <h2>اکران‌های امروز</h2>
+            <div class="movies-grid" id="cards-container">
+                <!-- کارت‌ها خودکار از پوشه cards/ لود میشن -->
             </div>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2025 Soft Shiraz. همه حقوق محفوظ است.</p>
+        <p>© 2025 سافت شیراز - تمامی حقوق محفوظ است</p>
     </footer>
 
     <script>
-        let allMovies = [];
-        let allSeries = [];
+        const container = document.getElementById('cards-container');
 
-        // لود فیلم‌ها با spinner
-        document.getElementById('movies-loading').style.display = 'flex';
-        fetch('movies.json')
-            .then(response => response.json())
-            .then(movies => {
-                allMovies = movies;
-                const moviesGrid = document.getElementById('movies-grid');
-                movies.forEach((movie, index) => {
-                    const card = createCard(movie.title, movie.poster, movie.summary, movie.detailPage, index);
-                    card.classList.add('searchable');
-                    moviesGrid.appendChild(card);
-                });
-                document.getElementById('movies-loading').style.display = 'none';
-            })
-            .catch(error => {
-                console.error('خطا در لود فیلم‌ها:', error);
-                document.getElementById('movies-loading').innerHTML = '<p>خطا در لود</p>';
-            });
-
-        // لود سریال‌ها با spinner
-        document.getElementById('series-loading').style.display = 'flex';
-        fetch('series.json')
-            .then(response => response.json())
-            .then(series => {
-                allSeries = series;
-                const seriesGrid = document.getElementById('series-grid');
-                series.forEach((serie, index) => {
-                    const card = createCard(serie.title, serie.poster, serie.summary, serie.detailPage, index);
-                    card.classList.add('searchable');
-                    seriesGrid.appendChild(card);
-                });
-                document.getElementById('series-loading').style.display = 'none';
-            })
-            .catch(error => {
-                console.error('خطا در لود سریال‌ها:', error);
-                document.getElementById('series-loading').innerHTML = '<p>خطا در لود</p>';
-            });
-
-        // تابع ساخت کارت (با animation-delay)
-        function createCard(title, poster, summary, detailPage, index) {
-            const card = document.createElement('div');
-            card.className = 'movie-card';
-            card.style.animationDelay = `${index * 0.1}s`;
-            card.innerHTML = `
-                <img src="${poster}" alt="${title}">
-                <div class="movie-info">
-                    <div class="movie-title">${title}</div>
-                    <div class="movie-desc">${summary}</div>
-                </div>
-            `;
-            card.addEventListener('click', () => {
-                window.location.href = detailPage;
-            });
-            return card;
+        // ساخت 9999 کارت خالی (همه به ترتیب)
+        for (let i = 1; i <= 9999; i++) {
+            const div = document.createElement('div');
+            div.setAttribute('data-card', i);
+            div.style.animationDelay = `${(i % 20) * 0.05}s`; // انیمیشن ورود زیبا
+            container.appendChild(div);
         }
 
-        // جستجوی واقعی
-        function searchMovies() {
-            const query = document.getElementById('search-input').value.toLowerCase();
-            const cards = document.querySelectorAll('.searchable');
-            cards.forEach(card => {
-                const title = card.querySelector('.movie-title').textContent.toLowerCase();
-                if (title.includes(query)) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
+        // لود کارت‌ها به ترتیب عددی
+        document.querySelectorAll('[data-card]').forEach(async (cardDiv) => {
+            const num = cardDiv.getAttribute('data-card');
+            const filePath = `cards/${num}.html`;
 
-        // Hamburger toggle
-        function toggleSearch() {
-            const searchBar = document.getElementById('search-bar');
-            searchBar.classList.toggle('active');
-        }
+            try {
+                const res = await fetch(filePath);
+                if (!res.ok) throw new Error();
+                const html = await res.text();
 
-        // سرچ با Enter
-        document.getElementById('search-input').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                searchMovies();
+                if (html.includes('ندارد')) throw new Error();
+
+                cardDiv.innerHTML = html;
+
+                // اضافه کردن دکمه رزرو به همه کارت‌ها
+                const reserveBtn = document.createElement('div');
+                reserveBtn.innerHTML = `
+                    <a href="https://t.me/softshiraz" target="_blank" class="reserve-btn">
+                        رزرو بلیط
+                    </a>`;
+                cardDiv.querySelector('.movie-info')?.appendChild(reserveBtn);
+            } catch {
+                cardDiv.remove(); // فایل نبود یا "ندارد" بود → حذف کامل
             }
         });
     </script>
