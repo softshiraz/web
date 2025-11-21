@@ -3,49 +3,73 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>اکران‌های سریال | @softshiraz</title>
+  <title>اکران امروز | @softshiraz</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
   <style>
-    body { background: #0a0a0a; color: white; font-family: 'Vazirmatn', sans-serif; }
-    .card { aspect-ratio: 2/3; } /* عمودی مثل سریال‌ها */
-    .overlay { background: linear-gradient(transparent, rgba(0,0,0,0.8)); }
+    body { background: #000; color: white; font-family: 'Vazirmatn', sans-serif; padding: 20px 0; }
+    .card { aspect-ratio: 2/3; }
+    .glow:hover { box-shadow: 0 0 30px rgba(236, 72, 153, 0.6); }
   </style>
 </head>
-<body class="p-4 md:p-8">
+<body>
 
-  <!-- Grid عمودی برای 12 کارت -->
-  <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-    
-    <!-- ترتیب عمودی 1 تا 12 -->
-    <div data-card="1"></div>
-    <div data-card="2"></div>
-    <div data-card="3"></div>
-    <div data-card="4"></div>
-    <div data-card="5"></div>
-    <div data-card="6"></div>
-    <div data-card="7"></div>
-    <div data-card="8"></div>
-    <div data-card="9"></div>
-    <div data-card="10"></div>
-    <div data-card="11"></div>
-    <div data-card="12"></div>
-
+  <div class="max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 px-4" id="cards-container">
+    <!-- کارت‌ها اینجا خودکار اضافه میشن -->
   </div>
 
   <script>
-    // لود 12 کارت به ترتیب
-    for (let i = 1; i <= 12; i++) {
-      const container = document.querySelector(`[data-card="${i}"]`);
-      const code = i;
-      fetch(`cards/${code}.html`)
-        .then(r => r.ok ? r.text() : Promise.reject())
-        .then(html => {
-          if (html.includes("ندارد")) return; // اگر "ندارد" بود → نشون نده
-          container.innerHTML = html;
-        })
-        .catch(() => {}); // فایل نبود → خالی بذار
+    // ترتیب هوشمند: از 1 تا 9999
+    const totalCards = 9999;
+    const container = document.getElementById('cards-container');
+
+    for (let i = 1; i <= totalCards; i++) {
+      const div = document.createElement('div');
+      div.setAttribute('data-card', i);
+      container.appendChild(div);
     }
+
+    // لود کارت‌ها به ترتیب عددی
+    document.querySelectorAll('[data-card]').forEach(async (container) => {
+      const num = container.getAttribute('data-card');
+      const file = `cards/${num}.html`;
+
+      try {
+        const res = await fetch(file);
+        if (!res.ok) throw new Error();
+        const html = await res.text();
+
+        if (html.includes('ندارد')) throw new Error(); // مخفی کن
+
+        // فقط برای کارت شماره 1: دو خط متن
+        if (num === "1") {
+          container.innerHTML = html;
+        } else {
+          container.innerHTML = `
+            <div class="card relative rounded-2xl overflow-hidden shadow-2xl group glow transition-all duration-500 cursor-pointer">
+              <img src="png/${num}.png" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+              
+              <!-- تاریخ شیک گوشه بالا -->
+              <div class="absolute top-3 left-3 bg-black/80 backdrop-blur-md border border-pink-500/50 rounded-xl px-4 py-3 text-center">
+                <p class="text-xs text-gray-400">پنجشنبه</p>
+                <p class="text-2xl font-bold text-pink-400">۶</p>
+                <p class="text-xs text-gray-300">آذر</p>
+                <p class="text-sm font-bold text-white">۱۷:۰۰</p>
+              </div>
+
+              <!-- دکمه رزرو برای همه کارت‌ها (به جز 1) -->
+              <div class="absolute bottom-0 left-0 right-0 p-5 text-center opacity-0 group-hover:opacity-100 transition">
+                <a href="https://t.me/softshiraz" target="_blank" 
+                   class="inline-block bg-gradient-to-r from-pink-600 to-purple-700 hover:from-pink-500 hover:to-purple-600 text-white font-bold py-3 px-8 rounded-full shadow-2xl">
+                  رزرو بلیط
+                </a>
+              </div>
+            </div>`;
+        }
+      } catch {
+        container.remove(); // اگر فایل نبود یا "ندارد" بود → کاملاً حذف بشه
+      }
+    });
   </script>
 </body>
 </html>
