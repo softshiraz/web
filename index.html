@@ -73,24 +73,23 @@ h2 {
     height:36px;
     line-height:36px;
     padding:0 10px;
-    font-size:16px;
     text-align:center;
     overflow:hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     border-top: 1px solid #222;
 }
-.date-bar { background:#111; color:#ffd700; border-bottom:none; }
-.title-bar { background:#111; color:#fff; border-bottom:none; }
-.reserve-bar { background:#0b0b0b; margin-top:auto; }
+.date-bar { background:#111; color:#ffd700; border-bottom:none; font-size:16px; }
+.title-bar { background:#111; color:#fff; border-bottom:none; font-size:14px; } /* فونت کمی کوچکتر */
+.reserve-bar { background:#0b0b0b; margin-top:auto; font-size:14px; }
 
-/* دکمه رزرو */
+/* دکمه رزرو داخل رزرو بار */
 .reserve-btn {
     background:#ffd700;
     color:#000;
     font-weight:600;
-    font-size:15px;
-    padding:4px 16px; /* متن داخل دکمه کمی جمع‌تر شد */
+    font-size:13px;
+    padding:4px 16px; 
     border-radius:20px;
     text-decoration:none;
 }
@@ -160,7 +159,6 @@ fetch('order.txt')
             card.style.animation=`fadeUp 0.5s ease forwards`;
             card.style.animationDelay=`${index*0.08}s`;
 
-            // کارت شامل جلو و پشت در یک فایل
             card.innerHTML = cardHTML;
 
             container.appendChild(card);
