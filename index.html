@@ -96,17 +96,11 @@ h2 {
 /* رنگ متن کادرها */
 .date-bar { color:#ffd700; }
 .title-bar { color:#fff; }
-/* تغییر رنگ دکمه رزرو بلیط به مشکی */
 .reserve-bar { 
-    color:#fff; /* متن سفید */
-    background:#000; /* پس‌زمینه مشکی */
+    color:#000;  /* تغییر رنگ متن به سیاه */
+    background:#ffd700;
     font-weight: bold;
     cursor: pointer;
-}
-
-.reserve-bar:hover {
-    background: #ffd700; /* رنگ پس‌زمینه زرد هنگام hover */
-    color: #000; /* متن سیاه */
 }
 
 /* پشت کارت */
@@ -191,6 +185,15 @@ fetch('order.txt')
             card.innerHTML = cardHTML;
 
             container.appendChild(card);
+
+            // اضافه کردن عملکرد برای کلیک روی دکمه رزرو بلیط
+            const reserveButton = card.querySelector('.reserve-bar');
+            if (reserveButton) {
+                reserveButton.addEventListener('click', function() {
+                    const telegramID = 'softshiraz'; // به جای این آی‌دی، آی‌دی تلگرام مربوطه را قرار دهید
+                    window.location.href = `https://t.me/${telegramID}`;
+                });
+            }
         });
     });
 });
@@ -204,15 +207,6 @@ document.addEventListener('click',function(e){
         }
         cardInner.classList.toggle('flipped');
         openCard = cardInner.classList.contains('flipped') ? cardInner : null;
-    }
-});
-
-// هنگامی که روی دکمه رزرو بلیط کلیک می‌کنید
-document.addEventListener('click', function(e) {
-    const reserveButton = e.target.closest('.reserve-bar');
-    if (reserveButton) {
-        alert("دستور رزرو بلیط اجرا شد!");
-        // در اینجا شما می‌توانید کد یا دستورات دیگر برای رزرو بلیط را اجرا کنید
     }
 });
 </script>
