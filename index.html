@@ -3,88 +3,68 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>سافت شیراز - نسخه ویژه</title>
+<title>A Slider</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:#0d0d0e;color:#fff;font-family:sans-serif;overflow-x:hidden}
-
-.slider{
-    width:100%;
-    overflow:hidden;
-    position:relative;
-    padding:40px 0;
-}
-
-.slider-track{
-    display:flex;
-    gap:20px;
-    transition:0.6s ease;
-}
+body{background:#0b0b0c;color:#fff;font-family:sans-serif;overflow-x:hidden}
+.slider{padding:40px 0;overflow:hidden}
+.slider-track{display:flex;gap:18px;transition:.6s}
 
 .card{
-    min-width:320px;
-    max-width:320px;
-    background:#151515;
-    border-radius:14px;
-    overflow:hidden;
-    display:flex;
+    min-width:260px;
+    max-width:260px;
+    background:#141414;
     border:1px solid #222;
+    border-radius:12px;
+    overflow:hidden;
 }
-
-.card-content{
-    padding:15px;
-    width:60%;
-    display:flex;
-    flex-direction:column;
-    gap:8px;
-}
-
-.card h3{font-size:20px;color:#ffd700;margin-bottom:6px}
-.card .score{color:#4af;font-weight:bold}
-.card .genre{color:#aaa}
-.card .desc{color:#ccc;font-size:14px;line-height:1.5}
 
 .card img{
-    width:40%;
-    height:100%;
+    width:100%;
+    height:160px;
     object-fit:cover;
 }
 
-/* اسلاید خودکار */
+.info{
+    padding:12px;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+h3{font-size:17px;color:#ffd700}
+.score{color:#4af;font-size:14px}
+.genre{color:#bbb;font-size:13px}
+.desc{color:#ccc;font-size:13px;line-height:1.4}
 </style>
 </head>
 <body>
 
 <div class="slider">
-    <div id="track" class="slider-track"></div>
+<div id="track" class="slider-track"></div>
 </div>
 
 <script>
 const track=document.getElementById("track");
-
 fetch('order.txt')
 .then(r=>r.text())
-.then(t=>t.split(',').map(x=>x.trim()))
-.then(order=>{
-    order.forEach(num=>{
-        fetch(`cards/${num}.html`).then(r=>r.text()).then(html=>{
-            const div=document.createElement('div');
-            div.innerHTML=html;
-            track.appendChild(div.firstElementChild);
-        });
-    });
+.then(t=>t.split(','))
+.then(arr=>{
+arr.forEach(n=>{
+fetch(`cards/${n}.html`).then(r=>r.text()).then(h=>{
+let d=document.createElement('div');
+d.innerHTML=h;
+track.appendChild(d.firstElementChild);
+});
+});
 });
 
-/* Slide auto */
 let pos=0;
 setInterval(()=>{
-    const width=340; 
-    pos-=width;
-    if(Math.abs(pos) >= track.scrollWidth - window.innerWidth){
-        pos=0;
-    }
-    track.style.transform=`translateX(${pos}px)`;
+const w=280;
+pos-=w;
+if(Math.abs(pos)>track.scrollWidth-window.innerWidth)pos=0;
+track.style.transform=`translateX(${pos}px)`;
 },5000);
 </script>
 
