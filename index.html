@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>اکران‌های بعدی</title>
+<title>سافت شیراز - اکران‌های بعدی</title>
 
 <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/dist/font-face.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -14,18 +14,16 @@ body { font-family: "Vazirmatn", sans-serif; background: #0e0e0f; color: #fff; }
 
 header {
     background: #000; padding: 15px 25px;
-    display:flex; justify-content: space-between; align-items:center;
+    display:flex; justify-content: center; align-items:center;
     border-bottom:1px solid #303030; position: sticky; top:0; z-index: 999;
 }
-.logo-fa, .logo-en {
+.logo-en {
     font-weight: 700;
     background: linear-gradient(45deg,#ffd700,#ffb300);
     -webkit-background-clip: text; color: transparent;
+    font-size: 26px;
 }
-.logo-fa { font-size: 24px; }
-.logo-en { font-size: 26px; }
 
-/* Main */
 main { padding: 35px 15px 60px; }
 h2 {
     color:#ffd700; font-size:28px; text-align:center;
@@ -34,25 +32,23 @@ h2 {
 }
 .section { text-align:center; }
 
-/* اسلایدر کارت‌ها */
-.movies-slider {
-    display:flex;
-    overflow-x:auto;
-    scroll-behavior: smooth;
+.movies-grid {
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap:20px;
-    padding-bottom:15px;
-    -webkit-overflow-scrolling: touch;
+    justify-items:center;
+    max-width:1200px;
+    margin:0 auto;
 }
-.movies-slider::-webkit-scrollbar { display:none; }
 
 /* کارت فلپ با اندازه ثابت سه حالت */
-.movie-card { perspective: 1000px; flex:0 0 auto; }
+.movie-card { perspective: 1000px; }
 .card-inner {
     position: relative;
     transition: transform 0.7s;
     transform-style: preserve-3d;
     cursor: pointer;
-    width: 280px; /* دسکتاپ پیش‌فرض */
+    width: 280px; /* پیش‌فرض دسکتاپ */
     height: 420px; 
 }
 .card-inner.flipped { transform: rotateY(180deg); }
@@ -70,8 +66,16 @@ h2 {
 .card-front {
     background:#131314; display:flex; flex-direction:column;
 }
-.img-bar { flex:1; width:100%; overflow:hidden; }
-.img-bar img { width:100%; height:100%; object-fit:cover; }
+.img-bar {
+    flex:1;
+    width:100%;
+    overflow:hidden;
+}
+.img-bar img { 
+    width:100%; 
+    height:100%; 
+    object-fit:cover; 
+}
 
 /* شیشه‌ای کردن کادرها */
 .date-bar, .title-bar, .reserve-bar {
@@ -118,7 +122,7 @@ footer {
     border-top:1px solid #303030; margin-top:60px;
 }
 .footer-title { font-size:18px; color:#ffd700; margin-bottom:18px; }
-.social-row { display:flex; justify-content:center; gap:18px; flex-wrap:wrap; }
+.social-row { display:flex; justify-content:center; gap:18px; }
 .social-icon {
     width:48px; height:48px; border-radius:50%;
     background:#1a1a1a; display:flex; align-items:center; justify-content:center;
@@ -126,28 +130,31 @@ footer {
 }
 .social-icon:hover { background:#ffd700; color:#000; }
 
-/* ریسپانسیو کارت‌ها */
-@media (max-width: 1200px) { .card-inner { width:240px; height:360px; } }
-@media (max-width: 768px) { .card-inner { width:200px; height:300px; } }
+/* ریسپانسیو: اندازه کارت‌ها برای لپ‌تاپ و موبایل */
+@media (max-width: 1200px) { 
+    .card-inner { width:240px; height:360px; } /* لپ‌تاپ متوسط */
+}
+@media (max-width: 768px) { 
+    .card-inner { width:200px; height:300px; } /* موبایل کوچک */
+}
 
 </style>
 </head>
 <body>
 
 <header>
-    <div class="logo-fa">سافت شیراز</div>
     <div class="logo-en">Soft Shiraz</div>
 </header>
 
 <main>
     <section class="section">
         <h2>اکران‌های بعدی</h2>
-        <div class="movies-slider" id="cards-container"></div>
+        <div class="movies-grid" id="cards-container"></div>
     </section>
 </main>
 
 <footer>
-    <div class="footer-title">شبکه‌های اجتماعی سافت شیراز</div>
+    <div class="footer-title">شبکه‌های اجتماعی Soft Shiraz</div>
     <div class="social-row">
         <a class="social-icon" href="https://t.me/softshiraz" target="_blank"><i class="fab fa-telegram"></i></a>
         <a class="social-icon" href="https://instagram.com/softshiraz" target="_blank"><i class="fab fa-instagram"></i></a>
@@ -174,6 +181,7 @@ fetch('order.txt')
             card.style.animationDelay=`${index*0.08}s`;
 
             card.innerHTML = cardHTML;
+
             container.appendChild(card);
         });
     });
@@ -186,22 +194,6 @@ document.addEventListener('click',function(e){
         cardInner.classList.toggle('flipped');
     }
 });
-
-// اسلایدر خودکار روان
-let slider = document.getElementById('cards-container');
-let scrollPos = 0;
-let scrollDirection = 1;
-function autoScroll(){
-    if(slider.scrollWidth > slider.clientWidth){
-        scrollPos += scrollDirection;
-        if(scrollPos >= slider.scrollWidth - slider.clientWidth) scrollDirection = -1;
-        if(scrollPos <= 0) scrollDirection = 1;
-        slider.scrollLeft = scrollPos;
-    }
-    requestAnimationFrame(autoScroll);
-}
-autoScroll();
-
 </script>
 
 </body>
