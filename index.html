@@ -11,232 +11,211 @@
     <!-- آیکون‌ها -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <!-- متا تگ‌های سئو -->
-    <meta name="description" content="لیست کامل اکران‌های بعدی Soft Shiraz همراه با اطلاعات فیلم، زمان پخش و امکان رزرو">
+    <!-- سئو -->
+    <meta name="description" content="برنامه اکران فیلم‌ها در Soft Shiraz">
     <meta property="og:title" content="سافت شیراز - اکران‌های بعدی">
-    <meta property="og:description" content="جدیدترین برنامه اکران فیلم‌ها در Soft Shiraz">
-    <meta property="og:image" content="https://softshiraz.com/banner.jpg">
+    <meta property="og:description" content="پخش جدیدترین اکران‌ها در Soft Shiraz">
     <meta property="og:type" content="website">
 
     <style>
         * { margin:0; padding:0; box-sizing:border-box; }
         body {
             font-family: "Vazirmatn", sans-serif;
-            background: #0c0c0e;
+            background: #0e0e0f;
             color: #fff;
-            min-height: 100vh;
         }
 
         /* هدر */
         header {
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(14px);
-            padding: 18px 25px;
+            background: #000;
+            padding: 15px 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: 1px solid #303030;
             position: sticky;
             top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid #444;
-            box-shadow: 0 0 25px rgba(0,0,0,0.5);
+            z-index: 999;
         }
-        .logo-fa { 
-            font-size: 27px; 
-            font-weight: bold; 
+        .logo-fa, .logo-en {
+            font-weight: 700;
             background: linear-gradient(45deg, #ffd700, #ffb300);
             -webkit-background-clip: text;
             color: transparent;
         }
-        .logo-en { 
-            font-size: 29px; 
-            font-weight: bold; 
-            background: linear-gradient(45deg, #ffd700, #ffb300);
-            -webkit-background-clip: text;
-            color: transparent;
-        }
+        .logo-fa { font-size: 24px; }
+        .logo-en { font-size: 26px; }
 
-        main { padding: 30px 15px 80px; }
+        main { padding: 35px 15px 60px; }
 
         h2 {
             color: #ffd700;
-            font-size: 34px;
+            font-size: 28px;
             text-align: center;
-            margin-bottom: 40px;
-            border-bottom: 4px solid #ffd700;
+            margin-bottom: 35px;
+            border-bottom: 3px solid #ffd700;
             display: inline-block;
-            padding-bottom: 10px;
+            padding-bottom: 6px;
         }
         .section { text-align:center; }
 
         /* گرید کارت‌ها */
         .movies-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 25px;
-            max-width: 1200px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 22px;
+            max-width: 1100px;
             margin: 0 auto;
         }
 
-        /* کارت سینمایی جدید */
+        /* کارت */
         .movie-card {
-            background: #111;
+            background: #131314;
             border: 1px solid #222;
-            border-radius: 18px;
+            border-radius: 14px;
             overflow: hidden;
-            transition: 0.4s;
+            animation: fadeUp 0.6s forwards;
             opacity: 0;
-            transform: translateY(25px);
-            animation: fadeUp 0.8s forwards;
-            box-shadow: 0 12px 30px rgba(0,0,0,0.6);
-        }
-        .movie-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 18px 35px rgba(0,0,0,0.75);
+            transform: translateY(20px);
         }
 
         /* پوستر */
         .img-bar {
-            height: 420px;
+            height: 380px;
             overflow: hidden;
-            position: relative;
         }
         .img-bar img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: 0.5s;
-        }
-        .movie-card:hover img {
-            transform: scale(1.08);
-            filter: brightness(1.15);
         }
 
         /* تاریخ */
         .date-bar {
             background: #111;
-            padding: 16px;
-            font-size: 20px;
+            padding: 12px;
+            font-size: 17px;
             color: #ffd700;
             text-align: center;
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid #222;
         }
 
         /* عنوان */
         .title-bar {
             background: #111;
-            padding: 20px;
-            font-size: 23px;
-            font-weight: bold;
+            padding: 18px;
+            font-size: 19px;
             color: #fff;
             text-align: center;
         }
 
         /* رزرو */
         .reserve-bar {
-            padding: 20px;
+            padding: 16px;
             text-align: center;
             background: #0b0b0b;
-            border-top: 1px solid #333;
+            border-top: 1px solid #222;
         }
         .reserve-btn {
-            background: linear-gradient(45deg, #ffd700, #ffb300);
-            padding: 14px 35px;
-            border-radius: 50px;
-            font-size: 18px;
-            font-weight: bold;
+            background: #ffd700;
+            padding: 11px 26px;
+            border-radius: 40px;
+            font-size: 16px;
+            font-weight: 600;
             color: #000;
             text-decoration: none;
-            display: inline-block;
-            transition: 0.3s;
-        }
-        .reserve-btn:hover {
-            transform: scale(1.07);
-            background: linear-gradient(45deg, #ffe066, #ffc400);
         }
 
         /* انیمیشن */
         @keyframes fadeUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* فوتِر */
+        /* فوتِر جدید */
         footer {
             background: #000;
-            padding: 40px 20px;
-            margin-top: 70px;
+            padding: 35px 20px;
             text-align: center;
-            border-top: 1px solid #444;
+            border-top: 1px solid #303030;
+            margin-top: 60px;
         }
-        .social-icons a {
-            display: inline-flex;
-            width: 55px; height: 55px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            justify-content: center;
-            align-items: center;
-            margin: 0 10px;
-            font-size: 25px;
+        .footer-title {
+            font-size: 18px;
             color: #ffd700;
-            transition: 0.3s;
+            margin-bottom: 18px;
         }
-        .social-icons a:hover {
+        .social-row {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+        }
+        .social-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffd700;
+            font-size: 22px;
+            text-decoration: none;
+        }
+        .social-icon:hover {
             background: #ffd700;
             color: #000;
-            transform: scale(1.2);
         }
+
     </style>
 </head>
 
 <body>
-    <header>
-        <div class="logo-fa">سافت شیراز</div>
-        <div class="logo-en">Soft Shiraz</div>
-    </header>
 
-    <main>
-        <section class="section">
-            <h2>اکران‌های بعدی</h2>
-            <div class="movies-grid" id="cards-container"></div>
-        </section>
-    </main>
+<header>
+    <div class="logo-fa">سافت شیراز</div>
+    <div class="logo-en">Soft Shiraz</div>
+</header>
 
-    <footer>
-        <div class="social-icons">
-            <a href="https://t.me/softshiraz" target="_blank"><i class="fab fa-telegram"></i></a>
-            <a href="https://instagram.com/softshiraz" target="_blank"><i class="fab fa-instagram"></i></a>
-        </div>
-        <p style="margin-top:20px; color:#bbb; font-size:17px;">softshiraz</p>
-    </footer>
+<main>
+    <section class="section">
+        <h2>اکران‌های بعدی</h2>
+        <div class="movies-grid" id="cards-container"></div>
+    </section>
+</main>
 
-    <script>
-        const container = document.getElementById('cards-container');
+<footer>
+    <div class="footer-title">شبکه‌های اجتماعی</div>
+    <div class="social-row">
+        <a class="social-icon" href="https://t.me/softshiraz" target="_blank"><i class="fab fa-telegram"></i></a>
+        <a class="social-icon" href="https://instagram.com/softshiraz" target="_blank"><i class="fab fa-instagram"></i></a>
+    </div>
+</footer>
 
-        fetch('order.txt')
-            .then(r => r.ok ? r.text() : Promise.reject())
-            .then(text => text.split(',').map(n => n.trim()))
-            .catch(() => ['1','2','3','4','5','6','7','8','9','10','11','12'])
-            .then(order => {
-                order.forEach((num, index) => {
-                    fetch(`cards/${num}.html`, { cache: "no-store" })
-                        .then(r => r.ok ? r.text() : Promise.reject())
-                        .then(html => {
-                            if (html.includes('ندارد')) return;
+<script>
+    const container = document.getElementById('cards-container');
 
-                            const card = document.createElement('div');
-                            card.className = 'movie-card';
-                            card.style.animationDelay = `${index * 0.12}s`;
-                            card.innerHTML = html;
+    fetch('order.txt')
+        .then(r => r.ok ? r.text() : Promise.reject())
+        .then(text => text.split(',').map(n => n.trim()))
+        .catch(() => ['1','2','3','4','5','6','7','8','9','10','11','12'])
+        .then(order => {
+            order.forEach((num, index) => {
+                fetch(`cards/${num}.html`, { cache: "no-store" })
+                    .then(r => r.ok ? r.text() : Promise.reject())
+                    .then(html => {
+                        if (html.includes('ندارد')) return;
 
-                            container.appendChild(card);
-                        })
-                        .catch(() => {});
-                });
+                        const card = document.createElement('div');
+                        card.className = 'movie-card';
+                        card.style.animationDelay = `${index * 0.10}s`;
+                        card.innerHTML = html;
+
+                        container.appendChild(card);
+                    })
+                    .catch(() => {});
             });
-    </script>
+        });
+</script>
 
 </body>
 </html>
