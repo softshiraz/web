@@ -14,16 +14,15 @@ body { font-family: "Vazirmatn", sans-serif; background: #0e0e0f; color: #fff; }
 
 header {
     background: #000; padding: 15px 25px;
-    display:flex; justify-content: space-between; align-items:center;
+    display:flex; justify-content: center; align-items:center;
     border-bottom:1px solid #303030; position: sticky; top:0; z-index: 999;
 }
-.logo-fa, .logo-en {
+.logo-en {
     font-weight: 700;
     background: linear-gradient(45deg,#ffd700,#ffb300);
     -webkit-background-clip: text; color: transparent;
+    font-size: 26px;
 }
-.logo-fa { font-size: 24px; }
-.logo-en { font-size: 26px; }
 
 main { padding: 35px 15px 60px; }
 h2 {
@@ -35,26 +34,28 @@ h2 {
 
 .movies-grid {
     display:grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap:20px;
-    max-width:1100px;
+    justify-items:center;
+    max-width:1200px;
     margin:0 auto;
 }
 
-/* کارت فلپ */
-.movie-card { perspective: 1000px; height:480px; position:relative; }
+/* کارت فلپ با اندازه ثابت سه حالت */
+.movie-card { perspective: 1000px; }
 .card-inner {
     position: relative;
-    width: 100%; height: 100%;
     transition: transform 0.7s;
     transform-style: preserve-3d;
     cursor: pointer;
+    width: 280px; /* پیش‌فرض دسکتاپ */
+    height: 420px; 
 }
 .card-inner.flipped { transform: rotateY(180deg); }
 
 .card-front, .card-back {
     position:absolute;
-    width:100%; height:100%;
+    top:0; left:0; width:100%; height:100%;
     border-radius:14px;
     overflow:hidden;
     backface-visibility:hidden;
@@ -65,55 +66,38 @@ h2 {
 .card-front {
     background:#131314; display:flex; flex-direction:column;
 }
-.img-bar { height:280px; overflow:hidden; }
-.img-bar img { width:100%; height:100%; object-fit:cover; }
+.img-bar {
+    flex:1;
+    width:100%;
+    overflow:hidden;
+}
+.img-bar img { 
+    width:100%; 
+    height:100%; 
+    object-fit:cover; 
+}
 
-/* فقط اصلاح کادر عنوان فیلم */
-.title-bar {
+/* شیشه‌ای کردن کادرها */
+.date-bar, .title-bar, .reserve-bar {
     height:36px;
     line-height:36px;
     padding:0 10px;
     text-align:center;
+    overflow:hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(6px);
+    border-top:1px solid rgba(255,255,255,0.1);
     font-size:14px;
-    overflow:hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    background:#111;
-    color:#fff;
-    border-top:1px solid #222;
-    border-bottom:none;
 }
 
-/* کادر تاریخ و ساعت */
-.date-bar {
-    height:36px;
-    line-height:36px;
-    padding:0 10px;
-    text-align:center;
-    font-size:16px;
-    overflow:hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    background:#111;
-    color:#ffd700;
-    border-top:1px solid #222;
-    border-bottom:none;
-}
+/* رنگ متن کادرها */
+.date-bar { color:#ffd700; }
+.title-bar { color:#fff; }
+.reserve-bar { color:#ffd700; }
 
-/* کادر رزرو بلیط بدون margin-top */
-.reserve-bar {
-    height:36px;
-    line-height:36px;
-    padding:0 10px;
-    text-align:center;
-    font-size:14px;
-    overflow:hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    background:#0b0b0b;
-}
-
-/* دکمه رزرو داخل رزرو بار */
+/* دکمه رزرو */
 .reserve-btn {
     background:#ffd700;
     color:#000;
@@ -146,12 +130,19 @@ footer {
 }
 .social-icon:hover { background:#ffd700; color:#000; }
 
+/* ریسپانسیو: اندازه کارت‌ها برای لپ‌تاپ و موبایل */
+@media (max-width: 1200px) { 
+    .card-inner { width:240px; height:360px; } /* لپ‌تاپ متوسط */
+}
+@media (max-width: 768px) { 
+    .card-inner { width:200px; height:300px; } /* موبایل کوچک */
+}
+
 </style>
 </head>
 <body>
 
 <header>
-    <div class="logo-fa">سافت شیراز</div>
     <div class="logo-en">Soft Shiraz</div>
 </header>
 
@@ -163,7 +154,7 @@ footer {
 </main>
 
 <footer>
-    <div class="footer-title">شبکه‌های اجتماعی</div>
+    <div class="footer-title">شبکه‌های اجتماعی Soft Shiraz</div>
     <div class="social-row">
         <a class="social-icon" href="https://t.me/softshiraz" target="_blank"><i class="fab fa-telegram"></i></a>
         <a class="social-icon" href="https://instagram.com/softshiraz" target="_blank"><i class="fab fa-instagram"></i></a>
