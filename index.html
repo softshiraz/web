@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Soft Shiraz</title>
+<title>سافت شیراز - اکران‌های بعدی</title>
 
 <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/dist/font-face.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -96,11 +96,17 @@ h2 {
 /* رنگ متن کادرها */
 .date-bar { color:#ffd700; }
 .title-bar { color:#fff; }
+/* تغییر رنگ دکمه رزرو بلیط به مشکی */
 .reserve-bar { 
-    color:#000; 
-    background:#ffd700;
+    color:#fff; /* متن سفید */
+    background:#000; /* پس‌زمینه مشکی */
     font-weight: bold;
     cursor: pointer;
+}
+
+.reserve-bar:hover {
+    background: #ffd700; /* رنگ پس‌زمینه زرد هنگام hover */
+    color: #000; /* متن سیاه */
 }
 
 /* پشت کارت */
@@ -144,12 +150,12 @@ footer {
 <body>
 
 <header>
-    <div class="logo-fa">Soft Shiraz</div>
+    <div class="logo-fa">سافت شیراز</div>
 </header>
 
 <main>
     <section class="section">
-        <h2>اکران‌های آینده</h2>
+        <h2>اکران‌های بعدی</h2>
         <div class="movies-grid" id="cards-container"></div>
     </section>
 </main>
@@ -198,6 +204,15 @@ document.addEventListener('click',function(e){
         }
         cardInner.classList.toggle('flipped');
         openCard = cardInner.classList.contains('flipped') ? cardInner : null;
+    }
+});
+
+// هنگامی که روی دکمه رزرو بلیط کلیک می‌کنید
+document.addEventListener('click', function(e) {
+    const reserveButton = e.target.closest('.reserve-bar');
+    if (reserveButton) {
+        alert("دستور رزرو بلیط اجرا شد!");
+        // در اینجا شما می‌توانید کد یا دستورات دیگر برای رزرو بلیط را اجرا کنید
     }
 });
 </script>
