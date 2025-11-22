@@ -67,10 +67,62 @@ h2 {
 }
 .img-bar { height:280px; overflow:hidden; }
 .img-bar img { width:100%; height:100%; object-fit:cover; }
-.date-bar { background:#111; padding:10px; font-size:16px; color:#ffd700; text-align:center; border-bottom:1px solid #222; }
-.title-bar { background:#111; padding:12px; font-size:18px; color:#fff; text-align:center; }
-.reserve-bar { padding:12px; text-align:center; background:#0b0b0b; border-top:1px solid #222; margin-top:auto; }
-.reserve-btn { background:#ffd700; padding:10px 22px; border-radius:35px; font-size:15px; font-weight:600; color:#000; text-decoration:none; }
+
+/* فقط اصلاح کادر عنوان فیلم */
+.title-bar {
+    height:36px;
+    line-height:36px;
+    padding:0 10px;
+    text-align:center;
+    font-size:14px;
+    overflow:hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    background:#111;
+    color:#fff;
+    border-top:1px solid #222;
+    border-bottom:none;
+}
+
+/* کادر تاریخ و ساعت */
+.date-bar {
+    height:36px;
+    line-height:36px;
+    padding:0 10px;
+    text-align:center;
+    font-size:16px;
+    overflow:hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    background:#111;
+    color:#ffd700;
+    border-top:1px solid #222;
+    border-bottom:none;
+}
+
+/* کادر رزرو بلیط بدون margin-top */
+.reserve-bar {
+    height:36px;
+    line-height:36px;
+    padding:0 10px;
+    text-align:center;
+    font-size:14px;
+    overflow:hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    background:#0b0b0b;
+}
+
+/* دکمه رزرو داخل رزرو بار */
+.reserve-btn {
+    background:#ffd700;
+    color:#000;
+    font-weight:600;
+    font-size:13px;
+    padding:4px 16px; 
+    border-radius:20px;
+    text-decoration:none;
+}
 
 /* پشت کارت */
 .card-back {
@@ -137,7 +189,6 @@ fetch('order.txt')
             card.style.animation=`fadeUp 0.5s ease forwards`;
             card.style.animationDelay=`${index*0.08}s`;
 
-            // کارت شامل جلو و پشت در یک فایل
             card.innerHTML = cardHTML;
 
             container.appendChild(card);
