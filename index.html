@@ -3,158 +3,223 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>سافت شیراز - اکران‌های بعدی</title>
+<title>اکران‌های بعدی - Soft Shiraz</title>
 
 <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/dist/font-face.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-* { margin:0; padding:0; box-sizing:border-box; }
-body { font-family: "Vazirmatn", sans-serif; background: #0e0e0f; color: #fff; }
-
-header {
-    background: #000; padding: 15px 25px;
-    display:flex; justify-content: center; align-items:center;
-    border-bottom:1px solid #303030; position: sticky; top:0; z-index: 999;
-}
-.logo-en {
-    font-weight: 700;
-    background: linear-gradient(45deg,#ffd700,#ffb300);
-    -webkit-background-clip: text; color: transparent;
-    font-size: 26px;
+/* ریست */
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+    font-family:"Vazirmatn",sans-serif;
+    background:#0f0f11;
+    color:#fff;
+    overflow-x:hidden;
 }
 
-main { padding: 35px 15px 60px; }
-h2 {
-    color:#ffd700; font-size:28px; text-align:center;
-    margin-bottom:35px; border-bottom:3px solid #ffd700;
-    display:inline-block; padding-bottom:6px;
+/* هدر */
+header{
+    background:rgba(0,0,0,0.65);
+    backdrop-filter:blur(12px);
+    padding:15px 25px;
+    border-bottom:1px solid #333;
+    display:flex;
+    justify-content:flex-end;
+    position:sticky;
+    top:0;
+    z-index:1000;
 }
-.section { text-align:center; }
+.logo-fa{
+    font-size:28px;
+    font-weight:900;
+    color:#ffd700;
+}
 
-.movies-grid {
+/* عنوان صفحه */
+h2{
+    text-align:center;
+    font-size:30px;
+    color:#ffd700;
+    margin:35px auto 45px;
+    width:fit-content;
+    padding-bottom:8px;
+    border-bottom:3px solid #ffd700;
+}
+
+/* گرید حرفه‌ای ریسپانسیو */
+.movies-grid{
     display:grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap:20px;
+    gap:25px;
     justify-items:center;
-    max-width:1200px;
+    max-width:1300px;
     margin:0 auto;
 }
 
-/* کارت فلپ با اندازه ثابت سه حالت */
-.movie-card { perspective: 1000px; }
-.card-inner {
-    position: relative;
-    transition: transform 0.7s;
-    transform-style: preserve-3d;
-    cursor: pointer;
-    width: 280px; /* پیش‌فرض دسکتاپ */
-    height: 420px; 
+/* تعداد کارت‌ها */
+@media (min-width:1200px){
+    .movies-grid{grid-template-columns:repeat(4,1fr);}
 }
-.card-inner.flipped { transform: rotateY(180deg); }
+@media (max-width:1199px){
+    .movies-grid{grid-template-columns:repeat(3,1fr);}
+}
+@media (max-width:900px){
+    .movies-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media (max-width:520px){
+    .movies-grid{grid-template-columns:1fr;}
+}
 
-.card-front, .card-back {
+/* کارت */
+.movie-card{
+    perspective:1200px;
+    width:100%;
+    max-width:280px;
+    height:auto;
+    animation:fadeUp 0.9s ease backwards;
+}
+.card-inner{
+    width:100%;
+    height:100%;
+    min-height:420px;
+    position:relative;
+    transform-style:preserve-3d;
+    transition:0.75s;
+    border-radius:16px;
+}
+.card-inner.flipped{transform:rotateY(180deg);}
+.card-front,.card-back{
     position:absolute;
-    top:0; left:0; width:100%; height:100%;
-    border-radius:14px;
-    overflow:hidden;
+    inset:0;
     backface-visibility:hidden;
+    border-radius:16px;
+    overflow:hidden;
+    background:#121214;
     border:1px solid #222;
 }
 
 /* جلو کارت */
-.card-front {
-    background:#131314; display:flex; flex-direction:column;
-}
-.img-bar {
-    flex:1;
-    width:100%;
-    overflow:hidden;
-}
-.img-bar img { 
-    width:100%; 
-    height:100%; 
-    object-fit:cover; 
+.card-front{
+    display:flex;
+    flex-direction:column;
 }
 
-/* شیشه‌ای کردن کادرها */
-.date-bar, .title-bar, .reserve-bar {
+/* تصویر */
+.img-bar{
+    height:100%;
+    max-height:100%;
+    flex:1;
+}
+.img-bar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+/* شیشه‌ای */
+.date-bar,.title-bar,.reserve-bar{
     height:36px;
     line-height:36px;
     padding:0 10px;
     text-align:center;
+    backdrop-filter:blur(6px);
+    white-space:nowrap;
     overflow:hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    background: rgba(0,0,0,0.4);
-    backdrop-filter: blur(6px);
-    border-top:1px solid rgba(255,255,255,0.1);
-    font-size:14px;
+    text-overflow:ellipsis;
+    font-size:15px;
 }
-
-/* رنگ متن کادرها */
-.date-bar { color:#ffd700; }
-.title-bar { color:#fff; }
-.reserve-bar { color:#ffd700; }
-
-/* دکمه رزرو */
-.reserve-btn {
+.date-bar{color:#ffd700;background:rgba(0,0,0,0.5);}
+.title-bar{color:#fff;background:rgba(0,0,0,0.45);}
+.reserve-bar{
     background:#ffd700;
     color:#000;
-    font-weight:600;
-    font-size:13px;
-    padding:4px 16px; 
-    border-radius:20px;
-    text-decoration:none;
+    font-weight:bold;
+}
+
+/* حالت هاور بدون بزرگ شدن */
+.card-front:hover{
+    box-shadow:0 8px 25px rgba(0,0,0,0.45);
+    transition:0.25s;
 }
 
 /* پشت کارت */
-.card-back {
-    transform:rotateY(180deg); background:#111; color:#fff;
-    padding:20px; text-align:right; font-size:15px; display:flex; flex-direction:column; justify-content:flex-start;
+.card-back{
+    transform:rotateY(180deg);
+    padding:20px;
+    background:#111;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start;
 }
-.card-back h3 { color:#ffd700; margin-bottom:8px; }
-.card-back p { margin-bottom:6px; }
+.card-back p{
+    margin-bottom:10px;
+    font-size:14px;
+    line-height:22px;
+}
+.card-back strong{
+    color:#ffd700;
+}
+.card-back span{
+    font-weight:bold;
+    color:#fff;
+}
 
 /* فوتر */
-footer {
-    background:#000; padding:35px 20px; text-align:center;
-    border-top:1px solid #303030; margin-top:60px;
+footer{
+    margin-top:60px;
+    padding:40px 25px;
+    background:#000;
+    border-top:1px solid #333;
+    text-align:right;
 }
-.footer-title { font-size:18px; color:#ffd700; margin-bottom:18px; }
-.social-row { display:flex; justify-content:center; gap:18px; }
-.social-icon {
-    width:48px; height:48px; border-radius:50%;
-    background:#1a1a1a; display:flex; align-items:center; justify-content:center;
-    color:#ffd700; font-size:22px; text-decoration:none;
+.footer-title{
+    font-size:20px;
+    color:#ffd700;
+    margin-bottom:15px;
 }
-.social-icon:hover { background:#ffd700; color:#000; }
+.social-row{
+    display:flex;
+    gap:15px;
+    justify-content:flex-end;
+}
+.social-icon{
+    width:50px;height:50px;border-radius:50%;
+    background:#1c1c1c;
+    display:flex;align-items:center;justify-content:center;
+    color:#ffd700;font-size:22px;text-decoration:none;
+}
+.social-icon:hover{
+    background:#ffd700;color:#000;
+    transition:0.3s;
+}
 
-/* ریسپانسیو: اندازه کارت‌ها برای لپ‌تاپ و موبایل */
-@media (max-width: 1200px) { 
-    .card-inner { width:240px; height:360px; } /* لپ‌تاپ متوسط */
-}
-@media (max-width: 768px) { 
-    .card-inner { width:200px; height:300px; } /* موبایل کوچک */
+/* انیمیشن ورود */
+@keyframes fadeUp{
+    from{opacity:0;transform:translateY(25px) scale(0.97) blur(4px);}
+    to{opacity:1;transform:translateY(0) scale(1) blur(0);}
 }
 
+/* اندازه کارت‌ها برای لپتاپ و موبایل */
+@media (max-width:1200px){
+    .card-inner{min-height:360px;}
+}
+@media (max-width:768px){
+    .card-inner{min-height:300px;}
+}
 </style>
 </head>
 <body>
 
 <header>
-    <div class="logo-en">Soft Shiraz</div>
+    <div class="logo-fa">Soft Shiraz</div>
 </header>
 
-<main>
-    <section class="section">
-        <h2>اکران‌های بعدی</h2>
-        <div class="movies-grid" id="cards-container"></div>
-    </section>
-</main>
+<h2>اکران‌های بعدی</h2>
+
+<div class="movies-grid" id="cards-container"></div>
 
 <footer>
-    <div class="footer-title">شبکه‌های اجتماعی Soft Shiraz</div>
+    <div class="footer-title">شبکه‌های اجتماعی سافت شیراز</div>
     <div class="social-row">
         <a class="social-icon" href="https://t.me/softshiraz" target="_blank"><i class="fab fa-telegram"></i></a>
         <a class="social-icon" href="https://instagram.com/softshiraz" target="_blank"><i class="fab fa-instagram"></i></a>
@@ -162,36 +227,37 @@ footer {
 </footer>
 
 <script>
-const container = document.getElementById('cards-container');
+const container = document.getElementById("cards-container");
+let openCard = null;
 
-fetch('order.txt')
-.then(r=>r.ok?r.text():Promise.reject())
-.then(text=>text.split(',').map(n=>n.trim()))
-.catch(()=>['1','2','3','4','5','6','7','8','9','10','11','12'])
-.then(order=>{
-    order.forEach((num,index)=>{
-        fetch(`cards/${num}.html`,{cache:"no-store"})
-        .then(r=>r.ok?r.text():Promise.reject())
-        .then(cardHTML=>{
-            if(!cardHTML) return;
-
-            const card=document.createElement('div');
-            card.className='movie-card';
-            card.style.animation=`fadeUp 0.5s ease forwards`;
-            card.style.animationDelay=`${index*0.08}s`;
-
-            card.innerHTML = cardHTML;
-
+/* لود کارت‌ها */
+fetch("order.txt")
+.then(r => r.ok ? r.text() : Promise.reject())
+.then(t => t.split(",").map(n => n.trim()))
+.catch(() => ["1","2","3","4","5","6","7","8","9","10"])
+.then(order => {
+    order.forEach(num => {
+        fetch(`cards/${num}.html`, {cache:"no-store"})
+        .then(r => r.ok ? r.text() : "")
+        .then(html => {
+            if(!html) return;
+            const card = document.createElement("div");
+            card.className = "movie-card";
+            card.innerHTML = html;
             container.appendChild(card);
-        });
+        })
     });
 });
 
-// فلپ کارت با کلیک
-document.addEventListener('click',function(e){
-    const cardInner = e.target.closest('.card-inner');
+/* بستن کارت قبلی و باز کردن کارت جدید */
+document.addEventListener("click", function(e){
+    const cardInner = e.target.closest(".card-inner");
     if(cardInner){
-        cardInner.classList.toggle('flipped');
+        if(openCard && openCard !== cardInner){
+            openCard.classList.remove("flipped");
+        }
+        cardInner.classList.toggle("flipped");
+        openCard = cardInner.classList.contains("flipped") ? cardInner : null;
     }
 });
 </script>
