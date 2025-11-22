@@ -65,8 +65,23 @@ h2 {
 .card-front {
     background:#131314; display:flex; flex-direction:column;
 }
-.img-bar { height:280px; overflow:hidden; }
-.img-bar img { width:100%; height:100%; object-fit:cover; }
+.img-bar {
+    width:100%; 
+    padding-top:66.6667%; /* نسبت 3:2 (ارتفاع = 2/3 عرض) */
+    position:relative; 
+    overflow:hidden;
+}
+.img-bar img {
+    position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover;
+}
+
+/* شیشه‌ای برای کادرها */
+.glass-bar {
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(6px);
+    border-radius:6px;
+    border:1px solid rgba(255,255,255,0.15);
+}
 
 /* فقط اصلاح کادر عنوان فیلم */
 .title-bar {
@@ -78,13 +93,9 @@ h2 {
     overflow:hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    background:#111;
     color:#fff;
-    border-top:1px solid #222;
-    border-bottom:none;
+    border-top:1px solid rgba(255,255,255,0.15);
 }
-
-/* کادر تاریخ و ساعت */
 .date-bar {
     height:36px;
     line-height:36px;
@@ -94,13 +105,9 @@ h2 {
     overflow:hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    background:#111;
     color:#ffd700;
-    border-top:1px solid #222;
-    border-bottom:none;
+    border-top:1px solid rgba(255,255,255,0.15);
 }
-
-/* کادر رزرو بلیط بدون margin-top */
 .reserve-bar {
     height:36px;
     line-height:36px;
@@ -110,10 +117,9 @@ h2 {
     overflow:hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    background:#0b0b0b;
 }
 
-/* دکمه رزرو داخل رزرو بار */
+/* دکمه رزرو */
 .reserve-btn {
     background:#ffd700;
     color:#000;
