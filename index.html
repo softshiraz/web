@@ -6,6 +6,7 @@
     <title>سافت شیراز - اکران‌های بعدی</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/b-koodak-bold@v1.0/font-face.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         * { margin:0; padding:0; box-sizing:border-box; }
         html { scroll-behavior: smooth; }
@@ -17,54 +18,40 @@
             overflow-x: hidden;
             position: relative;
         }
-
         /* باران نئونی */
         .rain {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1;
         }
         .drop {
-            position: absolute; width: 2px; background: linear-gradient(transparent, #ffd700);
-            animation: fall linear infinite;
+            position: absolute; width: 2px; height: 50px; background: linear-gradient(transparent, #ffd700);
+            animation: fall linear infinite; opacity: 0.6;
         }
-        @keyframes fall { to { transform: translateY(100vh); } }
+        @keyframes fall {
+            to { transform: translateY(100vh); }
+        }
 
-        /* لودینگ اول صفحه */
-        .loader {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000;
-            display: flex; align-items: center; justify-content: center; z-index: 9999;
-            transition: opacity 1s; opacity: 1;
+        /* لوگو اول صفحه */
+        .splash {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999;
+            display: flex; align-items: center; justify-content: center; flex-direction: column;
+            animation: fadeOut 3s forwards 2s;
         }
-        .loader h1 {
-            font-size: 60px; color: #ffd700; animation: typing 3s steps(20) forwards, glow 2s infinite;
-        }
-        @keyframes typing { from { width: 0; } to { width: 100%; } }
-        @keyframes glow { 0%,100% { text-shadow: 0 0 20px #ffd700; } 50% { text-shadow: 0 0 40px #ffd700; } }
+        .splash h1 { font-size: 70px; color: #ffd700; text-shadow: 0 0 30px #ffd700; animation: glow 2s infinite alternate; }
+        @keyframes glow { from { text-shadow: 0 0 20px #ffd700; } to { text-shadow: 0 0 50px #ffd700; } }
+        @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
 
         header {
-            background: rgba(10,10,30,0.95); backdrop-filter: blur(16px); padding: 18px 30px;
-            position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #404060;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+            background: rgba(10,10,30,0.95); backdrop-filter: blur(16px); padding: 16px 25px;
+            display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid #404060; box-shadow: 0 6px 25px rgba(0,0,0,0.6);
         }
-        .logo-fa, .logo-en {
-            font-size: 32px; font-weight: bold; color: #ffd700; overflow: hidden; white-space: nowrap;
-        }
-        .logo-fa { animation: typeFa 3s steps(10) forwards; }
-        .logo-en { animation: typeEn 3s steps(10) forwards; }
-        @keyframes typeFa { from { width: 0; } to { width: 120px; } }
-        @keyframes typeEn { from { width: 0; } to { width: 140px; } }
-
-        /* نوار متحرک بالای سایت */
-        .marquee {
-            background: linear-gradient(90deg, #ffd700, #ff6ec4); color: #000; padding: 12px; font-weight: bold;
-            font-size: 20px; text-align: center; animation: marquee 20s linear infinite;
-        }
-        @keyframes marquee { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
+        .logo-fa, .logo-en { font-size: 28px; font-weight: bold; color: #ffd700; }
 
         main { padding: 40px 15px 100px; position: relative; z-index: 2; }
         .section h2 {
-            color: #ffd700; font-size: 40px; text-align: center; margin-bottom: 60px;
-            text-shadow: 0 0 20px #ffd700; padding-bottom: 15px; border-bottom: 5px solid #ffd700;
-            width: fit-content; margin-left: auto; margin-right: auto;
+            color: #ffd700; font-size: 38px; text-align: center; margin-bottom: 60px;
+            padding-bottom: 12px; border-bottom: 6px solid #ffd700; width: fit-content; margin-left: auto; margin-right: auto;
+            text-shadow: 0 0 20px #ffd700;
         }
 
         .movies-grid {
@@ -75,80 +62,78 @@
             margin: 0 auto;
         }
         .movie-card {
-            background: #111; border-radius: 24px; overflow: hidden;
+            background: rgba(20,20,50,0.9);
+            border-radius: 22px;
+            overflow: hidden;
+            border: 2px solid transparent;
+            transition: all 0.5s ease;
+            opacity: 0;
+            transform: translateY(50px);
             box-shadow: 0 10px 30px rgba(0,0,0,0.7);
-            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
-            animation: fadeUp 0.8s ease-out forwards;
-            opacity: 0; transform: translateY(60px);
-            position: relative; overflow: hidden;
+        }
+        .movie-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.8s ease-out;
         }
         .movie-card:hover {
             transform: translateY(-20px) scale(1.05) rotateY(5deg);
-            box-shadow: 0 0 50px #ffd70080;
+            border-color: #ffd700;
+            box-shadow: 0 0 50px rgba(255,215,0,0.6);
         }
-        .movie-card::before {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: linear-gradient(45deg, transparent, #ffd70020, transparent);
-            transform: rotate(45deg); animation: shine 3s infinite;
-            opacity: 0; transition: opacity 0.5s;
+        .movie-card img {
+            width: 100%;
+            height: 380px;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1s ease;
         }
-        .movie-card:hover::before { opacity: 1; }
-        @keyframes shine { 0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); } 100% { transform: translateX(100%) translateY(100%) rotate(45deg); } }
+        .movie-card img.loaded { opacity: 1; }
 
-        .date-bar { background: #0066ff; padding: 20px; text-align: center; font-size: 22px; color: white; }
-        .img-bar { height: 400px; overflow: hidden; }
-        .img-bar img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s; }
-        .movie-card:hover .img-bar img { transform: scale(1.15); }
-        .title-bar { background: #00aa00; padding: 22px; text-align: center; font-size: 26px; color: white; }
+        .date-bar { background: #0066ff; padding: 20px; text-align: center; font-size: 21px; font-weight: bold; color: white; }
+        .title-bar { background: #00aa00; padding: 22px; text-align: center; font-size: 26px; font-weight: bold; color: white; }
         .reserve-bar { background: #ffcc00; padding: 22px; text-align: center; }
         .reserve-btn {
-            background: #000; color: #ffcc00; padding: 16px 50px; border-radius: 50px;
-            font-size: 20px; font-weight: bold; text-decoration: none;
+            background: #000; color: #ffcc00; font-weight: bold; padding: 15px 45px;
+            border-radius: 50px; font-size: 19px; text-decoration: none; display: inline-block;
             animation: pulse 2s infinite;
+            box-shadow: 0 0 30px rgba(255,204,0,0.8);
         }
-        @keyframes pulse { 0%,100% { box-shadow: 0 0 20px #ffcc00; } 50% { box-shadow: 0 0 40px #ffcc00; } }
-
-        .badge {
-            position: absolute; top: 15px; right: 15px; background: #ff0000; color: white;
-            padding: 8px 16px; border-radius: 20px; font-size: 14px; animation: blink 2s infinite;
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
         }
-        @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.6; } }
 
-        footer { background: #000; padding: 50px 20px; text-align: center; border-top: 1px solid #333; }
-        .social-icons a { width: 70px; height: 70px; background: #222; border-radius: 50%; display: inline-flex;
-            align-items: center; justify-content: center; font-size: 32px; color: #ffd700; margin: 0 20px;
-            transition: all 0.4s; }
-        .social-icons a:hover { background: #ffd700; color: #000; transform: rotate(360deg) scale(1.2); }
-
-        /* تلگرام شناور */
-        .telegram-float {
-            position: fixed; bottom: 30px; left: 30px; background: #0088cc; color: white;
-            width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center;
-            justify-content: center; font-size: 30px; box-shadow: 0 10px 30px rgba(0,136,204,0.6);
-            animation: float 3s infinite; z-index: 999;
+        /* حالت شب سینمایی */
+        .night-mode { filter: brightness(0.6) contrast(1.2); }
+        .night-toggle {
+            position: fixed; bottom: 20px; left: 20px; z-index: 999; background: #333; color: #ffd700;
+            width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 28px; cursor: pointer; box-shadow: 0 0 20px rgba(255,215,0,0.5);
         }
-        @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
-        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+        /* QR کد شناور */
+        .qr-float {
+            position: fixed; bottom: 20px; right: 20px; z-index: 999; background: white; padding: 10px;
+            border-radius: 15px; box-shadow: 0 0 30px rgba(255,215,0,0.7); border: 3px solid #ffd700;
+        }
 
         @media (max-width: 992px) {
             .movies-grid { grid-template-columns: 1fr; }
-            .img-bar { height: 500px; }
+            .movie-card img { height: 420px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- لودینگ -->
-    <div class="loader" id="loader">
+    <!-- لوگو اول صفحه -->
+    <div class="splash">
         <h1>Soft Shiraz</h1>
+        <p style="color:#ffd700; margin-top:20px; font-size:24px;">در حال بارگذاری تجربه سینمایی...</p>
     </div>
 
     <!-- باران نئونی -->
     <div class="rain" id="rain"></div>
-
-    <!-- نوار متحرک -->
-    <div class="marquee">اکران ویژه امشب - جوکر ۲ - سالن VIP - رزرو از تلگرام @softshiraz</div>
 
     <header>
         <div class="logo-fa">سافت شیراز</div>
@@ -162,64 +147,71 @@
         </section>
     </main>
 
-    <footer>
-        <div class="social-icons">
-            <a href="https://t.me/softshiraz" target="_blank"><i class="fab fa-telegram"></i></a>
-            <a href="https://instagram.com/softshiraz" target="_blank"><i class="fab fa-instagram"></i></a>
-        </div>
-        <p style="color:#aaa; margin-top:25px; font-size:18px;">softshiraz - تجربه‌ای متفاوت از سینما</p>
-    </footer>
+    <!-- دکمه حالت شب -->
+    <div class="night-toggle" onclick="document.body.classList.toggle('night-mode')">
+        <i class="fas fa-moon"></i>
+    </div>
 
-    <!-- تلگرام شناور -->
-    <a href="https://t.me/softshiraz" target="_blank" class="telegram-float">
-        <i class="fab fa-telegram-plane"></i>
-    </a>
+    <!-- QR کد تلگرام -->
+    <div class="qr-float">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://t.me/softshiraz" alt="تلگرام">
+    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script>
-        // لودینگ
-        window.addEventListener('load', () => {
-            setTimeout(() => { document.getElementById('loader').style.opacity = '0'; setTimeout(() => { document.getElementById('loader').remove(); }, 1000); }, 3000);
-        });
-
         // باران نئونی
         const rain = document.getElementById('rain');
         for(let i=0; i<80; i++) {
             const drop = document.createElement('div');
             drop.className = 'drop';
-            drop.style.left = Math.random()*100 + '%';
-            drop.style.animationDuration = 1 + Math.random()*2 + 's';
-            drop.style.animationDelay = Math.random()*5 + 's';
-            drop.style.height = 50 + Math.random()*100 + 'px';
+            drop.style.left = Math.random() * 100 + '%';
+            drop.style.animationDuration = 0.8 + Math.random() * 0.8 + 's';
+            drop.style.animationDelay = Math.random() * 5 + 's';
             rain.appendChild(drop);
         }
 
-        // confetti موقع رزرو
-        document.addEventListener('click', e => {
-            if(e.target.classList.contains('reserve-btn')) {
-                confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-            }
-        });
+        // انیمیشن اسکرول نرم و بدون باگ
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
 
         // لود کارت‌ها
         const container = document.getElementById('cards-container');
         fetch('order.txt')
             .then(r => r.ok ? r.text() : Promise.reject())
-            .then(t => t.split(',').map(x => x.trim()))
+            .then(text => text.split(',').map(n => n.trim()))
             .catch(() => ['1','2','3','4','5','6','7','8','9','10','11','12'])
             .then(order => {
                 order.forEach((num, i) => {
-                    fetch(`cards/${num}.html`)
+                    fetch(`cards/${num}.html`, { cache: "no-store" })
                         .then(r => r.ok ? r.text() : Promise.reject())
                         .then(html => {
-                            if(html.includes('ندارد')) return;
+                            if (html.includes('ندارد')) return;
                             const card = document.createElement('div');
                             card.className = 'movie-card';
-                            card.style.animationDelay = i * 0.15 + 's';
                             card.innerHTML = html;
                             container.appendChild(card);
-                        })
-                        .catch(() => {});
+                            observer.observe(card);
+
+                            // fade-in عکس
+                            const img = card.querySelector('img');
+                            if (img) img.onload = () => img.classList.add('loaded');
+
+                            // confetti موقع کلیک روی رزرو
+                            card.querySelectorAll('.reserve-btn').forEach(btn => {
+                                btn.addEventListener('click', () => {
+                                    confetti({
+                                        particleCount: 100,
+                                        spread: 70,
+                                        origin: { y: 0.6 },
+                                        colors: ['#ffd700', '#ffcc00', '#ffaa00']
+                                    });
+                                });
+                            });
+                        });
                 });
             });
     </script>
