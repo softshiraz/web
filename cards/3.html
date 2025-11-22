@@ -1,72 +1,9 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A Slider</title>
-
-<style>
-body{background:#0b0b0c;color:#fff;font-family:sans-serif;overflow-x:hidden}
-.slider{padding:40px 0;overflow:hidden}
-.slider-track{display:flex;gap:18px;transition:.6s}
-
-.card{
-    min-width:260px;
-    max-width:260px;
-    background:#141414;
-    border:1px solid #222;
-    border-radius:12px;
-    overflow:hidden;
-}
-
-.card img{
-    width:100%;
-    height:160px;
-    object-fit:cover;
-}
-
-.info{
-    padding:12px;
-    display:flex;
-    flex-direction:column;
-    gap:6px;
-}
-
-h3{font-size:17px;color:#ffd700}
-.score{color:#4af;font-size:14px}
-.genre{color:#bbb;font-size:13px}
-.desc{color:#ccc;font-size:13px;line-height:1.4}
-</style>
-</head>
-<body>
-
-<div class="slider">
-<div id="track" class="slider-track"></div>
+<div class="card">
+    <img src="https://via.placeholder.com/400x500" />
+    <div class="info">
+        <h3>فیلم ۱</h3>
+        <div class="score">امتیاز: 9.1</div>
+        <div class="genre">ژانر: هیجان‌انگیز</div>
+        <div class="desc">خلاصه فیلم در چند خط…</div>
+    </div>
 </div>
-
-<script>
-const track=document.getElementById("track");
-fetch('order.txt')
-.then(r=>r.text())
-.then(t=>t.split(','))
-.then(arr=>{
-arr.forEach(n=>{
-fetch(`cards/${n}.html`).then(r=>r.text()).then(h=>{
-let d=document.createElement('div');
-d.innerHTML=h;
-track.appendChild(d.firstElementChild);
-});
-});
-});
-
-let pos=0;
-setInterval(()=>{
-const w=280;
-pos-=w;
-if(Math.abs(pos)>track.scrollWidth-window.innerWidth)pos=0;
-track.style.transform=`translateX(${pos}px)`;
-},5000);
-</script>
-
-</body>
-</html>
