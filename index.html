@@ -4,142 +4,194 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>سافت شیراز - اکران‌های بعدی</title>
+
+    <!-- فونت -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/dist/font-face.css" rel="stylesheet">
+
+    <!-- آیکون‌ها -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/b-koodak-bold@v1.0/font-face.css" rel="stylesheet">
+
+    <!-- متا تگ‌های سئو -->
+    <meta name="description" content="لیست کامل اکران‌های بعدی Soft Shiraz همراه با اطلاعات فیلم، زمان پخش و امکان رزرو">
+    <meta property="og:title" content="سافت شیراز - اکران‌های بعدی">
+    <meta property="og:description" content="جدیدترین برنامه اکران فیلم‌ها در Soft Shiraz">
+    <meta property="og:image" content="https://softshiraz.com/banner.jpg">
+    <meta property="og:type" content="website">
+
     <style>
         * { margin:0; padding:0; box-sizing:border-box; }
         body {
-            font-family: 'B Koodak Bold', sans-serif !important;
-            background: #0a0a0a;
+            font-family: "Vazirmatn", sans-serif;
+            background: #0c0c0e;
             color: #fff;
             min-height: 100vh;
         }
+
+        /* هدر */
         header {
-            background: rgba(15,15,30,0.96);
-            backdrop-filter: blur(16px);
-            padding: 16px 25px;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(14px);
+            padding: 18px 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: sticky;
             top: 0;
             z-index: 1000;
-            border-bottom: 1px solid #404060;
-            box-shadow: 0 6px 25px rgba(0,0,0,0.5);
+            border-bottom: 1px solid #444;
+            box-shadow: 0 0 25px rgba(0,0,0,0.5);
         }
-        .logo-fa { font-size: 27px; font-weight: bold; color: #ffd700; }
-        .logo-en { font-size: 29px; font-weight: bold; color: #ffd700; }
+        .logo-fa { 
+            font-size: 27px; 
+            font-weight: bold; 
+            background: linear-gradient(45deg, #ffd700, #ffb300);
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .logo-en { 
+            font-size: 29px; 
+            font-weight: bold; 
+            background: linear-gradient(45deg, #ffd700, #ffb300);
+            -webkit-background-clip: text;
+            color: transparent;
+        }
 
         main { padding: 30px 15px 80px; }
-        .section h2 {
-            color: #ffd700; font-size: 36px; text-align: center;
-            margin-bottom: 50px; padding-bottom: 12px;
-            border-bottom: 5px solid #ffd700; width: fit-content;
-            margin-left: auto; margin-right: auto;
-            border-radius: 5px;
-        }
 
+        h2 {
+            color: #ffd700;
+            font-size: 34px;
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 4px solid #ffd700;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        .section { text-align:center; }
+
+        /* گرید کارت‌ها */
         .movies-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
             max-width: 1200px;
             margin: 0 auto;
         }
+
+        /* کارت سینمایی جدید */
         .movie-card {
-            background: transparent;
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 18px;
             overflow: hidden;
-            animation: cardIn 0.8s ease-out forwards;
+            transition: 0.4s;
             opacity: 0;
-            transform: translateY(30px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            transform: translateY(25px);
+            animation: fadeUp 0.8s forwards;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.6);
         }
-        .movie-card:hover { transform: translateY(-10px) scale(1.03); transition: all 0.4s; }
-
-        /* آبی - تاریخ و ساعت */
-        .date-bar {
-            background: #0066ff;
-            padding: 18px;
-            text-align: center;
-            font-size: 20px;
-            font-weight: bold;
-            color: white;
+        .movie-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 18px 35px rgba(0,0,0,0.75);
         }
 
-        /* قرمز - عکس */
+        /* پوستر */
         .img-bar {
-            background: #cc0000;
-            height: 380px;
+            height: 420px;
             overflow: hidden;
+            position: relative;
         }
         .img-bar img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: 0.5s;
+        }
+        .movie-card:hover img {
+            transform: scale(1.08);
+            filter: brightness(1.15);
         }
 
-        /* سبز - اسم فیلم */
+        /* تاریخ */
+        .date-bar {
+            background: #111;
+            padding: 16px;
+            font-size: 20px;
+            color: #ffd700;
+            text-align: center;
+            border-bottom: 1px solid #333;
+        }
+
+        /* عنوان */
         .title-bar {
-            background: #00aa00;
+            background: #111;
             padding: 20px;
-            text-align: center;
-            font-size: 24px;
+            font-size: 23px;
             font-weight: bold;
-            color: white;
+            color: #fff;
+            text-align: center;
         }
 
-        /* زرد - دکمه رزرو */
+        /* رزرو */
         .reserve-bar {
-            background: #ffcc00;
             padding: 20px;
             text-align: center;
+            background: #0b0b0b;
+            border-top: 1px solid #333;
         }
         .reserve-btn {
-            background: #000;
-            color: #ffcc00;
-            font-weight: bold;
-            padding: 14px 40px;
+            background: linear-gradient(45deg, #ffd700, #ffb300);
+            padding: 14px 35px;
             border-radius: 50px;
             font-size: 18px;
+            font-weight: bold;
+            color: #000;
             text-decoration: none;
             display: inline-block;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+            transition: 0.3s;
         }
         .reserve-btn:hover {
-            background: #333;
-            transform: scale(1.1);
+            transform: scale(1.07);
+            background: linear-gradient(45deg, #ffe066, #ffc400);
         }
 
+        /* انیمیشن */
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* فوتِر */
         footer {
-            background: rgba(15,15,30,0.98);
+            background: #000;
             padding: 40px 20px;
+            margin-top: 70px;
             text-align: center;
-            margin-top: 80px;
-            border-top: 1px solid #404060;
+            border-top: 1px solid #444;
         }
         .social-icons a {
-            width: 60px; height: 60px; background: rgba(255,255,255,0.15);
-            border-radius: 50%; display: inline-flex;
-            align-items: center; justify-content: center;
-            font-size: 28px; color: #ffd700; margin: 0 15px;
+            display: inline-flex;
+            width: 55px; height: 55px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            justify-content: center;
+            align-items: center;
+            margin: 0 10px;
+            font-size: 25px;
+            color: #ffd700;
+            transition: 0.3s;
         }
-        .social-icons a:hover { background: #ffd700; color: #000; transform: scale(1.2); }
-
-        @keyframes cardIn { to { opacity: 1; transform: translateY(0); } }
-
-        /* موبایل: ۱ کارت */
-        @media (max-width: 992px) {
-            .movies-grid { grid-template-columns: 1fr; }
-            .img-bar { height: 450px; }
-        }
-        @media (max-width: 480px) {
-            .date-bar, .title-bar, .reserve-bar { padding: 16px; font-size: 18px; }
-            .reserve-btn { padding: 12px 30px; font-size: 16px; }
+        .social-icons a:hover {
+            background: #ffd700;
+            color: #000;
+            transform: scale(1.2);
         }
     </style>
 </head>
-<body>
 
+<body>
     <header>
         <div class="logo-fa">سافت شیراز</div>
         <div class="logo-en">Soft Shiraz</div>
@@ -157,13 +209,12 @@
             <a href="https://t.me/softshiraz" target="_blank"><i class="fab fa-telegram"></i></a>
             <a href="https://instagram.com/softshiraz" target="_blank"><i class="fab fa-instagram"></i></a>
         </div>
-        <p style="color:#aaa; margin-top:20px; font-size:17px;">softshiraz</p>
+        <p style="margin-top:20px; color:#bbb; font-size:17px;">softshiraz</p>
     </footer>
 
     <script>
         const container = document.getElementById('cards-container');
 
-        // ترتیب از فایل order.txt (اگه نبود → ۱ تا ۱۲)
         fetch('order.txt')
             .then(r => r.ok ? r.text() : Promise.reject())
             .then(text => text.split(',').map(n => n.trim()))
@@ -177,13 +228,15 @@
 
                             const card = document.createElement('div');
                             card.className = 'movie-card';
-                            card.style.animationDelay = `${index * 0.15}s`;
+                            card.style.animationDelay = `${index * 0.12}s`;
                             card.innerHTML = html;
+
                             container.appendChild(card);
                         })
-                        .catch(() => { /* فایل نبود → نشون نده */ });
+                        .catch(() => {});
                 });
             });
     </script>
+
 </body>
 </html>
