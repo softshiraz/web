@@ -1,22 +1,55 @@
-<div class="card-inner">
-    <!-- جلو کارت -->
-    <div class="card-front">
-        <div class="date-bar">جمعه ۸ آذر - ساعت ۱۹:۰۰</div>
-        <div class="img-bar"><img src="../web/png/1.png" alt="جوکو ۲"></div>
-        <div class="title-bar">جوکک ۲</div>
-        <div class="reserve-bar">
-            <a href="https://t.me/softshiraz" target="_blank" class="reserve-btn">رزرو بلیط</a>
+<div class="movie-card">
+    <div class="card-inner">
+        <!-- جلو کارت -->
+        <div class="card-front">
+            <div class="date-bar">جمعه ۸ آذر - ساعت ۱۹:۰۰</div>
+            <div class="img-bar"><img src="../web/png/1.png" alt="فیلم"></div>
+            <div class="title-bar">جوکر ۱</div>
+            <div class="reserve-bar">رزرو بلیط</div>
+        </div>
+
+        <!-- پشت کارت -->
+        <div class="card-back">
+            <p><strong>فیلم:</strong> <span>جوکر ۲</span></p>
+            <p><strong>ژانر:</strong> <span>اکشن، جنایی، هیجان‌انگیز</span></p>
+            <p><strong>خلاصه:</strong> <span>داستان ادامه ماجراهای جوکر و تاثیر او بر شهر گاتهام...</span></p>
+            <p><strong>سال انتشار:</strong> <span>2025</span></p>
+            <p><strong>امتیاز فیلم:</strong> <span>8.2</span></p>
+            <p><strong>مدت زمان:</strong> <span>2 ساعت و 30 دقیقه</span></p>
+            <p><strong>رده سنی:</strong> <span>+18</span></p>
         </div>
     </div>
-
-    <!-- پشت کارت -->
-    <div class="card-back">
-        <h3>فیلم: فرانکشتاین</h3>
-        <p><strong>ژانر:</strong> دارم، ترسناک، فانتزی</p>
-        <p><strong>خلاصه:</strong> یک دانشمند باهوش اما خودخواه، موجودی را در یک آزمایش هولناک به زندگی می‌آورد که در نهایت منجر به نابودی خالق و مخلوق غم‌انگیزش می‌شود.</p>
-        <p><strong>سال انتشار:</strong> 2025</p>
-        <p><strong>امتیاز IMDb:</strong> 7.8</p>
-        <p><strong>مدت زمان:</strong> 2 ساعت و 30 دقیقه</p>
-        <p><strong>رده سنی:</strong> +18 سال</p>
-    </div>
 </div>
+
+<style>
+.movie-card { perspective:1000px; width:280px; height:420px; margin:15px; }
+.card-inner { position:relative; width:100%; height:100%; transition:0.7s; transform-style: preserve-3d; cursor:pointer; }
+.card-inner.flipped { transform:rotateY(180deg); }
+.card-front, .card-back { position:absolute; top:0; left:0; width:100%; height:100%; border-radius:12px; overflow:hidden; backface-visibility:hidden; border:1px solid #222; }
+.card-front { background:#131314; display:flex; flex-direction:column; }
+.img-bar { flex:1; width:100%; overflow:hidden; }
+.img-bar img { width:100%; height:100%; object-fit:cover; }
+.date-bar, .title-bar, .reserve-bar { height:36px; line-height:36px; padding:0 10px; text-align:center; background: rgba(0,0,0,0.4); backdrop-filter:blur(6px); color:#fff; margin:2px 0; border-top:1px solid rgba(255,255,255,0.1); font-size:14px; }
+.date-bar { color:#ffd700; }
+.title-bar { color:#fff; }
+.reserve-bar { color:#000; background:#ffd700; font-weight:bold; cursor:pointer; }
+
+/* پشت کارت */
+.card-back {
+    transform:rotateY(180deg); background:#111; color:#fff;
+    padding:15px; text-align:right; font-size:14px; display:flex; flex-direction:column; justify-content:flex-start;
+}
+.card-back p { margin-bottom:6px; }
+.card-back strong { color:#ffd700; } /* عنوان زرد */
+.card-back span { color:#fff; font-weight:bold; } /* محتوا سفید و بولد */
+</style>
+
+<script>
+// فلپ کارت با کلیک
+document.addEventListener('click', function(e){
+    const cardInner = e.target.closest('.card-inner');
+    if(cardInner){
+        cardInner.classList.toggle('flipped');
+    }
+});
+</script>
