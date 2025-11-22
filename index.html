@@ -3,32 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>سافت شیراز - اکران‌های آینده</title>
+<title>سافت شیراز - اکران‌های بعدی</title>
 
 <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/dist/font-face.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
-body { font-family: "Vazirmatn", sans-serif; background: #0e0e0f; color: #fff; }
+body { font-family: "Vazirmatn", sans-serif; background: #3b0e2c; color: #fff; } /* پس‌زمینه زرشکی تیره */
 
 header {
-    background: #000; padding: 15px 25px;
+    background: #9b1b30; /* رنگ زرشکی روشن */
+    padding: 15px 25px;
     display:flex; justify-content: flex-end; align-items:center;
-    border-bottom:1px solid #303030; position: sticky; top:0; z-index: 999;
+    border-bottom:1px solid #5e0a1d; position: sticky; top:0; z-index: 999;
 }
 .logo-fa {
     font-weight: 700;
     font-size: 26px;
-    background: linear-gradient(45deg,#ffd700,#ffb300);
+    background: linear-gradient(45deg, #ffbf00, #e60000); /* طلایی تا زرشکی */
     -webkit-background-clip: text;
     color: transparent;
 }
 
 main { padding: 35px 15px 60px; }
 h2 {
-    color:#ffd700; font-size:28px; text-align:center;
-    margin-bottom:35px; border-bottom:3px solid #ffd700;
+    color: #ffbf00; /* طلایی */
+    font-size:28px; text-align:center;
+    margin-bottom:35px; border-bottom:3px solid #ffbf00;
     display:inline-block; padding-bottom:6px;
 }
 .section { text-align:center; }
@@ -60,12 +62,13 @@ h2 {
     border-radius:14px;
     overflow:hidden;
     backface-visibility:hidden;
-    border:1px solid #222;
+    border:1px solid #5e0a1d; /* حاشیه زرشکی */
 }
 
 /* جلو کارت */
 .card-front {
-    background:#131314; display:flex; flex-direction:column;
+    background:#2b0b1e; /* پس‌زمینه تیره‌تر برای جلو کارت */
+    display:flex; flex-direction:column;
 }
 .img-bar {
     flex:1;
@@ -94,30 +97,33 @@ h2 {
 }
 
 /* رنگ متن کادرها */
-.date-bar { color:#ffd700; }
+.date-bar { color:#ffbf00; } /* طلایی */
 .title-bar { color:#fff; }
 .reserve-bar { 
-    color:#000;  /* تغییر رنگ متن به سیاه */
-    background:#ffd700;
+    color:#fff;  /* رنگ متن سفید */
+    background:#e60000; /* رنگ زرشکی */
     font-weight: bold;
     cursor: pointer;
 }
 
 /* پشت کارت */
 .card-back {
-    transform:rotateY(180deg); background:#111; color:#fff;
+    transform:rotateY(180deg); background:#3b0e2c; color:#fff;
     padding:15px; text-align:right; font-size:14px; display:flex; flex-direction:column; justify-content:flex-start;
 }
-.card-back h3, .card-back p strong { color:#ffd700; } /* اینها زرد شدند */
-.card-back p span { color:#fff; } /* متن توضیحاتی جلوش سفید باشد */
+.card-back h3, .card-back p strong { color:#ffbf00; } /* طلایی */
+.card-back p span { color:#fff; } /* متن توضیحاتی سفید */
 .card-back p { margin-bottom:6px; }
 
 /* فوتر */
 footer {
-    background:#000; padding:35px 20px; text-align:center; /* تغییر برای وسط‌چینی */
-    border-top:1px solid #303030; margin-top:60px;
+    background:#3b0e2c; /* پس‌زمینه زرشکی تیره */
+    padding:35px 20px;
+    text-align:center;
+    border-top:1px solid #5e0a1d; /* حاشیه زرشکی */
+    margin-top:60px;
 }
-.footer-title { font-size:18px; color:#ffd700; margin-bottom:18px; }
+.footer-title { font-size:18px; color:#ffbf00; margin-bottom:18px; }
 
 .social-row {
     display: flex;
@@ -128,12 +134,12 @@ footer {
 
 .social-icon {
     width:48px; height:48px; border-radius:50%;
-    background:#1a1a1a; display:flex; align-items:center; justify-content:center;
-    color:#ffd700; font-size:22px; text-decoration:none;
+    background:#2b0b1e; /* پس‌زمینه تیره */
+    display:flex; align-items:center; justify-content:center;
+    color:#ffbf00; font-size:22px; text-decoration:none;
 }
-.social-icon:hover { background:#ffd700; color:#000; }
+.social-icon:hover { background:#ffbf00; color:#000; } /* تغییر رنگ هنگام هاور */
 
-/* ریسپانسیو: اندازه کارت‌ها برای لپ‌تاپ و موبایل */
 @media (max-width: 1200px) { 
     .card-inner { width:300px; height:450px; } /* لپ‌تاپ متوسط */
     .movies-grid { grid-template-columns: repeat(3, 1fr); }
@@ -151,12 +157,12 @@ footer {
 <body>
 
 <header>
-    <div class="logo-fa">Soft Shiraz</div>
+    <div class="logo-fa">سافت شیراز</div>
 </header>
 
 <main>
     <section class="section">
-        <h2>اکران‌های آینده</h2>
+        <h2>اکران‌های بعدی</h2>
         <div class="movies-grid" id="cards-container"></div>
     </section>
 </main>
@@ -207,16 +213,3 @@ fetch('order.txt')
 
 // فلپ کارت با کلیک: فقط یک کارت باز باشد
 document.addEventListener('click',function(e){
-    const cardInner = e.target.closest('.card-inner');
-    if(cardInner){
-        if(openCard && openCard !== cardInner){
-            openCard.classList.remove('flipped');
-        }
-        cardInner.classList.toggle('flipped');
-        openCard = cardInner.classList.contains('flipped') ? cardInner : null;
-    }
-});
-</script>
-
-</body>
-</html>
