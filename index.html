@@ -9,145 +9,181 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
+/* تعریف رنگ‌ها */
+:root {
+    --black: #000000;
+    --dark-gray: #1a1a1a;
+    --gray: #333333;
+    --light-gray: #4d4d4d;
+    --lighter-gray: #808080;
+    --very-light-gray: #b3b3b3;
+    --white: #ffffff;
+}
+
 * { margin:0; padding:0; box-sizing:border-box; }
-body { font-family: "Vazirmatn", sans-serif; background: #121212; color: #fff; /* رنگ پس‌زمینه مشکی تیره */ }
+body { 
+    font-family: "Vazirmatn", sans-serif; 
+    background: var(--dark-gray); /* پس‌زمینه کلی */
+    color: var(--white); /* رنگ متن */
+}
 
 header {
-    background: #1e1e1e; /* خاکستری تیره */
+    background: var(--black); 
     padding: 15px 25px;
-    display:flex; justify-content: flex-end; align-items:center;
-    border-bottom:1px solid #303030; position: sticky; top:0; z-index: 999;
+    display: flex; justify-content: flex-end; align-items: center;
+    border-bottom: 1px solid var(--light-gray);
+    position: sticky; top: 0; z-index: 999;
 }
 .logo-fa {
     font-weight: 700;
     font-size: 26px;
-    background: linear-gradient(45deg, #ff6f00, #ffd700); /* ترکیب نارنجی و زرد */
+    background: linear-gradient(45deg, var(--very-light-gray), var(--lighter-gray));
     -webkit-background-clip: text;
     color: transparent;
 }
 
 main { padding: 35px 15px 60px; }
 h2 {
-    color:#ffd700; font-size:28px; text-align:center;
-    margin-bottom:35px; border-bottom:3px solid #ffd700;
-    display:inline-block; padding-bottom:6px;
+    color: var(--very-light-gray); 
+    font-size: 28px; 
+    text-align: center;
+    margin-bottom: 35px; 
+    border-bottom: 3px solid var(--very-light-gray);
+    display: inline-block; padding-bottom: 6px;
 }
-.section { text-align:center; }
+.section { text-align: center; }
 
 .movies-grid {
-    display:grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 کارت دسکتاپ */
-    gap:20px;
-    justify-items:center;
-    max-width:1200px;
-    margin:0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    justify-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-/* کارت فلپ با اندازه ثابت سه حالت */
+/* کارت فلپ */
 .movie-card { perspective: 1000px; }
 .card-inner {
     position: relative;
     transition: transform 0.7s;
     transform-style: preserve-3d;
     cursor: pointer;
-    width: 280px; /* دسکتاپ بزرگ */
+    width: 280px; 
     height: 420px; 
 }
 .card-inner.flipped { transform: rotateY(180deg); }
 
 .card-front, .card-back {
-    position:absolute;
-    top:0; left:0; width:100%; height:100%;
-    border-radius:14px;
-    overflow:hidden;
-    backface-visibility:hidden;
-    border:1px solid #222;
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    border-radius: 14px;
+    overflow: hidden;
+    backface-visibility: hidden;
+    border: 1px solid var(--light-gray);
 }
 
 /* جلو کارت */
 .card-front {
-    background:#1a1a1a; /* خاکستری تیره */
-    display:flex; flex-direction:column;
+    background: var(--dark-gray); 
+    display: flex; flex-direction: column;
 }
 .img-bar {
-    flex:1;
-    width:100%;
-    overflow:hidden;
+    flex: 1;
+    width: 100%;
+    overflow: hidden;
 }
 .img-bar img { 
-    width:100%; 
-    height:100%; 
-    object-fit:cover; 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
 }
 
 /* شیشه‌ای کردن کادرها */
 .date-bar, .title-bar, .reserve-bar {
-    height:36px;
-    line-height:36px;
-    padding:0 10px;
-    text-align:center;
-    overflow:hidden;
+    height: 36px;
+    line-height: 36px;
+    padding: 0 10px;
+    text-align: center;
+    overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    background: rgba(0,0,0,0.4);
+    background: rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(6px);
-    border-top:1px solid rgba(255,255,255,0.1);
-    font-size:14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 14px;
 }
 
 /* رنگ متن کادرها */
-.date-bar { color:#ffd700; }
-.title-bar { color:#fff; }
+.date-bar { color: var(--very-light-gray); }
+.title-bar { color: var(--white); }
 .reserve-bar { 
-    color:#000;  /* رنگ متن رزرو به سیاه */
-    background:#ffd700;
+    color: var(--black);  
+    background: var(--very-light-gray);
     font-weight: bold;
     cursor: pointer;
 }
 
 /* پشت کارت */
 .card-back {
-    transform:rotateY(180deg); background:#121212; /* مشکی تیره */
-    color:#fff;
-    padding:15px; text-align:right; font-size:14px; display:flex; flex-direction:column; justify-content:flex-start;
+    transform: rotateY(180deg); 
+    background: var(--black); 
+    color: var(--white);
+    padding: 15px; 
+    text-align: right; 
+    font-size: 14px; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: flex-start;
 }
-.card-back h3, .card-back p strong { color:#ffd700; } /* رنگ زرد برای عنوان‌ها */
-.card-back p span { color:#fff; }
-.card-back p { margin-bottom:6px; }
+.card-back h3, .card-back p strong { color: var(--very-light-gray); }
+.card-back p span { color: var(--white); }
+.card-back p { margin-bottom: 6px; }
 
 /* فوتر */
 footer {
-    background:#1e1e1e; /* خاکستری تیره */
-    padding:35px 20px; text-align:center;
-    border-top:1px solid #303030; margin-top:60px;
+    background: var(--black); 
+    padding: 35px 20px; 
+    text-align: center;
+    border-top: 1px solid var(--light-gray); 
+    margin-top: 60px;
 }
-.footer-title { font-size:18px; color:#ffd700; margin-bottom:18px; }
+.footer-title { font-size: 18px; color: var(--very-light-gray); margin-bottom: 18px; }
 
 .social-row {
     display: flex;
-    justify-content: center; /* وسط‌چین آیکون‌ها */
+    justify-content: center; 
     gap: 18px;
-    align-items: center; /* وسط‌چین عمودی آیکون‌ها */
+    align-items: center;
 }
 
 .social-icon {
-    width:48px; height:48px; border-radius:50%;
-    background:#1a1a1a; display:flex; align-items:center; justify-content:center;
-    color:#ffd700; font-size:22px; text-decoration:none;
+    width: 48px; height: 48px; 
+    border-radius: 50%;
+    background: var(--dark-gray); 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    color: var(--very-light-gray); 
+    font-size: 22px; 
+    text-decoration: none;
 }
-.social-icon:hover { background:#ffd700; color:#000; }
+.social-icon:hover { 
+    background: var(--very-light-gray); 
+    color: var(--black); 
+}
 
 /* ریسپانسیو: اندازه کارت‌ها برای لپ‌تاپ و موبایل */
 @media (max-width: 1200px) { 
-    .card-inner { width:300px; height:450px; } /* لپ‌تاپ متوسط */
+    .card-inner { width: 300px; height: 450px; } 
     .movies-grid { grid-template-columns: repeat(3, 1fr); }
 }
 @media (max-width: 768px) { 
-    .card-inner { width:280px; height:420px; } /* موبایل بزرگ */
+    .card-inner { width: 280px; height: 420px; } 
     .movies-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 480px) {
-    .card-inner { width:250px; height:375px; } /* موبایل کوچک */
+    .card-inner { width: 250px; height: 375px; } 
     .movies-grid { grid-template-columns: 1fr; }
 }
 </style>
@@ -191,36 +227,4 @@ fetch('order.txt')
             const card=document.createElement('div');
             card.className='movie-card';
             card.style.animation=`fadeUp 0.5s ease forwards`;
-            card.style.animationDelay=`${index*0.08}s`;
-
-            card.innerHTML = cardHTML;
-
-            container.appendChild(card);
-
-            // اضافه کردن عملکرد برای کلیک روی دکمه رزرو بلیط
-            const reserveButton = card.querySelector('.reserve-bar');
-            if (reserveButton) {
-                reserveButton.addEventListener('click', function() {
-                    const telegramID = 'softshiraz'; // به جای این آی‌دی، آی‌دی تلگرام مربوطه را قرار دهید
-                    window.location.href = `https://t.me/${telegramID}`;
-                });
-            }
-        });
-    });
-});
-
-// فلپ کارت با کلیک: فقط یک کارت باز باشد
-document.addEventListener('click',function(e){
-    const cardInner = e.target.closest('.card-inner');
-    if(cardInner){
-        if(openCard && openCard !== cardInner){
-            openCard.classList.remove('flipped');
-        }
-        cardInner.classList.toggle('flipped');
-        openCard = cardInner.classList.contains('flipped') ? cardInner : null;
-    }
-});
-</script>
-
-</body>
-</html>
+            card.style.animationDelay=`${index*
