@@ -10,46 +10,50 @@
 
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
-body { font-family: "Vazirmatn", sans-serif; background: linear-gradient(135deg, #f1a7c4, #a3d8f4); color: #333; }
+body { font-family: "Vazirmatn", sans-serif; background: #e6f0ff; color: #002147; }
 
+/* هدر */
 header {
-    background: #ffffff; padding: 15px 25px;
+    background: #004080; 
+    padding: 15px 25px;
     display:flex; justify-content: flex-end; align-items:center;
-    border-bottom:1px solid #cccccc; position: sticky; top:0; z-index: 999;
+    border-bottom:1px solid #0066cc; position: sticky; top:0; z-index: 999;
 }
 .logo-fa {
     font-weight: 700;
     font-size: 26px;
-    background: linear-gradient(45deg, #f99ac3, #7ad9f3);
+    background: linear-gradient(45deg,#ffffff,#66ccff);
     -webkit-background-clip: text;
     color: transparent;
 }
 
+/* اصلی */
 main { padding: 35px 15px 60px; }
 h2 {
-    color:#ff6ec7; font-size:28px; text-align:center;
-    margin-bottom:35px; border-bottom:3px solid #ff6ec7;
+    color:#004080; font-size:28px; text-align:center;
+    margin-bottom:35px; border-bottom:3px solid #66ccff;
     display:inline-block; padding-bottom:6px;
 }
 .section { text-align:center; }
 
+/* گرید کارت‌ها */
 .movies-grid {
     display:grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 کارت دسکتاپ */
+    grid-template-columns: repeat(4, 1fr);
     gap:20px;
     justify-items:center;
     max-width:1200px;
     margin:0 auto;
 }
 
-/* کارت فلپ با اندازه ثابت سه حالت */
+/* کارت فلپ */
 .movie-card { perspective: 1000px; }
 .card-inner {
     position: relative;
     transition: transform 0.7s;
     transform-style: preserve-3d;
     cursor: pointer;
-    width: 280px; /* دسکتاپ بزرگ */
+    width: 280px;
     height: 420px; 
 }
 .card-inner.flipped { transform: rotateY(180deg); }
@@ -60,12 +64,12 @@ h2 {
     border-radius:14px;
     overflow:hidden;
     backface-visibility:hidden;
-    border:1px solid #eee;
+    border:1px solid #99ccff;
 }
 
 /* جلو کارت */
 .card-front {
-    background:#ffffff; display:flex; flex-direction:column;
+    background:#cce0ff; display:flex; flex-direction:column;
 }
 .img-bar {
     flex:1;
@@ -87,63 +91,62 @@ h2 {
     overflow:hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    background: rgba(255,255,255,0.4);
+    background: rgba(255,255,255,0.7);
     backdrop-filter: blur(6px);
-    border-top:1px solid rgba(255,255,255,0.1);
+    border-top:1px solid rgba(0,0,128,0.3);
     font-size:14px;
 }
 
-/* رنگ متن کادرها */
-.date-bar { color:#ff6ec7; }
-.title-bar { color:#333; }
+.date-bar { color:#004080; }
+.title-bar { color:#001f3f; }
 .reserve-bar { 
-    color:#ffffff;  /* تغییر رنگ متن به سفید */
-    background:#ff6ec7;
+    color:#ffffff;
+    background:#0066cc;
     font-weight: bold;
     cursor: pointer;
 }
 
 /* پشت کارت */
 .card-back {
-    transform:rotateY(180deg); background:#ffffff; color:#333;
+    transform:rotateY(180deg); 
+    background:#b3d1ff; 
+    color:#001f3f;
     padding:15px; text-align:right; font-size:14px; display:flex; flex-direction:column; justify-content:flex-start;
 }
-.card-back h3, .card-back p strong { color:#ff6ec7; }
-.card-back p span { color:#333; }
+.card-back h3, .card-back p strong { color:#004080; }
+.card-back p span { color:#001f3f; }
 .card-back p { margin-bottom:6px; }
 
 /* فوتر */
 footer {
-    background:#ffffff; padding:35px 20px; text-align:center;
-    border-top:1px solid #cccccc; margin-top:60px;
+    background:#004080; padding:35px 20px; text-align:center;
+    border-top:1px solid #66ccff; margin-top:60px;
 }
-.footer-title { font-size:18px; color:#ff6ec7; margin-bottom:18px; }
-
+.footer-title { font-size:18px; color:#ffffff; margin-bottom:18px; }
 .social-row {
     display: flex;
-    justify-content: center; /* وسط‌چین آیکون‌ها */
+    justify-content: center; 
     gap: 18px;
-    align-items: center; /* وسط‌چین عمودی آیکون‌ها */
+    align-items: center; 
 }
-
 .social-icon {
     width:48px; height:48px; border-radius:50%;
-    background:#1a1a1a; display:flex; align-items:center; justify-content:center;
-    color:#ff6ec7; font-size:22px; text-decoration:none;
+    background:#66ccff; display:flex; align-items:center; justify-content:center;
+    color:#004080; font-size:22px; text-decoration:none;
 }
-.social-icon:hover { background:#ff6ec7; color:#ffffff; }
+.social-icon:hover { background:#004080; color:#ffffff; }
 
-/* ریسپانسیو: اندازه کارت‌ها برای لپ‌تاپ و موبایل */
+/* ریسپانسیو */
 @media (max-width: 1200px) { 
-    .card-inner { width:300px; height:450px; } /* لپ‌تاپ متوسط */
+    .card-inner { width:300px; height:450px; } 
     .movies-grid { grid-template-columns: repeat(3, 1fr); }
 }
 @media (max-width: 768px) { 
-    .card-inner { width:280px; height:420px; } /* موبایل بزرگ */
+    .card-inner { width:280px; height:420px; } 
     .movies-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 480px) {
-    .card-inner { width:250px; height:375px; } /* موبایل کوچک */
+    .card-inner { width:250px; height:375px; } 
     .movies-grid { grid-template-columns: 1fr; }
 }
 </style>
@@ -171,7 +174,7 @@ footer {
 
 <script>
 const container = document.getElementById('cards-container');
-let openCard = null; // کارت باز فعلی
+let openCard = null;
 
 fetch('order.txt')
 .then(r=>r.ok?r.text():Promise.reject())
@@ -190,14 +193,13 @@ fetch('order.txt')
             card.style.animationDelay=`${index*0.08}s`;
 
             card.innerHTML = cardHTML;
-
             container.appendChild(card);
 
-            // اضافه کردن عملکرد برای کلیک روی دکمه رزرو بلیط
+            // کلیک روی رزرو
             const reserveButton = card.querySelector('.reserve-bar');
             if (reserveButton) {
                 reserveButton.addEventListener('click', function() {
-                    const telegramID = 'softshiraz'; // به جای این آی‌دی، آی‌دی تلگرام مربوطه را قرار دهید
+                    const telegramID = 'softshiraz';
                     window.location.href = `https://t.me/${telegramID}`;
                 });
             }
@@ -205,7 +207,7 @@ fetch('order.txt')
     });
 });
 
-// فلپ کارت با کلیک: فقط یک کارت باز باشد
+// فلپ کارت با کلیک
 document.addEventListener('click',function(e){
     const cardInner = e.target.closest('.card-inner');
     if(cardInner){
