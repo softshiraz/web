@@ -1,13 +1,72 @@
-<div class="relative w-96 h-56 rounded-2xl overflow-hidden shadow-2xl flex-shrink-0 transform transition-all duration-500 hover:scale-105 hover:z-10">
-  <img src="../png/4.2.png" class="w-full h-full object-cover">
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Slider</title>
 
-  <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+<style>
+body{background:#0b0b0c;color:#fff;font-family:sans-serif;overflow-x:hidden}
+.slider{padding:40px 0;overflow:hidden}
+.slider-track{display:flex;gap:18px;transition:.6s}
 
-  <div class="absolute bottom-0 p-5 text-right w-full">
-    <h3 class="text-2xl font-bold text-white drop-shadow-xl">جوکر ۲</h3>
-    <p class="text-lg text-pink-400 font-bold mt-1">چهارشنبه ۵ آذر - ساعت ۱۵:۰۰</p>
-    <a href="https://t.me/softshiraz" target="_blank" class="mt-3 inline-block bg-pink-600 hover:bg-pink-500 text-white px-7 py-2.5 rounded-full font-bold text-sm transition">
-      رزرو بلیط
-    </a>
-  </div>
+.card{
+    min-width:260px;
+    max-width:260px;
+    background:#141414;
+    border:1px solid #222;
+    border-radius:12px;
+    overflow:hidden;
+}
+
+.card img{
+    width:100%;
+    height:160px;
+    object-fit:cover;
+}
+
+.info{
+    padding:12px;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+h3{font-size:17px;color:#ffd700}
+.score{color:#4af;font-size:14px}
+.genre{color:#bbb;font-size:13px}
+.desc{color:#ccc;font-size:13px;line-height:1.4}
+</style>
+</head>
+<body>
+
+<div class="slider">
+<div id="track" class="slider-track"></div>
 </div>
+
+<script>
+const track=document.getElementById("track");
+fetch('order.txt')
+.then(r=>r.text())
+.then(t=>t.split(','))
+.then(arr=>{
+arr.forEach(n=>{
+fetch(`cards/${n}.html`).then(r=>r.text()).then(h=>{
+let d=document.createElement('div');
+d.innerHTML=h;
+track.appendChild(d.firstElementChild);
+});
+});
+});
+
+let pos=0;
+setInterval(()=>{
+const w=280;
+pos-=w;
+if(Math.abs(pos)>track.scrollWidth-window.innerWidth)pos=0;
+track.style.transform=`translateX(${pos}px)`;
+},5000);
+</script>
+
+</body>
+</html>
