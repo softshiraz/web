@@ -49,8 +49,8 @@ h2 {
     transition: transform 0.7s;
     transform-style: preserve-3d;
     cursor: pointer;
-    width: 280px; /* دسکتاپ بزرگ */
-    height: 420px; 
+    width: 320px; /* اندازه بزرگ‌تر */
+    height: 480px; /* اندازه بزرگ‌تر */
 }
 .card-inner.flipped { transform: rotateY(180deg); }
 
@@ -128,14 +128,15 @@ footer {
 
 /* ریسپانسیو: اندازه کارت‌ها برای لپ‌تاپ و موبایل */
 @media (max-width: 1200px) { 
-    .card-inner { width:240px; height:360px; } /* لپ‌تاپ متوسط */
+    .card-inner { width:280px; height:420px; } /* لپ‌تاپ متوسط */
     .movies-grid { grid-template-columns: repeat(3, 1fr); }
 }
 @media (max-width: 768px) { 
-    .card-inner { width:200px; height:300px; } /* موبایل کوچک */
+    .card-inner { width:240px; height:360px; } /* موبایل متوسط */
     .movies-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 480px) {
+    .card-inner { width:200px; height:300px; } /* موبایل کوچک */
     .movies-grid { grid-template-columns: 1fr; }
 }
 </style>
