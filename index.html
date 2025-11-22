@@ -10,26 +10,25 @@
 
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
-body { font-family: "Vazirmatn", sans-serif; background: #2c0a10; color: #fff; /* پس‌زمینه زرشکی تیره */ }
+body { font-family: "Vazirmatn", sans-serif; background: linear-gradient(135deg, #f1a7c4, #a3d8f4); color: #333; }
 
 header {
-    background: linear-gradient(45deg, #ff6600, #ff3300); /* گرادیانت طلایی تا زرشکی */
-    padding: 15px 25px;
+    background: #ffffff; padding: 15px 25px;
     display:flex; justify-content: flex-end; align-items:center;
-    border-bottom:1px solid #303030; position: sticky; top:0; z-index: 999;
+    border-bottom:1px solid #cccccc; position: sticky; top:0; z-index: 999;
 }
 .logo-fa {
     font-weight: 700;
     font-size: 26px;
-    background: linear-gradient(45deg, #ffd700, #ff6600);
+    background: linear-gradient(45deg, #f99ac3, #7ad9f3);
     -webkit-background-clip: text;
     color: transparent;
 }
 
 main { padding: 35px 15px 60px; }
 h2 {
-    color:#ffd700; font-size:28px; text-align:center;
-    margin-bottom:35px; border-bottom:3px solid #ffd700;
+    color:#ff6ec7; font-size:28px; text-align:center;
+    margin-bottom:35px; border-bottom:3px solid #ff6ec7;
     display:inline-block; padding-bottom:6px;
 }
 .section { text-align:center; }
@@ -61,12 +60,12 @@ h2 {
     border-radius:14px;
     overflow:hidden;
     backface-visibility:hidden;
-    border:1px solid #222;
+    border:1px solid #eee;
 }
 
 /* جلو کارت */
 .card-front {
-    background:#330000; display:flex; flex-direction:column; /* پس‌زمینه زرشکی تیره */
+    background:#ffffff; display:flex; flex-direction:column;
 }
 .img-bar {
     flex:1;
@@ -88,38 +87,37 @@ h2 {
     overflow:hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    background: rgba(0,0,0,0.4);
+    background: rgba(255,255,255,0.4);
     backdrop-filter: blur(6px);
     border-top:1px solid rgba(255,255,255,0.1);
     font-size:14px;
 }
 
 /* رنگ متن کادرها */
-.date-bar { color:#ffd700; }
-.title-bar { color:#fff; }
+.date-bar { color:#ff6ec7; }
+.title-bar { color:#333; }
 .reserve-bar { 
-    color:#330000;  /* تغییر رنگ متن به زرشکی تیره */
-    background:#ffd700;
+    color:#ffffff;  /* تغییر رنگ متن به سفید */
+    background:#ff6ec7;
     font-weight: bold;
     cursor: pointer;
 }
 
 /* پشت کارت */
 .card-back {
-    transform:rotateY(180deg); background:#330000; color:#fff; /* رنگ زرشکی تیره */
+    transform:rotateY(180deg); background:#ffffff; color:#333;
     padding:15px; text-align:right; font-size:14px; display:flex; flex-direction:column; justify-content:flex-start;
 }
-.card-back h3, .card-back p strong { color:#ffd700; } /* اینها زرد شدند */
-.card-back p span { color:#fff; } /* متن توضیحاتی جلوش سفید باشد */
+.card-back h3, .card-back p strong { color:#ff6ec7; }
+.card-back p span { color:#333; }
 .card-back p { margin-bottom:6px; }
 
 /* فوتر */
 footer {
-    background: linear-gradient(45deg, #ff6600, #ff3300); /* گرادیانت طلایی تا زرشکی */
-    padding:35px 20px; text-align:center;
-    border-top:1px solid #303030; margin-top:60px;
+    background:#ffffff; padding:35px 20px; text-align:center;
+    border-top:1px solid #cccccc; margin-top:60px;
 }
-.footer-title { font-size:18px; color:#ffd700; margin-bottom:18px; }
+.footer-title { font-size:18px; color:#ff6ec7; margin-bottom:18px; }
 
 .social-row {
     display: flex;
@@ -131,9 +129,9 @@ footer {
 .social-icon {
     width:48px; height:48px; border-radius:50%;
     background:#1a1a1a; display:flex; align-items:center; justify-content:center;
-    color:#ffd700; font-size:22px; text-decoration:none;
+    color:#ff6ec7; font-size:22px; text-decoration:none;
 }
-.social-icon:hover { background:#ffd700; color:#000; }
+.social-icon:hover { background:#ff6ec7; color:#ffffff; }
 
 /* ریسپانسیو: اندازه کارت‌ها برای لپ‌تاپ و موبایل */
 @media (max-width: 1200px) { 
