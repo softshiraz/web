@@ -68,20 +68,51 @@ h2 {
 .img-bar { height:280px; overflow:hidden; }
 .img-bar img { width:100%; height:100%; object-fit:cover; }
 
-/* کادرهای با ارتفاع ثابت 36px */
-.date-bar, .title-bar, .reserve-bar {
+/* فقط اصلاح کادر عنوان فیلم */
+.title-bar {
     height:36px;
     line-height:36px;
     padding:0 10px;
     text-align:center;
+    font-size:14px; /* فونت مناسب تا متن داخل کادر جا شود */
     overflow:hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    border-top: 1px solid #222;
+    background:#111;
+    color:#fff;
+    border-top:1px solid #222;
+    border-bottom:none;
 }
-.date-bar { background:#111; color:#ffd700; border-bottom:none; font-size:16px; }
-.title-bar { background:#111; color:#fff; border-bottom:none; font-size:14px; } /* فونت کمی کوچکتر */
-.reserve-bar { background:#0b0b0b; margin-top:auto; font-size:14px; }
+
+/* کادر تاریخ و ساعت */
+.date-bar {
+    height:36px;
+    line-height:36px;
+    padding:0 10px;
+    text-align:center;
+    font-size:16px;
+    overflow:hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    background:#111;
+    color:#ffd700;
+    border-top:1px solid #222;
+    border-bottom:none;
+}
+
+/* کادر رزرو بلیط */
+.reserve-bar {
+    height:36px;
+    line-height:36px;
+    padding:0 10px;
+    text-align:center;
+    font-size:14px;
+    overflow:hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    background:#0b0b0b;
+    margin-top:auto;
+}
 
 /* دکمه رزرو داخل رزرو بار */
 .reserve-btn {
