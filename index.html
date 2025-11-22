@@ -14,14 +14,15 @@ body { font-family: "Vazirmatn", sans-serif; background: #0e0e0f; color: #fff; }
 
 header {
     background: #000; padding: 15px 25px;
-    display:flex; justify-content: center; align-items:center;
+    display:flex; justify-content: flex-end; align-items:center;
     border-bottom:1px solid #303030; position: sticky; top:0; z-index: 999;
 }
-.logo-en {
+.logo-fa {
     font-weight: 700;
-    background: linear-gradient(45deg,#ffd700,#ffb300);
-    -webkit-background-clip: text; color: transparent;
     font-size: 26px;
+    background: linear-gradient(45deg,#ffd700,#ffb300);
+    -webkit-background-clip: text;
+    color: transparent;
 }
 
 main { padding: 35px 15px 60px; }
@@ -34,7 +35,7 @@ h2 {
 
 .movies-grid {
     display:grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(4, 1fr); /* 4 کارت دسکتاپ */
     gap:20px;
     justify-items:center;
     max-width:1200px;
@@ -48,7 +49,7 @@ h2 {
     transition: transform 0.7s;
     transform-style: preserve-3d;
     cursor: pointer;
-    width: 280px; /* پیش‌فرض دسکتاپ */
+    width: 280px; /* دسکتاپ بزرگ */
     height: 420px; 
 }
 .card-inner.flipped { transform: rotateY(180deg); }
@@ -95,34 +96,28 @@ h2 {
 /* رنگ متن کادرها */
 .date-bar { color:#ffd700; }
 .title-bar { color:#fff; }
-.reserve-bar { color:#ffd700; }
-
-/* دکمه رزرو */
-.reserve-btn {
+.reserve-bar { 
+    color:#000; 
     background:#ffd700;
-    color:#000;
-    font-weight:600;
-    font-size:13px;
-    padding:4px 16px; 
-    border-radius:20px;
-    text-decoration:none;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 /* پشت کارت */
 .card-back {
-    transform:rotateY(180deg); background:#111; color:#fff;
-    padding:20px; text-align:right; font-size:15px; display:flex; flex-direction:column; justify-content:flex-start;
+    transform:rotateY(180deg); background:#111; color:#ffd700;
+    padding:15px; text-align:right; font-size:14px; display:flex; flex-direction:column; justify-content:flex-start;
 }
-.card-back h3 { color:#ffd700; margin-bottom:8px; }
+.card-back h3, .card-back p strong { color:#ffd700; }
 .card-back p { margin-bottom:6px; }
 
 /* فوتر */
 footer {
-    background:#000; padding:35px 20px; text-align:center;
+    background:#000; padding:35px 20px; text-align:right;
     border-top:1px solid #303030; margin-top:60px;
 }
 .footer-title { font-size:18px; color:#ffd700; margin-bottom:18px; }
-.social-row { display:flex; justify-content:center; gap:18px; }
+.social-row { display:flex; justify-content:flex-end; gap:18px; }
 .social-icon {
     width:48px; height:48px; border-radius:50%;
     background:#1a1a1a; display:flex; align-items:center; justify-content:center;
@@ -133,17 +128,21 @@ footer {
 /* ریسپانسیو: اندازه کارت‌ها برای لپ‌تاپ و موبایل */
 @media (max-width: 1200px) { 
     .card-inner { width:240px; height:360px; } /* لپ‌تاپ متوسط */
+    .movies-grid { grid-template-columns: repeat(3, 1fr); }
 }
 @media (max-width: 768px) { 
     .card-inner { width:200px; height:300px; } /* موبایل کوچک */
+    .movies-grid { grid-template-columns: repeat(2, 1fr); }
 }
-
+@media (max-width: 480px) {
+    .movies-grid { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
 
 <header>
-    <div class="logo-en">Soft Shiraz</div>
+    <div class="logo-fa">Soft Shiraz</div>
 </header>
 
 <main>
@@ -154,7 +153,7 @@ footer {
 </main>
 
 <footer>
-    <div class="footer-title">شبکه‌های اجتماعی Soft Shiraz</div>
+    <div class="footer-title">شبکه‌های اجتماعی سافت شیراز</div>
     <div class="social-row">
         <a class="social-icon" href="https://t.me/softshiraz" target="_blank"><i class="fab fa-telegram"></i></a>
         <a class="social-icon" href="https://instagram.com/softshiraz" target="_blank"><i class="fab fa-instagram"></i></a>
@@ -163,6 +162,7 @@ footer {
 
 <script>
 const container = document.getElementById('cards-container');
+let openCard = null; // کارت باز فعلی
 
 fetch('order.txt')
 .then(r=>r.ok?r.text():Promise.reject())
@@ -187,11 +187,15 @@ fetch('order.txt')
     });
 });
 
-// فلپ کارت با کلیک
+// فلپ کارت با کلیک: فقط یک کارت باز باشد
 document.addEventListener('click',function(e){
     const cardInner = e.target.closest('.card-inner');
     if(cardInner){
+        if(openCard && openCard !== cardInner){
+            openCard.classList.remove('flipped');
+        }
         cardInner.classList.toggle('flipped');
+        openCard = cardInner.classList.contains('flipped') ? cardInner : null;
     }
 });
 </script>
