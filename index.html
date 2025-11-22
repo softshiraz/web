@@ -1,266 +1,55 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>اکران‌های بعدی - Soft Shiraz</title>
+<div class="movie-card">
+    <div class="card-inner">
+        <!-- جلو کارت -->
+        <div class="card-front">
+            <div class="date-bar">جمعه ۸ آذر - ساعت ۱۹:۰۰</div>
+            <div class="img-bar"><img src="../web/png/1.png" alt="فیلم"></div>
+            <div class="title-bar">جوکر ۲</div>
+            <div class="reserve-bar">رزرو بلیط</div>
+        </div>
 
-<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/dist/font-face.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+        <!-- پشت کارت -->
+        <div class="card-back">
+            <p><strong>فیلم:</strong> <span>جوکر ۲</span></p>
+            <p><strong>ژانر:</strong> <span>اکشن، جنایی، هیجان‌انگیز</span></p>
+            <p><strong>خلاصه:</strong> <span>داستان ادامه ماجراهای جوکر و تاثیر او بر شهر گاتهام...</span></p>
+            <p><strong>سال انتشار:</strong> <span>2025</span></p>
+            <p><strong>امتیاز فیلم:</strong> <span>8.2</span></p>
+            <p><strong>مدت زمان:</strong> <span>2 ساعت و 30 دقیقه</span></p>
+            <p><strong>رده سنی:</strong> <span>+18</span></p>
+        </div>
+    </div>
+</div>
 
 <style>
-/* ریست */
-*{margin:0;padding:0;box-sizing:border-box;}
-body{
-    font-family:"Vazirmatn",sans-serif;
-    background:#0f0f11;
-    color:#fff;
-    overflow-x:hidden;
-}
-
-/* هدر */
-header{
-    background:rgba(0,0,0,0.65);
-    backdrop-filter:blur(12px);
-    padding:15px 25px;
-    border-bottom:1px solid #333;
-    display:flex;
-    justify-content:flex-end;
-    position:sticky;
-    top:0;
-    z-index:1000;
-}
-.logo-fa{
-    font-size:28px;
-    font-weight:900;
-    color:#ffd700;
-}
-
-/* عنوان صفحه */
-h2{
-    text-align:center;
-    font-size:30px;
-    color:#ffd700;
-    margin:35px auto 45px;
-    width:fit-content;
-    padding-bottom:8px;
-    border-bottom:3px solid #ffd700;
-}
-
-/* گرید حرفه‌ای ریسپانسیو */
-.movies-grid{
-    display:grid;
-    gap:25px;
-    justify-items:center;
-    max-width:1300px;
-    margin:0 auto;
-}
-
-/* تعداد کارت‌ها */
-@media (min-width:1200px){
-    .movies-grid{grid-template-columns:repeat(4,1fr);}
-}
-@media (max-width:1199px){
-    .movies-grid{grid-template-columns:repeat(3,1fr);}
-}
-@media (max-width:900px){
-    .movies-grid{grid-template-columns:repeat(2,1fr);}
-}
-@media (max-width:520px){
-    .movies-grid{grid-template-columns:1fr;}
-}
-
-/* کارت */
-.movie-card{
-    perspective:1200px;
-    width:100%;
-    max-width:280px;
-    height:auto;
-    animation:fadeUp 0.9s ease backwards;
-}
-.card-inner{
-    width:100%;
-    height:100%;
-    min-height:420px;
-    position:relative;
-    transform-style:preserve-3d;
-    transition:0.75s;
-    border-radius:16px;
-}
-.card-inner.flipped{transform:rotateY(180deg);}
-.card-front,.card-back{
-    position:absolute;
-    inset:0;
-    backface-visibility:hidden;
-    border-radius:16px;
-    overflow:hidden;
-    background:#121214;
-    border:1px solid #222;
-}
-
-/* جلو کارت */
-.card-front{
-    display:flex;
-    flex-direction:column;
-}
-
-/* تصویر */
-.img-bar{
-    height:100%;
-    max-height:100%;
-    flex:1;
-}
-.img-bar img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-}
-
-/* شیشه‌ای */
-.date-bar,.title-bar,.reserve-bar{
-    height:36px;
-    line-height:36px;
-    padding:0 10px;
-    text-align:center;
-    backdrop-filter:blur(6px);
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    font-size:15px;
-}
-.date-bar{color:#ffd700;background:rgba(0,0,0,0.5);}
-.title-bar{color:#fff;background:rgba(0,0,0,0.45);}
-.reserve-bar{
-    background:#ffd700;
-    color:#000;
-    font-weight:bold;
-}
-
-/* حالت هاور بدون بزرگ شدن */
-.card-front:hover{
-    box-shadow:0 8px 25px rgba(0,0,0,0.45);
-    transition:0.25s;
-}
+.movie-card { perspective:1000px; width:280px; height:420px; margin:15px; }
+.card-inner { position:relative; width:100%; height:100%; transition:0.7s; transform-style: preserve-3d; cursor:pointer; }
+.card-inner.flipped { transform:rotateY(180deg); }
+.card-front, .card-back { position:absolute; top:0; left:0; width:100%; height:100%; border-radius:12px; overflow:hidden; backface-visibility:hidden; border:1px solid #222; }
+.card-front { background:#131314; display:flex; flex-direction:column; }
+.img-bar { flex:1; width:100%; overflow:hidden; }
+.img-bar img { width:100%; height:100%; object-fit:cover; }
+.date-bar, .title-bar, .reserve-bar { height:36px; line-height:36px; padding:0 10px; text-align:center; background: rgba(0,0,0,0.4); backdrop-filter:blur(6px); color:#fff; margin:2px 0; border-top:1px solid rgba(255,255,255,0.1); font-size:14px; }
+.date-bar { color:#ffd700; }
+.title-bar { color:#fff; }
+.reserve-bar { color:#000; background:#ffd700; font-weight:bold; cursor:pointer; }
 
 /* پشت کارت */
-.card-back{
-    transform:rotateY(180deg);
-    padding:20px;
-    background:#111;
-    display:flex;
-    flex-direction:column;
-    justify-content:flex-start;
+.card-back {
+    transform:rotateY(180deg); background:#111; color:#fff;
+    padding:15px; text-align:right; font-size:14px; display:flex; flex-direction:column; justify-content:flex-start;
 }
-.card-back p{
-    margin-bottom:10px;
-    font-size:14px;
-    line-height:22px;
-}
-.card-back strong{
-    color:#ffd700;
-}
-.card-back span{
-    font-weight:bold;
-    color:#fff;
-}
-
-/* فوتر */
-footer{
-    margin-top:60px;
-    padding:40px 25px;
-    background:#000;
-    border-top:1px solid #333;
-    text-align:right;
-}
-.footer-title{
-    font-size:20px;
-    color:#ffd700;
-    margin-bottom:15px;
-}
-.social-row{
-    display:flex;
-    gap:15px;
-    justify-content:flex-end;
-}
-.social-icon{
-    width:50px;height:50px;border-radius:50%;
-    background:#1c1c1c;
-    display:flex;align-items:center;justify-content:center;
-    color:#ffd700;font-size:22px;text-decoration:none;
-}
-.social-icon:hover{
-    background:#ffd700;color:#000;
-    transition:0.3s;
-}
-
-/* انیمیشن ورود */
-@keyframes fadeUp{
-    from{opacity:0;transform:translateY(25px) scale(0.97) blur(4px);}
-    to{opacity:1;transform:translateY(0) scale(1) blur(0);}
-}
-
-/* اندازه کارت‌ها برای لپتاپ و موبایل */
-@media (max-width:1200px){
-    .card-inner{min-height:360px;}
-}
-@media (max-width:768px){
-    .card-inner{min-height:300px;}
-}
+.card-back p { margin-bottom:6px; }
+.card-back strong { color:#ffd700; } /* عنوان زرد */
+.card-back span { color:#fff; font-weight:bold; } /* محتوا سفید و بولد */
 </style>
-</head>
-<body>
-
-<header>
-    <div class="logo-fa">Soft Shiraz</div>
-</header>
-
-<h2>اکران‌های بعدی</h2>
-
-<div class="movies-grid" id="cards-container"></div>
-
-<footer>
-    <div class="footer-title">شبکه‌های اجتماعی سافت شیراز</div>
-    <div class="social-row">
-        <a class="social-icon" href="https://t.me/softshiraz" target="_blank"><i class="fab fa-telegram"></i></a>
-        <a class="social-icon" href="https://instagram.com/softshiraz" target="_blank"><i class="fab fa-instagram"></i></a>
-    </div>
-</footer>
 
 <script>
-const container = document.getElementById("cards-container");
-let openCard = null;
-
-/* لود کارت‌ها */
-fetch("order.txt")
-.then(r => r.ok ? r.text() : Promise.reject())
-.then(t => t.split(",").map(n => n.trim()))
-.catch(() => ["1","2","3","4","5","6","7","8","9","10"])
-.then(order => {
-    order.forEach(num => {
-        fetch(`cards/${num}.html`, {cache:"no-store"})
-        .then(r => r.ok ? r.text() : "")
-        .then(html => {
-            if(!html) return;
-            const card = document.createElement("div");
-            card.className = "movie-card";
-            card.innerHTML = html;
-            container.appendChild(card);
-        })
-    });
-});
-
-/* بستن کارت قبلی و باز کردن کارت جدید */
-document.addEventListener("click", function(e){
-    const cardInner = e.target.closest(".card-inner");
+// فلپ کارت با کلیک
+document.addEventListener('click', function(e){
+    const cardInner = e.target.closest('.card-inner');
     if(cardInner){
-        if(openCard && openCard !== cardInner){
-            openCard.classList.remove("flipped");
-        }
-        cardInner.classList.toggle("flipped");
-        openCard = cardInner.classList.contains("flipped") ? cardInner : null;
+        cardInner.classList.toggle('flipped');
     }
 });
 </script>
-
-</body>
-</html>
