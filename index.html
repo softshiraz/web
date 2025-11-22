@@ -1,220 +1,91 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سافت شیراز - اکران‌های بعدی</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>سافت شیراز - نسخه ویژه</title>
 
-    <!-- فونت -->
-    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/dist/font-face.css" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0d0d0e;color:#fff;font-family:sans-serif;overflow-x:hidden}
 
-    <!-- آیکون‌ها -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+.slider{
+    width:100%;
+    overflow:hidden;
+    position:relative;
+    padding:40px 0;
+}
 
-    <!-- سئو -->
-    <meta name="description" content="برنامه اکران فیلم‌ها در Soft Shiraz">
-    <meta property="og:title" content="سافت شیراز - اکران‌های بعدی">
-    <meta property="og:description" content="پخش جدیدترین اکران‌ها در Soft Shiraz">
-    <meta property="og:type" content="website">
+.slider-track{
+    display:flex;
+    gap:20px;
+    transition:0.6s ease;
+}
 
-    <style>
-        * { margin:0; padding:0; box-sizing:border-box; }
-        body {
-            font-family: "Vazirmatn", sans-serif;
-            background: #0e0e0f;
-            color: #fff;
-        }
+.card{
+    min-width:320px;
+    max-width:320px;
+    background:#151515;
+    border-radius:14px;
+    overflow:hidden;
+    display:flex;
+    border:1px solid #222;
+}
 
-        /* هدر */
-        header {
-            background: #000;
-            padding: 15px 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #303030;
-            position: sticky;
-            top: 0;
-            z-index: 999;
-        }
-        .logo-fa, .logo-en {
-            font-weight: 700;
-            background: linear-gradient(45deg, #ffd700, #ffb300);
-            -webkit-background-clip: text;
-            color: transparent;
-        }
-        .logo-fa { font-size: 24px; }
-        .logo-en { font-size: 26px; }
+.card-content{
+    padding:15px;
+    width:60%;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
 
-        main { padding: 35px 15px 60px; }
+.card h3{font-size:20px;color:#ffd700;margin-bottom:6px}
+.card .score{color:#4af;font-weight:bold}
+.card .genre{color:#aaa}
+.card .desc{color:#ccc;font-size:14px;line-height:1.5}
 
-        h2 {
-            color: #ffd700;
-            font-size: 28px;
-            text-align: center;
-            margin-bottom: 35px;
-            border-bottom: 3px solid #ffd700;
-            display: inline-block;
-            padding-bottom: 6px;
-        }
-        .section { text-align:center; }
+.card img{
+    width:40%;
+    height:100%;
+    object-fit:cover;
+}
 
-        /* گرید کارت‌ها */
-        .movies-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 22px;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        /* کارت */
-        .movie-card {
-            background: #131314;
-            border: 1px solid #222;
-            border-radius: 14px;
-            overflow: hidden;
-            animation: fadeUp 0.6s forwards;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        /* پوستر */
-        .img-bar {
-            height: 380px;
-            overflow: hidden;
-        }
-        .img-bar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* تاریخ */
-        .date-bar {
-            background: #111;
-            padding: 12px;
-            font-size: 17px;
-            color: #ffd700;
-            text-align: center;
-            border-bottom: 1px solid #222;
-        }
-
-        /* عنوان */
-        .title-bar {
-            background: #111;
-            padding: 18px;
-            font-size: 19px;
-            color: #fff;
-            text-align: center;
-        }
-
-        /* رزرو */
-        .reserve-bar {
-            padding: 16px;
-            text-align: center;
-            background: #0b0b0b;
-            border-top: 1px solid #222;
-        }
-        .reserve-btn {
-            background: #ffd700;
-            padding: 11px 26px;
-            border-radius: 40px;
-            font-size: 16px;
-            font-weight: 600;
-            color: #000;
-            text-decoration: none;
-        }
-
-        /* انیمیشن */
-        @keyframes fadeUp {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* فوتِر جدید */
-        footer {
-            background: #000;
-            padding: 35px 20px;
-            text-align: center;
-            border-top: 1px solid #303030;
-            margin-top: 60px;
-        }
-        .footer-title {
-            font-size: 18px;
-            color: #ffd700;
-            margin-bottom: 18px;
-        }
-        .social-row {
-            display: flex;
-            justify-content: center;
-            gap: 18px;
-        }
-        .social-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: #1a1a1a;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #ffd700;
-            font-size: 22px;
-            text-decoration: none;
-        }
-        .social-icon:hover {
-            background: #ffd700;
-            color: #000;
-        }
-
-    </style>
+/* اسلاید خودکار */
+</style>
 </head>
-
 <body>
 
-<header>
-    <div class="logo-fa">سافت شیراز</div>
-    <div class="logo-en">Soft Shiraz</div>
-</header>
-
-<main>
-    <section class="section">
-        <h2>اکران‌های بعدی</h2>
-        <div class="movies-grid" id="cards-container"></div>
-    </section>
-</main>
-
-<footer>
-    <div class="footer-title">شبکه‌های اجتماعی</div>
-    <div class="social-row">
-        <a class="social-icon" href="https://t.me/softshiraz" target="_blank"><i class="fab fa-telegram"></i></a>
-        <a class="social-icon" href="https://instagram.com/softshiraz" target="_blank"><i class="fab fa-instagram"></i></a>
-    </div>
-</footer>
+<div class="slider">
+    <div id="track" class="slider-track"></div>
+</div>
 
 <script>
-    const container = document.getElementById('cards-container');
+const track=document.getElementById("track");
 
-    fetch('order.txt')
-        .then(r => r.ok ? r.text() : Promise.reject())
-        .then(text => text.split(',').map(n => n.trim()))
-        .catch(() => ['1','2','3','4','5','6','7','8','9','10','11','12'])
-        .then(order => {
-            order.forEach((num, index) => {
-                fetch(`cards/${num}.html`, { cache: "no-store" })
-                    .then(r => r.ok ? r.text() : Promise.reject())
-                    .then(html => {
-                        if (html.includes('ندارد')) return;
-
-                        const card = document.createElement('div');
-                        card.className = 'movie-card';
-                        card.style.animationDelay = `${index * 0.10}s`;
-                        card.innerHTML = html;
-
-                        container.appendChild(card);
-                    })
-                    .catch(() => {});
-            });
+fetch('order.txt')
+.then(r=>r.text())
+.then(t=>t.split(',').map(x=>x.trim()))
+.then(order=>{
+    order.forEach(num=>{
+        fetch(`cards/${num}.html`).then(r=>r.text()).then(html=>{
+            const div=document.createElement('div');
+            div.innerHTML=html;
+            track.appendChild(div.firstElementChild);
         });
+    });
+});
+
+/* Slide auto */
+let pos=0;
+setInterval(()=>{
+    const width=340; 
+    pos-=width;
+    if(Math.abs(pos) >= track.scrollWidth - window.innerWidth){
+        pos=0;
+    }
+    track.style.transform=`translateX(${pos}px)`;
+},5000);
 </script>
 
 </body>
