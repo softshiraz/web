@@ -3,186 +3,115 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>اکران‌های بعدی - Soft Shiraz</title>
+<title>سافت شیراز - اکران‌های بعدی</title>
 
 <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/dist/font-face.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-body{
-    font-family:"Vazirmatn",sans-serif;
-    background:#0f0f11;
-    color:#fff;
-    min-height:100vh;
-}
-header{
-    background:rgba(0,0,0,0.65);
-    backdrop-filter:blur(12px);
-    padding:15px 25px;
-    border-bottom:1px solid #333;
-    position:sticky;
-    top:0;
-    z-index:1000;
-    display:flex;
-    justify-content:flex-start; /* لوگو سمت چپ */
-}
-.logo-fa{
-    font-size:28px;
-    font-weight:900;
-    color:#ffd700;
-}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: "Vazirmatn", sans-serif; background: #0e0e0f; color: #fff; }
 
-h2{
-    text-align:center;
-    font-size:30px;
-    color:#ffd700;
-    margin:40px auto 50px;
-    padding-bottom:8px;
-    border-bottom:3px solid #ffd700;
-    width:fit-content;
+header {
+    background: #000; padding: 15px 25px;
+    display:flex; justify-content: space-between; align-items:center;
+    border-bottom:1px solid #303030; position: sticky; top:0; z-index: 999;
 }
+.logo-fa, .logo-en {
+    font-weight: 700;
+    background: linear-gradient(45deg,#ffd700,#ffb300);
+    -webkit-background-clip: text; color: transparent;
+}
+.logo-fa { font-size: 24px; }
+.logo-en { font-size: 26px; }
 
-/* گرید کاملاً وسط صفحه */
-.movies-grid{
+main { padding: 35px 15px 60px; }
+h2 {
+    color:#ffd700; font-size:28px; text-align:center;
+    margin-bottom:35px; border-bottom:3px solid #ffd700;
+    display:inline-block; padding-bottom:6px;
+}
+.section { text-align:center; }
+
+.movies-grid {
     display:grid;
-    gap:30px;
-    justify-content:center;
-    max-width:1400px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap:20px;
+    max-width:1100px;
     margin:0 auto;
-    padding:0 15px;
 }
-@media (min-width:1300px){ .movies-grid{grid-template-columns:repeat(4,1fr);} }
-@media (max-width:1299px) and (min-width:900px){ .movies-grid{grid-template-columns:repeat(3,1fr);} }
-@media (max-width:899px) and (min-width:550px){ .movies-grid{grid-template-columns:repeat(2,1fr);} }
-@media (max-width:549px){ .movies-grid{grid-template-columns:1fr;} }
 
-.movie-card{
-    perspective:1200px;
-    width:100%;
-    max-width:290px;
-    animation:fadeUp 0.9s ease backwards;
+/* کارت فلپ */
+.movie-card { perspective: 1000px; height:480px; position:relative; }
+.card-inner {
+    position: relative;
+    width: 100%; height: 100%;
+    transition: transform 0.7s;
+    transform-style: preserve-3d;
+    cursor: pointer;
 }
-.card-inner{
-    position:relative;
-    width:100%;
-    height:460px;
-    transform-style:preserve-3d;
-    transition:transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    border-radius:18px;
-    cursor:pointer;
-    box-shadow:0 4px 20px rgba(0,0,0,0.5);
-}
-.card-inner.flipped{ transform:rotateY(180deg); }
+.card-inner.flipped { transform: rotateY(180deg); }
 
-.card-front,.card-back{
+.card-front, .card-back {
     position:absolute;
-    inset:0;
-    backface-visibility:hidden;
-    border-radius:18px;
+    width:100%; height:100%;
+    border-radius:14px;
     overflow:hidden;
-    background:#121214;
+    backface-visibility:hidden;
     border:1px solid #222;
 }
-.card-front:hover{ box-shadow:0 15px 40px rgba(0,0,0,0.7); }
 
-.img-bar{
-    height:320px;
-    background:#000;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    overflow:hidden;
+/* جلو کارت */
+.card-front {
+    background:#131314; display:flex; flex-direction:column;
 }
-.img-bar img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    transition:transform 0.4s ease;
-}
-.card-front:hover .img-bar img{ transform:scale(1.1); }
+.img-bar { height:280px; overflow:hidden; }
+.img-bar img { width:100%; height:100%; object-fit:cover; }
+.date-bar { background:#111; padding:10px; font-size:16px; color:#ffd700; text-align:center; border-bottom:1px solid #222; }
+.title-bar { background:#111; padding:12px; font-size:18px; color:#fff; text-align:center; }
+.reserve-bar { padding:12px; text-align:center; background:#0b0b0b; border-top:1px solid #222; margin-top:auto; }
+.reserve-btn { background:#ffd700; padding:10px 22px; border-radius:35px; font-size:15px; font-weight:600; color:#000; text-decoration:none; }
 
-.date-bar,.title-bar{
-    height:42px;
-    line-height:42px;
-    padding:0 14px;
-    text-align:center;
-    backdrop-filter:blur(8px);
-    font-size:15px;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
+/* پشت کارت */
+.card-back {
+    transform:rotateY(180deg); background:#111; color:#fff;
+    padding:20px; text-align:right; font-size:15px; display:flex; flex-direction:column; justify-content:flex-start;
 }
-.date-bar{background:rgba(0,0,0,0.65);color:#ffd700;font-weight:bold;}
-.title-bar{background:rgba(0,0,0,0.55);color:#fff;}
+.card-back h3 { color:#ffd700; margin-bottom:8px; }
+.card-back p { margin-bottom:6px; }
 
-.reserve-bar{
-    height:56px;
-    background:#ffd700;
-    color:#000;
-    font-weight:bold;
-    font-size:17px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
+/* فوتر */
+footer {
+    background:#000; padding:35px 20px; text-align:center;
+    border-top:1px solid #303030; margin-top:60px;
 }
-.reserve-bar a{
-    color:#000;
-    text-decoration:none;
-    width:100%;
-    height:100%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
+.footer-title { font-size:18px; color:#ffd700; margin-bottom:18px; }
+.social-row { display:flex; justify-content:center; gap:18px; }
+.social-icon {
+    width:48px; height:48px; border-radius:50%;
+    background:#1a1a1a; display:flex; align-items:center; justify-content:center;
+    color:#ffd700; font-size:22px; text-decoration:none;
 }
+.social-icon:hover { background:#ffd700; color:#000; }
 
-.card-back{
-    transform:rotateY(180deg);
-    padding:24px;
-    background:#111;
-    display:flex;
-    flex-direction:column;
-    gap:14px;
-    font-size:14.5px;
-    line-height:23px;
-}
-.card-back h3{color:#ffd700;font-size:19px;margin-bottom:5px;}
-.card-back strong{color:#ffd700;}
-
-footer{
-    margin-top:90px;
-    padding:40px 25px;
-    background:#000;
-    border-top:1px solid #333;
-    text-align:right;
-}
-.footer-title{font-size:20px;color:#ffd700;margin-bottom:15px;}
-.social-row{display:flex;gap:15px;justify-content:flex-end;}
-.social-icon{
-    width:50px;height:50px;border-radius:50%;
-    background:#1c1c1c;color:#ffd700;font-size:22px;
-    display:flex;align-items:center;justify-content:center;text-decoration:none;
-}
-.social-icon:hover{background:#ffd700;color:#000;transition:0.3s;}
-
-@keyframes fadeUp{
-    from{opacity:0;transform:translateY(30px);}
-    to{opacity:1;transform:translateY(0);}
-}
 </style>
 </head>
 <body>
 
 <header>
-    <div class="logo-fa">Soft Shiraz</div>
+    <div class="logo-fa">سافت شیراز</div>
+    <div class="logo-en">Soft Shiraz</div>
 </header>
 
-<h2>اکران‌های بعدی</h2>
-
-<div class="movies-grid" id="movies-container"></div>
+<main>
+    <section class="section">
+        <h2>اکران‌های بعدی</h2>
+        <div class="movies-grid" id="cards-container"></div>
+    </section>
+</main>
 
 <footer>
-    <div class="footer-title">شبکه‌های اجتماعی سافت شیراز</div>
+    <div class="footer-title">شبکه‌های اجتماعی</div>
     <div class="social-row">
         <a class="social-icon" href="https://t.me/softshiraz" target="_blank"><i class="fab fa-telegram"></i></a>
         <a class="social-icon" href="https://instagram.com/softshiraz" target="_blank"><i class="fab fa-instagram"></i></a>
@@ -190,76 +119,38 @@ footer{
 </footer>
 
 <script>
-const container = document.getElementById("movies-container");
-let currentFlipped = null;
+const container = document.getElementById('cards-container');
 
-// لود ترتیب از order.txt
-fetch("order.txt?t=" + Date.now())
-    .then(r => r.ok ? r.text() : Promise.reject())
-    .then(text => text.split(",").map(n => n.trim()).filter(Boolean))
-    .then(order => {
-        if (order.length === 0) return;
+fetch('order.txt')
+.then(r=>r.ok?r.text():Promise.reject())
+.then(text=>text.split(',').map(n=>n.trim()))
+.catch(()=>['1','2','3','4','5','6','7','8','9','10','11','12'])
+.then(order=>{
+    order.forEach((num,index)=>{
+        fetch(`cards/${num}.html`,{cache:"no-store"})
+        .then(r=>r.ok?r.text():Promise.reject())
+        .then(cardHTML=>{
+            if(!cardHTML) return;
 
-        order.forEach((num, index) => {
-            const id = num.trim();
-            if (!id) return;
+            const card=document.createElement('div');
+            card.className='movie-card';
+            card.style.animation=`fadeUp 0.5s ease forwards`;
+            card.style.animationDelay=`${index*0.08}s`;
 
-            fetch(`cards/${id}.json?t=${Date.now()}`)
-                .then(r => r.ok ? r.json() : Promise.reject())
-                .then(data => {
-                    const card = document.createElement("div");
-                    card.className = "movie-card";
-                    card.style.animationDelay = `${index * 0.1}s`;
+            // کارت شامل جلو و پشت در یک فایل
+            card.innerHTML = cardHTML;
 
-                    // اگر تصویر نبود → جای خالی (هیچ چیز اضافه نمیشه)
-                    const imgHtml = data.image 
-                        ? `<img src="${data.image}" alt="${data.title || ''}" onerror="this.style.display='none'">`
-                        : '';
-
-                    card.innerHTML = `
-                        <div class="card-inner">
-                            <div class="card-front">
-                                <div class="date-bar">${data.date || 'به زودی'}</div>
-                                <div class="img-bar">${imgHtml}</div>
-                                <div class="title-bar">${data.title || 'فیلم ' + id}</div>
-                                <div class="reserve-bar">
-                                    <a href="${data.reserve_link || 'https://t.me/softshiraz'}" target="_blank">رزرو بلیط</a>
-                                </div>
-                            </div>
-
-                            <div class="card-back">
-                                <h3>${data.back?.movie_title || data.title || 'فیلم ' + id}</h3>
-                                <p><strong>ژانر:</strong> ${data.back?.genre || 'نامشخص'}</p>
-                                <p><strong>خلاصه:</strong> ${data.back?.summary || 'در حال بروزرسانی...'}</p>
-                                <p><strong>سال انتشار:</strong> ${data.back?.year || 'نامشخص'}</p>
-                                <p><strong>امتیاز IMDb:</strong> ${data.back?.imdb || 'نامشخص'}</p>
-                                <p><strong>مدت زمان:</strong> ${data.back?.duration || 'نامشخص'}</p>
-                                <p><strong>رده سنی:</strong> ${data.back?.age || 'نامشخص'}</p>
-                            </div>
-                        </div>
-                    `;
-                    container.appendChild(card);
-                })
-                .catch(() => {
-                    // اگر JSON نبود → هیچی نمایش داده نمیشه (کاملاً مخفی)
-                    console.log(`کارت ${id} وجود ندارد یا خطا دارد`);
-                });
+            container.appendChild(card);
         });
     });
+});
 
-// فلیپ کارت با کلیک
-document.addEventListener("click", e => {
-    const inner = e.target.closest(".card-inner");
-    if (!inner) {
-        if (currentFlipped) currentFlipped.classList.remove("flipped");
-        currentFlipped = null;
-        return;
+// فلپ کارت با کلیک
+document.addEventListener('click',function(e){
+    const cardInner = e.target.closest('.card-inner');
+    if(cardInner){
+        cardInner.classList.toggle('flipped');
     }
-    if (currentFlipped && currentFlipped !== inner) {
-        currentFlipped.classList.remove("flipped");
-    }
-    inner.classList.toggle("flipped");
-    currentFlipped = inner.classList.contains("flipped") ? inner : null;
 });
 </script>
 
