@@ -17,7 +17,15 @@ header {
     display:flex; justify-content: space-between; align-items:center;
     border-bottom:1px solid #303030; position: sticky; top:0; z-index: 999;
 }
+.logo-fa, .logo-en {
+    font-weight: 700;
+    background: linear-gradient(45deg,#ffd700,#ffb300);
+    -webkit-background-clip: text; color: transparent;
+}
+.logo-fa { font-size: 24px; }
+.logo-en { font-size: 26px; }
 
+/* Main */
 main { padding: 35px 15px 60px; }
 h2 {
     color:#ffd700; font-size:28px; text-align:center;
@@ -126,7 +134,10 @@ footer {
 </head>
 <body>
 
-<header></header>
+<header>
+    <div class="logo-fa">سافت شیراز</div>
+    <div class="logo-en">Soft Shiraz</div>
+</header>
 
 <main>
     <section class="section">
@@ -176,18 +187,21 @@ document.addEventListener('click',function(e){
     }
 });
 
-// اسلایدر خودکار
-let scrollAmount = 0;
-const slider = document.getElementById('cards-container');
-const sliderSpeed = 1; // پیکسل در فریم
-
-function autoScroll() {
-    if(slider.scrollWidth - slider.clientWidth <= scrollAmount) scrollAmount = 0;
-    slider.scrollLeft = scrollAmount;
-    scrollAmount += sliderSpeed;
+// اسلایدر خودکار روان
+let slider = document.getElementById('cards-container');
+let scrollPos = 0;
+let scrollDirection = 1;
+function autoScroll(){
+    if(slider.scrollWidth > slider.clientWidth){
+        scrollPos += scrollDirection;
+        if(scrollPos >= slider.scrollWidth - slider.clientWidth) scrollDirection = -1;
+        if(scrollPos <= 0) scrollDirection = 1;
+        slider.scrollLeft = scrollPos;
+    }
     requestAnimationFrame(autoScroll);
 }
 autoScroll();
+
 </script>
 
 </body>
