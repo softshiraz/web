@@ -10,24 +10,20 @@
 
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
-body { 
-    font-family: "Vazirmatn", sans-serif; 
-    background: linear-gradient(to bottom, #fdfcfb, #cce0f5); /* سفید مالت تا آبی کم‌رنگ */
-    color: #1a1a1a; /* متن اصلی تیره برای خوانایی */
-}
+body { font-family: "Vazirmatn", sans-serif; background: #e0f7f7; color: #004d4d; }
 
 /* هدر */
 header {
-    background: #ffffffcc; /* سفید شفاف */
+    background: #00c6c6; 
     padding: 15px 25px;
     display:flex; justify-content: flex-end; align-items:center;
-    border-bottom:1px solid #cce0f5;
+    border-bottom:1px solid #66d9d9; 
     position: sticky; top:0; z-index: 999;
 }
 .logo-fa {
     font-weight: 700;
     font-size: 26px;
-    background: linear-gradient(45deg,#88cfff,#1c82d5); /* طیف آبی روشن */
+    background: linear-gradient(45deg,#ffffff,#00bcd4);
     -webkit-background-clip: text;
     color: transparent;
 }
@@ -35,29 +31,29 @@ header {
 /* بدنه اصلی */
 main { padding: 35px 15px 60px; }
 h2 {
-    color:#1c82d5; font-size:28px; text-align:center;
-    margin-bottom:35px; border-bottom:3px solid #88cfff;
+    color:#00bcd4; font-size:28px; text-align:center;
+    margin-bottom:35px; border-bottom:3px solid #00bcd4;
     display:inline-block; padding-bottom:6px;
 }
 .section { text-align:center; }
 
 .movies-grid {
     display:grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, 1fr); 
     gap:20px;
     justify-items:center;
     max-width:1200px;
     margin:0 auto;
 }
 
-/* کارت‌ها */
+/* کارت فلپ */
 .movie-card { perspective: 1000px; }
 .card-inner {
     position: relative;
     transition: transform 0.7s;
     transform-style: preserve-3d;
     cursor: pointer;
-    width: 280px;
+    width: 280px; 
     height: 420px; 
 }
 .card-inner.flipped { transform: rotateY(180deg); }
@@ -68,13 +64,13 @@ h2 {
     border-radius:14px;
     overflow:hidden;
     backface-visibility:hidden;
-    border:1px solid #88cfff;
+    border:1px solid #00bcd4;
 }
 
 /* جلو کارت */
 .card-front {
-    background: #ffffffcc; /* سفید شفاف */
-    display:flex; flex-direction:column;
+    background:#ffffff; display:flex; flex-direction:column;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 .img-bar {
     flex:1;
@@ -87,7 +83,6 @@ h2 {
     object-fit:cover; 
 }
 
-/* شیشه‌ای کردن کادرها */
 .date-bar, .title-bar, .reserve-bar {
     height:36px;
     line-height:36px;
@@ -96,68 +91,72 @@ h2 {
     overflow:hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    background: rgba(255,255,255,0.6);
+    background: rgba(0,188,212,0.2);
     backdrop-filter: blur(6px);
-    border-top:1px solid rgba(28,130,213,0.3);
+    border-top:1px solid rgba(0,188,212,0.5);
     font-size:14px;
 }
 
-/* رنگ متن کادرها */
-.date-bar { color:#1c82d5; }
-.title-bar { color:#1a1a1a; }
+.date-bar { color:#00bcd4; }
+.title-bar { color:#004d4d; }
 .reserve-bar { 
     color:#ffffff;  
-    background:#1c82d5;
+    background:#00bcd4;
     font-weight: bold;
     cursor: pointer;
-    border-radius:6px;
 }
 
 /* پشت کارت */
 .card-back {
     transform:rotateY(180deg); 
-    background:#e6f0fb; /* آبی خیلی روشن */
-    color:#1a1a1a;
-    padding:15px; text-align:right; font-size:14px; display:flex; flex-direction:column; justify-content:flex-start;
+    background:#e0f7f7; 
+    color:#004d4d;
+    padding:15px; 
+    text-align:right; 
+    font-size:14px; 
+    display:flex; flex-direction:column; 
+    justify-content:flex-start;
 }
-.card-back h3, .card-back p strong { color:#1c82d5; }
-.card-back p span { color:#1a1a1a; }
+.card-back h3, .card-back p strong { color:#00bcd4; }
+.card-back p span { color:#004d4d; }
 .card-back p { margin-bottom:6px; }
 
 /* فوتر */
 footer {
-    background: #ffffffcc;
-    padding:35px 20px; text-align:center;
-    border-top:1px solid #cce0f5; 
+    background:#00c6c6; 
+    padding:35px 20px; 
+    text-align:center;
+    border-top:1px solid #66d9d9; 
     margin-top:60px;
 }
-.footer-title { font-size:18px; color:#1c82d5; margin-bottom:18px; }
+.footer-title { font-size:18px; color:#ffffff; margin-bottom:18px; }
 
 .social-row {
     display: flex;
-    justify-content: center; 
+    justify-content: center;
     gap: 18px;
     align-items: center;
 }
 
 .social-icon {
     width:48px; height:48px; border-radius:50%;
-    background:#cce0f5; display:flex; align-items:center; justify-content:center;
-    color:#1c82d5; font-size:22px; text-decoration:none;
+    background:#ffffff; 
+    display:flex; align-items:center; justify-content:center;
+    color:#00bcd4; font-size:22px; text-decoration:none;
 }
-.social-icon:hover { background:#1c82d5; color:#ffffff; }
+.social-icon:hover { background:#00bcd4; color:#ffffff; }
 
 /* ریسپانسیو */
 @media (max-width: 1200px) { 
-    .card-inner { width:300px; height:450px; }
+    .card-inner { width:300px; height:450px; } 
     .movies-grid { grid-template-columns: repeat(3, 1fr); }
 }
 @media (max-width: 768px) { 
-    .card-inner { width:280px; height:420px; }
+    .card-inner { width:280px; height:420px; } 
     .movies-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 480px) {
-    .card-inner { width:250px; height:375px; }
+    .card-inner { width:250px; height:375px; } 
     .movies-grid { grid-template-columns: 1fr; }
 }
 </style>
@@ -185,7 +184,7 @@ footer {
 
 <script>
 const container = document.getElementById('cards-container');
-let openCard = null;
+let openCard = null; 
 
 fetch('order.txt')
 .then(r=>r.ok?r.text():Promise.reject())
@@ -202,10 +201,11 @@ fetch('order.txt')
             card.className='movie-card';
             card.style.animation=`fadeUp 0.5s ease forwards`;
             card.style.animationDelay=`${index*0.08}s`;
-
             card.innerHTML = cardHTML;
+
             container.appendChild(card);
 
+            // کلیک روی رزرو بلیط
             const reserveButton = card.querySelector('.reserve-bar');
             if (reserveButton) {
                 reserveButton.addEventListener('click', function() {
