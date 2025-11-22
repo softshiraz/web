@@ -1,55 +1,205 @@
-<div class="movie-card">
-    <div class="card-inner">
-        <!-- جلو کارت -->
-        <div class="card-front">
-            <div class="date-bar">جمعه ۸ آذر - ساعت ۱۹:۰۰</div>
-            <div class="img-bar"><img src="../web/png/1.png" alt="فیلم"></div>
-            <div class="title-bar">جوکر ۲</div>
-            <div class="reserve-bar">رزرو بلیط</div>
-        </div>
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>سافت شیراز - اکران‌های بعدی</title>
 
-        <!-- پشت کارت -->
-        <div class="card-back">
-            <p><strong>فیلم:</strong> <span>جوکر ۲</span></p>
-            <p><strong>ژانر:</strong> <span>اکشن، جنایی، هیجان‌انگیز</span></p>
-            <p><strong>خلاصه:</strong> <span>داستان ادامه ماجراهای جوکر و تاثیر او بر شهر گاتهام...</span></p>
-            <p><strong>سال انتشار:</strong> <span>2025</span></p>
-            <p><strong>امتیاز فیلم:</strong> <span>8.2</span></p>
-            <p><strong>مدت زمان:</strong> <span>2 ساعت و 30 دقیقه</span></p>
-            <p><strong>رده سنی:</strong> <span>+18</span></p>
-        </div>
-    </div>
-</div>
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/dist/font-face.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-.movie-card { perspective:1000px; width:280px; height:420px; margin:15px; }
-.card-inner { position:relative; width:100%; height:100%; transition:0.7s; transform-style: preserve-3d; cursor:pointer; }
-.card-inner.flipped { transform:rotateY(180deg); }
-.card-front, .card-back { position:absolute; top:0; left:0; width:100%; height:100%; border-radius:12px; overflow:hidden; backface-visibility:hidden; border:1px solid #222; }
-.card-front { background:#131314; display:flex; flex-direction:column; }
-.img-bar { flex:1; width:100%; overflow:hidden; }
-.img-bar img { width:100%; height:100%; object-fit:cover; }
-.date-bar, .title-bar, .reserve-bar { height:36px; line-height:36px; padding:0 10px; text-align:center; background: rgba(0,0,0,0.4); backdrop-filter:blur(6px); color:#fff; margin:2px 0; border-top:1px solid rgba(255,255,255,0.1); font-size:14px; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: "Vazirmatn", sans-serif; background: #0e0e0f; color: #fff; }
+
+header {
+    background: #000; padding: 15px 25px;
+    display:flex; justify-content: flex-end; align-items:center;
+    border-bottom:1px solid #303030; position: sticky; top:0; z-index: 999;
+}
+.logo-fa {
+    font-weight: 700;
+    font-size: 26px;
+    background: linear-gradient(45deg,#ffd700,#ffb300);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+main { padding: 35px 15px 60px; }
+h2 {
+    color:#ffd700; font-size:28px; text-align:center;
+    margin-bottom:35px; border-bottom:3px solid #ffd700;
+    display:inline-block; padding-bottom:6px;
+}
+.section { text-align:center; }
+
+.movies-grid {
+    display:grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 کارت دسکتاپ */
+    gap:20px;
+    justify-items:center;
+    max-width:1200px;
+    margin:0 auto;
+}
+
+/* کارت فلپ با اندازه ثابت سه حالت */
+.movie-card { perspective: 1000px; }
+.card-inner {
+    position: relative;
+    transition: transform 0.7s;
+    transform-style: preserve-3d;
+    cursor: pointer;
+    width: 280px; /* دسکتاپ بزرگ */
+    height: 420px; 
+}
+.card-inner.flipped { transform: rotateY(180deg); }
+
+.card-front, .card-back {
+    position:absolute;
+    top:0; left:0; width:100%; height:100%;
+    border-radius:14px;
+    overflow:hidden;
+    backface-visibility:hidden;
+    border:1px solid #222;
+}
+
+/* جلو کارت */
+.card-front {
+    background:#131314; display:flex; flex-direction:column;
+}
+.img-bar {
+    flex:1;
+    width:100%;
+    overflow:hidden;
+}
+.img-bar img { 
+    width:100%; 
+    height:100%; 
+    object-fit:cover; 
+}
+
+/* شیشه‌ای کردن کادرها */
+.date-bar, .title-bar, .reserve-bar {
+    height:36px;
+    line-height:36px;
+    padding:0 10px;
+    text-align:center;
+    overflow:hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(6px);
+    border-top:1px solid rgba(255,255,255,0.1);
+    font-size:14px;
+}
+
+/* رنگ متن کادرها */
 .date-bar { color:#ffd700; }
 .title-bar { color:#fff; }
-.reserve-bar { color:#000; background:#ffd700; font-weight:bold; cursor:pointer; }
+.reserve-bar { 
+    color:#000; 
+    background:#ffd700;
+    font-weight: bold;
+    cursor: pointer;
+}
 
 /* پشت کارت */
 .card-back {
     transform:rotateY(180deg); background:#111; color:#fff;
     padding:15px; text-align:right; font-size:14px; display:flex; flex-direction:column; justify-content:flex-start;
 }
+.card-back h3, .card-back p strong { color:#ffd700; } /* اینها زرد شدند */
+.card-back p span { color:#fff; } /* متن توضیحاتی جلوش سفید باشد */
 .card-back p { margin-bottom:6px; }
-.card-back strong { color:#ffd700; } /* عنوان زرد */
-.card-back span { color:#fff; font-weight:bold; } /* محتوا سفید و بولد */
+
+/* فوتر */
+footer {
+    background:#000; padding:35px 20px; text-align:right;
+    border-top:1px solid #303030; margin-top:60px;
+}
+.footer-title { font-size:18px; color:#ffd700; margin-bottom:18px; }
+.social-row { display:flex; justify-content:flex-end; gap:18px; }
+.social-icon {
+    width:48px; height:48px; border-radius:50%;
+    background:#1a1a1a; display:flex; align-items:center; justify-content:center;
+    color:#ffd700; font-size:22px; text-decoration:none;
+}
+.social-icon:hover { background:#ffd700; color:#000; }
+
+/* ریسپانسیو: اندازه کارت‌ها برای لپ‌تاپ و موبایل */
+@media (max-width: 1200px) { 
+    .card-inner { width:240px; height:360px; } /* لپ‌تاپ متوسط */
+    .movies-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 768px) { 
+    .card-inner { width:200px; height:300px; } /* موبایل کوچک */
+    .movies-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+    .movies-grid { grid-template-columns: 1fr; }
+}
 </style>
+</head>
+<body>
+
+<header>
+    <div class="logo-fa">سافت شیراز</div>
+</header>
+
+<main>
+    <section class="section">
+        <h2>اکران‌های بعدی</h2>
+        <div class="movies-grid" id="cards-container"></div>
+    </section>
+</main>
+
+<footer>
+    <div class="footer-title">شبکه‌های اجتماعی سافت شیراز</div>
+    <div class="social-row">
+        <a class="social-icon" href="https://t.me/softshiraz" target="_blank"><i class="fab fa-telegram"></i></a>
+        <a class="social-icon" href="https://instagram.com/softshiraz" target="_blank"><i class="fab fa-instagram"></i></a>
+    </div>
+</footer>
 
 <script>
-// فلپ کارت با کلیک
-document.addEventListener('click', function(e){
+const container = document.getElementById('cards-container');
+let openCard = null; // کارت باز فعلی
+
+fetch('order.txt')
+.then(r=>r.ok?r.text():Promise.reject())
+.then(text=>text.split(',').map(n=>n.trim()))
+.catch(()=>['1','2','3','4','5','6','7','8','9','10','11','12'])
+.then(order=>{
+    order.forEach((num,index)=>{
+        fetch(`cards/${num}.html`,{cache:"no-store"})
+        .then(r=>r.ok?r.text():Promise.reject())
+        .then(cardHTML=>{
+            if(!cardHTML) return;
+
+            const card=document.createElement('div');
+            card.className='movie-card';
+            card.style.animation=`fadeUp 0.5s ease forwards`;
+            card.style.animationDelay=`${index*0.08}s`;
+
+            card.innerHTML = cardHTML;
+
+            container.appendChild(card);
+        });
+    });
+});
+
+// فلپ کارت با کلیک: فقط یک کارت باز باشد
+document.addEventListener('click',function(e){
     const cardInner = e.target.closest('.card-inner');
     if(cardInner){
+        if(openCard && openCard !== cardInner){
+            openCard.classList.remove('flipped');
+        }
         cardInner.classList.toggle('flipped');
+        openCard = cardInner.classList.contains('flipped') ? cardInner : null;
     }
 });
 </script>
+
+</body>
+</html>
