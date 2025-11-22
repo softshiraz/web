@@ -3,63 +3,53 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>سافت شیراز - اکران‌های بعدی</title>
+<title>سافت شیراز - اکران‌های آینده</title>
 
 <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/dist/font-face.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
-body { 
-    font-family: "Vazirmatn", sans-serif; 
-    background: #f5f0e1; /* کرم روشن */
-    color: #0a1d3a; /* آبی تیره */
-    transition: all 0.3s ease;
-}
+body { font-family: "Vazirmatn", sans-serif; background: #0e0e0f; color: #fff; }
 
 header {
-    background: #0a1d3a; /* آبی تیره */
-    padding: 15px 25px;
+    background: #000; padding: 15px 25px;
     display:flex; justify-content: flex-end; align-items:center;
-    border-bottom:1px solid #ff4c4c; /* قرمز روشن */
-    position: sticky; top:0; z-index: 999;
+    border-bottom:1px solid #303030; position: sticky; top:0; z-index: 999;
 }
 .logo-fa {
     font-weight: 700;
     font-size: 26px;
-    background: linear-gradient(45deg,#ff4c4c,#ff0000); /* قرمز روشن */
+    background: linear-gradient(45deg,#ffd700,#ffb300);
     -webkit-background-clip: text;
     color: transparent;
 }
 
 main { padding: 35px 15px 60px; }
 h2 {
-    color:#ff4c4c; /* قرمز روشن */
-    font-size:28px; 
-    text-align:center;
-    margin-bottom:35px; 
-    border-bottom:3px solid #ff4c4c;
-    display:inline-block; 
-    padding-bottom:6px;
+    color:#ffd700; font-size:28px; text-align:center;
+    margin-bottom:35px; border-bottom:3px solid #ffd700;
+    display:inline-block; padding-bottom:6px;
 }
 .section { text-align:center; }
 
 .movies-grid {
     display:grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, 1fr); /* 4 کارت دسکتاپ */
     gap:20px;
     justify-items:center;
     max-width:1200px;
     margin:0 auto;
 }
 
+/* کارت فلپ با اندازه ثابت سه حالت */
 .movie-card { perspective: 1000px; }
 .card-inner {
     position: relative;
     transition: transform 0.7s;
     transform-style: preserve-3d;
     cursor: pointer;
-    width: 280px;
+    width: 280px; /* دسکتاپ بزرگ */
     height: 420px; 
 }
 .card-inner.flipped { transform: rotateY(180deg); }
@@ -70,170 +60,103 @@ h2 {
     border-radius:14px;
     overflow:hidden;
     backface-visibility:hidden;
-    border:1px solid #ff4c4c; /* قرمز روشن */
+    border:1px solid #222;
 }
 
 /* جلو کارت */
 .card-front {
-    background:#0a1d3a; 
-    display:flex; flex-direction:column;
+    background:#131314; display:flex; flex-direction:column;
 }
-.img-bar { flex:1; width:100%; overflow:hidden; }
-.img-bar img { width:100%; height:100%; object-fit:cover; }
+.img-bar {
+    flex:1;
+    width:100%;
+    overflow:hidden;
+}
+.img-bar img { 
+    width:100%; 
+    height:100%; 
+    object-fit:cover; 
+}
 
+/* شیشه‌ای کردن کادرها */
 .date-bar, .title-bar, .reserve-bar {
-    height:36px; line-height:36px;
-    padding:0 10px; text-align:center;
-    overflow:hidden; white-space: nowrap; text-overflow: ellipsis;
-    background: rgba(255,255,255,0.4); 
+    height:36px;
+    line-height:36px;
+    padding:0 10px;
+    text-align:center;
+    overflow:hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    background: rgba(0,0,0,0.4);
     backdrop-filter: blur(6px);
-    border-top:1px solid #ff4c4c; /* قرمز روشن */
+    border-top:1px solid rgba(255,255,255,0.1);
     font-size:14px;
 }
 
-.date-bar { color:#ff4c4c; } /* قرمز روشن */
-.title-bar { color:#0a1d3a; } /* آبی تیره */
+/* رنگ متن کادرها */
+.date-bar { color:#ffd700; }
+.title-bar { color:#fff; }
 .reserve-bar { 
-    color:#0a1d3a; /* متن سیاه آبی تیره */
-    background:#ff4c4c; /* قرمز روشن */
+    color:#000;  /* تغییر رنگ متن به سیاه */
+    background:#ffd700;
     font-weight: bold;
     cursor: pointer;
 }
 
 /* پشت کارت */
 .card-back {
-    transform:rotateY(180deg); background:#0a1d3a; color:#f5f0e1;
+    transform:rotateY(180deg); background:#111; color:#fff;
     padding:15px; text-align:right; font-size:14px; display:flex; flex-direction:column; justify-content:flex-start;
 }
-.card-back h3, .card-back p strong { color:#ff4c4c; } 
-.card-back p span { color:#f5f0e1; }
+.card-back h3, .card-back p strong { color:#ffd700; } /* اینها زرد شدند */
+.card-back p span { color:#fff; } /* متن توضیحاتی جلوش سفید باشد */
 .card-back p { margin-bottom:6px; }
 
 /* فوتر */
 footer {
-    background:#0a1d3a; /* آبی تیره */
-    padding:35px 20px;
-    text-align:center;
-    border-top:1px solid #ff4c4c; /* قرمز روشن */
-    margin-top:60px;
+    background:#000; padding:35px 20px; text-align:center; /* تغییر برای وسط‌چینی */
+    border-top:1px solid #303030; margin-top:60px;
 }
-.footer-title { font-size:18px; color:#ff4c4c; margin-bottom:18px; }
+.footer-title { font-size:18px; color:#ffd700; margin-bottom:18px; }
 
 .social-row {
     display: flex;
-    justify-content: center; 
+    justify-content: center; /* وسط‌چین آیکون‌ها */
     gap: 18px;
-    align-items: center;
+    align-items: center; /* وسط‌چین عمودی آیکون‌ها */
 }
+
 .social-icon {
     width:48px; height:48px; border-radius:50%;
-    background:#f5f0e1; /* پس‌زمینه کرمی */
-    display:flex; align-items:center; justify-content:center;
-    color:#0a1d3a; /* آبی تیره */
-    font-size:22px; text-decoration:none;
+    background:#1a1a1a; display:flex; align-items:center; justify-content:center;
+    color:#ffd700; font-size:22px; text-decoration:none;
 }
-.social-icon:hover { background:#ff4c4c; color:#f5f0e1; }
+.social-icon:hover { background:#ffd700; color:#000; }
 
-/* تنظیمات شب و روز */
-.dark-theme {
-    background: #0e0e0f;
-    color: #131314;
+/* ریسپانسیو: اندازه کارت‌ها برای لپ‌تاپ و موبایل */
+@media (max-width: 1200px) { 
+    .card-inner { width:300px; height:450px; } /* لپ‌تاپ متوسط */
+    .movies-grid { grid-template-columns: repeat(3, 1fr); }
 }
-
-.dark-theme header {
-    background: #131314;
-    border-bottom: 1px solid #ffd700;
+@media (max-width: 768px) { 
+    .card-inner { width:280px; height:420px; } /* موبایل بزرگ */
+    .movies-grid { grid-template-columns: repeat(2, 1fr); }
 }
-
-.dark-theme .card-front {
-    background: #131314;
-    border: 1px solid #ffd700;
-}
-
-.dark-theme .date-bar { color: #ffd700; }
-.dark-theme .title-bar { color: #131314; }
-.dark-theme .reserve-bar { 
-    background: #ffd700;
-    color: #131314;
-}
-
-.dark-theme footer {
-    background: #131314;
-    border-top: 1px solid #ffd700;
-}
-
-/* پنجره درباره ما */
-.about-popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #fff;
-    color: #0a1d3a;
-    padding: 20px;
-    border-radius: 10px;
-    width: 80%;
-    max-width: 500px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.3);
-    display: none;
-}
-
-.about-popup .popup-header {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 15px;
-}
-
-.about-popup .popup-content {
-    font-size: 16px;
-    line-height: 1.5;
-}
-
-.about-popup .close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    font-size: 20px;
-    color: #ff4c4c;
-    cursor: pointer;
-}
-
-/* آیکون برای تغییر تم و درباره ما */
-#theme-toggle, #about-btn {
-    background:none; 
-    border:none; 
-    color:white; 
-    font-size:22px; 
-    cursor:pointer;
-}
-
-#theme-toggle {
-    margin-left: 20px;
-}
-
-#about-btn {
-    position: absolute;
-    left: 20px;
-    bottom: 10px;
-    font-size: 24px;
-    color: white;
+@media (max-width: 480px) {
+    .card-inner { width:250px; height:375px; } /* موبایل کوچک */
+    .movies-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 <body>
 
 <header>
-    <div class="logo-fa">سافت شیراز</div>
-    <button id="theme-toggle" class="theme-toggle">
-        <i class="fas fa-moon"></i> <!-- آیکون برای تم شب -->
-    </button>
+    <div class="logo-fa">Soft Shiraz</div>
 </header>
 
 <main>
     <section class="section">
-        <h2>اکران‌های بعدی</h2>
+        <h2>اکران‌های آینده</h2>
         <div class="movies-grid" id="cards-container"></div>
     </section>
 </main>
@@ -244,20 +167,11 @@ footer {
         <a class="social-icon" href="https://t.me/softshiraz" target="_blank"><i class="fab fa-telegram"></i></a>
         <a class="social-icon" href="https://instagram.com/softshiraz" target="_blank"><i class="fab fa-instagram"></i></a>
     </div>
-    <button id="about-btn" class="about-btn"><i class="fas fa-info-circle"></i></button>
 </footer>
-
-<div class="about-popup" id="about-popup">
-    <button class="close-btn" id="close-about">×</button>
-    <div class="popup-header">درباره ما</div>
-    <div class="popup-content">
-        <p>سایت سافت شیراز به اکران فیلم‌ها و برنامه‌های مختلف می‌پردازد. هدف ما ارائه بهترین محتوا و تجربه برای شماست.</p>
-    </div>
-</div>
 
 <script>
 const container = document.getElementById('cards-container');
-let openCard = null;
+let openCard = null; // کارت باز فعلی
 
 fetch('order.txt')
 .then(r=>r.ok?r.text():Promise.reject())
@@ -276,12 +190,14 @@ fetch('order.txt')
             card.style.animationDelay=`${index*0.08}s`;
 
             card.innerHTML = cardHTML;
+
             container.appendChild(card);
 
+            // اضافه کردن عملکرد برای کلیک روی دکمه رزرو بلیط
             const reserveButton = card.querySelector('.reserve-bar');
             if (reserveButton) {
                 reserveButton.addEventListener('click', function() {
-                    const telegramID = 'softshiraz';
+                    const telegramID = 'softshiraz'; // به جای این آی‌دی، آی‌دی تلگرام مربوطه را قرار دهید
                     window.location.href = `https://t.me/${telegramID}`;
                 });
             }
@@ -289,6 +205,7 @@ fetch('order.txt')
     });
 });
 
+// فلپ کارت با کلیک: فقط یک کارت باز باشد
 document.addEventListener('click',function(e){
     const cardInner = e.target.closest('.card-inner');
     if(cardInner){
@@ -298,25 +215,6 @@ document.addEventListener('click',function(e){
         cardInner.classList.toggle('flipped');
         openCard = cardInner.classList.contains('flipped') ? cardInner : null;
     }
-});
-
-// تغییر تم
-document.getElementById('theme-toggle').addEventListener('click', function() {
-    document.body.classList.toggle('dark-theme');
-    const isDark = document.body.classList.contains('dark-theme');
-    const themeIcon = document.querySelector('#theme-toggle i');
-    themeIcon.classList.toggle('fa-sun'); // تغییر آیکون به خورشید برای تم روز
-    themeIcon.classList.toggle('fa-moon'); // تغییر آیکون به ماه برای تم شب
-});
-
-// نمایش کادر درباره ما
-document.getElementById('about-btn').addEventListener('click', function() {
-    document.getElementById('about-popup').style.display = 'block';
-});
-
-// بستن کادر درباره ما
-document.getElementById('close-about').addEventListener('click', function() {
-    document.getElementById('about-popup').style.display = 'none';
 });
 </script>
 
