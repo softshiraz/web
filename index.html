@@ -10,33 +10,37 @@
 
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
-body { font-family: "Vazirmatn", sans-serif; background: #e6f0ff; color: #002147; }
+body { 
+    font-family: "Vazirmatn", sans-serif; 
+    background: linear-gradient(to bottom, #fdfcfb, #cce0f5); /* سفید مالت تا آبی کم‌رنگ */
+    color: #1a1a1a; /* متن اصلی تیره برای خوانایی */
+}
 
 /* هدر */
 header {
-    background: #004080; 
+    background: #ffffffcc; /* سفید شفاف */
     padding: 15px 25px;
     display:flex; justify-content: flex-end; align-items:center;
-    border-bottom:1px solid #0066cc; position: sticky; top:0; z-index: 999;
+    border-bottom:1px solid #cce0f5;
+    position: sticky; top:0; z-index: 999;
 }
 .logo-fa {
     font-weight: 700;
     font-size: 26px;
-    background: linear-gradient(45deg,#ffffff,#66ccff);
+    background: linear-gradient(45deg,#88cfff,#1c82d5); /* طیف آبی روشن */
     -webkit-background-clip: text;
     color: transparent;
 }
 
-/* اصلی */
+/* بدنه اصلی */
 main { padding: 35px 15px 60px; }
 h2 {
-    color:#004080; font-size:28px; text-align:center;
-    margin-bottom:35px; border-bottom:3px solid #66ccff;
+    color:#1c82d5; font-size:28px; text-align:center;
+    margin-bottom:35px; border-bottom:3px solid #88cfff;
     display:inline-block; padding-bottom:6px;
 }
 .section { text-align:center; }
 
-/* گرید کارت‌ها */
 .movies-grid {
     display:grid;
     grid-template-columns: repeat(4, 1fr);
@@ -46,7 +50,7 @@ h2 {
     margin:0 auto;
 }
 
-/* کارت فلپ */
+/* کارت‌ها */
 .movie-card { perspective: 1000px; }
 .card-inner {
     position: relative;
@@ -64,12 +68,13 @@ h2 {
     border-radius:14px;
     overflow:hidden;
     backface-visibility:hidden;
-    border:1px solid #99ccff;
+    border:1px solid #88cfff;
 }
 
 /* جلو کارت */
 .card-front {
-    background:#cce0ff; display:flex; flex-direction:column;
+    background: #ffffffcc; /* سفید شفاف */
+    display:flex; flex-direction:column;
 }
 .img-bar {
     flex:1;
@@ -91,62 +96,68 @@ h2 {
     overflow:hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    background: rgba(255,255,255,0.7);
+    background: rgba(255,255,255,0.6);
     backdrop-filter: blur(6px);
-    border-top:1px solid rgba(0,0,128,0.3);
+    border-top:1px solid rgba(28,130,213,0.3);
     font-size:14px;
 }
 
-.date-bar { color:#004080; }
-.title-bar { color:#001f3f; }
+/* رنگ متن کادرها */
+.date-bar { color:#1c82d5; }
+.title-bar { color:#1a1a1a; }
 .reserve-bar { 
-    color:#ffffff;
-    background:#0066cc;
+    color:#ffffff;  
+    background:#1c82d5;
     font-weight: bold;
     cursor: pointer;
+    border-radius:6px;
 }
 
 /* پشت کارت */
 .card-back {
     transform:rotateY(180deg); 
-    background:#b3d1ff; 
-    color:#001f3f;
+    background:#e6f0fb; /* آبی خیلی روشن */
+    color:#1a1a1a;
     padding:15px; text-align:right; font-size:14px; display:flex; flex-direction:column; justify-content:flex-start;
 }
-.card-back h3, .card-back p strong { color:#004080; }
-.card-back p span { color:#001f3f; }
+.card-back h3, .card-back p strong { color:#1c82d5; }
+.card-back p span { color:#1a1a1a; }
 .card-back p { margin-bottom:6px; }
 
 /* فوتر */
 footer {
-    background:#004080; padding:35px 20px; text-align:center;
-    border-top:1px solid #66ccff; margin-top:60px;
+    background: #ffffffcc;
+    padding:35px 20px; text-align:center;
+    border-top:1px solid #cce0f5; 
+    margin-top:60px;
 }
-.footer-title { font-size:18px; color:#ffffff; margin-bottom:18px; }
+.footer-title { font-size:18px; color:#1c82d5; margin-bottom:18px; }
+
 .social-row {
     display: flex;
     justify-content: center; 
     gap: 18px;
-    align-items: center; 
+    align-items: center;
 }
+
 .social-icon {
     width:48px; height:48px; border-radius:50%;
-    background:#66ccff; display:flex; align-items:center; justify-content:center;
-    color:#004080; font-size:22px; text-decoration:none;
+    background:#cce0f5; display:flex; align-items:center; justify-content:center;
+    color:#1c82d5; font-size:22px; text-decoration:none;
 }
-.social-icon:hover { background:#004080; color:#ffffff; }
+.social-icon:hover { background:#1c82d5; color:#ffffff; }
 
 /* ریسپانسیو */
 @media (max-width: 1200px) { 
-    .card-inner { width:300px; height:450px; } 
+    .card-inner { width:300px; height:450px; }
     .movies-grid { grid-template-columns: repeat(3, 1fr); }
 }
 @media (max-width: 768px) { 
-    .card-inner { width:280px; height:420px; } 
+    .card-inner { width:280px; height:420px; }
     .movies-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 480px) {
-    .card-inner { width:250px; height:375px; } 
+    .card-inner { width:250px; height:375px; }
     .movies-grid { grid-template-columns: 1fr; }
 }
 </style>
@@ -195,7 +206,6 @@ fetch('order.txt')
             card.innerHTML = cardHTML;
             container.appendChild(card);
 
-            // کلیک روی رزرو
             const reserveButton = card.querySelector('.reserve-bar');
             if (reserveButton) {
                 reserveButton.addEventListener('click', function() {
@@ -207,7 +217,6 @@ fetch('order.txt')
     });
 });
 
-// فلپ کارت با کلیک
 document.addEventListener('click',function(e){
     const cardInner = e.target.closest('.card-inner');
     if(cardInner){
