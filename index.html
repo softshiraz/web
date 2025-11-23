@@ -149,7 +149,6 @@ footer {
     transition: opacity 0.3s ease;
 }
 
-/* نمایش با opacity */
 #about-popup.show {
     display:block;
     opacity: 1;
@@ -200,31 +199,27 @@ footer {
 const container = document.getElementById('cards-container');
 let openCard = null;
 
-/* --- تغییر فقط این بخش انجام شد: ترتیب ثابت 1 تا 12 --- */
-const order = Array.from({ length: 12 }, (_, i) => (i + 1).toString());
+/* --- ترتیب ثابت 1 تا 12 --- */
+for (let num = 1; num <= 12; num++) {
 
-order.forEach((num, index) => {
     fetch(`cards/${num}.html`, { cache: "no-store" })
-    .then(r => r.ok ? r.text() : Promise.reject())
+    .then(r => r.ok ? r.text() : null)
     .then(cardHTML => {
         if (!cardHTML) return;
 
         const card = document.createElement('div');
         card.className = 'movie-card';
-        card.style.animation = `fadeUp 0.5s ease forwards`;
-        card.style.animationDelay = `${index * 0.08}s`;
         card.innerHTML = cardHTML;
         container.appendChild(card);
 
         const reserveButton = card.querySelector('.reserve-bar');
         if (reserveButton) {
             reserveButton.addEventListener('click', function() {
-                const telegramID = 'softshiraz';
-                window.location.href = `https://t.me/${telegramID}`;
+                window.location.href = `https://t.me/softshiraz`;
             });
         }
     });
-});
+}
 
 document.addEventListener('click', function(e) {
     const cardInner = e.target.closest('.card-inner');
