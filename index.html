@@ -10,12 +10,29 @@
 
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
-body { font-family: "Vazirmatn", sans-serif; background: #0e0e0f; color: #fff; }
+body { 
+    font-family: "Vazirmatn", sans-serif; 
+    background: #0e0e0f; 
+    color: #fff; 
+    /* Effect background: اضافه کردن بک‌گراند با افکت گرادیانت انیمیشنی */
+    background: linear-gradient(45deg, #0e0e0f, #1a1a1a, #0e0e0f);
+    background-size: 400% 400%;
+    animation: gradientEffect 15s ease infinite;
+}
+
+@keyframes gradientEffect {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
 
 header {
-    background: #000; padding: 15px 25px;
+    background: rgba(0, 0, 0, 0.5); /* Glass effect: شفاف با بلور */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 15px 25px;
     display:flex; justify-content: flex-end; align-items:center;
-    border-bottom:1px solid #303030; 
+    border-bottom:1px solid rgba(48, 48, 48, 0.5); 
     position: sticky; top:0; z-index: 999;
 }
 .logo-fa {
@@ -60,10 +77,14 @@ h2 {
     border-radius:14px;
     overflow:hidden;
     backface-visibility:hidden;
-    border:1px solid #222;
+    border:1px solid rgba(34, 34, 34, 0.5);
+    /* Glass effect: اعمال بلور و شفافیت به کارت‌ها */
+    background: rgba(19, 19, 20, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 }
 
-.card-front { background:#131314; display:flex; flex-direction:column; }
+.card-front { display:flex; flex-direction:column; }
 .img-bar { flex:1; width:100%; overflow:hidden; }
 .img-bar img { width:100%; height:100%; object-fit:cover; }
 
@@ -80,15 +101,18 @@ h2 {
 .reserve-bar { color:#000; background:#ffd700; font-weight:bold; cursor:pointer; }
 
 .card-back {
-    transform:rotateY(180deg); background:#111;
+    transform:rotateY(180deg);
     padding:15px; color:#fff; text-align:right;
     font-size:14px; display:flex; flex-direction:column;
 }
 .card-back h3, .card-back p strong { color:#ffd700; }
 
 footer {
-    background:#000; padding:35px 20px; text-align:center;
-    border-top:1px solid #303030; 
+    background: rgba(0, 0, 0, 0.5); /* Glass effect: شفاف با بلور */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding:35px 20px; text-align:center;
+    border-top:1px solid rgba(48, 48, 48, 0.5); 
     margin-top:60px;
 }
 .footer-title { font-size:18px; color:#ffd700; margin-bottom:18px; }
@@ -98,7 +122,10 @@ footer {
 }
 .social-icon {
     width:48px; height:48px; border-radius:50%;
-    background:#1a1a1a; display:flex; align-items:center; justify-content:center;
+    background: rgba(26, 26, 26, 0.7); /* Glass effect برای آیکون‌ها */
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    display:flex; align-items:center; justify-content:center;
     color:#ffd700; font-size:22px; 
 }
 .social-icon:hover { background:#ffd700; color:#000; }
@@ -106,12 +133,80 @@ footer {
 #about-popup {
     display:none; position:fixed; top:50%; left:50%;
     transform:translate(-50%,-50%);
-    width:300px; background:#111; border:2px solid #ffd700;
+    width:300px; background: rgba(17, 17, 17, 0.8); /* Glass effect */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border:2px solid rgba(255, 215, 0, 0.5);
     border-radius:12px; padding:20px; 
     font-size:14px; text-align:right; z-index:1000;
     opacity:0; transition:opacity .3s;
 }
 #about-popup.show { display:block; opacity:1; }
+
+/* Loading: یک لودینگ خوشگل و عجیب (با افکت چرخشی و ذرات) برای ۵ ثانیه اول */
+#loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+#loading-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+.loader {
+    width: 80px;
+    height: 80px;
+    border: 5px solid #ffd700;
+    border-top: 5px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite, pulse 2s ease-in-out infinite;
+    position: relative;
+}
+.loader::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    background: #ffd700;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: particle 2s ease infinite;
+}
+.loader::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 15px;
+    height: 15px;
+    background: #ffb300;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: particle 3s ease infinite reverse;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+@keyframes particle {
+    0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(3); opacity: 0; }
+}
 
 /* ریسپانسیو */
 @media (max-width:1200px) { .movies-grid{grid-template-columns:repeat(3,1fr);} }
@@ -121,6 +216,10 @@ footer {
 
 </head>
 <body>
+
+<div id="loading-overlay">
+    <div class="loader"></div>
+</div>
 
 <header><div class="logo-fa">Soft Shiraz</div></header>
 
@@ -148,6 +247,13 @@ footer {
 <script>
 const container = document.getElementById("cards-container");
 let openCard = null;
+
+// لودینگ: نمایش برای ۵ ثانیه اول و سپس محو شدن
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        document.getElementById('loading-overlay').classList.add('hidden');
+    }, 5000); // ۵ ثانیه
+});
 
 /* --------------------
    لود اجباری و ترتیبی
