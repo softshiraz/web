@@ -15,7 +15,8 @@ body { font-family: "Vazirmatn", sans-serif; background: #0e0e0f; color: #fff; }
 header {
     background: #000; padding: 15px 25px;
     display:flex; justify-content: flex-end; align-items:center;
-    border-bottom:1px solid #303030; position: sticky; top:0; z-index: 999;
+    border-bottom:1px solid #303030; 
+    position: sticky; top:0; z-index: 999;
 }
 .logo-fa {
     font-weight: 700;
@@ -62,188 +63,146 @@ h2 {
     border:1px solid #222;
 }
 
-.card-front {
-    background:#131314; display:flex; flex-direction:column;
-}
-.img-bar {
-    flex:1;
-    width:100%;
-    overflow:hidden;
-}
-.img-bar img { 
-    width:100%; 
-    height:100%; 
-    object-fit:cover; 
-}
+.card-front { background:#131314; display:flex; flex-direction:column; }
+.img-bar { flex:1; width:100%; overflow:hidden; }
+.img-bar img { width:100%; height:100%; object-fit:cover; }
 
 .date-bar, .title-bar, .reserve-bar {
-    height:36px;
-    line-height:36px;
-    padding:0 10px;
-    text-align:center;
-    overflow:hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    background: rgba(0,0,0,0.3);
-    backdrop-filter: blur(6px);
-    border-top:1px solid rgba(255,255,255,0.1);
-    font-size:14px;
+    height:36px; line-height:36px;
+    padding:0 10px; text-align:center;
+    overflow:hidden; white-space: nowrap; text-overflow: ellipsis;
+    background: rgba(0,0,0,0.3); backdrop-filter: blur(6px);
+    border-top:1px solid rgba(255,255,255,0.1); font-size:14px;
 }
 
 .date-bar { color:#ffd700; }
 .title-bar { color:#fff; }
-.reserve-bar { 
-    color:#000;
-    background:#ffd700;
-    font-weight: bold;
-    cursor: pointer;
-}
+.reserve-bar { color:#000; background:#ffd700; font-weight:bold; cursor:pointer; }
 
 .card-back {
-    transform:rotateY(180deg); background:#111; color:#fff;
-    padding:15px; text-align:right; font-size:14px; display:flex; flex-direction:column; justify-content:flex-start;
+    transform:rotateY(180deg); background:#111;
+    padding:15px; color:#fff; text-align:right;
+    font-size:14px; display:flex; flex-direction:column;
 }
 .card-back h3, .card-back p strong { color:#ffd700; }
-.card-back p span { color:#fff; }
-.card-back p { margin-bottom:6px; }
 
 footer {
     background:#000; padding:35px 20px; text-align:center;
-    border-top:1px solid #303030; margin-top:60px;
-    position: relative;
+    border-top:1px solid #303030; 
+    margin-top:60px;
 }
 .footer-title { font-size:18px; color:#ffd700; margin-bottom:18px; }
 
 .social-row {
-    display: flex;
-    justify-content: center;
-    gap: 18px;
-    align-items: center;
+    display:flex; justify-content:center; gap:18px;
 }
-
 .social-icon {
     width:48px; height:48px; border-radius:50%;
     background:#1a1a1a; display:flex; align-items:center; justify-content:center;
-    color:#ffd700; font-size:22px; text-decoration:none;
-    position: relative;
+    color:#ffd700; font-size:22px; 
 }
 .social-icon:hover { background:#ffd700; color:#000; }
 
-/* پاپ‌آپ وسط صفحه */
 #about-popup {
-    display:none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 300px;
-    background:#111;
-    border:2px solid #ffd700;
-    border-radius:12px;
-    padding:20px;
-    font-size:14px;
-    text-align:right;
-    z-index: 1000;
-    box-shadow:0 0 20px rgba(255,255,0,0.7);
-    opacity: 0;
-    transition: opacity 0.3s ease;
+    display:none; position:fixed; top:50%; left:50%;
+    transform:translate(-50%,-50%);
+    width:300px; background:#111; border:2px solid #ffd700;
+    border-radius:12px; padding:20px; 
+    font-size:14px; text-align:right; z-index:1000;
+    opacity:0; transition:opacity .3s;
 }
+#about-popup.show { display:block; opacity:1; }
 
-#about-popup.show {
-    display:block;
-    opacity: 1;
-}
-
-/* ریسپانسیو کارت‌ها */
-@media (max-width: 1200px) { 
-    .card-inner { width:300px; height:450px; }
-    .movies-grid { grid-template-columns: repeat(3, 1fr); }
-}
-@media (max-width: 768px) { 
-    .card-inner { width:280px; height:420px; }
-    .movies-grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 480px) {
-    .card-inner { width:250px; height:375px; }
-    .movies-grid { grid-template-columns: 1fr; }
-}
+/* ریسپانسیو */
+@media (max-width:1200px) { .movies-grid{grid-template-columns:repeat(3,1fr);} }
+@media (max-width:768px)  { .movies-grid{grid-template-columns:repeat(2,1fr);} }
+@media (max-width:480px)  { .movies-grid{grid-template-columns:1fr;} }
 </style>
+
 </head>
 <body>
 
-<header style="padding-left: 15px;">
-    <div class="logo-fa">Soft Shiraz</div>
-</header >
+<header><div class="logo-fa">Soft Shiraz</div></header>
 
-<main style="padding-top: 15px; padding-bottom: 30px;">
+<main>
     <section class="section">
         <h2>اکران‌های آینده</h2>
         <div class="movies-grid" id="cards-container"></div>
     </section>
 </main>
 
-<footer style="margin-top: unset; padding-bottom: 20px; padding-top: 20px;">
+<footer>
     <div class="footer-title">شبکه‌های اجتماعی سافت شیراز</div>
     <div class="social-row">
         <a class="social-icon" href="https://t.me/softshiraz" target="_blank"><i class="fab fa-telegram"></i></a>
         <a class="social-icon" href="https://instagram.com/softshiraz" target="_blank"><i class="fab fa-instagram"></i></a>
-        <a class="social-icon" id="about-btn" href="javascript:void(0)"><i class="fas fa-info"></i></a>
-        <div id="about-popup">
-            <strong>درباره ما:</strong>
-            <p>سافت شیراز مرجع معرفی فیلم‌های آینده و اخبار سینما است. هدف ما ارائه تجربه‌ای جذاب و کاربردی به کاربران عزیز است.</p>
-        </div>
+        <a class="social-icon" id="about-btn"><i class="fas fa-info"></i></a>
+    </div>
+
+    <div id="about-popup">
+        <strong>درباره ما:</strong>
+        <p>سافت شیراز مرجع معرفی فیلم‌های آینده و اخبار سینما است.</p>
     </div>
 </footer>
 
 <script>
-const container = document.getElementById('cards-container');
+const container = document.getElementById("cards-container");
 let openCard = null;
 
-/* --- ترتیب ثابت 1 تا 12 --- */
-for (let num = 1; num <= 12; num++) {
+/* --------------------
+   لود اجباری و ترتیبی
+   -------------------- */
+async function loadCardsStrictly() {
+    for (let num = 1; num <= 12; num++) {
 
-    fetch(`cards/${num}.html`, { cache: "no-store" })
-    .then(r => r.ok ? r.text() : null)
-    .then(cardHTML => {
-        if (!cardHTML) return;
+        try {
+            const response = await fetch(`cards/${num}.html`, { cache: "no-store" });
+            if (!response.ok) continue;
 
-        const card = document.createElement('div');
-        card.className = 'movie-card';
-        card.innerHTML = cardHTML;
-        container.appendChild(card);
+            const html = await response.text();
 
-        const reserveButton = card.querySelector('.reserve-bar');
-        if (reserveButton) {
-            reserveButton.addEventListener('click', function() {
-                window.location.href = `https://t.me/softshiraz`;
-            });
+            const card = document.createElement("div");
+            card.className = "movie-card";
+            card.innerHTML = html;
+            container.appendChild(card);
+
+            const reserveButton = card.querySelector(".reserve-bar");
+            if (reserveButton) {
+                reserveButton.addEventListener("click", () => {
+                    window.location.href = "https://t.me/softshiraz";
+                });
+            }
+
+        } catch (e) {
+            console.log("خطا در لود کارت", num);
         }
-    });
+    }
 }
 
-document.addEventListener('click', function(e) {
-    const cardInner = e.target.closest('.card-inner');
+loadCardsStrictly();
+
+/* --- flip card --- */
+document.addEventListener("click", function (e) {
+    const cardInner = e.target.closest(".card-inner");
     if (cardInner) {
-        if (openCard && openCard !== cardInner) {
-            openCard.classList.remove('flipped');
-        }
-        cardInner.classList.toggle('flipped');
-        openCard = cardInner.classList.contains('flipped') ? cardInner : null;
+        if (openCard && openCard !== cardInner) openCard.classList.remove("flipped");
+        cardInner.classList.toggle("flipped");
+        openCard = cardInner.classList.contains("flipped") ? cardInner : null;
     }
 });
 
-// درباره ما
-const aboutBtn = document.getElementById('about-btn');
-const aboutPopup = document.getElementById('about-popup');
+/* --- درباره ما --- */
+const aboutBtn = document.getElementById("about-btn");
+const aboutPopup = document.getElementById("about-popup");
 
-aboutBtn.addEventListener('click', (e) => {
+aboutBtn.addEventListener("click", (e) => {
     e.stopPropagation();
-    aboutPopup.classList.toggle('show');
+    aboutPopup.classList.toggle("show");
 });
 
-document.addEventListener('click', (e) => {
+document.addEventListener("click", (e) => {
     if (!aboutPopup.contains(e.target) && e.target !== aboutBtn) {
-        aboutPopup.classList.remove('show');
+        aboutPopup.classList.remove("show");
     }
 });
 </script>
