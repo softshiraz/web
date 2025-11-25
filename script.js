@@ -1,3 +1,4 @@
+// ذرات طلایی
 const particleContainer = document.getElementById("gold-particles");
 for (let i = 0; i < 80; i++) {
     const p = document.createElement("div");
@@ -12,12 +13,14 @@ for (let i = 0; i < 80; i++) {
     particleContainer.appendChild(p);
 }
 
+// لودر
 window.addEventListener('load', () => {
     setTimeout(() => {
         document.getElementById('loading-overlay').classList.add('hidden');
     }, 5000);
 });
 
+// کارت‌ها
 const container = document.getElementById("cards-container");
 let openCard = null;
 
@@ -29,39 +32,6 @@ const revealObserver = new IntersectionObserver((entries) => {
         }
     });
 }, { threshold: 0.18 });
-
-function attachTilt(innerEl) {
-    if (!innerEl) return;
-    const maxTilt = 8;
-
-    function handleMove(e) {
-        const isTouch = e.type.startsWith('touch');
-        const clientX = isTouch ? (e.touches[0] && e.touches[0].clientX) || 0 : e.clientX;
-        const clientY = isTouch ? (e.touches[0] && e.touches[0].clientY) || 0 : e.clientY;
-
-        const rect = innerEl.getBoundingClientRect();
-        const relX = clientX - rect.left;
-        const relY = clientY - rect.top;
-        const px = (relX / rect.width) - 0.5;
-        const py = (relY / rect.height) - 0.5;
-
-        const tiltY = (px * maxTilt).toFixed(2);
-        const tiltX = (-py * maxTilt).toFixed(2);
-
-        innerEl.style.setProperty('--tiltX', tiltX + 'deg');
-        innerEl.style.setProperty('--tiltY', tiltY + 'deg');
-    }
-
-    function resetTilt() {
-        innerEl.style.setProperty('--tiltX', '0deg');
-        innerEl.style.setProperty('--tiltY', '0deg');
-    }
-
-    innerEl.addEventListener('mousemove', handleMove);
-    innerEl.addEventListener('mouseleave', resetTilt);
-    innerEl.addEventListener('touchmove', function(e){ handleMove(e); }, {passive:true});
-    innerEl.addEventListener('touchend', resetTilt);
-}
 
 async function loadCardsStrictly() {
     for (let num = 1; num <= 12; num++) {
@@ -81,9 +51,6 @@ async function loadCardsStrictly() {
                     window.location.href = "https://t.me/softshirazadmin";
                 });
             }
-
-            const inner = card.querySelector(".card-inner");
-            if (inner) attachTilt(inner);
         } catch (e) {
             console.log("خطا در لود کارت", num);
         }
@@ -92,6 +59,7 @@ async function loadCardsStrictly() {
 
 loadCardsStrictly();
 
+// Flip کارت‌ها
 document.addEventListener("click", function (e) {
     const cardInner = e.target.closest(".card-inner");
     if (cardInner) {
@@ -101,6 +69,7 @@ document.addEventListener("click", function (e) {
     }
 });
 
+// درباره ما
 const aboutBtn = document.getElementById("about-btn");
 const aboutPopup = document.getElementById("about-popup");
 aboutBtn.addEventListener("click", (e) => {
