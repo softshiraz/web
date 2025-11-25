@@ -1,73 +1,73 @@
-// ذرات طلایی
-const particleContainer = document.getElementById("gold-particles");
+/* ---------------- ذرات طلایی ---------------- */
+const particles = document.getElementById("gold-particles");
+
 for (let i = 0; i < 80; i++) {
     const p = document.createElement("div");
     p.className = "particle";
-    const size = Math.random() * 3 + 2;
+
+    const size = Math.random() * 4 + 2;
+    const duration = Math.random() * 5 + 5;
+
     p.style.width = size + "px";
     p.style.height = size + "px";
-    p.style.left = Math.random() * 100 + "%";
-    p.style.top = Math.random() * -100 + "vh";
-    p.style.animationDuration = Math.random() * 4 + 4 + "s";
-    p.style.animationDelay = Math.random() * 3 + "s";
-    particleContainer.appendChild(p);
+    p.style.left = Math.random() * 100 + "vw";
+    p.style.animationDuration = duration + "s";
+    p.style.animationDelay = Math.random() * 5 + "s";
+
+    particles.appendChild(p);
 }
 
-// لودر
-window.addEventListener('load', () => {
+/* ---------------- لودر ---------------- */
+window.addEventListener("load", () => {
     setTimeout(() => {
-        document.getElementById('loading-overlay').classList.add('hidden');
-    }, 5000);
+        document.getElementById("loading-overlay").classList.add("hidden");
+    }, 1500);
 });
 
-// کارت‌ها
-const container = document.getElementById("cards-container");
+/* ---------------- بارگذاری کارت‌ها ---------------- */
+const cardsContainer = document.getElementById("cards-container");
+
+for (let i = 1; i <= 12; i++) {
+    fetch(`cards/${i}.html`)
+        .then(res => res.text())
+        .then(html => {
+            const card = document.createElement("div");
+            card.innerHTML = html;
+            cardsContainer.appendChild(card);
+
+            setupCard(card);
+        });
+}
+
+/* ---------------- Flip کارت ---------------- */
 let openCard = null;
 
-async function loadCardsStrictly() {
-    for (let num = 1; num <= 12; num++) {
-        try {
-            const response = await fetch(`cards/${num}.html`, { cache: "no-store" });
-            if (!response.ok) continue;
-            const html = await response.text();
-            const card = document.createElement("div");
-            card.className = "movie-card"; // نمایش همه کارت‌ها به‌صورت کامل
-            card.innerHTML = html;
-            container.appendChild(card);
+function setupCard(wrapper) {
+    const inner = wrapper.querySelector(".card-inner");
+    const reserve = wrapper.querySelector(".reserve-bar");
 
-            const reserveButton = card.querySelector(".reserve-bar");
-            if (reserveButton) {
-                reserveButton.addEventListener("click", () => {
-                    window.location.href = "https://t.me/softshirazadmin";
-                });
-            }
-        } catch (e) {
-            console.log("خطا در لود کارت", num);
+    inner.addEventListener("click", () => {
+        if (openCard && openCard !== inner) {
+            openCard.classList.remove("flipped");
         }
-    }
+        inner.classList.toggle("flipped");
+        openCard = inner;
+    });
+
+    reserve.addEventListener("click", (e) => {
+        e.stopPropagation();
+        window.location.href = "https://t.me/SoftShiraz_Admin";
+    });
 }
 
-loadCardsStrictly();
-
-// Flip کارت‌ها
-document.addEventListener("click", function (e) {
-    const cardInner = e.target.closest(".card-inner");
-    if (cardInner) {
-        if (openCard && openCard !== cardInner) openCard.classList.remove("flipped");
-        cardInner.classList.toggle("flipped");
-        openCard = cardInner.classList.contains("flipped") ? cardInner : null;
-    }
-});
-
-// درباره ما
+/* ---------------- پاپ‌آپ درباره ما ---------------- */
 const aboutBtn = document.getElementById("about-btn");
 const aboutPopup = document.getElementById("about-popup");
-aboutBtn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    aboutPopup.classList.toggle("show");
-});
+
+aboutBtn.onclick = () => aboutPopup.classList.toggle("hidden");
+
 document.addEventListener("click", (e) => {
     if (!aboutPopup.contains(e.target) && e.target !== aboutBtn) {
-        aboutPopup.classList.remove("show");
+        aboutPopup.classList.add("hidden");
     }
 });
