@@ -24,15 +24,6 @@ window.addEventListener('load', () => {
 const container = document.getElementById("cards-container");
 let openCard = null;
 
-const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            revealObserver.unobserve(entry.target);
-        }
-    });
-}, { threshold: 0.18 });
-
 async function loadCardsStrictly() {
     for (let num = 1; num <= 12; num++) {
         try {
@@ -40,10 +31,9 @@ async function loadCardsStrictly() {
             if (!response.ok) continue;
             const html = await response.text();
             const card = document.createElement("div");
-            card.className = "movie-card reveal";
+            card.className = "movie-card"; // نمایش همه کارت‌ها به‌صورت کامل
             card.innerHTML = html;
             container.appendChild(card);
-            revealObserver.observe(card);
 
             const reserveButton = card.querySelector(".reserve-bar");
             if (reserveButton) {
