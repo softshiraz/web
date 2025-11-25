@@ -61,7 +61,7 @@ h2 {
 
 .section { text-align:center; }
 
-/* کارت‌ها یکجا ظاهر می‌شوند، بدون reveal */
+/* کارت‌ها */
 .movies-grid {
     display:grid;
     grid-template-columns:repeat(4,1fr);
@@ -84,20 +84,29 @@ h2 {
     height: 420px; 
 }
 
-.card-inner.flipped { transform: rotateY(180deg); }
-
+/* لبه‌دارتر — این بخش مهم است */
 .card-front, .card-back {
     position:absolute;
     top:0; left:0; width:100%; height:100%;
-    border-radius:14px;
+    border-radius:16px;
     overflow:hidden;
     backface-visibility:hidden;
-    border:1px solid rgba(34,34,34,0.5);
-    background: rgba(19,19,20,0.6);
-    backdrop-filter: blur(8px);
-    z-index: 1;
+
+    /* لبه واضح‌تر و پررنگ‌تر */
+    border:2px solid rgba(255,215,0,0.65);
+
+    /* کمی درخشندگی بسیار ملایم */
+    box-shadow:
+        0 0 8px rgba(255,215,0,0.25),
+        inset 0 0 6px rgba(255,215,0,0.2);
+
+    background: rgba(19,19,20,0.75);
+    backdrop-filter: blur(10px);
 }
 
+.card-inner.flipped { transform: rotateY(180deg); }
+
+/* جلو کارت */
 .card-front { display:flex; flex-direction:column; }
 
 .img-bar { flex:1; width:100%; overflow:hidden; }
@@ -112,11 +121,12 @@ h2 {
 }
 
 .date-bar { color:#ffd700; }
-.title-bar { color:#fff; text-shadow:none; }
+.title-bar { color:#fff; }
 .reserve-bar { 
     color:#000; background:#ffd700; font-weight:bold; cursor:pointer;
 }
 
+/* پشت کارت */
 .card-back {
     transform:rotateY(180deg);
     padding:15px; color:#fff; text-align:right;
