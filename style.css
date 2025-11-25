@@ -5,15 +5,6 @@ body {
     background:#0e0e0f;
     color:#fff;
     overflow-x:hidden;
-    background: linear-gradient(45deg,#0e0e0f,#1a1a1a,#0e0e0f);
-    background-size:400% 400%;
-    animation: gradientEffect 15s ease infinite;
-}
-
-@keyframes gradientEffect {
-    0% { background-position:0% 50%; }
-    50% { background-position:100% 50%; }
-    100% { background-position:0% 50%; }
 }
 
 #gold-particles {
@@ -79,39 +70,16 @@ h2 {
 
 .movie-card { perspective:1000px; position:relative; }
 
-.movie-card::before {
-    content:''; position:absolute; width:300px; height:440px; border-radius:20px;
-    background: radial-gradient(circle, rgba(255,215,0,0.15), transparent 60%);
-    filter:blur(25px); top:-10px; left:-10px; z-index:-1;
-}
-
 .card-inner {
     position: relative;
-    transition: transform 220ms cubic-bezier(0.2,0.8,0.2,1);
+    transition: transform 0.3s cubic-bezier(0.3, 0, 0.2, 1);
     transform-style: preserve-3d;
     cursor: pointer;
     width: 280px;
     height: 420px; 
-    --tiltX: 0deg;
-    --tiltY: 0deg;
-    transform: rotateX(var(--tiltX)) rotateY(var(--tiltY));
-    will-change: transform;
 }
 
-.card-inner.flipped {
-    transform: rotateX(var(--tiltX)) rotateY(calc(var(--tiltY) + 180deg));
-}
-
-.card-inner::before{
-    content: "";
-    position: absolute;
-    top: -12px; left: -12px; right: -12px; bottom: -12px;
-    border-radius: 18px;
-    pointer-events: none;
-    filter: blur(18px);
-    background: radial-gradient(circle at 50% 30%, rgba(255,215,0,0.20), rgba(255,215,0,0.08) 30%, transparent 55%);
-    z-index: 0;
-}
+.card-inner.flipped { transform: rotateY(180deg); }
 
 .card-front, .card-back {
     position:absolute;
@@ -128,7 +96,6 @@ h2 {
 .card-front { display:flex; flex-direction:column; }
 
 .img-bar { flex:1; width:100%; overflow:hidden; }
-
 .img-bar img { width:100%; height:100%; object-fit:cover; }
 
 .date-bar, .title-bar, .reserve-bar {
