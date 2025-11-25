@@ -77,11 +77,6 @@ h2 {
     cursor: pointer;
     width: 280px;
     height: 420px; 
-    border-radius:14px;
-
-    /* نئون طلایی واضح */
-    border: 3px solid #ffd700;
-    box-shadow: 0 0 20px #ffd700, 0 0 40px rgba(255,215,0,0.5), 0 0 60px rgba(255,215,0,0.3);
 }
 
 .card-inner.flipped { transform: rotateY(180deg); }
@@ -92,6 +87,7 @@ h2 {
     border-radius:14px;
     overflow:hidden;
     backface-visibility:hidden;
+    border:1px solid rgba(34,34,34,0.5);
     background: rgba(19,19,20,0.6);
     backdrop-filter: blur(8px);
     z-index: 1;
@@ -232,3 +228,15 @@ footer {
 @media (max-width:1200px) { .movies-grid{grid-template-columns:repeat(3,1fr);} }
 @media (max-width:768px)  { .movies-grid{grid-template-columns:repeat(2,1fr);} }
 @media (max-width:480px)  { .movies-grid{grid-template-columns:1fr;} }
+
+.reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 600ms cubic-bezier(0.2,0.8,0.2,1), transform 600ms cubic-bezier(0.2,0.8,0.2,1);
+    will-change: opacity, transform;
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
