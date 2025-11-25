@@ -30,9 +30,11 @@ async function loadCardsStrictly() {
             const response = await fetch(`cards/${num}.html`, { cache: "no-store" });
             if (!response.ok) continue;
             const html = await response.text();
+
             const card = document.createElement("div");
-            card.className = "movie-card"; // نمایش همه کارت‌ها به‌صورت کامل
+            card.className = "movie-card";
             card.innerHTML = html;
+
             container.appendChild(card);
 
             const reserveButton = card.querySelector(".reserve-bar");
@@ -41,6 +43,7 @@ async function loadCardsStrictly() {
                     window.location.href = "https://t.me/softshirazadmin";
                 });
             }
+
         } catch (e) {
             console.log("خطا در لود کارت", num);
         }
@@ -49,7 +52,7 @@ async function loadCardsStrictly() {
 
 loadCardsStrictly();
 
-// Flip کارت‌ها
+// Flip
 document.addEventListener("click", function (e) {
     const cardInner = e.target.closest(".card-inner");
     if (cardInner) {
@@ -62,10 +65,12 @@ document.addEventListener("click", function (e) {
 // درباره ما
 const aboutBtn = document.getElementById("about-btn");
 const aboutPopup = document.getElementById("about-popup");
+
 aboutBtn.addEventListener("click", (e) => {
     e.stopPropagation();
     aboutPopup.classList.toggle("show");
 });
+
 document.addEventListener("click", (e) => {
     if (!aboutPopup.contains(e.target) && e.target !== aboutBtn) {
         aboutPopup.classList.remove("show");
