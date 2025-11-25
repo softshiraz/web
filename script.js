@@ -1,3 +1,4 @@
+// ذرات طلایی
 const particleContainer = document.getElementById("gold-particles");
 for (let i = 0; i < 80; i++) {
     const p = document.createElement("div");
@@ -12,14 +13,25 @@ for (let i = 0; i < 80; i++) {
     particleContainer.appendChild(p);
 }
 
+// لودر
 window.addEventListener('load', () => {
     setTimeout(() => {
         document.getElementById('loading-overlay').classList.add('hidden');
     }, 5000);
 });
 
+// کارت‌ها
 const container = document.getElementById("cards-container");
 let openCard = null;
+
+const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            revealObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.18 });
 
 async function loadCardsStrictly() {
     for (let num = 1; num <= 12; num++) {
@@ -28,9 +40,10 @@ async function loadCardsStrictly() {
             if (!response.ok) continue;
             const html = await response.text();
             const card = document.createElement("div");
-            card.className = "movie-card"; 
+            card.className = "movie-card reveal";
             card.innerHTML = html;
             container.appendChild(card);
+            revealObserver.observe(card);
 
             const reserveButton = card.querySelector(".reserve-bar");
             if (reserveButton) {
@@ -46,6 +59,7 @@ async function loadCardsStrictly() {
 
 loadCardsStrictly();
 
+// Flip کارت‌ها
 document.addEventListener("click", function (e) {
     const cardInner = e.target.closest(".card-inner");
     if (cardInner) {
@@ -55,6 +69,7 @@ document.addEventListener("click", function (e) {
     }
 });
 
+// درباره ما
 const aboutBtn = document.getElementById("about-btn");
 const aboutPopup = document.getElementById("about-popup");
 aboutBtn.addEventListener("click", (e) => {
