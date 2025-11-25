@@ -6,333 +6,193 @@
 <title>🎬 سافت شیراز 🎬</title>
 <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/dist/font-face.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
 <style>
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-
-body{
-    font-family:"Vazirmatn",sans-serif;
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
+body {
+    font-family: "Vazirmatn", sans-serif;
     background:#0e0e0f;
     color:#fff;
     overflow-x:hidden;
-    background:linear-gradient(45deg,#0e0e0f,#1a1a1a,#0e0e0f);
+    background: linear-gradient(45deg,#0e0e0f,#1a1a1a,#0e0e0f);
     background-size:400% 400%;
-    animation:gradientEffect 15s ease infinite;
+    animation: gradientEffect 15s ease infinite;
 }
-
 @keyframes gradientEffect {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
+    0% { background-position:0% 50%; }
+    50% { background-position:100% 50%; }
+    100% { background-position:0% 50%; }
 }
-
-/* ذرات طلایی */
-#gold-particles{
-    position:fixed;top:0;left:0;width:100%;height:100%;
-    overflow:hidden;pointer-events:none;z-index:0;
-}
-.particle{
+#gold-particles { position: fixed; top:0; left:0; width:100%; height:100%; overflow:hidden; pointer-events:none; z-index:0; }
+.particle {
     position:absolute;
-    width:4px;height:4px;
-    background:rgba(255,215,0,0.8);
+    width:4px; height:4px;
+    background:rgba(255,215,0,0.7);
     border-radius:50%;
-    box-shadow:0 0 6px rgba(255,215,0,0.9);
-    animation:floatDown linear infinite;
+    filter: blur(1px);
+    animation: floatDown linear infinite;
+    will-change: transform, opacity;
 }
-@keyframes floatDown{
-    from{transform:translateY(-120vh);opacity:1}
-    to{transform:translateY(120vh);opacity:0}
+@keyframes floatDown {
+    from { transform: translateY(-120vh); opacity:1; }
+    to { transform: translateY(120vh); opacity:0; }
 }
+/* باقی استایل‌ها بدون تغییر */
+header { background: rgba(0,0,0,0.5); backdrop-filter: blur(10px); padding:15px 25px; display:flex; justify-content:flex-end; align-items:center; border-bottom:1px solid rgba(48,48,48,0.5); position:sticky; top:0; z-index:10; text-shadow:0 0 10px rgba(255,215,0,0.25); }
+.logo-fa { font-weight:700; font-size:26px; background:linear-gradient(45deg,#ffd700,#ffb300); -webkit-background-clip:text; color:transparent; }
+main { padding:35px 15px 60px; }
+h2 { color:#ffd700; font-size:28px; text-align:center; margin-bottom:35px; border-bottom:3px solid #ffd700; display:inline-block; padding-bottom:6px; text-shadow:0 0 8px rgba(255,215,0,0.3); }
+.section { text-align:center; }
+.movies-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; justify-items:center; max-width:1200px; margin:0 auto; }
+.movie-card { perspective:1000px; position:relative; }
+.movie-card::before { content:''; position:absolute; width:300px; height:440px; border-radius:20px; background: radial-gradient(circle, rgba(255,215,0,0.15), transparent 60%); filter:blur(15px); top:-10px; left:-10px; z-index:-1; }
+.card-inner { position: relative; transition: transform 0.22s cubic-bezier(0.2,0.8,0.2,1); transform-style: preserve-3d; cursor: pointer; width: 280px; height: 420px; --tiltX:0deg; --tiltY:0deg; will-change: transform; }
+.card-inner.flipped { transform: rotateX(var(--tiltX)) rotateY(calc(var(--tiltY) + 180deg)); }
+.card-inner::before { content: ""; position: absolute; top: -12px; left: -12px; right: -12px; bottom: -12px; border-radius: 18px; pointer-events: none; filter: blur(10px); background: radial-gradient(circle at 50% 30%, rgba(255,215,0,0.20), rgba(255,215,0,0.08) 30%, transparent 55%); z-index: 0; }
+.card-front, .card-back { position:absolute; top:0; left:0; width:100%; height:100%; border-radius:14px; overflow:hidden; backface-visibility:hidden; border:1px solid rgba(34,34,34,0.5); background: rgba(19,19,20,0.6); backdrop-filter: blur(8px); z-index: 1; }
+.card-front { display:flex; flex-direction:column; }
+.img-bar { flex:1; width:100%; overflow:hidden; }
+.img-bar img { width:100%; height:100%; object-fit:cover; }
+.date-bar, .title-bar, .reserve-bar { height:36px; line-height:36px; padding:0 10px; text-align:center; background: rgba(0,0,0,0.3); border-top:1px solid rgba(255,255,255,0.1); font-size:14px; text-shadow: 0 0 8px rgba(255,215,0,0.25); }
+.date-bar { color:#ffd700; }
+.title-bar { color:#fff; text-shadow:none; }
+.reserve-bar { color:#000; background:#ffd700; font-weight:bold; cursor:pointer; text-shadow:none; }
+.card-back { transform:rotateY(180deg); padding:15px; color:#fff; text-align:right; font-size:14px; display:flex; flex-direction:column; text-shadow:0 0 8px rgba(255,215,0,0.25); }
+.card-back h3, .card-back p strong { color:#ffd700; }
+footer { background: rgba(0,0,0,0.5); backdrop-filter: blur(10px); padding:35px 20px; text-align:center; border-top:1px solid rgba(48,48,48,0.5); margin-top:60px; text-shadow: 0 0 10px rgba(255,215,0,0.25); }
+.footer-title { font-size:18px; color:#ffd700; margin-bottom:18px; }
+.social-row { display:flex; justify-content:center; gap:18px; }
+.social-icon { width:48px; height:48px; border-radius:50%; background: rgba(26,26,26,0.7); backdrop-filter: blur(5px); display:flex; align-items:center; justify-content:center; color:#ffd700; font-size:22px; }
+.social-icon:hover { background:#ffd700; color:#000; }
+.card-inner, .movie-card, .reserve-bar, a, button { -webkit-tap-highlight-color: transparent; outline: none; }
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity 600ms cubic-bezier(0.2,0.8,0.2,1), transform 600ms cubic-bezier(0.2,0.8,0.2,1); will-change: opacity, transform; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
 
-header{
-    background:rgba(0,0,0,0.5);
-    backdrop-filter:blur(6px);
-    padding:15px 25px;
-    display:flex;justify-content:flex-end;align-items:center;
-    border-bottom:1px solid rgba(48,48,48,0.5);
-    position:sticky;top:0;z-index:10;
-    text-shadow:0 0 10px rgba(255,215,0,0.25);
-}
-.logo-fa{
-    font-weight:700;font-size:26px;
-    background:linear-gradient(45deg,#ffd700,#ffb300);
-    -webkit-background-clip:text;color:transparent;
-}
-
-main{padding:20px 15px;}
-
-h2{
-    color:#ffd700;font-size:28px;text-align:center;
-    margin-bottom:30px;border-bottom:3px solid #ffd700;
-    display:inline-block;padding-bottom:6px;
-    text-shadow:0 0 8px rgba(255,215,0,0.3);
-}
-
-.movies-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:20px;
-    max-width:1200px;
-    margin:0 auto;
-}
-
-.movie-card{perspective:1000px;position:relative;}
-
-.movie-card::before{
-    content:'';
-    position:absolute;
-    width:300px;height:440px;
-    border-radius:20px;
-    background:radial-gradient(circle,rgba(255,215,0,0.15),transparent 60%);
-    filter:blur(25px);top:-10px;left:-10px;z-index:-1;
-}
-
-.card-inner{
-    width:280px;height:420px;
-    position:relative;
-    transform-style:preserve-3d;
-    transition:transform .25s ease;
-    cursor:pointer;
-    /* tilt variables */
-    --tiltX:0deg;--tiltY:0deg;
-    transform:rotateX(var(--tiltX)) rotateY(var(--tiltY));
-}
-
-.card-inner.flipped{
-    transform:rotateX(var(--tiltX)) rotateY(calc(var(--tiltY) + 180deg));
-}
-
-.card-inner::before{
-    content:"";
-    position:absolute;top:-12px;left:-12px;right:-12px;bottom:-12px;
-    border-radius:18px;pointer-events:none;
-    filter:blur(18px);
-    background:radial-gradient(circle at 50% 30%,rgba(255,215,0,0.20),rgba(255,215,0,0.08) 30%,transparent 55%);
-}
-
-.card-front,.card-back{
-    position:absolute;top:0;left:0;
-    width:100%;height:100%;
-    border-radius:14px;overflow:hidden;
-    backface-visibility:hidden;
-    border:1px solid rgba(34,34,34,0.5);
-    background:rgba(19,19,20,0.6);
-    backdrop-filter:blur(8px);
-    z-index:1;
-}
-
-.card-back{
-    transform:rotateY(180deg);
-    padding:15px;text-align:right;font-size:14px;
-}
-
-.img-bar img{width:100%;height:100%;object-fit:cover;}
-
-.date-bar,.title-bar,.reserve-bar{
-    height:36px;line-height:36px;text-align:center;padding:0 10px;
-    background:rgba(0,0,0,0.3);
-    border-top:1px solid rgba(255,255,255,0.1);
-}
-
-.reserve-bar{
-    background:#ffd700;color:#000;font-weight:bold;cursor:pointer;
-}
-
-/* Reveal ساده‌تر */
-.reveal{
-    opacity:0;transform:translateY(20px);
-    transition:opacity .45s ease,transform .45s ease;
-}
-.reveal.visible{opacity:1;transform:translateY(0)}
-
-footer{
-    background:rgba(0,0,0,0.5);
-    backdrop-filter:blur(10px);
-    padding:25px;text-align:center;
-    border-top:1px solid rgba(48,48,48,0.5);
-}
-
-.social-icon{
-    width:48px;height:48px;border-radius:50%;
-    background:rgba(26,26,26,0.7);
-    backdrop-filter:blur(3px);
-    display:flex;justify-content:center;align-items:center;
-    color:#ffd700;font-size:22px;
-}
-.social-icon:hover{background:#ffd700;color:#000}
-
-/* ریسپانسیو */
-@media(max-width:1200px){.movies-grid{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:768px){.movies-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:480px){.movies-grid{grid-template-columns:1fr}}
+@media (max-width:1200px) { .movies-grid{grid-template-columns:repeat(3,1fr);} }
+@media (max-width:768px)  { .movies-grid{grid-template-columns:repeat(2,1fr);} }
+@media (max-width:480px)  { .movies-grid{grid-template-columns:1fr;} }
 </style>
 </head>
-
 <body>
-
 <div id="gold-particles"></div>
 
-<!-- لودر جدید فوق سبک -->
-<div id="loading-overlay" style="
-    position:fixed;top:0;left:0;width:100%;height:100%;
-    background:#111;display:flex;align-items:center;justify-content:center;
-    z-index:9999;transition:opacity .4s;
-">
-    <div style="
-        width:22px;height:22px;border:3px solid #444;
-        border-top-color:#ffd700;border-radius:50%;
-        animation:spin 1s linear infinite;
-    "></div>
+<div id="loading-overlay">
+  <div class="loader">
+    <div class="circle"></div><div class="circle"></div><div class="circle"></div><div class="circle"></div><div class="circle"></div>
+  </div>
 </div>
-
-<style>
-@keyframes spin {to{transform:rotate(360deg)}}
-</style>
 
 <header><div class="logo-fa">Soft Shiraz</div></header>
 
-<main>
-    <section>
-        <h2>اکران‌های آینده</h2>
-        <div class="movies-grid" id="cards-container"></div>
-    </section>
+<main style="padding-bottom: 15px; padding-top: 15px;">
+<section class="section">
+<h2>اکران‌های آینده</h2>
+<div class="movies-grid" id="cards-container"></div>
+</section>
 </main>
 
-<footer>
-    <div class="footer-title" style="color:#ffd700;margin-bottom:18px">شبکه‌های اجتماعی سافت شیراز</div>
-    <div style="display:flex;gap:18px;justify-content:center;">
-        <a class="social-icon" href="https://t.me/softshiraz"><i class="fab fa-telegram"></i></a>
-        <a class="social-icon" href="https://instagram.com/soft_shiraz"><i class="fab fa-instagram"></i></a>
-        <a class="social-icon" id="about-btn"><i class="fas fa-info"></i></a>
-    </div>
-
-    <div id="about-popup" style="
-        display:none;position:fixed;top:50%;left:50%;
-        transform:translate(-50%,-50%);
-        width:300px;background:rgba(17,17,17,0.95);
-        border:2px solid rgba(255,215,0,0.5);
-        border-radius:12px;padding:20px;z-index:1000;
-    ">
-        <strong>درباره ما:</strong>
-        <p>سافت شیراز مرجع معرفی فیلم‌های آینده و اخبار سینما است.</p>
-    </div>
+<footer style="margin-top: unset; padding-top: 20px; padding-bottom: 20px;">
+<div class="footer-title">شبکه‌های اجتماعی سافت شیراز</div>
+<div class="social-row">
+<a class="social-icon" href="https://t.me/softshiraz" target="_blank"><i class="fab fa-telegram"></i></a>
+<a class="social-icon" href="https://instagram.com/soft_shiraz" target="_blank"><i class="fab fa-instagram"></i></a>
+<a class="social-icon" id="about-btn"><i class="fas fa-info"></i></a>
+</div>
+<div id="about-popup"><strong>درباره ما:</strong><p>سافت شیراز مرجع معرفی فیلم‌های آینده و اخبار سینما است.</p></div>
 </footer>
 
 <script>
-/* طلایی‌ها */
 const particleContainer = document.getElementById("gold-particles");
-for(let i=0;i<80;i++){
-    const p=document.createElement("div");
-    p.className="particle";
-    const size=Math.random()*3+2;
-    p.style.width=size+"px";
-    p.style.height=size+"px";
-    p.style.left=Math.random()*100+"%";
-    p.style.top=Math.random()*-100+"vh";
-    p.style.animationDuration=(Math.random()*4+4)+"s";
-    p.style.animationDelay=(Math.random()*3)+"s";
+for (let i = 0; i < 50; i++) { // کاهش تعداد ذرات برای لگ کمتر
+    const p = document.createElement("div");
+    p.className = "particle";
+    const size = Math.random() * 3 + 2;
+    p.style.width = size + "px";
+    p.style.height = size + "px";
+    p.style.left = Math.random() * 100 + "%";
+    p.style.top = Math.random() * -100 + "vh";
+    p.style.animationDuration = Math.random() * 4 + 4 + "s";
+    p.style.animationDelay = Math.random() * 3 + "s";
     particleContainer.appendChild(p);
 }
 
-/* لودر سبک */
-window.addEventListener("load",()=>{
-    setTimeout(()=>{
-        document.getElementById("loading-overlay").style.opacity="0";
-        setTimeout(()=>document.getElementById("loading-overlay").remove(),400);
-    },1500);
+window.addEventListener('load', () => {
+    setTimeout(() => { document.getElementById('loading-overlay').classList.add('hidden'); }, 3000);
 });
 
-/* Reveal */
-const revealObserver=new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{
-        if(e.isIntersecting){
-            e.target.classList.add("visible");
-            revealObserver.unobserve(e.target);
+const container = document.getElementById("cards-container");
+let openCard = null;
+
+const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            revealObserver.unobserve(entry.target);
         }
     });
-},{threshold:0.12});
+}, { threshold: 0.18 });
 
-/* Tilt فقط دسکتاپ */
-const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-
-/* Tilt */
-function attachTilt(inner){
-    if(isMobile) return; // خاموش روی موبایل
-
-    const maxTilt=8;
-
-    function move(e){
-        const rect=inner.getBoundingClientRect();
-        const x=(e.clientX - rect.left)/rect.width - 0.5;
-        const y=(e.clientY - rect.top)/rect.height - 0.5;
-        inner.style.setProperty('--tiltX',(-y*maxTilt)+'deg');
-        inner.style.setProperty('--tiltY',(x*maxTilt)+'deg');
+function attachTilt(innerEl) {
+    if (!innerEl) return;
+    const maxTilt = 8;
+    function handleMove(e) {
+        const isTouch = e.type.startsWith('touch');
+        const clientX = isTouch ? (e.touches[0] && e.touches[0].clientX) || 0 : e.clientX;
+        const clientY = isTouch ? (e.touches[0] && e.touches[0].clientY) || 0 : e.clientY;
+        const rect = innerEl.getBoundingClientRect();
+        const relX = clientX - rect.left;
+        const relY = clientY - rect.top;
+        const px = (relX / rect.width) - 0.5;
+        const py = (relY / rect.height) - 0.5;
+        innerEl.style.setProperty('--tiltX', (-py * maxTilt).toFixed(2) + 'deg');
+        innerEl.style.setProperty('--tiltY', (px * maxTilt).toFixed(2) + 'deg');
     }
-
-    function reset(){
-        inner.style.setProperty('--tiltX','0deg');
-        inner.style.setProperty('--tiltY','0deg');
-    }
-
-    inner.addEventListener("mousemove",move);
-    inner.addEventListener("mouseleave",reset);
+    function resetTilt() { innerEl.style.setProperty('--tiltX', '0deg'); innerEl.style.setProperty('--tiltY', '0deg'); }
+    innerEl.addEventListener('mousemove', handleMove);
+    innerEl.addEventListener('mouseleave', resetTilt);
+    innerEl.addEventListener('touchmove', function(e){ handleMove(e); }, {passive:true});
+    innerEl.addEventListener('touchend', resetTilt);
 }
 
-/* لود کارت‌ها */
-const container=document.getElementById("cards-container");
-
-async function loadCards(){
-    for(let i=1;i<=12;i++){
-        try{
-            const r=await fetch(`cards/${i}.html`,{cache:"no-store"});
-            if(!r.ok) continue;
-
-            const html=await r.text();
-            const card=document.createElement("div");
-            card.className="movie-card reveal";
-            card.innerHTML=html;
-
-            container.appendChild(card);
-            revealObserver.observe(card);
-
-            const inner=card.querySelector(".card-inner");
-            if(inner) attachTilt(inner);
-
-            const reserve=card.querySelector(".reserve-bar");
-            if(reserve){
-                reserve.onclick=()=>window.location.href="https://t.me/softshirazadmin";
+// load cards با requestAnimationFrame برای روانی
+function loadCardsStrictly() {
+    let num = 1;
+    function next() {
+        if(num > 12) return;
+        fetch(`cards/${num}.html`, { cache: "no-store" })
+        .then(res => res.ok ? res.text() : null)
+        .then(html => {
+            if(html){
+                const card = document.createElement("div");
+                card.className = "movie-card reveal";
+                card.innerHTML = html;
+                container.appendChild(card);
+                revealObserver.observe(card);
+                const reserveButton = card.querySelector(".reserve-bar");
+                if(reserveButton) reserveButton.addEventListener("click", () => { window.location.href = "https://t.me/softshirazadmin"; });
+                const inner = card.querySelector(".card-inner");
+                if(inner) attachTilt(inner);
             }
-        }catch{}
+        })
+        .catch(()=>console.log("خطا در لود کارت", num))
+        .finally(()=>{ num++; requestAnimationFrame(next); });
     }
+    requestAnimationFrame(next);
 }
-loadCards();
+loadCardsStrictly();
 
-/* Flip */
-let openCard=null;
-document.addEventListener("click",(e)=>{
-    const cardInner=e.target.closest(".card-inner");
-    if(cardInner){
-        if(openCard && openCard!==cardInner) openCard.classList.remove("flipped");
+document.addEventListener("click", function (e) {
+    const cardInner = e.target.closest(".card-inner");
+    if (cardInner) {
+        if (openCard && openCard !== cardInner) openCard.classList.remove("flipped");
         cardInner.classList.toggle("flipped");
-        openCard=cardInner.classList.contains("flipped")?cardInner:null;
+        openCard = cardInner.classList.contains("flipped") ? cardInner : null;
     }
 });
 
-/* درباره ما */
-const aboutBtn=document.getElementById("about-btn");
-const aboutPopup=document.getElementById("about-popup");
-
-aboutBtn.onclick=(e)=>{
-    e.stopPropagation();
-    aboutPopup.style.display=
-        (aboutPopup.style.display==="block")?"none":"block";
-};
-
-document.addEventListener("click",(e)=>{
-    if(e.target!==aboutBtn && !aboutPopup.contains(e.target)){
-        aboutPopup.style.display="none";
-    }
-});
+const aboutBtn = document.getElementById("about-btn");
+const aboutPopup = document.getElementById("about-popup");
+aboutBtn.addEventListener("click", (e) => { e.stopPropagation(); aboutPopup.classList.toggle("show"); });
+document.addEventListener("click", (e) => { if (!aboutPopup.contains(e.target) && e.target !== aboutBtn) aboutPopup.classList.remove("show"); });
 </script>
 </body>
 </html>
