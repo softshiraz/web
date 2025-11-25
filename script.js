@@ -1,4 +1,3 @@
-// ذرات طلایی
 const particleContainer = document.getElementById("gold-particles");
 for (let i = 0; i < 80; i++) {
     const p = document.createElement("div");
@@ -13,14 +12,12 @@ for (let i = 0; i < 80; i++) {
     particleContainer.appendChild(p);
 }
 
-// لودر
 window.addEventListener('load', () => {
     setTimeout(() => {
         document.getElementById('loading-overlay').classList.add('hidden');
     }, 5000);
 });
 
-// کارت‌ها
 const container = document.getElementById("cards-container");
 let openCard = null;
 
@@ -31,7 +28,7 @@ async function loadCardsStrictly() {
             if (!response.ok) continue;
             const html = await response.text();
             const card = document.createElement("div");
-            card.className = "movie-card"; // نمایش همه کارت‌ها به‌صورت کامل
+            card.className = "movie-card"; 
             card.innerHTML = html;
             container.appendChild(card);
 
@@ -49,7 +46,6 @@ async function loadCardsStrictly() {
 
 loadCardsStrictly();
 
-// Flip کارت‌ها
 document.addEventListener("click", function (e) {
     const cardInner = e.target.closest(".card-inner");
     if (cardInner) {
@@ -59,7 +55,6 @@ document.addEventListener("click", function (e) {
     }
 });
 
-// درباره ما
 const aboutBtn = document.getElementById("about-btn");
 const aboutPopup = document.getElementById("about-popup");
 aboutBtn.addEventListener("click", (e) => {
