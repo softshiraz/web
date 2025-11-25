@@ -7,6 +7,7 @@ body {
     overflow-x:hidden;
 }
 
+/* ذرات طلایی */
 #gold-particles {
     position: fixed;
     top:0; left:0;
@@ -30,6 +31,7 @@ body {
     to { transform: translateY(120vh); opacity:0; }
 }
 
+/* هدر */
 header {
     background: rgba(0,0,0,0.5);
     backdrop-filter: blur(10px);
@@ -59,6 +61,7 @@ h2 {
 
 .section { text-align:center; }
 
+/* کارت‌ها یکجا ظاهر می‌شوند، بدون reveal */
 .movies-grid {
     display:grid;
     grid-template-columns:repeat(4,1fr);
@@ -66,6 +69,8 @@ h2 {
     justify-items:center;
     max-width:1200px;
     margin:0 auto;
+    opacity: 1 !important;
+    transform: none !important;
 }
 
 .movie-card { perspective:1000px; position:relative; }
@@ -77,9 +82,6 @@ h2 {
     cursor: pointer;
     width: 280px;
     height: 420px; 
-    border-radius:14px;
-    border: 2px solid rgba(255,215,0,0.8); /* نئون طلایی دور کارت */
-    box-shadow: 0 0 15px rgba(255,215,0,0.6);
 }
 
 .card-inner.flipped { transform: rotateY(180deg); }
@@ -90,6 +92,7 @@ h2 {
     border-radius:14px;
     overflow:hidden;
     backface-visibility:hidden;
+    border:1px solid rgba(34,34,34,0.5);
     background: rgba(19,19,20,0.6);
     backdrop-filter: blur(8px);
     z-index: 1;
@@ -106,30 +109,28 @@ h2 {
     background: rgba(0,0,0,0.3);
     border-top:1px solid rgba(255,255,255,0.1);
     font-size:14px;
-    text-shadow: 0 0 8px rgba(255,215,0,0.25);
 }
 
 .date-bar { color:#ffd700; }
 .title-bar { color:#fff; text-shadow:none; }
 .reserve-bar { 
-    color:#000; background:#ffd700; font-weight:bold; cursor:pointer; text-shadow:none;
+    color:#000; background:#ffd700; font-weight:bold; cursor:pointer;
 }
 
 .card-back {
     transform:rotateY(180deg);
     padding:15px; color:#fff; text-align:right;
     font-size:14px; display:flex; flex-direction:column;
-    text-shadow:0 0 8px rgba(255,215,0,0.25);
 }
 
 .card-back h3, .card-back p strong { color:#ffd700; }
 
+/* فوتر */
 footer {
     background: rgba(0,0,0,0.5);
     backdrop-filter: blur(10px);
     padding:20px; text-align:center;
     border-top:1px solid rgba(48,48,48,0.5); 
-    text-shadow: 0 0 10px rgba(255,215,0,0.25);
 }
 
 .footer-title { font-size:18px; color:#ffd700; margin-bottom:18px; }
@@ -147,11 +148,7 @@ footer {
 
 .social-icon:hover { background:#ffd700; color:#000; }
 
-.card-inner, .movie-card, .reserve-bar, a, button {
-    -webkit-tap-highlight-color: transparent;
-    outline: none;
-}
-
+/* پاپ‌آپ */
 #about-popup {
     display:none; 
     position:fixed; 
@@ -168,11 +165,11 @@ footer {
     z-index:1000;
     opacity:0; 
     transition:opacity .3s;
-    text-shadow: 0 0 8px rgba(255,215,0,0.2);
 }
 
 #about-popup.show { display:block; opacity:1; }
 
+/* لودر */
 #loading-overlay {
     position: fixed;
     top: 0;
@@ -227,6 +224,7 @@ footer {
   100% { transform:rotate(945deg); opacity: 0; } 
 }
 
+/* ریسپانسیو */
 @media (max-width:1200px) { .movies-grid{grid-template-columns:repeat(3,1fr);} }
 @media (max-width:768px)  { .movies-grid{grid-template-columns:repeat(2,1fr);} }
 @media (max-width:480px)  { .movies-grid{grid-template-columns:1fr;} }
