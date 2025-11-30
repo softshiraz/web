@@ -56,9 +56,9 @@ header {
     background: rgba(0,0,0,0.5);
     backdrop-filter: blur(10px);
     padding:15px 25px;
-    display:flex; justify-content:flex-end; align-items:center;
+    display:flex; justify-content:space-between; align-items:center;
     border-bottom:1px solid rgba(48,48,48,0.5); 
-    position:sticky; top:0; z-index:10;
+    position:sticky; top:0; z-index:20;
     text-shadow:0 0 10px rgba(255,215,0,0.25);
 }
 
@@ -70,6 +70,62 @@ header {
     color:transparent;
 }
 
+/* دکمه همبرگر */
+.hamburger-btn {
+    width:48px; height:42px; display:flex; align-items:center; justify-content:center;
+    background: rgba(26,26,26,0.6); border-radius:10px; border:2px solid rgba(255,215,0,0.25);
+    cursor:pointer; transition:transform .18s, background .18s; color:#ffd700;
+}
+.hamburger-btn:active { transform:scale(.97); }
+.hamburger-inner { width:22px; height:16px; position:relative; }
+.hamburger-inner span { position:absolute; left:0; right:0; height:2px; background:#ffd700; display:block; border-radius:2px; }
+.hamburger-inner span:nth-child(1){ top:0; }
+.hamburger-inner span:nth-child(2){ top:7px; }
+.hamburger-inner span:nth-child(3){ top:14px; }
+
+/* منوی کشویی (از سمت چپ باز می‌شود) */
+#side-menu {
+    position: fixed; 
+    top: 0; 
+    left: auto;      /* منو از سمت چپ */
+    right: 0;  /* جلوگیری از اثرات rtl */
+    height: 100vh; 
+    width: 320px; 
+    max-width: 85%;
+    background: linear-gradient(180deg, rgba(12,12,12,0.98), rgba(20,20,20,0.98));
+    box-shadow: 4px 0 30px rgba(0,0,0,0.6);
+    transform: translateX(100%);  /* مخفی بودن اولیه */
+    transition: transform 0.32s cubic-bezier(.2,.9,.2,1);
+    z-index: 30; 
+    padding: 28px; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 18px; 
+    direction: rtl;
+    border-right: 2px solid rgba(255,215,0,0.12);
+}
+#side-menu.open { transform: translateX(0); }
+
+#menu-close { align-self:flex-start; background:transparent; border:none; color:#ffd700; font-size:20px; cursor:pointer; }
+
+.side-brand { font-weight:800; color:#ffd700; font-size:20px; text-align:right; }
+.side-desc { font-size:13px; color:rgba(255,255,255,0.8); text-align:right; }
+
+.side-links { margin-top:6px; display:flex; flex-direction:column; gap:8px; }
+.side-links a {
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    padding:12px 14px; border-radius:10px; text-decoration:none; color:#fff; font-weight:600;
+    background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.03);
+}
+.side-links a:hover { background:rgba(255,215,0,0.06); color:#ffd700; }
+
+/* بک‌دراپ برای کلیک بیرون و تار کردن پس‌زمینه */
+#menu-backdrop {
+    position:fixed; inset:0; background:rgba(0,0,0,0.55); opacity:0; pointer-events:none; transition:opacity .28s; z-index:25;
+}
+#menu-backdrop.visible { opacity:1; pointer-events:auto; }
+
+/* بقیه استایل‌ها همچنان */
 main { padding:35px 15px 60px; }
 
 h2 {
@@ -266,7 +322,37 @@ footer {
   </div>
 </div>
 
-<header><div class="logo-fa">Soft Shiraz</div></header>
+<header>
+    <!-- همبرگر در سمت چپ (روبروی لوگو) -->
+    <button class="hamburger-btn" id="hamburger" aria-controls="side-menu" aria-expanded="false" aria-label="باز کردن منو">
+        <span class="hamburger-inner" aria-hidden="true"><span></span><span></span><span></span></span>
+    </button>
+
+    <div class="logo-fa">Soft Shiraz</div>
+</header>
+
+<!-- بک‌دراپ -->
+<div id="menu-backdrop" tabindex="-1"></div>
+
+<!-- منوی کشویی -->
+<nav id="side-menu" aria-hidden="true">
+    <button id="menu-close" aria-label="بستن منو"><i class="fas fa-times"></i></button>
+    <div class="side-brand">Soft Shiraz</div>
+    <div class="side-desc">معرفی اکران‌های آینده، رزرو بلیط و اخبار سینما</div>
+
+    <div class="side-links" role="menu">
+        <a href="pages/past-releases.html" role="menuitem">اکران‌های شده‌ها</a>
+        <a href="pages/events.html" role="menuitem">ایونت‌ها</a>
+        <a href="https://instagram.com/soft_shiraz" target="_blank" role="menuitem">اینستاگرام ما</a>
+        <a href="https://t.me/softshiraz" target="_blank" role="menuitem">تلگرام ما</a>
+        <a href="pages/about.html" role="menuitem">درباره ما</a>
+        <a href="https://t.me/FLOKI000" role="menuitem">پشتیبانی سایت</a>
+    </div>
+
+    <div style="margin-top:auto; font-size:13px; color:rgba(255,255,255,0.8); text-align:right;">
+        نسخه وب — سافت شیراز
+    </div>
+</nav>
 
 <main style="padding-top:20px;">
     <section class="section">
@@ -341,7 +427,7 @@ document.addEventListener("click", function(e) {
     e.stopPropagation();
 
     // بررسی متن دکمه
-    if (reserveBtn.textContent.trim() !== "تهیه بلیط") return;
+    if (reserveBtn.textContent.trim() !== "رزرو بلیط") return;
 
     const cardFront = reserveBtn.closest(".card-front");
     if (!cardFront) return;
@@ -349,13 +435,7 @@ document.addEventListener("click", function(e) {
     const movieName = (cardFront.querySelector(".date-bar")?.textContent || "نامشخص").trim();
     const dateTime   = (cardFront.querySelector(".title-bar")?.textContent || "نامشخص").trim();
 
-    const message = `💖 سلام وقت بخیر 💖
-
-🎬 فیلم : ${movieName} 🍿
-🕓 زمان : ${dateTime} ⏰
-
-✨ ممنون میشم شرایط رزرو و موجودی رو اعلام کنید 🙏
-🌟 مرسی ازتون 🌟`;
+    const message = `💖 سلام وقت بخیر 💖\n\n🎬 فیلم : ${movieName} 🍿\n🕓 زمان : ${dateTime} ⏰\n\n✨ ممنون میشم شرایط رزرو و موجودی رو اعلام کنید 🙏\n🌟 مرسی ازتون 🌟`;
 
     const encoded = encodeURIComponent(message);
     window.open(`https://t.me/softshirazadmin?text=${encoded}`, "_blank");
@@ -387,6 +467,121 @@ document.addEventListener("click", (e) => {
         aboutPopup.classList.remove("show");
     }
 });
+
+// --- منوی همبرگری ---
+const hamburger = document.getElementById('hamburger');
+const sideMenu = document.getElementById('side-menu');
+const backdrop = document.getElementById('menu-backdrop');
+const menuClose = document.getElementById('menu-close');
+
+function openMenu() {
+    sideMenu.classList.add('open');
+    backdrop.classList.add('visible');
+    hamburger.setAttribute('aria-expanded', 'true');
+    sideMenu.setAttribute('aria-hidden', 'false');
+    // تمرکز را به اولین لینک منتقل کن
+    const firstLink = sideMenu.querySelector('.side-links a');
+    if (firstLink) firstLink.focus();
+}
+
+function closeMenu() {
+    sideMenu.classList.remove('open');
+    backdrop.classList.remove('visible');
+    hamburger.setAttribute('aria-expanded', 'false');
+    sideMenu.setAttribute('aria-hidden', 'true');
+    hamburger.focus();
+}
+
+hamburger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const expanded = hamburger.getAttribute('aria-expanded') === 'true';
+    if (expanded) closeMenu(); else openMenu();
+});
+
+menuClose.addEventListener('click', (e) => { e.stopPropagation(); closeMenu(); });
+backdrop.addEventListener('click', (e) => { closeMenu(); });
+
+// بستن با Escape
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeMenu();
+});
+
+// جلوگیری از بسته شدن منو هنگام تعامل درون آن
+sideMenu.addEventListener('click', (e) => {
+    e.stopPropagation();
+});
+
+// بک‌گراند متحرک
+(() => {
+  const canvas = document.getElementById('bg');
+  const ctx = canvas.getContext('2d');
+  let w, h, particles = [], N = 90, maxDist = 120;
+
+  function resize() { w = canvas.width = innerWidth; h = canvas.height = innerHeight; }
+  addEventListener('resize', resize);
+  resize();
+
+  function rand(a, b) { return Math.random() * (b - a) + a; }
+
+  function init() {
+    particles = [];
+    for (let i = 0; i < N; i++) {
+      particles.push({
+        x: rand(0, w),
+        y: rand(0, h),
+        vx: rand(-0.6, 0.6),
+        vy: rand(-0.6, 0.6),
+        r: rand(0.8, 2.5),
+        a: rand(0.6, 1.0)
+      });
+    }
+  }
+
+  function frame() {
+    const isLight = document.body.classList.contains('light-mode');
+
+    ctx.clearRect(0, 0, w, h);
+
+    for (let p of particles) {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > w) p.vx *= -1;
+      if (p.y < 0 || p.y > h) p.vy *= -1;
+
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(255, 215, 0, ${p.a})`;
+      ctx.shadowColor = isLight
+        ? 'rgba(230, 184, 0, 0.35)'
+        : 'rgba(255, 215, 0, 0.15)';
+      ctx.shadowBlur = isLight ? 12 : 8;
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+
+    ctx.lineWidth = 0.8;
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const p = particles[i], q = particles[j];
+        const d = Math.hypot(p.x - q.x, p.y - q.y);
+        if (d < maxDist) {
+          const alpha = (1 - d / maxDist) * (isLight ? 0.4 : 0.25);
+          ctx.beginPath();
+          ctx.strokeStyle = `rgba(255, 215, 0, ${alpha})`;
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(q.x, q.y);
+          ctx.stroke();
+        }
+      }
+    }
+
+    requestAnimationFrame(frame);
+  }
+
+  init();
+  frame();
+})();
+
+    
 </script>
 
 </body>
