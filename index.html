@@ -333,14 +333,17 @@ async function loadCardsStrictly() {
 }
 loadCardsStrictly();
 
-// رزرو
+// رزرو با بررسی متن دکمه
 document.addEventListener("click", function(e) {
-    const reserveBar = e.target.closest(".reserve-bar");
-    if (!reserveBar) return;
+    const reserveBtn = e.target.closest(".reserve-bar a");
+    if (!reserveBtn) return;
 
     e.stopPropagation();
 
-    const cardFront = reserveBar.closest(".card-front");
+    // بررسی متن دکمه
+    if (reserveBtn.textContent.trim() !== "رزرو بلیط") return;
+
+    const cardFront = reserveBtn.closest(".card-front");
     if (!cardFront) return;
 
     const movieName = (cardFront.querySelector(".date-bar")?.textContent || "نامشخص").trim();
