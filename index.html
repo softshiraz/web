@@ -3,10 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- جلوگیری از کش شدن -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+
 <title>🎬 سافت شیراز 🎬</title>
 
-<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/dist/font-face.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<!-- فونت با نسخه‌گذاری -->
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/dist/font-face.css?v=3" rel="stylesheet">
+
+<!-- آیکون‌ها با نسخه‌گذاری -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css?v=3">
 
 <style>
 * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
@@ -80,61 +89,30 @@ h2 {
     justify-items:center;
     max-width:1200px;
     margin:0 auto;
-    opacity: 1 !important;
-    transform: none !important;
 }
 
 .movie-card { perspective:1000px; position:relative; }
 
-.card-inner {
-    position: relative;
-    transition: transform 0.3s cubic-bezier(0.3, 0, 0.2, 1);
-    transform-style: preserve-3d;
-    cursor: pointer;
-    width: 280px;
-    height: 420px; 
-}
-
-/* لبه‌دار */
-.card-front, .card-back {
-    position:absolute;
-    top:0; left:0; width:100%; height:100%;
-    border-radius:16px;
-    overflow:hidden;
-    backface-visibility:hidden;
-    border:2px solid rgba(255,215,0,0.65);
-    box-shadow:
-        0 0 8px rgba(255,215,0,0.25),
-        inset 0 0 6px rgba(255,215,0,0.2);
-    background: rgba(19,19,20,0.75);
-    backdrop-filter: blur(10px);
-}
-
-.card-inner.flipped { transform: rotateY(180deg); }
-
-/* کارت‌ها */
-.movies-grid {
-    display:grid; grid-template-columns:repeat(4,1fr); gap:20px; justify-items:center;
-    max-width:1200px; margin:0 auto;
-}
-.movie-card { perspective:1000px; position:relative; }
 .card-inner {
     position:relative; width:280px; height:420px; cursor:pointer;
     transition:transform 0.35s cubic-bezier(0.3,0,0.2,1); transform-style:preserve-3d;
 }
+
 .card-inner.flipped { transform:rotateY(180deg); }
+
 .card-front, .card-back {
     position:absolute; top:0; left:0; width:100%; height:100%; border-radius:16px; overflow:hidden;
     backface-visibility:hidden; border:2px solid rgba(255,215,0,0.65);
     box-shadow:0 0 8px rgba(255,215,0,0.25), inset 0 0 6px rgba(255,215,0,0.2);
     background:rgba(19,19,20,0.75); backdrop-filter:blur(10px);
 }
+
 .card-front { display:flex; flex-direction:column; }
 .img-bar { flex:1; overflow:hidden; }
 .img-bar img { width:100%; height:100%; object-fit:cover; transition:transform 0.4s; }
 .movie-card:hover .img-bar img { transform:scale(1.08); }
 
-/* ——— اسم فیلم (بزرگ و درخشان) ——— */
+/* اسم فیلم */
 .date-bar {
     height:52px !important; line-height:52px !important; padding:0 10px;
     text-align:center; background:rgba(0,0,0,0.45); border-top:none !important;
@@ -145,14 +123,14 @@ h2 {
     font-size:21px !important; display:block; transform:translateY(1px);
 }
 
-/* سانس و تاریخ */
+/* سانس */
 .title-bar {
     height:36px; line-height:36px; padding:0 10px; text-align:center;
     background:rgba(0,0,0,0.3); border-top:1px solid rgba(255,255,255,0.1);
     color:#fff; font-weight:600; font-size:15px;
 }
 
-/* دکمه رزرو */
+/* رزرو */
 .reserve-bar {
     height:36px; line-height:36px; padding:0 10px; text-align:center;
     background:#ffd700; color:#000; font-weight:bold; cursor:pointer;
@@ -192,7 +170,7 @@ footer {
 
 .social-icon:hover { background:#ffd700; color:#000; }
 
-/* پاپ‌آپ */
+/* درباره ما */
 #about-popup {
     display:none; 
     position:fixed; 
@@ -312,7 +290,7 @@ footer {
 </footer>
 
 <script>
-// ذرات طلایی (همون قبلی)
+// ذرات طلایی
 const particleContainer = document.getElementById("gold-particles");
 for (let i = 0; i < 80; i++) {
     const p = document.createElement("div");
@@ -334,14 +312,14 @@ window.addEventListener('load', () => {
     }, 5000);
 });
 
-// لود کارت‌ها (همون قبلی - بدون تغییر)
+// لود کارت‌ها با ضد کش
 const container = document.getElementById("cards-container");
 let openCard = null;
 
 async function loadCardsStrictly() {
     for (let num = 1; num <= 150; num++) {
         try {
-            const response = await fetch(`cards/${num}.html`, { cache: "no-store" });
+            const response = await fetch(`cards/${num}.html?v=${Date.now()}`, { cache: "no-store" });
             if (!response.ok) continue;
             const html = await response.text();
             const card = document.createElement("div");
@@ -355,17 +333,16 @@ async function loadCardsStrictly() {
 }
 loadCardsStrictly();
 
-// سیستم رزرو هوشمند با ربات @softshirazadmin
+// رزرو
 document.addEventListener("click", function(e) {
     const reserveBar = e.target.closest(".reserve-bar");
     if (!reserveBar) return;
 
-    e.stopPropagation(); // جلوگیری از فلیپ شدن کارت
+    e.stopPropagation();
 
     const cardFront = reserveBar.closest(".card-front");
     if (!cardFront) return;
 
-    // گرفتن نام فیلم و سانس از داخل کارت (دقیقاً از date-bar و title-bar)
     const movieName = (cardFront.querySelector(".date-bar")?.textContent || "نامشخص").trim();
     const dateTime   = (cardFront.querySelector(".title-bar")?.textContent || "نامشخص").trim();
 
@@ -381,9 +358,9 @@ document.addEventListener("click", function(e) {
     window.open(`https://t.me/softshirazadmin?text=${encoded}`, "_blank");
 });
 
-// فلیپ کارت (فقط وقتی روی جاهای دیگه کلیک بشه)
+// فلیپ کارت
 document.addEventListener("click", function(e) {
-    if (e.target.closest(".reserve-bar")) return; // اگر روی رزرو بود، فلیپ نشه
+    if (e.target.closest(".reserve-bar")) return;
 
     const cardInner = e.target.closest(".card-inner");
     if (cardInner) {
@@ -408,3 +385,6 @@ document.addEventListener("click", (e) => {
     }
 });
 </script>
+
+</body>
+</html>
