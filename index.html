@@ -341,8 +341,8 @@ document.addEventListener("click", function(e) {
     e.stopPropagation();
 
     // بررسی متن دکمه
-    if (reserveBtn.textContent.trim() !== "تهیه بلیط : تمدید شده" , "تهیه بلیط") return;
-
+    if (reserveBtn.textContent.trim() !== "تهیه بلیط") return;
+    if (reserveBtn.textContent.trim() !== "تهیه بلیط : تمدید شده") return;
     const cardFront = reserveBtn.closest(".card-front");
     if (!cardFront) return;
 
