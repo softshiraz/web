@@ -384,15 +384,10 @@ async function startLoading(){
       card.innerHTML = html;
       container.appendChild(card);
       loaded++;
-      if(loaded >= 6){ // حداقل ۶ تا کارت که اومد، لودینگ رو بردار
+      if(loaded >= 1){ // حداقل ۶ تا کارت که اومد، لودینگ رو بردار
         loading.classList.add("hidden");
       }
     }catch(e){}
-
-  // حداکثر ۸ ثانیه صبر کن بعد لودینگ رو کامل ببند
-  setTimeout(()=>loading.classList.add("hidden"), 8000);
-}
-
 startLoading();
  
 // رزرو با بررسی متن دکمه
