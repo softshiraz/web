@@ -356,40 +356,6 @@ async function loadCardsStrictly() {
     }
 }
 loadCardsStrictly();
-
-// بارگذاری کارت‌ها با ترتیب از order.json
-const container = document.getElementById("cards-container");
-const loading = document.getElementById("loading-overlay");
-let loaded = 0;
-
-async function startLoading(){
-  let order = [1,2,3,4,5,6]; // پیش‌فرض
-
-  try{
-    const res = await fetch("cards/order.json?t="+Date.now(), {cache:"no-store"});
-    if(res.ok){
-      order = await res.json();
-    }
-  }catch(e){
-    console.log("order.json پیدا نشد — از ترتیب پیش‌فرض استفاده می‌شود");
-  }
-
-  for(const num of order){
-    try{
-      const r = await fetch(`cards/${num}.html?t=${Date.now()}`, {cache:"no-store"});
-      if(!r.ok) continue;
-      const html = await r.text();
-      const card = document.createElement("div");
-      card.className="movie-card";
-      card.innerHTML = html;
-      container.appendChild(card);
-      loaded++;
-      if(loaded >= 1){ // حداقل ۶ تا کارت که اومد، لودینگ رو بردار
-        loading.classList.add("hidden");
-      }
-    }catch(e){}
-startLoading();
- 
 // رزرو با بررسی متن دکمه
 document.addEventListener("click", function(e) {
     const reserveBtn = e.target.closest(".reserve-bar a");
