@@ -186,20 +186,12 @@ header {
     76% { transform:rotate(945deg); opacity: 0; }
     100% { transform:rotate(945deg); opacity: 0; }
 }
-
-/* تغییر فقط اینجا — موبایل دو تا دو تا */
 @media (max-width:1200px) { .movies-grid{grid-template-columns:repeat(3,1fr);} }
 @media (max-width:768px) { .movies-grid{grid-template-columns:repeat(2,1fr);} }
-@media (max-width:480px) { 
-    .movies-grid{grid-template-columns:repeat(2,1fr); gap:16px;} 
-    .movie-card { width:100%; }
-    .card-inner { width:100%; max-width:320px; margin:0 auto; }
-}
+@media (max-width:480px) { .movies-grid{grid-template-columns:1fr;} }
 </style>
 </head>
 <body>
-
-<!-- بقیه کد دقیقاً همون قبلیه، فقط قسمت بالا تغییر کرده -->
 
 <div id="loading-overlay">
   <div class="loader">
@@ -215,6 +207,7 @@ header {
     <button class="hamburger-btn" id="hamburger" aria-controls="side-menu" aria-expanded="false" aria-label="باز کردن منو">
         <span class="hamburger-inner" aria-hidden="true"><span></span><span></span><span></span></span>
     </button>
+    <!-- لوگو حالا قابل کلیک و لینک داره -->
     <a href="https://softshiraz.github.io/web/" target="_blank" rel="noopener" class="logo-link">
         <div class="logo-fa">Soft Shiraz</div>
     </a>
@@ -223,34 +216,54 @@ header {
 <div id="menu-backdrop" tabindex="-1"></div>
 
 <nav id="side-menu" aria-hidden="true">
-    <button id="menu-close" aria-label="بستن منو" style="padding:5px;">×</button>
-    <div class="side-brand" style="padding-right: 20px;">ایونت‌های طلایی سافت شیراز</div>
-    <div class="side-links" role="menu">
+    <button id="menu-close" aria-label="بستن منو" style="
+    padding-bottom: 5px;
+    padding-top: 5px;
+    padding-right: 5px;
+    padding-left: 5px;
+">×</button>
+    <div class="side-brand" style="
+    padding-right: 20px;
+">ایونت‌های طلایی سافت شیراز</div>
+    <div class="side-links" role="menu" style="
+    margin-top: 0px;
+">
         <a href="events/events.html" role="menuitem">ایونت‌های کتابخوانی</a>
         <a href="pages/past-releases.html" role="menuitem">اکران‌های شده‌ها</a>
         <a href="pages/about.html" role="menuitem">درباره ما</a>
     </div>
-    <div class="menu-social-row">
+    <div class="menu-social-row" style="
+    margin-top: 0px;
+    padding-top: 0px;
+">
         <a class="menu-social-icon" href="https://t.me/softshiraz" target="_blank"><i class="fab fa-telegram"></i></a>
         <a class="menu-social-icon" href="https://instagram.com/soft_shiraz" target="_blank"><i class="fab fa-instagram"></i></a>
         <a class="menu-social-icon" href="https://t.me/FLOKI000" target="_blank"><i class="fas fa-headset"></i></a>
     </div>
-    <div class="side-footer-text" style="padding-right: 50px;">ساخته شده توسط فلوکی</div>
+    <div class="side-footer-text" style="
+    padding-top: 0px;
+    padding-right: 50px;
+">ساخته شده توسط فلوکی</div>
 </nav>
 
 <main style="padding-top:0px;">
     <section class="section">
-        <div class="section-title-wrapper" style="margin:30px 0;">
+        <div class="section-title-wrapper" style="
+    margin-bottom: 30px;
+    margin-top: 30px;
+">
             <div class="section-title-box">
                 <h2>اکران‌های آینده</h2>
             </div>
         </div>
-        <div class="movies-grid" id="cards-container" style="margin-bottom:30px;"></div>
+        <div class="movies-grid" id="cards-container" style="
+    margin-bottom: 30px;
+"></div>
     </section>
 </main>
 
 <script>
-// اسکریپت‌ها دقیقاً همون قبلی — هیچ تغییری ندادم
+// لودر — دقیقاً ۵ ثانیه کامل نمایش داده میشه
 const overlay = document.getElementById('loading-overlay');
 const minDuration = 5000;
 const startTime = Date.now();
@@ -258,11 +271,13 @@ const startTime = Date.now();
 window.addEventListener('load', () => {
     const elapsed = Date.now() - startTime;
     const delay = Math.max(0, minDuration - elapsed);
+
     setTimeout(() => {
         overlay.classList.add('hidden');
     }, delay);
 });
 
+// لود کارت‌ها
 const container = document.getElementById("cards-container");
 let openCard = null;
 async function loadCardsStrictly() {
@@ -282,20 +297,23 @@ async function loadCardsStrictly() {
 }
 loadCardsStrictly();
 
+// رزرو
 document.addEventListener("click", function(e) {
     const reserveBtn = e.target.closest(".reserve-bar a");
     if (!reserveBtn) return;
     e.stopPropagation();
+    // بررسی متن دکمه
     if (reserveBtn.textContent.trim() !== "تهیه بلیط") return;
     const cardFront = reserveBtn.closest(".card-front");
     if (!cardFront) return;
     const movieName = (cardFront.querySelector(".date-bar")?.textContent || "نامشخص").trim();
     const dateTime = (cardFront.querySelector(".title-bar")?.textContent || "نامشخص").trim();
-    const message = `سلام وقت بخیر\n\nفیلم : ${movieName} 🍿\nزمان : ${dateTime} ⏰\n\nممنون میشم شرایط رزرو و موجودی رو اعلام کنید 🙏\nمرسی ازتون 🌟`;
+    const message = `💖 سلام وقت بخیر 💖\n\n🎬 فیلم : ${movieName} 🍿\n🕓 زمان : ${dateTime} ⏰\n\n✨ ممنون میشم شرایط رزرو و موجودی رو اعلام کنید 🙏\n🌟 مرسی ازتون 🌟`;
     const encoded = encodeURIComponent(message);
     window.open(`https://t.me/softshirazadmin?text=${encoded}`, "_blank");
-});
+});;
 
+// فلیپ کارت
 document.addEventListener("click", function(e) {
     if (e.target.closest(".reserve-bar")) return;
     const cardInner = e.target.closest(".card-inner");
@@ -306,6 +324,7 @@ document.addEventListener("click", function(e) {
     }
 });
 
+// منوی همبرگری
 const hamburger = document.getElementById('hamburger');
 const sideMenu = document.getElementById('side-menu');
 const backdrop = document.getElementById('menu-backdrop');
@@ -330,6 +349,7 @@ backdrop.addEventListener('click', closeMenu);
 document.addEventListener('keydown', e => { if (e.key==='Escape') closeMenu(); });
 sideMenu.addEventListener('click', e => e.stopPropagation());
 
+// انیمیشن بک‌گراند
 (() => {
   const canvas = document.createElement('canvas');
   document.body.appendChild(canvas);
