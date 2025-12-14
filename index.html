@@ -12,7 +12,7 @@
 <!-- آیکون‌ها با نسخه‌گذاری -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css?v=3">
 
-<!-- PWA: Manifest Inline با آیکون دلخواه شما (لوگو S با تم انیمه) -->
+<!-- PWA: Manifest Inline با لوگوی خودت -->
 <link rel="manifest" href="data:application/manifest+json,{
   %22name%22:%22سافت%20شیراز%20-%20اکران‌های%20آینده%22,
   %22short_name%22:%22سافت%20شیراز%22,
@@ -39,7 +39,6 @@
   ]
 }">
 
-<!-- آیکون‌های اضافی برای PWA و اپل (همان لوگوی شما) -->
 <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/softshiraz/web/refs/heads/main/png/0.png">
 <meta name="theme-color" content="#ffd700">
 
@@ -102,7 +101,6 @@ header {
 #side-menu.open { transform: translateX(0); }
 #menu-close { align-self:flex-start; background:transparent; border:none; color:#ffd700; font-size:20px; cursor:pointer; }
 .side-brand { font-weight:800; color:#ffd700; font-size:20px; text-align:right; }
-.side-desc { font-size:13px; color:rgba(255,255,255,0.8); text-align:right; }
 .side-links { margin-top:6px; display:flex; flex-direction:column; gap:8px; }
 .side-links a {
     display:flex; align-items:center; justify-content:space-between; gap:10px;
@@ -110,8 +108,17 @@ header {
     background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.03);
 }
 .side-links a:hover { background:rgba(255,215,0,0.06); color:#ffd700; }
-.menu-social-title { margin-top: 20px; font-size: 16px; color: #ffd700; text-align: right; }
 .menu-social-row { display: flex; justify-content: center; gap: 18px; margin-top: 12px; }
+
+/* آیکون نصب اپ - حالا داخل منو، کنار آیکون پشتیبانی */
+.menu-install-icon {
+    width: 48px; height: 48px; border-radius: 12px; background: rgba(26,26,26,1);
+    backdrop-filter: blur(5px); display: flex; align-items: center; justify-content: center;
+    color: #ffd700; font-size: 22px; text-decoration: none; transition: all 0.3s;
+    cursor: pointer;
+}
+.menu-install-icon:hover { background: #ffd700; color: #000; }
+
 .menu-social-icon {
     width: 48px; height: 48px; border-radius: 12px; background: rgba(26,26,26,1);
     backdrop-filter: blur(5px); display: flex; align-items: center; justify-content: center;
@@ -126,7 +133,7 @@ header {
 }
 #menu-backdrop.visible { opacity:1; pointer-events:auto; }
 
-/* عنوان اکران‌های آینده - اندازه یک کارت (280px) */
+/* عنوان اکران‌های آینده - اندازه یک کارت */
 .section-title-wrapper {
     max-width: 1200px;
     margin: 40px auto 50px auto;
@@ -246,10 +253,7 @@ header {
 }
 @media (max-width:480px) {
     .movies-grid { grid-template-columns:1fr; }
-    .section-title-box { 
-        width: 280px; 
-        padding: 16px 20px; 
-    }
+    .section-title-box { width: 280px; padding: 16px 20px; }
     .section-title-box h2 { font-size: 28px; }
 }
 </style>
@@ -286,6 +290,10 @@ header {
         <a href="pages/about.html" role="menuitem">درباره ما</a>
     </div>
     <div class="menu-social-row" style="margin-top: 0px;padding-top: 0px;">
+        <!-- آیکون نصب اپ - کنار آیکون پشتیبانی -->
+        <div class="menu-install-icon" id="install-button" title="نصب اپ سافت شیراز">
+            <i class="fas fa-download"></i>
+        </div>
         <a class="menu-social-icon" href="https://t.me/softshiraz" target="_blank"><i class="fab fa-telegram"></i></a>
         <a class="menu-social-icon" href="https://instagram.com/soft_shiraz" target="_blank"><i class="fab fa-instagram"></i></a>
         <a class="menu-social-icon" href="https://t.me/FLOKI000" target="_blank"><i class="fas fa-headset"></i></a>
@@ -305,7 +313,7 @@ header {
 </main>
 
 <script>
-// لودر — دقیقاً ۵ ثانیه کامل نمایش داده میشه
+// لودر
 const overlay = document.getElementById('loading-overlay');
 const minDuration = 5000;
 const startTime = Date.now();
@@ -460,7 +468,29 @@ sideMenu.addEventListener('click', e => e.stopPropagation());
   frame();
 })();
 
-// PWA: Service Worker بدون فایل جدا
+// کد نصب اپ - حالا روی آیکون داخل منو
+let deferredPrompt;
+const installBtn = document.getElementById('install-button');
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  installBtn.style.display = 'flex'; // نمایش آیکون وقتی قابل نصب باشه
+});
+
+installBtn.addEventListener('click', async (e) => {
+  e.stopPropagation(); // جلوگیری از بسته شدن منو
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+  if (outcome === 'accepted') {
+    console.log('کاربر اپ رو نصب کرد');
+  }
+  deferredPrompt = null;
+  installBtn.style.display = 'none';
+});
+
+// Service Worker
 if ('serviceWorker' in navigator) {
   const swCode = `
     const CACHE = 'softshiraz-web-v1';
