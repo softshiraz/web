@@ -116,6 +116,23 @@
     .logo-link {
         text-decoration: none;
         cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    /* لوگو تصویری جدید */
+    .logo-img {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        object-fit: cover;
+        border: 2px solid #ffd700;
+        box-shadow: 0 0 15px rgba(255,215,0,0.4);
+        transition: all 0.3s ease;
+    }
+    .logo-link:hover .logo-img {
+        transform: scale(1.1);
+        box-shadow: 0 0 25px rgba(255,215,0,0.6);
     }
     .logo-fa {
         font-weight:700;
@@ -129,7 +146,7 @@
         text-shadow: 0 0 20px rgba(255,215,0,0.8);
         transform: scale(1.05);
     }
-    /* دکمه همبرگر - بازگشت به آیکون کلاسیک سه خط (همبرگری واقعی) با استایل باحال‌تر و طلایی */
+    /* دکمه همبرگر - آیکون کلاسیک سه خط با انیمیشن X */
     .hamburger-btn {
         width:48px; height:48px; display:flex; align-items:center; justify-content:center;
         background: rgba(26,26,26,0.7); border-radius:14px; border:2px solid rgba(255,215,0,0.35);
@@ -148,7 +165,6 @@
     .hamburger-inner span:nth-child(1){ top:0; }
     .hamburger-inner span:nth-child(2){ top:7.5px; }
     .hamburger-inner span:nth-child(3){ top:15px; }
-    /* انیمیشن تبدیل به X وقتی منو بازه */
     .hamburger-btn[aria-expanded="true"] .hamburger-inner span:nth-child(1) {
         transform: rotate(45deg); top:7.5px;
     }
@@ -375,12 +391,13 @@
   </div>
 </div>
 <header>
-    <!-- بازگشت به آیکون کلاسیک همبرگری (سه خط) با انیمیشن تبدیل به X -->
+    <!-- دکمه همبرگر (سه خط با انیمیشن X) -->
     <button class="hamburger-btn" id="hamburger" aria-controls="side-menu" aria-expanded="false" aria-label="باز کردن منو">
         <span class="hamburger-inner" aria-hidden="true"><span></span><span></span><span></span></span>
     </button>
-    <!-- لینک لوگو به صفحه اصلی فعلی -->
+    <!-- لوگو جدید: تصویر + متن کنار هم -->
     <a href="./index.html" class="logo-link">
+        <img src="https://raw.githubusercontent.com/softshiraz/web/refs/heads/main/png/0.png" alt="لوگو سافت شیراز" class="logo-img">
         <div class="logo-fa">Soft Shiraz</div>
     </a>
 </header>
@@ -391,9 +408,9 @@
     </button>
     <div class="side-brand">ایونت‌های طلایی سافت شیراز</div>
     <div class="side-links" role="menu">
-        <a href="../web/events/events.html" role="menuitem">ایونت‌های کتابخوانی</a>
+        <a href="../events/events.html" role="menuitem">ایونت‌های کتابخوانی</a>
         <a href="../pages/past-releases.html" role="menuitem">اکران‌های شده‌ها</a>
-        <a href="../web/pages/about.html" role="menuitem">درباره ما</a>
+        <a href="../pages/about.html" role="menuitem">درباره ما</a>
     </div>
     <div class="menu-social-row">
         <div class="menu-install-icon" id="install-button" title="نصب اپ سافت شیراز">
