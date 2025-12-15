@@ -129,18 +129,35 @@
         text-shadow: 0 0 20px rgba(255,215,0,0.8);
         transform: scale(1.05);
     }
-    /* دکمه همبرگر */
+    /* دکمه همبرگر - بازگشت به آیکون کلاسیک سه خط (همبرگری واقعی) با استایل باحال‌تر و طلایی */
     .hamburger-btn {
-        width:48px; height:42px; display:flex; align-items:center; justify-content:center;
-        background: rgba(26,26,26,0.6); border-radius:10px; border:2px solid rgba(255,215,0,0.25);
-        cursor:pointer; transition:transform .18s, background .18s; color:#ffd700;
+        width:48px; height:48px; display:flex; align-items:center; justify-content:center;
+        background: rgba(26,26,26,0.7); border-radius:14px; border:2px solid rgba(255,215,0,0.35);
+        cursor:pointer; transition:all .3s ease; color:#ffd700;
+        box-shadow: 0 0 15px rgba(255,215,0,0.2);
     }
-    .hamburger-btn:active { transform:scale(.97); }
-    .hamburger-inner { width:22px; height:16px; position:relative; }
-    .hamburger-inner span { position:absolute; left:0; right:0; height:2px; background:#ffd700; display:block; border-radius:2px; }
+    .hamburger-btn:hover {
+        background: rgba(255,215,0,0.15);
+        border-color:#ffd700;
+        transform: scale(1.08);
+        box-shadow: 0 0 25px rgba(255,215,0,0.4);
+    }
+    .hamburger-btn:active { transform:scale(.95); }
+    .hamburger-inner { width:24px; height:18px; position:relative; }
+    .hamburger-inner span { position:absolute; left:0; right:0; height:3px; background:#ffd700; display:block; border-radius:3px; transition:all .3s; }
     .hamburger-inner span:nth-child(1){ top:0; }
-    .hamburger-inner span:nth circonst(2){ top:7px; }
-    .hamburger-inner span:nth-child(3){ top:14px; }
+    .hamburger-inner span:nth-child(2){ top:7.5px; }
+    .hamburger-inner span:nth-child(3){ top:15px; }
+    /* انیمیشن تبدیل به X وقتی منو بازه */
+    .hamburger-btn[aria-expanded="true"] .hamburger-inner span:nth-child(1) {
+        transform: rotate(45deg); top:7.5px;
+    }
+    .hamburger-btn[aria-expanded="true"] .hamburger-inner span:nth-child(2) {
+        opacity:0;
+    }
+    .hamburger-btn[aria-expanded="true"] .hamburger-inner span:nth-child(3) {
+        transform: rotate(-45deg); top:7.5px;
+    }
     /* منوی کشویی */
     #side-menu {
         position: fixed; top: 0; right: 0; height: 100vh; width: 320px; max-width: 85%;
@@ -358,10 +375,12 @@
   </div>
 </div>
 <header>
+    <!-- بازگشت به آیکون کلاسیک همبرگری (سه خط) با انیمیشن تبدیل به X -->
     <button class="hamburger-btn" id="hamburger" aria-controls="side-menu" aria-expanded="false" aria-label="باز کردن منو">
         <span class="hamburger-inner" aria-hidden="true"><span></span><span></span><span></span></span>
     </button>
-    <a href="index.html" target="_blank" rel="noopener" class="logo-link">
+    <!-- لینک لوگو به صفحه اصلی فعلی -->
+    <a href="./index.html" class="logo-link">
         <div class="logo-fa">Soft Shiraz</div>
     </a>
 </header>
@@ -372,9 +391,9 @@
     </button>
     <div class="side-brand">ایونت‌های طلایی سافت شیراز</div>
     <div class="side-links" role="menu">
-        <a href="events/events.html" role="menuitem">ایونت‌های کتابخوانی</a>
-        <a href="pages/past-releases.html" role="menuitem">اکران‌های شده‌ها</a>
-        <a href="pages/about.html" role="menuitem">درباره ما</a>
+        <a href="../events/events.html" role="menuitem">ایونت‌های کتابخوانی</a>
+        <a href="../pages/past-releases.html" role="menuitem">اکران‌های شده‌ها</a>
+        <a href="../pages/about.html" role="menuitem">درباره ما</a>
     </div>
     <div class="menu-social-row">
         <div class="menu-install-icon" id="install-button" title="نصب اپ سافت شیراز">
@@ -399,12 +418,10 @@
 </main>
 
 <script>
-// لودر (بهبود یافته برای جلوگیری از گیر کردن)
+// لودر (بهبود یافته)
 const overlay = document.getElementById('loading-overlay');
-const minDuration = 1500; // ۱.۵ ثانیه حداقل
+const minDuration = 1500;
 const startTime = Date.now();
-
-// حداکثر ۱۲ ثانیه لودینگ
 const maxTimeout = setTimeout(() => {
     overlay.classList.add('hidden');
 }, 12000);
