@@ -70,10 +70,10 @@
     }">
     <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/softshiraz/web/refs/heads/main/png/0.png">
     <style>
-    /* --- متغیرهای تم --- */
+    /* --- متغیرهای تم و حالت شب/روز --- */
     :root {
-        /* Dark Mode - بدون تغییر */
-        --color-primary: #ffd700;
+        /* Dark Mode (Default) - طلایی */
+        --color-primary: #ffd700;          /* طلایی اصلی */
         --color-secondary: #ffb300;
         --accent-text: #ffd700;            /* متن برجسته در دارک = طلایی */
         --bg-color: #0e0e0f;
@@ -92,10 +92,12 @@
         --card-border: rgba(255,215,0,0.65);
         --card-shadow-color: rgba(255,215,0,0.25);
         --card-title-bar-bg: var(--link-bg);
+        --glow-color: rgba(255,215,0,0.5); /* برای انیمیشن طلایی */
     }
 
+    /* Light Mode - آبی + سفید */
     .light-mode {
-        --color-primary: #4a90e2;
+        --color-primary: #4a90e2;          /* آبی اصلی */
         --color-secondary: #357abd;
         --accent-text: #ffffff;            /* متن برجسته در لایت = سفید */
         --bg-color: #f8fbff;
@@ -114,8 +116,10 @@
         --card-border: rgba(74,144,226,0.55);
         --card-shadow-color: rgba(74,144,226,0.25);
         --card-title-bar-bg: rgba(74,144,226,0.06);
+        --glow-color: rgba(74,144,226,0.5); /* برای انیمیشن آبی */
     }
 
+    /* Fallback (سیستم دارک مود) */
     @media (prefers-color-scheme: dark) {
         body:not(.light-mode) {
             --color-primary: #ffd700;
@@ -137,6 +141,7 @@
             --card-border: rgba(255,215,0,0.65);
             --card-shadow-color: rgba(255,215,0,0.25);
             --card-title-bar-bg: var(--link-bg);
+            --glow-color: rgba(255,215,0,0.5);
         }
     }
 
@@ -149,6 +154,7 @@
         transition: background-color 0.3s, color 0.3s;
     }
 
+    /* هدر */
     header {
         background: var(--header-bg);
         backdrop-filter: blur(10px);
@@ -156,7 +162,7 @@
         display:flex; justify-content:space-between; align-items:center;
         border-bottom:1px solid var(--border-color);
         position:sticky; top:0; z-index:20;
-        text-shadow:0 0 10px rgba(255,215,0,0.25);
+        text-shadow:0 0 10px var(--glow-color);
     }
 
     .logo-link {
@@ -174,24 +180,25 @@
     }
 
     .logo-link:hover .logo-fa {
-        text-shadow: 0 0 20px rgba(255,215,0,0.8);
+        text-shadow: 0 0 20px var(--glow-color);
         transform: scale(1.05);
     }
 
+    /* دکمه همبرگر */
     .hamburger-btn {
         width:48px; height:48px; display:flex; align-items:center; justify-content:center;
         background: var(--icon-bg); border-radius:14px; border:2px solid var(--icon-border);
         cursor:pointer; transition:all .3s ease; color:var(--color-primary);
-        box-shadow: 0 0 15px rgba(255,215,0,0.2);
+        box-shadow: 0 0 15px var(--glow-color);
     }
 
-    .light-mode .hamburger-btn { box-shadow: 0 0 12px rgba(74,144,226,0.15); }
+    .light-mode .hamburger-btn { box-shadow: 0 0 12px var(--glow-color); }
 
     .hamburger-btn:hover {
         background: var(--link-hover-bg);
         border-color:var(--color-primary);
         transform: scale(1.08);
-        box-shadow: 0 0 25px rgba(255,215,0,0.4);
+        box-shadow: 0 0 25px var(--glow-color);
     }
 
     .hamburger-btn:active { transform:scale(.95); }
@@ -212,6 +219,7 @@
         transform: rotate(-45deg); top:7.5px;
     }
 
+    /* منوی کشویی */
     #side-menu {
         position: fixed; top: 0; right: 0; height: 100vh; width: 320px; max-width: 85%;
         background: linear-gradient(180deg, var(--menu-bg-start), var(--menu-bg-end));
@@ -223,6 +231,7 @@
 
     #side-menu.open { transform: translateX(0); }
 
+    /* بخش بالایی منو */
     .menu-header {
         display: flex;
         justify-content: space-between;
@@ -259,13 +268,17 @@
     .menu-controls #theme-toggle { order: 2; }
     .menu-controls #menu-close { order: 1; }
 
+    .side-brand,
+    .side-footer-text {
+        text-align: center;
+        width: 100%;
+    }
+
     .side-brand {
         font-weight:800;
         color:var(--color-primary);
         font-size:20px;
         margin: -10px 0 10px 0;
-        text-align: center;
-        width: 100%;
     }
 
     .side-links {
@@ -302,6 +315,7 @@
 
     .menu-install-icon:hover, .menu-social-icon:hover {
         background: var(--link-hover-bg);
+        color: var(--color-primary);
         border-color: var(--color-primary);
     }
 
@@ -315,8 +329,6 @@
         font-size: 13px;
         color: rgba(255,255,255,0.7);
         padding-top: 20px;
-        text-align: center;
-        width: 100%;
     }
 
     .light-mode .side-footer-text {
@@ -340,28 +352,33 @@
 
     .section-title-box {
         width: 280px;
-        background: rgba(74,144,226,0.15);  /* پس‌زمینه آبی شفاف */
+        background: rgba(255,215,0,0); /* دارک: شفاف بدون رنگ */
         backdrop-filter: blur(10px);
         border: 2px solid var(--color-primary);
         border-radius: 18px;
         padding: 16px 20px;
-        box-shadow: 0 0 20px rgba(74,144,226,0.4), inset 0 0 15px rgba(74,144,226,0.15);
+        box-shadow: 0 0 20px var(--glow-color), inset 0 0 15px var(--glow-color);
         animation: glowPulse 4s ease-in-out infinite alternate;
         text-align: center;
     }
 
+    .light-mode .section-title-box {
+        background: rgba(74,144,226,0.15); /* لایت: آبی شفاف */
+        box-shadow: 0 0 20px var(--glow-color), inset 0 0 15px var(--glow-color);
+    }
+
     .section-title-box h1 {
-        color: var(--accent-text);          /* سفید در لایت، طلایی در دارک */
+        color: var(--accent-text);
         font-size: 32px;
         font-weight: 900;
         margin: 0;
-        text-shadow: 0 0 10px rgba(74,144,226,0.7), 0 0 20px rgba(74,144,226,0.4);
+        text-shadow: 0 0 10px var(--glow-color), 0 0 20px var(--glow-color);
         letter-spacing: 2px;
     }
 
     @keyframes glowPulse {
-        from { box-shadow: 0 0 20px rgba(74,144,226,0.4), inset 0 0 15px rgba(74,144,226,0.15); }
-        to { box-shadow: 0 0 35px rgba(74,144,226,0.6), inset 0 0 20px rgba(74,144,226,0.25); }
+        from { box-shadow: 0 0 20px var(--glow-color), inset 0 0 15px var(--glow-color); }
+        to   { box-shadow: 0 0 30px var(--glow-color), inset 0 0 20px var(--glow-color); }
     }
 
     /* کارت‌ها */
@@ -404,11 +421,14 @@
 
     .date-bar {
         height:52px !important; line-height:52px !important; padding:0 10px; text-align:center;
-        background: rgba(74,144,226,0.25);   /* پس‌زمینه آبی تیره‌تر */
-        color: var(--accent-text);           /* سفید در لایت، طلایی در دارک */
+        background: rgba(255,215,0,0.12); /* دارک: طلایی شفاف */
+        color: var(--accent-text);
         font-size:19px !important; font-weight:900 !important;
-        letter-spacing:1.2px;
-        text-shadow:0 0 14px rgba(74,144,226,0.8);
+        letter-spacing:1.2px; text-shadow:0 0 14px var(--glow-color);
+    }
+
+    .light-mode .date-bar {
+        background: rgba(74,144,226,0.25); /* لایت: آبی شفاف */
     }
 
     .date-bar strong { font-size:21px !important; display:block; transform:translateY(1px); }
@@ -417,20 +437,24 @@
         height:36px; line-height:36px; padding:0 10px; text-align:center;
         background:var(--card-title-bar-bg);
         border-top:1px solid var(--link-border);
-        color:var(--text-color);
-        font-weight:600; font-size:15px;
+        color:var(--text-color); font-weight:600; font-size:15px;
     }
 
     .reserve-bar {
         height:36px; line-height:36px; padding:0 10px; text-align:center;
-        background:var(--color-primary);
-        color:var(--bg-color);
-        font-weight:bold; cursor:pointer; transition:background 0.3s;
+        background:var(--color-primary); color:var(--bg-color); font-weight:bold; cursor:pointer; transition:background 0.3s;
     }
 
-    .reserve-bar:hover { background:#5a9ef0; }
+    .reserve-bar:hover { background:#ffea00; }
 
-    .light-mode .reserve-bar { color: #ffffff; }
+    .light-mode .reserve-bar { 
+        background: var(--color-primary);
+        color: #ffffff; 
+    }
+
+    .light-mode .reserve-bar:hover {
+        background: #5a9ef0;
+    }
 
     .card-back {
         transform:rotateY(180deg); padding:15px; color:var(--text-color); text-align:right;
@@ -484,9 +508,14 @@
         visibility: visible;
     }
 
-    @media (max-width:1200px) { .movies-grid { grid-template-columns:repeat(3,1fr); } }
-    @media (max-width:768px) { .movies-grid { grid-template-columns:repeat(2,1fr); } }
-    @media (max-width:480px) { 
+    /* ریسپانسیو */
+    @media (max-width:1200px) {
+        .movies-grid { grid-template-columns:repeat(3,1fr); }
+    }
+    @media (max-width:768px) {
+        .movies-grid { grid-template-columns:repeat(2,1fr); }
+    }
+    @media (max-width:480px) {
         .movies-grid { grid-template-columns:1fr; }
         .section-title-box { width: 280px; padding: 16px 20px; }
         .section-title-box h1 { font-size: 28px; }
@@ -503,7 +532,6 @@
     <div class="circle"></div>
   </div>
 </div>
-
 <header>
     <button class="hamburger-btn" id="hamburger" aria-controls="side-menu" aria-expanded="false" aria-label="باز کردن منو">
         <span class="hamburger-inner" aria-hidden="true"><span></span><span></span><span></span></span>
@@ -512,9 +540,7 @@
         <div class="logo-fa">Soft Shiraz</div>
     </a>
 </header>
-
 <div id="menu-backdrop" tabindex="-1"></div>
-
 <nav id="side-menu" aria-hidden="true">
     <div class="menu-header">
         <div class="menu-controls">
@@ -533,7 +559,6 @@
         <a href="../pages/past-releases.html" role="menuitem">اکران‌های شده‌ها</a>
         <a href="../web/pages/about.html" role="menuitem">درباره ما</a>
     </div>
-
     <div class="menu-social-row">
         <div class="menu-install-icon" id="install-button" title="نصب اپ سافت شیراز">
             <i class="fas fa-download"></i>
@@ -542,10 +567,8 @@
         <a class="menu-social-icon" href="https://instagram.com/soft_shiraz" target="_blank"><i class="fab fa-instagram"></i></a>
         <a class="menu-social-icon" href="https://t.me/FLOKI000" target="_blank"><i class="fas fa-headset"></i></a>
     </div>
-
     <div class="side-footer-text">ساخته شده توسط فلوکی</div>
 </nav>
-
 <main style="padding-top:0px;">
     <section class="section">
         <div class="section-title-wrapper">
@@ -556,9 +579,8 @@
         <div class="movies-grid" id="cards-container" style="margin-bottom: 45px;"></div>
     </section>
 </main>
-
 <script>
-// --- منطق تغییر تم ---
+// --- منطق تغییر تم (Theme Toggle Logic) ---
 const body = document.body;
 const themeToggle = document.getElementById('theme-toggle');
 let currentTheme = localStorage.getItem('theme');
@@ -607,7 +629,7 @@ prefersDark.addEventListener('change', (e) => {
 initializeTheme();
 themeToggle.addEventListener('click', toggleTheme);
 
-// لودر
+// لودر (حداقل ۵ ثانیه)
 const overlay = document.getElementById('loading-overlay');
 const minDuration = 5000;
 const startTime = Date.now();
@@ -624,10 +646,9 @@ window.addEventListener('load', () => {
     }, delay);
 });
 
-// بقیه کد جاوااسکریپت بدون تغییر
+// لود کارت‌ها
 const container = document.getElementById("cards-container");
 let openCard = null;
-
 async function loadCardsStrictly() {
     for (let num = 1; num <= 150; num++) {
         try {
@@ -645,6 +666,7 @@ async function loadCardsStrictly() {
 }
 loadCardsStrictly();
 
+// رزرو بلیط
 document.addEventListener("click", function(e) {
     const reserveBtn = e.target.closest(".reserve-bar a");
     if (!reserveBtn) return;
@@ -660,6 +682,7 @@ document.addEventListener("click", function(e) {
     window.open(`https://t.me/${adminId}?text=${encoded}`, "_blank");
 });
 
+// فلیپ کارت
 document.addEventListener("click", function(e) {
     if (e.target.closest(".reserve-bar")) return;
     const cardInner = e.target.closest(".card-inner");
@@ -670,6 +693,7 @@ document.addEventListener("click", function(e) {
     }
 });
 
+// منوی همبرگری
 const hamburger = document.getElementById('hamburger');
 const sideMenu = document.getElementById('side-menu');
 const backdrop = document.getElementById('menu-backdrop');
@@ -697,7 +721,7 @@ backdrop.addEventListener('click', closeMenu);
 document.addEventListener('keydown', e => { if (e.key==='Escape') closeMenu(); });
 sideMenu.addEventListener('click', e => e.stopPropagation());
 
-// انیمیشن ذرات
+// انیمیشن بک‌گراند ذرات
 (() => {
   const canvas = document.createElement('canvas');
   document.body.appendChild(canvas);
@@ -708,13 +732,10 @@ sideMenu.addEventListener('click', e => e.stopPropagation());
   canvas.style.zIndex = '-1';
   const ctx = canvas.getContext('2d');
   let w, h, particles = [], N = 120, maxDist = 120;
-
   function resize() { w = canvas.width = innerWidth; h = canvas.height = innerHeight; }
   addEventListener('resize', resize);
   resize();
-
   function rand(a, b) { return Math.random() * (b - a) + a; }
-
   function init() {
     particles = [];
     for (let i = 0; i < N; i++) {
@@ -728,24 +749,20 @@ sideMenu.addEventListener('click', e => e.stopPropagation());
       });
     }
   }
-
   function frame() {
     ctx.clearRect(0, 0, w, h);
     const isLight = body.classList.contains('light-mode');
     const particleColor = isLight ? '74,144,226' : '255,215,0';
     const lineOpacityFactor = isLight ? 0.35 : 0.22;
-
     for (let p of particles) {
       p.x += p.vx; p.y += p.vy;
       if (p.x < 0) p.x = w; if (p.x > w) p.x = 0;
       if (p.y < 0) p.y = h; if (p.y > h) p.y = 0;
-
       ctx.beginPath();
       ctx.fillStyle = `rgba(${particleColor},${p.a * 0.9})`;
       ctx.arc(p.x, p.y, p.r, 0, 6.28);
       ctx.fill();
     }
-
     ctx.lineWidth = 0.7;
     for (let i = 0; i < particles.length; i++) {
       for (let j = i + 1; j < particles.length; j++) {
@@ -762,12 +779,11 @@ sideMenu.addEventListener('click', e => e.stopPropagation());
     }
     requestAnimationFrame(frame);
   }
-
   init();
   frame();
 })();
 
-// نصب PWA
+// کد نصب PWA
 let deferredPrompt;
 const installBtn = document.getElementById('install-button');
 window.addEventListener('beforeinstallprompt', (e) => {
@@ -787,6 +803,7 @@ installBtn.addEventListener('click', async (e) => {
   installBtn.style.display = 'none';
 });
 
+// Service Worker
 if ('serviceWorker' in navigator) {
   const swCode = `
     const CACHE = 'softshiraz-web-v1';
