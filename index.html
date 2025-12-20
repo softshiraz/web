@@ -70,12 +70,12 @@
     }">
     <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/softshiraz/web/refs/heads/main/png/0.png">
     <style>
-    /* --- متغیرهای تم و حالت شب/روز --- */
+    /* --- متغیرهای تم --- */
     :root {
-        /* Dark Mode (Default) - طلایی */
-        --color-primary: #ffd700;          /* طلایی اصلی */
+        /* Dark Mode - بدون تغییر */
+        --color-primary: #ffd700;
         --color-secondary: #ffb300;
-        --accent-text: #ffd700;            /* رنگ متن برجسته در دارک = طلایی */
+        --accent-text: #ffd700;            /* متن برجسته در دارک = طلایی */
         --bg-color: #0e0e0f;
         --text-color: #fff;
         --header-bg: rgba(0,0,0,0.5);
@@ -94,11 +94,10 @@
         --card-title-bar-bg: var(--link-bg);
     }
 
-    /* Light Mode - آبی + سفید */
     .light-mode {
-        --color-primary: #4a90e2;          /* آبی اصلی */
+        --color-primary: #4a90e2;
         --color-secondary: #357abd;
-        --accent-text: #ffffff;            /* متن برجسته در لایت = سفید (یا می‌تونی #1e3a8a بذاری برای آبی تیره) */
+        --accent-text: #ffffff;            /* متن برجسته در لایت = سفید */
         --bg-color: #f8fbff;
         --text-color: #1a2b4b;
         --header-bg: rgba(255,255,255,0.92);
@@ -117,7 +116,6 @@
         --card-title-bar-bg: rgba(74,144,226,0.06);
     }
 
-    /* Fallback سیستم دارک */
     @media (prefers-color-scheme: dark) {
         body:not(.light-mode) {
             --color-primary: #ffd700;
@@ -151,7 +149,6 @@
         transition: background-color 0.3s, color 0.3s;
     }
 
-    /* هدر */
     header {
         background: var(--header-bg);
         backdrop-filter: blur(10px);
@@ -181,7 +178,6 @@
         transform: scale(1.05);
     }
 
-    /* دکمه همبرگر */
     .hamburger-btn {
         width:48px; height:48px; display:flex; align-items:center; justify-content:center;
         background: var(--icon-bg); border-radius:14px; border:2px solid var(--icon-border);
@@ -189,9 +185,7 @@
         box-shadow: 0 0 15px rgba(255,215,0,0.2);
     }
 
-    .light-mode .hamburger-btn { 
-        box-shadow: 0 0 12px rgba(74,144,226,0.15); 
-    }
+    .light-mode .hamburger-btn { box-shadow: 0 0 12px rgba(74,144,226,0.15); }
 
     .hamburger-btn:hover {
         background: var(--link-hover-bg);
@@ -218,7 +212,6 @@
         transform: rotate(-45deg); top:7.5px;
     }
 
-    /* منوی کشویی */
     #side-menu {
         position: fixed; top: 0; right: 0; height: 100vh; width: 320px; max-width: 85%;
         background: linear-gradient(180deg, var(--menu-bg-start), var(--menu-bg-end));
@@ -266,17 +259,13 @@
     .menu-controls #theme-toggle { order: 2; }
     .menu-controls #menu-close { order: 1; }
 
-    .side-brand,
-    .side-footer-text {
-        text-align: center;
-        width: 100%;
-    }
-
     .side-brand {
         font-weight:800;
         color:var(--color-primary);
         font-size:20px;
         margin: -10px 0 10px 0;
+        text-align: center;
+        width: 100%;
     }
 
     .side-links {
@@ -313,7 +302,6 @@
 
     .menu-install-icon:hover, .menu-social-icon:hover {
         background: var(--link-hover-bg);
-        color: var(--color-primary);
         border-color: var(--color-primary);
     }
 
@@ -327,6 +315,8 @@
         font-size: 13px;
         color: rgba(255,255,255,0.7);
         padding-top: 20px;
+        text-align: center;
+        width: 100%;
     }
 
     .light-mode .side-footer-text {
@@ -350,28 +340,28 @@
 
     .section-title-box {
         width: 280px;
-        background: rgb(255 215 0 / 0%);
+        background: rgba(74,144,226,0.15);  /* پس‌زمینه آبی شفاف */
         backdrop-filter: blur(10px);
         border: 2px solid var(--color-primary);
         border-radius: 18px;
         padding: 16px 20px;
-        box-shadow: 0 0 20px rgba(255,215,0,0.3), inset 0 0 15px rgba(255,215,0,0.1);
+        box-shadow: 0 0 20px rgba(74,144,226,0.4), inset 0 0 15px rgba(74,144,226,0.15);
         animation: glowPulse 4s ease-in-out infinite alternate;
         text-align: center;
     }
 
     .section-title-box h1 {
-        color: var(--accent-text);          /* استفاده از متغیر جدید */
+        color: var(--accent-text);          /* سفید در لایت، طلایی در دارک */
         font-size: 32px;
         font-weight: 900;
         margin: 0;
-        text-shadow: 0 0 10px rgba(255,215,0,0.6), 0 0 20px rgba(255,215,0,0.4);
+        text-shadow: 0 0 10px rgba(74,144,226,0.7), 0 0 20px rgba(74,144,226,0.4);
         letter-spacing: 2px;
     }
 
     @keyframes glowPulse {
-        from { box-shadow: 0 0 20px rgba(255,215,0,0.3), inset 0 0 15px rgba(255,215,0,0.1); }
-        to { box-shadow: 0 0 30px rgba(255,215,0,0.5), inset 0 0 20px rgba(255,215,0,0.2); }
+        from { box-shadow: 0 0 20px rgba(74,144,226,0.4), inset 0 0 15px rgba(74,144,226,0.15); }
+        to { box-shadow: 0 0 35px rgba(74,144,226,0.6), inset 0 0 20px rgba(74,144,226,0.25); }
     }
 
     /* کارت‌ها */
@@ -414,11 +404,11 @@
 
     .date-bar {
         height:52px !important; line-height:52px !important; padding:0 10px; text-align:center;
-        background:rgba(138, 119, 0, 0.06); 
-        color: var(--accent-text);           /* استفاده از متغیر جدید */
+        background: rgba(74,144,226,0.25);   /* پس‌زمینه آبی تیره‌تر */
+        color: var(--accent-text);           /* سفید در لایت، طلایی در دارک */
         font-size:19px !important; font-weight:900 !important;
-        letter-spacing:1.2px; 
-        text-shadow:0 0 14px rgba(255,215,0,0.8);
+        letter-spacing:1.2px;
+        text-shadow:0 0 14px rgba(74,144,226,0.8);
     }
 
     .date-bar strong { font-size:21px !important; display:block; transform:translateY(1px); }
@@ -427,30 +417,20 @@
         height:36px; line-height:36px; padding:0 10px; text-align:center;
         background:var(--card-title-bar-bg);
         border-top:1px solid var(--link-border);
-        color:var(--text-color); 
-        font-weight:600; 
-        font-size:15px;
+        color:var(--text-color);
+        font-weight:600; font-size:15px;
     }
 
     .reserve-bar {
         height:36px; line-height:36px; padding:0 10px; text-align:center;
-        background:var(--color-primary); 
-        color:var(--bg-color); 
-        font-weight:bold; 
-        cursor:pointer; 
-        transition:background 0.3s;
+        background:var(--color-primary);
+        color:var(--bg-color);
+        font-weight:bold; cursor:pointer; transition:background 0.3s;
     }
 
-    .reserve-bar:hover { background:#ffea00; }
+    .reserve-bar:hover { background:#5a9ef0; }
 
-    .light-mode .reserve-bar { 
-        background: var(--color-primary);
-        color: #ffffff; 
-    }
-
-    .light-mode .reserve-bar:hover {
-        background: #5a9ef0;
-    }
+    .light-mode .reserve-bar { color: #ffffff; }
 
     .card-back {
         transform:rotateY(180deg); padding:15px; color:var(--text-color); text-align:right;
@@ -504,14 +484,9 @@
         visibility: visible;
     }
 
-    /* ریسپانسیو */
-    @media (max-width:1200px) {
-        .movies-grid { grid-template-columns:repeat(3,1fr); }
-    }
-    @media (max-width:768px) {
-        .movies-grid { grid-template-columns:repeat(2,1fr); }
-    }
-    @media (max-width:480px) {
+    @media (max-width:1200px) { .movies-grid { grid-template-columns:repeat(3,1fr); } }
+    @media (max-width:768px) { .movies-grid { grid-template-columns:repeat(2,1fr); } }
+    @media (max-width:480px) { 
         .movies-grid { grid-template-columns:1fr; }
         .section-title-box { width: 280px; padding: 16px 20px; }
         .section-title-box h1 { font-size: 28px; }
@@ -649,7 +624,7 @@ window.addEventListener('load', () => {
     }, delay);
 });
 
-// بقیه کدهای جاوااسکریپت بدون تغییر
+// بقیه کد جاوااسکریپت بدون تغییر
 const container = document.getElementById("cards-container");
 let openCard = null;
 
