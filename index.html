@@ -72,9 +72,10 @@
     <style>
     /* --- متغیرهای تم و حالت شب/روز --- */
     :root {
-        /* Dark Mode (Default) - دقیقاً مثل کد اولیه شما */
-        --color-primary: #ffd700; /* طلایی روشن */
+        /* Dark Mode (Default) - طلایی */
+        --color-primary: #ffd700;          /* طلایی اصلی */
         --color-secondary: #ffb300;
+        --accent-text: #ffd700;            /* رنگ متن برجسته در دارک = طلایی */
         --bg-color: #0e0e0f;
         --text-color: #fff;
         --header-bg: rgba(0,0,0,0.5);
@@ -93,12 +94,13 @@
         --card-title-bar-bg: var(--link-bg);
     }
 
-    /* Light Mode - تم جدید آبی + سفید */
+    /* Light Mode - آبی + سفید */
     .light-mode {
         --color-primary: #4a90e2;          /* آبی اصلی */
-        --color-secondary: #357abd;         /* آبی تیره‌تر */
-        --bg-color: #f8fbff;                /* سفید خیلی روشن با ته‌مایه آبی ملایم */
-        --text-color: #1a2b4b;              /* آبی-خاکستری تیره برای خوانایی */
+        --color-secondary: #357abd;
+        --accent-text: #ffffff;            /* متن برجسته در لایت = سفید (یا می‌تونی #1e3a8a بذاری برای آبی تیره) */
+        --bg-color: #f8fbff;
+        --text-color: #1a2b4b;
         --header-bg: rgba(255,255,255,0.92);
         --border-color: rgba(74,144,226,0.25);
         --menu-bg-start: rgba(248,251,255,0.98);
@@ -115,11 +117,12 @@
         --card-title-bar-bg: rgba(74,144,226,0.06);
     }
 
-    /* Fallback (سیستم دارک مود) */
+    /* Fallback سیستم دارک */
     @media (prefers-color-scheme: dark) {
         body:not(.light-mode) {
             --color-primary: #ffd700;
             --color-secondary: #ffb300;
+            --accent-text: #ffd700;
             --bg-color: #0e0e0f;
             --text-color: #fff;
             --header-bg: rgba(0,0,0,0.5);
@@ -227,7 +230,6 @@
 
     #side-menu.open { transform: translateX(0); }
 
-    /* بخش بالایی منو */
     .menu-header {
         display: flex;
         justify-content: space-between;
@@ -318,7 +320,6 @@
     .light-mode .menu-install-icon:hover,
     .light-mode .menu-social-icon:hover {
         color: #ffffff;
-        background: var(--link-hover-bg);
     }
 
     .side-footer-text {
@@ -360,7 +361,7 @@
     }
 
     .section-title-box h1 {
-        color: var(--color-primary);
+        color: var(--accent-text);          /* استفاده از متغیر جدید */
         font-size: 32px;
         font-weight: 900;
         margin: 0;
@@ -413,8 +414,11 @@
 
     .date-bar {
         height:52px !important; line-height:52px !important; padding:0 10px; text-align:center;
-        background:rgba(138, 119, 0, 0.06); color:var(--color-primary); font-size:19px !important; font-weight:900 !important;
-        letter-spacing:1.2px; text-shadow:0 0 14px rgba(255,215,0,0.8);
+        background:rgba(138, 119, 0, 0.06); 
+        color: var(--accent-text);           /* استفاده از متغیر جدید */
+        font-size:19px !important; font-weight:900 !important;
+        letter-spacing:1.2px; 
+        text-shadow:0 0 14px rgba(255,215,0,0.8);
     }
 
     .date-bar strong { font-size:21px !important; display:block; transform:translateY(1px); }
@@ -423,12 +427,18 @@
         height:36px; line-height:36px; padding:0 10px; text-align:center;
         background:var(--card-title-bar-bg);
         border-top:1px solid var(--link-border);
-        color:var(--text-color); font-weight:600; font-size:15px;
+        color:var(--text-color); 
+        font-weight:600; 
+        font-size:15px;
     }
 
     .reserve-bar {
         height:36px; line-height:36px; padding:0 10px; text-align:center;
-        background:var(--color-primary); color:var(--bg-color); font-weight:bold; cursor:pointer; transition:background 0.3s;
+        background:var(--color-primary); 
+        color:var(--bg-color); 
+        font-weight:bold; 
+        cursor:pointer; 
+        transition:background 0.3s;
     }
 
     .reserve-bar:hover { background:#ffea00; }
@@ -483,7 +493,6 @@
         100% { transform:rotate(945deg); opacity: 0; }
     }
 
-    /* مخفی کردن محتوای اصلی تا وقتی لودر تمام شود */
     main, header, #menu-backdrop, #side-menu {
         visibility: hidden;
     }
@@ -574,7 +583,7 @@
 </main>
 
 <script>
-// --- منطق تغییر تم (Theme Toggle Logic) ---
+// --- منطق تغییر تم ---
 const body = document.body;
 const themeToggle = document.getElementById('theme-toggle');
 let currentTheme = localStorage.getItem('theme');
@@ -601,7 +610,7 @@ function initializeTheme() {
         if (prefersDark.matches) {
             applyTheme('dark');
         } else {
-            applyTheme('dark'); // پیش‌فرض دارک
+            applyTheme('dark');
         }
     } else {
         applyTheme(currentTheme);
@@ -640,7 +649,7 @@ window.addEventListener('load', () => {
     }, delay);
 });
 
-// بقیه اسکریپت‌ها بدون تغییر
+// بقیه کدهای جاوااسکریپت بدون تغییر
 const container = document.getElementById("cards-container");
 let openCard = null;
 
@@ -713,7 +722,7 @@ backdrop.addEventListener('click', closeMenu);
 document.addEventListener('keydown', e => { if (e.key==='Escape') closeMenu(); });
 sideMenu.addEventListener('click', e => e.stopPropagation());
 
-// انیمیشن ذرات (در لایت مود به آبی تغییر می‌کند)
+// انیمیشن ذرات
 (() => {
   const canvas = document.createElement('canvas');
   document.body.appendChild(canvas);
@@ -783,7 +792,7 @@ sideMenu.addEventListener('click', e => e.stopPropagation());
   frame();
 })();
 
-// کد نصب اپ و Service Worker
+// نصب PWA
 let deferredPrompt;
 const installBtn = document.getElementById('install-button');
 window.addEventListener('beforeinstallprompt', (e) => {
