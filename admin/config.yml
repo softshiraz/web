@@ -2,10 +2,8 @@ backend:
   name: github
   repo: softshiraz/web
   branch: main
-  auth_endpoint: https://github.com/login/oauth/authorize
-  token_endpoint: https://github.com/login/oauth/access_token
-  client_id: Iv23lii1aTw39LkVrh1h
-  client_secret: 73be1bd6dc67c9435dedc0a59f48a54f924a7abe
+  base_url: https://admin.softshiraz.workers.dev  # آدرس Worker خودت رو اینجا بذار
+  auth_type: implicit
 
 media_folder: "cards/images"
 public_folder: "/cards/images"
