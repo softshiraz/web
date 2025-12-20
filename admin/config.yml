@@ -2,9 +2,8 @@ backend:
   name: github
   repo: softshiraz/web
   branch: main
-  # آدرس Worker خودت (دقیقاً این رو عوض کن با آدرس واقعی Worker)
+  # آدرس Worker شما (دقیقاً همین رو نگه دار)
   base_url: https://admin.softshiraz.workers.dev
-  # اگر private repo داری، scope رو repo,user بذار
 
 media_folder: "cards/images"
 public_folder: "/cards/images"
@@ -14,6 +13,7 @@ collections:
     label: "اکران‌های آینده"
     folder: "cards"
     create: true
+    delete: false
     format: "frontmatter"
     extension: "md"
     fields:
