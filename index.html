@@ -595,7 +595,7 @@ window.addEventListener('load', () => {
 const container = document.getElementById("cards-container");
 let openCard = null;
 async function loadCardsStrictly() {
-    for (let num = 1; num <= 150; num++) {
+    for (let num = 1; num <= 50; num++) {
         try {
             const response = await fetch(`cards/${num}.html?v=${Date.now()}`, { cache: "no-store" });
             if (!response.ok) continue;
