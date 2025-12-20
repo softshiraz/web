@@ -92,27 +92,28 @@
         --card-shadow-color: rgba(255,215,0,0.25);
         --card-title-bar-bg: var(--link-bg);
     }
-    /* Light Mode */
+   /* Light Mode - تم جدید آبی + سفید */
     .light-mode {
-        --color-primary: #8a7700; /* طلایی تیره تر (بازگشت به حالت قبلی) */
-        --color-secondary: #a89433;
-        --bg-color: rgba(138, 119, 0, 0.03);
-        --text-color: #1a1a1a;
-        --header-bg: rgba(255,255,255,0.8);
-        --border-color: rgba(200,200,200,0.5);
-        --menu-bg-start: rgba(245,245,245,0.98);
-        --menu-bg-end: rgba(255,255,255,0.98);
-        --menu-border-right: rgba(138,119,0,0.25);
-        --link-bg: rgba(138,119,0,0.06);
-        --link-border: rgba(138,119,0,0.1);
-        --link-hover-bg: rgba(138,119,0,0.15);
+        --color-primary: #4a90e2;          /* آبی اصلی */
+        --color-secondary: #357abd;         /* آبی تیره‌تر */
+        --bg-color: #f8fbff;                /* سفید خیلی روشن با ته‌مایه آبی ملایم */
+        --text-color: #1a2b4b;              /* آبی-خاکستری تیره برای خوانایی */
+        --header-bg: rgba(255,255,255,0.92);
+        --border-color: rgba(74,144,226,0.25);
+        --menu-bg-start: rgba(248,251,255,0.98);
+        --menu-bg-end: rgba(240,245,255,0.98);
+        --menu-border-right: rgba(74,144,226,0.35);
+        --link-bg: rgba(74,144,226,0.08);
+        --link-border: rgba(74,144,226,0.18);
+        --link-hover-bg: rgba(74,144,226,0.18);
         --icon-bg: var(--link-bg);
         --icon-border: var(--link-border);
-        --card-bg: rgba(255,255,255,0.9);
-        --card-border: rgba(138,119,0,0.65);
-        --card-shadow-color: rgba(138,119,0,0.25);
-        --card-title-bar-bg: var(--link-bg);
+        --card-bg: rgba(255,255,255,0.92);
+        --card-border: rgba(74,144,226,0.55);
+        --card-shadow-color: rgba(74,144,226,0.25);
+        --card-title-bar-bg: rgba(74,144,226,0.06);
     }
+
     /* Fallback (سیستم دارک مود) */
     @media (prefers-color-scheme: dark) {
         body:not(.light-mode) {
