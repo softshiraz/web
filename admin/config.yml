@@ -1,0 +1,24 @@
+backend:
+  name: github
+  repo: softshiraz/web
+  branch: main
+  # آدرس Worker خودت (دقیقاً این رو عوض کن با آدرس واقعی Worker)
+  base_url: https://admin.softshiraz.workers.dev
+  # اگر private repo داری، scope رو repo,user بذار
+
+media_folder: "cards/images"
+public_folder: "/cards/images"
+
+collections:
+  - name: "movies"
+    label: "اکران‌های آینده"
+    folder: "cards"
+    create: true
+    format: "frontmatter"
+    extension: "md"
+    fields:
+      - {label: "تاریخ و زمان", name: "datetime", widget: "datetime", required: true, date_format: "YYYY/MM/DD", time_format: "HH:mm"}
+      - {label: "نام فیلم", name: "title", widget: "string", required: true}
+      - {label: "پوستر فیلم", name: "poster", widget: "image", required: true}
+      - {label: "تخفیف ویژه", name: "has_discount", widget: "boolean", default: false}
+      - {label: "توضیحات", name: "body", widget: "markdown"}
