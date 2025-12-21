@@ -411,30 +411,6 @@
     @media (max-width:1200px) { .movies-grid { grid-template-columns:repeat(3,1fr); } }
     @media (max-width:768px) { .movies-grid { grid-template-columns:repeat(2,1fr); } }
     @media (max-width:480px) { .movies-grid { grid-template-columns:1fr; } }
-
-    #push-subscribe-btn {
-        position: fixed;
-        bottom: 20px;
-        left: 20px;
-        padding: 12px 20px;
-        background: var(--color-primary);
-        color: var(--bg-color);
-        border: none;
-        border-radius: 12px;
-        font-weight: bold;
-        cursor: pointer;
-        box-shadow: 0 4px 15px var(--glow-color);
-        z-index: 100;
-        transition: all 0.3s;
-    }
-    #push-subscribe-btn:hover {
-        background: var(--color-secondary);
-        transform: scale(1.05);
-    }
-    #push-subscribe-btn:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-    }
     </style>
 </head>
 <body>
@@ -493,8 +469,6 @@
         <div class="movies-grid" id="cards-container" style="margin-bottom: 45px;"></div>
     </section>
 </main>
-
-<button id="push-subscribe-btn">فعال کردن اعلان‌ها</button>
 
 <script>
 // --- منطق تغییر تم ---
@@ -718,72 +692,6 @@ installBtn.addEventListener('click', async (e) => {
 });
 
 // === Push Notification با آیکون سفارشی ===
-const pushSubscribeBtn = document.getElementById('push-subscribe-btn');
-
-// تبدیل VAPID کلید عمومی (base64) به Uint8Array
-function urlBase64ToUint8Array(base64String) {
-  const padding = '='.repeat((4 - base64String.length % 4) % 4);
-  const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
-  const rawData = window.atob(base64);
-  const outputArray = new Uint8Array(rawData.length);
-  for (let i = 0; i < rawData.length; ++i) {
-    outputArray[i] = rawData.charCodeAt(i);
-  }
-  return outputArray;
-}
-
-// درخواست مجوز Push
-async function subscribeUserToPush() {
-  try {
-    const registration = await navigator.serviceWorker.ready;
-    const permission = await Notification.requestPermission();
-    if (permission !== 'granted') {
-      console.log('مجوز اعلان داده نشد');
-      pushSubscribeBtn.textContent = 'اعلان‌ها مجاز نیستند';
-      pushSubscribeBtn.disabled = true;
-      return;
-    }
-
-    const vapidPublicKey = 'BJthRQ5myDgc7OSXzPCMftGw-n16F7zQBEN7EUD6XxcfTTvrLGWSIG7y_JxiWtVlCFua0S8MTc5B6B9C3vLLe6k'; // ← کلید VAPID واقعی خودت رو جایگزین کن
-
-    const applicationServerKey = urlBase64ToUint8Array(vapidPublicKey);
-
-    const subscription = await registration.pushManager.subscribe({
-      userVisibleOnly: true,
-      applicationServerKey: applicationServerKey
-    });
-
-    console.log('اشتراک Push موفق:', subscription);
-
-    await fetch('https://your-server.com/save-subscription', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(subscription)
-    });
-
-    pushSubscribeBtn.textContent = 'اعلان‌ها فعال شد!';
-    pushSubscribeBtn.disabled = true;
-
-  } catch (error) {
-    console.error('خطا در اشتراک Push:', error);
-    pushSubscribeBtn.textContent = 'خطا در فعال‌سازی';
-  }
-}
-
-// چک کردن وضعیت فعلی اشتراک
-async function checkSubscription() {
-  const registration = await navigator.serviceWorker.ready;
-  const subscription = await registration.pushManager.getSubscription();
-  if (subscription) {
-    pushSubscribeBtn.textContent = 'اعلان‌ها فعال است';
-    pushSubscribeBtn.disabled = true;
-  } else {
-    pushSubscribeBtn.textContent = 'فعال کردن اعلان‌ها';
-    pushSubscribeBtn.disabled = false;
-  }
-}
-
-// ثبت Service Worker با آیکون سفارشی در اعلان‌ها
 if ('serviceWorker' in navigator) {
   const swCode = `
     const CACHE_NAME = 'softshiraz-web-cache-v4';
@@ -834,9 +742,9 @@ if ('serviceWorker' in navigator) {
 
       const options = {
         body: data.body || 'جدیدترین اکران‌های انیمه و انیمیشن در شیراز!',
-        icon: data.icon || 'https://raw.githubusercontent.com/softshiraz/web/main/png/0.png',  // آیکون اصلی اعلان
-        badge: data.badge || 'https://raw.githubusercontent.com/softshiraz/web/main/png/0.png', // آیکون کوچک (badge) در نوار اعلان
-        image: data.image || undefined,  // تصویر بزرگ اختیاری (زیر متن اعلان)
+        icon: data.icon || 'https://raw.githubusercontent.com/softshiraz/web/main/png/0.png',
+        badge: data.badge || 'https://raw.githubusercontent.com/softshiraz/web/main/png/0.png',
+        image: data.image || undefined,
         vibrate: [200, 100, 200],
         data: {
           url: data.url || '/web/'
@@ -863,14 +771,10 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register(swUrl, {scope: '/web/'})
       .then(reg => {
         console.log('Service Worker با آیکون سفارشی ثبت شد', reg);
-        checkSubscription();
       })
       .catch(err => console.log('خطا در ثبت SW:', err));
   });
 }
-
-// فعال کردن دکمه Push
-pushSubscribeBtn.addEventListener('click', subscribeUserToPush);
 </script>
 </body>
 </html>
