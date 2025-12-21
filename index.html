@@ -320,10 +320,20 @@
     .card-inner.flipped { transform:rotateY(180deg); }
     .card-front, .card-back {
         position:absolute; top:0; left:0; width:100%; height:100%; border-radius:16px; overflow:hidden;
-        backface-visibility:hidden; border:2px solid var(--card-border);
-        box-shadow:0 0 8px var(--card-shadow-color), inset 0 0 6px var(--card-shadow-color);
-        background:var(--card-bg); backdrop-filter:blur(10px);
-        transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+        backface-visibility:hidden;
+        background: rgba(255, 215, 0, 0.08);
+        backdrop-filter: blur(16px) saturate(180%);
+        -webkit-backdrop-filter: blur(16px) saturate(180%);
+        border: 1px solid rgba(255, 215, 0, 0.25);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37),
+                    inset 0 0 10px rgba(255, 215, 0, 0.15);
+        transition: all 0.4s ease;
+    }
+    .card-front:hover, .card-back:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5),
+                    inset 0 0 20px rgba(255, 215, 0, 0.3);
+        border-color: rgba(255, 215, 0, 0.5);
     }
     .card-front { display:flex; flex-direction:column; position: relative; }
     .img-bar { flex:1; overflow:hidden; }
@@ -331,7 +341,7 @@
     .movie-card:hover .img-bar img { transform:scale(1.08); }
     .date-bar {
         height:52px !important; line-height:52px !important; padding:0 10px; text-align:center;
-        background: rgba(255,215,0,0.12);
+        background: rgba(255,215,0,0.15);
         color: var(--accent-text);
         font-size:19px !important; font-weight:900 !important;
         letter-spacing:1.2px; text-shadow:0 0 14px var(--glow-color);
@@ -690,8 +700,6 @@ installBtn.addEventListener('click', async (e) => {
   deferredPrompt = null;
   installBtn.style.display = 'none';
 });
-
-// === Push Notification با آیکون سفارشی ===
 if ('serviceWorker' in navigator) {
   const swCode = `
     const CACHE_NAME = 'softshiraz-web-cache-v4';
@@ -730,38 +738,6 @@ if ('serviceWorker' in navigator) {
           .then(response => response || fetch(event.request))
       );
     });
-
-    // مدیریت Push Notification با آیکون سفارشی
-    self.addEventListener('push', event => {
-      let data;
-      try {
-        data = event.data.json();
-      } catch (e) {
-        data = { title: 'سافت شیراز', body: 'اعلان جدید!', icon: 'https://raw.githubusercontent.com/softshiraz/web/main/png/0.png' };
-      }
-
-      const options = {
-        body: data.body || 'جدیدترین اکران‌های انیمه و انیمیشن در شیراز!',
-        icon: data.icon || 'https://raw.githubusercontent.com/softshiraz/web/main/png/0.png',
-        badge: data.badge || 'https://raw.githubusercontent.com/softshiraz/web/main/png/0.png',
-        image: data.image || undefined,
-        vibrate: [200, 100, 200],
-        data: {
-          url: data.url || '/web/'
-        }
-      };
-
-      event.waitUntil(
-        self.registration.showNotification(data.title || 'سافت شیراز', options)
-      );
-    });
-
-    self.addEventListener('notificationclick', event => {
-      event.notification.close();
-      event.waitUntil(
-        clients.openWindow(event.notification.data.url)
-      );
-    });
   `;
 
   const blob = new Blob([swCode], {type: 'application/javascript'});
@@ -769,9 +745,7 @@ if ('serviceWorker' in navigator) {
 
   window.addEventListener('load', () => {
     navigator.serviceWorker.register(swUrl, {scope: '/web/'})
-      .then(reg => {
-        console.log('Service Worker با آیکون سفارشی ثبت شد', reg);
-      })
+      .then(reg => console.log('Service Worker ثبت شد'))
       .catch(err => console.log('خطا در ثبت SW:', err));
   });
 }
