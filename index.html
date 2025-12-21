@@ -412,7 +412,6 @@
     @media (max-width:768px) { .movies-grid { grid-template-columns:repeat(2,1fr); } }
     @media (max-width:480px) { .movies-grid { grid-template-columns:1fr; } }
 
-    /* استایل برای دکمه اشتراک Push (اختیاری - می‌تونی تغییر بدی) */
     #push-subscribe-btn {
         position: fixed;
         bottom: 20px;
@@ -495,7 +494,6 @@
     </section>
 </main>
 
-<!-- دکمه اشتراک Push Notification (اختیاری - می‌تونی حذف کنی یا تغییر بدی) -->
 <button id="push-subscribe-btn">فعال کردن اعلان‌ها</button>
 
 <script>
@@ -719,7 +717,7 @@ installBtn.addEventListener('click', async (e) => {
   installBtn.style.display = 'none';
 });
 
-// === Push Notification کامل و پیشرفته ===
+// === Push Notification با آیکون سفارشی ===
 const pushSubscribeBtn = document.getElementById('push-subscribe-btn');
 
 // تبدیل VAPID کلید عمومی (base64) به Uint8Array
@@ -746,9 +744,7 @@ async function subscribeUserToPush() {
       return;
     }
 
-    // کلید عمومی VAPID (این رو از سرور خودت بگیر یا از ابزارهایی مثل web-push تولید کن)
-    // این یک کلید عمومی نمونه است - حتماً با کلید واقعی جایگزین کن!
-    const vapidPublicKey = 'BJthRQ5myDgc7OSXzPCMftGw-n16F7zQBEN7EUD6XxcfTTvrLGWSIG7y_JxiWtVlCFua0S8MTc5B6B9C3vLLe6k'; // ← اینجا کلید واقعی خودت رو بگذار
+    const vapidPublicKey = 'BJthRQ5myDgc7OSXzPCMftGw-n16F7zQBEN7EUD6XxcfTTvrLGWSIG7y_JxiWtVlCFua0S8MTc5B6B9C3vLLe6k'; // ← کلید VAPID واقعی خودت رو جایگزین کن
 
     const applicationServerKey = urlBase64ToUint8Array(vapidPublicKey);
 
@@ -759,7 +755,6 @@ async function subscribeUserToPush() {
 
     console.log('اشتراک Push موفق:', subscription);
 
-    // ارسال subscription به سرور خودت (مثلاً از طریق fetch)
     await fetch('https://your-server.com/save-subscription', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -788,10 +783,10 @@ async function checkSubscription() {
   }
 }
 
-// ثبت Service Worker با پشتیبانی Push
+// ثبت Service Worker با آیکون سفارشی در اعلان‌ها
 if ('serviceWorker' in navigator) {
   const swCode = `
-    const CACHE_NAME = 'softshiraz-web-cache-v3';
+    const CACHE_NAME = 'softshiraz-web-cache-v4';
     const urlsToCache = [
       '/',
       '/web/',
@@ -828,20 +823,28 @@ if ('serviceWorker' in navigator) {
       );
     });
 
-    // مدیریت Push Notification
+    // مدیریت Push Notification با آیکون سفارشی
     self.addEventListener('push', event => {
-      const data = event.data.json();
+      let data;
+      try {
+        data = event.data.json();
+      } catch (e) {
+        data = { title: 'سافت شیراز', body: 'اعلان جدید!', icon: 'https://raw.githubusercontent.com/softshiraz/web/main/png/0.png' };
+      }
+
       const options = {
-        body: data.body,
-        icon: '/png/0.png',
-        badge: '/png/0.png',
+        body: data.body || 'جدیدترین اکران‌های انیمه و انیمیشن در شیراز!',
+        icon: data.icon || 'https://raw.githubusercontent.com/softshiraz/web/main/png/0.png',  // آیکون اصلی اعلان
+        badge: data.badge || 'https://raw.githubusercontent.com/softshiraz/web/main/png/0.png', // آیکون کوچک (badge) در نوار اعلان
+        image: data.image || undefined,  // تصویر بزرگ اختیاری (زیر متن اعلان)
         vibrate: [200, 100, 200],
         data: {
-          url: data.url || '/'
+          url: data.url || '/web/'
         }
       };
+
       event.waitUntil(
-        self.registration.showNotification(data.title, options)
+        self.registration.showNotification(data.title || 'سافت شیراز', options)
       );
     });
 
@@ -859,7 +862,7 @@ if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register(swUrl, {scope: '/web/'})
       .then(reg => {
-        console.log('Service Worker با پشتیبانی Push ثبت شد', reg);
+        console.log('Service Worker با آیکون سفارشی ثبت شد', reg);
         checkSubscription();
       })
       .catch(err => console.log('خطا در ثبت SW:', err));
