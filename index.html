@@ -524,7 +524,6 @@
 </main>
 
 <script>
-// --- منطق تغییر تم ---
 const body = document.body;
 const themeToggle = document.getElementById('theme-toggle');
 let currentTheme = localStorage.getItem('theme');
@@ -573,7 +572,6 @@ prefersDark.addEventListener('change', (e) => {
 initializeTheme();
 themeToggle.addEventListener('click', toggleTheme);
 
-// لودر
 const overlay = document.getElementById('loading-overlay');
 const minDuration = 5000;
 const startTime = Date.now();
@@ -590,7 +588,6 @@ window.addEventListener('load', () => {
     }, delay);
 });
 
-// لود کارت‌ها
 const container = document.getElementById("cards-container");
 let openCard = null;
 async function loadCardsStrictly() {
@@ -610,7 +607,6 @@ async function loadCardsStrictly() {
 }
 loadCardsStrictly();
 
-// رزرو بلیط با تخفیف ویژه
 document.addEventListener("click", function(e) {
     const reserveBtn = e.target.closest(".reserve-bar a");
     if (!reserveBtn) return;
@@ -639,7 +635,6 @@ document.addEventListener("click", function(e) {
     window.open(`https://t.me/${adminId}?text=${encoded}`, "_blank");
 });
 
-// فلیپ کارت
 document.addEventListener("click", function(e) {
     if (e.target.closest(".reserve-bar")) return;
     const cardInner = e.target.closest(".card-inner");
@@ -650,7 +645,6 @@ document.addEventListener("click", function(e) {
     }
 });
 
-// منوی همبرگری
 const hamburger = document.getElementById('hamburger');
 const sideMenu = document.getElementById('side-menu');
 const backdrop = document.getElementById('menu-backdrop');
@@ -678,7 +672,6 @@ backdrop.addEventListener('click', closeMenu);
 document.addEventListener('keydown', e => { if (e.key==='Escape') closeMenu(); });
 sideMenu.addEventListener('click', e => e.stopPropagation());
 
-// انیمیشن ذرات
 (() => {
   const canvas = document.createElement('canvas');
   document.body.appendChild(canvas);
@@ -748,7 +741,6 @@ sideMenu.addEventListener('click', e => e.stopPropagation());
   frame();
 })();
 
-// نصب PWA
 let deferredPrompt;
 const installBtn = document.getElementById('install-button');
 window.addEventListener('beforeinstallprompt', (e) => {
