@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>تبلیغ ویژه | سایت ما</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            font-family: Tahoma, sans-serif;
+            background: radial-gradient(circle at top, #1e3c72, #000);
+            overflow: hidden;
+            color: white;
+            direction: rtl;
+        }
+
+        /* بک‌گراند متحرک */
+        .glow {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: #00ffd5;
+            filter: blur(150px);
+            opacity: 0.3;
+            animation: moveGlow 10s infinite alternate;
+        }
+
+        @keyframes moveGlow {
+            from {
+                top: -100px;
+                left: -100px;
+            }
+            to {
+                top: 300px;
+                left: 600px;
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .ad-box {
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 25px;
+            padding: 45px;
+            width: 90%;
+            max-width: 550px;
+            text-align: center;
+            box-shadow: 0 0 40px rgba(0,255,200,0.3);
+            animation: popIn 1s ease;
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0.7);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .ad-box h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #00ffd5;
+            text-shadow: 0 0 10px rgba(0,255,200,0.7);
+        }
+
+        .ad-box p {
+            font-size: 18px;
+            line-height: 1.9;
+            margin-bottom: 15px;
+        }
+
+        .visitor {
+            margin-top: 25px;
+            font-size: 22px;
+            font-weight: bold;
+            color: #ffd700;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .cta {
+            margin-top: 30px;
+        }
+
+        .cta a {
+            display: inline-block;
+            padding: 15px 35px;
+            border-radius: 40px;
+            background: linear-gradient(135deg, #00ffd5, #00aaff);
+            color: black;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            transition: 0.3s;
+            box-shadow: 0 0 20px rgba(0,255,200,0.6);
+        }
+
+        .cta a:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 40px rgba(0,255,200,1);
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+
+<div class="glow"></div>
+
+<div class="container">
+    <div class="ad-box">
+        <h1>🚀 خوش اومدی به دنیای خفن ما!</h1>
+
+        <p>
+            اینجا جاییه که <strong>ایده‌های خاص</strong>،
+            <strong>آموزش‌های ناب</strong> و
+            <strong>ابزارهای حرفه‌ای</strong> منتظرته 😎
+        </p>
+
+        <p>
+            هر کسی که این لینک رو باز می‌کنه،
+            عضو یک جمع خاص میشه ✨
+        </p>
+
+        <div class="visitor" id="visitorNumber">
+            در حال شناسایی شما...
+        </div>
+
+        <div class="cta">
+            <a href="https://example.com" target="_blank">
+                ورود به سایت اصلی 🔥
+            </a>
+        </div>
+
+        <div class="footer">
+            © تمامی حقوق محفوظ است
+        </div>
+    </div>
+</div>
+
+<script>
+    let visitorNumber = localStorage.getItem("visitor_number");
+
+    if (visitorNumber === null) {
+        let counter = localStorage.getItem("counter");
+
+        if (counter === null) {
+            counter = 1;
+        } else {
+            counter = parseInt(counter) + 1;
+        }
+
+        localStorage.setItem("counter", counter);
+        localStorage.setItem("visitor_number", counter);
+        visitorNumber = counter;
+    }
+
+    document.getElementById("visitorNumber").innerText =
+        "✨ شما بازدیدکننده شماره " + visitorNumber + " هستید!";
+</script>
+
+</body>
+</html>
