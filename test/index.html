@@ -3,46 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سینمای خصوصی | پخش هماهنگ</title>
+    <title>سینمای خصوصی | پخش آنلاین</title>
     <style>
         :root { --primary: #00d1b2; --bg: #0a0a0a; --chat: #141414; }
-        
         body { font-family: Tahoma, sans-serif; background: var(--bg); color: white; margin: 0; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
-
-        /* هدر و دکمه بازگشت */
         .header-nav { background: #1a1a1a; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; }
         .logo-link { color: var(--primary); text-decoration: none; font-weight: bold; border: 1px solid var(--primary); padding: 6px 15px; border-radius: 5px; font-size: 13px; transition: 0.3s; }
         .logo-link:hover { background: var(--primary); color: #000; }
-
         #main-layout { display: flex; flex: 1; height: calc(100vh - 55px); overflow: hidden; }
-
-        /* بخش ویدیو */
         #video-section { flex: 3; background: #000; display: flex; flex-direction: column; position: relative; }
         #admin-panel { background: #222; padding: 10px; display: none; gap: 10px; border-bottom: 1px solid #444; }
         #admin-panel input { flex: 1; padding: 10px; border-radius: 4px; border: none; background: #333; color: white; }
-        
         .v-container { flex: 1; display: flex; align-items: center; justify-content: center; position: relative; background: #000; }
         video { width: 100%; max-height: 100%; outline: none; }
         #blocker { position: absolute; inset: 0; z-index: 10; display: none; }
-
-        /* بخش چت - اصلاح شده */
         #chat-section { flex: 1; background: var(--chat); display: flex; flex-direction: column; border-right: 1px solid #333; min-width: 320px; }
-        #chat-messages { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 10px; scroll-behavior: smooth; }
-        .msg { background: #262626; padding: 10px; border-radius: 8px; font-size: 14px; max-width: 85%; align-self: flex-start; line-height: 1.5; }
-        .msg strong { color: var(--primary); display: block; font-size: 11px; margin-bottom: 3px; }
+        #chat-messages { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 10px; }
+        .msg { background: #262626; padding: 10px; border-radius: 8px; font-size: 14px; max-width: 85%; align-self: flex-start; }
         .msg.mine { align-self: flex-end; background: #005c4b; }
-
-        /* کادر ارسال پیام - همیشه ثابت در پایین */
         #chat-input-area { padding: 15px; background: #1a1a1a; display: flex; gap: 10px; border-top: 1px solid #333; }
-        #chat-input { flex: 1; padding: 12px; border-radius: 8px; border: none; background: #333; color: white; outline: none; }
-        #send-btn { background: var(--primary); border: none; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; color: #000; font-size: 20px; font-weight: bold; }
-
-        /* ورود */
+        #chat-input { flex: 1; padding: 12px; border-radius: 8px; border: none; background: #333; color: white; }
+        #send-btn { background: var(--primary); border: none; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; color: #000; font-size: 20px; }
         #login-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 2000; display: flex; align-items: center; justify-content: center; }
-        .login-box { background: #222; padding: 30px; border-radius: 12px; width: 280px; text-align: center; border: 1px solid #444; }
-        .login-box input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 6px; border: 1px solid #444; background: #111; color: white; box-sizing: border-box; }
-        .login-box button { width: 100%; padding: 12px; background: var(--primary); border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-
+        .login-box { background: #222; padding: 30px; border-radius: 12px; width: 280px; text-align: center; }
+        .login-box input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 6px; border: 1px solid #444; background: #111; color: white; }
+        .login-box button { width: 100%; padding: 12px; background: var(--primary); border: none; border-radius: 6px; font-weight: bold; cursor: pointer; }
         @media (max-width: 768px) { #main-layout { flex-direction: column; } #chat-section { min-width: 100%; flex: 1; } }
     </style>
 </head>
@@ -50,12 +35,12 @@
 
     <header class="header-nav">
         <a href="../index.html" class="logo-link">برگشت به سایت</a>
-        <div id="user-info" style="font-size: 12px; color: #888;">درحال اتصال...</div>
+        <div id="user-info" style="font-size: 12px; color: #888;">اتصال به کلودفلر...</div>
     </header>
 
     <div id="login-modal">
         <div class="login-box">
-            <h2 style="margin-top:0">ورود به سینما</h2>
+            <h2>ورود به سینما</h2>
             <input type="text" id="inpName" placeholder="نام نمایشی">
             <input type="password" id="inpPass" placeholder="رمز عبور">
             <button id="btnLogin">ورود</button>
@@ -65,8 +50,8 @@
     <div id="main-layout">
         <div id="video-section">
             <div id="admin-panel">
-                <input type="text" id="urlInput" placeholder="لینک مستقیم فیلم (mp4)">
-                <button id="changeUrlBtn" style="background:var(--primary); border:none; padding:8px 15px; border-radius:4px; cursor:pointer; font-weight:bold;">ثبت فیلم</button>
+                <input type="text" id="urlInput" placeholder="لینک جدید فیلم">
+                <button id="changeUrlBtn">ثبت فیلم</button>
             </div>
             <div class="v-container">
                 <video id="myVideo" playsinline preload="auto">
@@ -75,11 +60,10 @@
                 <div id="blocker"></div>
             </div>
         </div>
-
         <div id="chat-section">
             <div id="chat-messages"></div>
             <div id="chat-input-area">
-                <input type="text" id="chat-input" placeholder="پیام شما...">
+                <input type="text" id="chat-input" placeholder="پیام...">
                 <button id="send-btn">➤</button>
             </div>
         </div>
@@ -89,7 +73,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
         import { getDatabase, ref, set, push, onValue, onChildAdded, update } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
 
-        // تنظیمات فایربیس شما
         const firebaseConfig = {
             apiKey: "AIzaSyCZVi8SyjtW6dxMHDX7D0lZEdF5XPLtwJA",
             authDomain: "softshiraz-2ddce.firebaseapp.com",
@@ -104,38 +87,64 @@
         const db = getDatabase(app);
         const roomRef = ref(db, 'cinema/status');
         const chatRef = ref(db, 'cinema/chat');
+        const workerUrl = "https://online.softshiraz.workers.dev/get-sync";
+        const defaultVideo = "https://s1.dlserfes.info/dl1/2018/Tag%202018/Tag_2018_720p_BrRip_YIFY.mkv?md5=JgOv4DHH-E856mk-iRe8Aw&u=288589&expires=1766897453";
 
         let isAdmin = false;
         let myName = localStorage.getItem('chatName') || '';
         const video = document.getElementById('myVideo');
 
-        if (myName) document.getElementById('inpName').value = myName;
-
         document.getElementById('btnLogin').onclick = () => {
             const name = document.getElementById('inpName').value.trim();
             const pass = document.getElementById('inpPass').value;
-
             if (!name) return alert("نام را وارد کنید");
             if (pass === "1234") isAdmin = true;
             else if (pass === "1111") isAdmin = false;
-            else return alert("رمز اشتباه است");
+            else return alert("رمز اشتباه");
 
             myName = name;
             localStorage.setItem('chatName', myName);
             document.getElementById('login-modal').style.display = 'none';
             document.getElementById('user-info').innerText = `کاربر: ${myName}`;
 
-            // کلیک برای اجازه پخش صدا در مرورگر
-            video.muted = false;
-            video.play().then(() => video.pause()).catch(e => console.log("Init play"));
+            video.play().then(() => video.pause()).catch(() => {});
+            initCinema();
+        };
+
+        async function initCinema() {
+            // تلاش برای دریافت وضعیت از کلودفلر
+            try {
+                const res = await fetch(workerUrl);
+                const data = await res.json();
+                if (data && data.videoUrl) {
+                    applySync(data);
+                } else {
+                    // اگر ورکر خالی بود، لینک پیش‌فرض شما را ست می‌کند
+                    video.src = defaultVideo;
+                }
+            } catch (e) {
+                console.log("Worker failed, using firebase directly");
+            }
 
             if (isAdmin) startAdmin(); else startViewer();
-        };
+        }
+
+        function applySync(data) {
+            if (data.videoUrl && video.src !== data.videoUrl) {
+                video.src = data.videoUrl;
+                video.load();
+            }
+            const elapsed = (Date.now() - data.updatedAt) / 1000;
+            const target = data.timestamp + (data.state === 'playing' ? elapsed : 0);
+            if (Math.abs(video.currentTime - target) > 3) video.currentTime = target;
+            if (data.state === 'playing') video.play().catch(() => {
+                document.addEventListener('click', () => video.play(), {once: true});
+            }); else video.pause();
+        }
 
         function startAdmin() {
             document.getElementById('admin-panel').style.display = 'flex';
             video.controls = true;
-
             document.getElementById('changeUrlBtn').onclick = () => {
                 const url = document.getElementById('urlInput').value.trim();
                 if (url) {
@@ -143,70 +152,33 @@
                     video.src = url; video.load(); video.play();
                 }
             };
-
-            const sync = () => {
-                update(roomRef, {
-                    state: video.paused ? 'paused' : 'playing',
-                    timestamp: video.currentTime,
-                    updatedAt: Date.now()
-                });
-            };
+            const sync = () => update(roomRef, { state: video.paused ? 'paused' : 'playing', timestamp: video.currentTime, updatedAt: Date.now() });
             video.onplay = sync; video.onpause = sync; video.onseeked = sync;
         }
 
-        async function startViewer() {
+        function startViewer() {
             document.getElementById('blocker').style.display = 'block';
             video.controls = false;
-
-            // دریافت مستقیم از فایربیس (حتی بدون حضور مالک)
             onValue(roomRef, (snapshot) => {
                 const data = snapshot.val();
-                if (!data) return;
-
-                // اگر لینک فیلم عوض شده باشد
-                if (data.videoUrl && video.src !== data.videoUrl) {
-                    video.src = data.videoUrl;
-                    video.load();
-                }
-
-                // محاسبه زمان دقیق پخش بر اساس زمان سرور
-                const elapsed = (Date.now() - data.updatedAt) / 1000;
-                const target = data.timestamp + (data.state === 'playing' ? elapsed : 0);
-
-                if (Math.abs(video.currentTime - target) > 3) {
-                    video.currentTime = target;
-                }
-
-                if (data.state === 'playing') {
-                    video.play().catch(() => {
-                        document.addEventListener('click', () => video.play(), {once: true});
-                    });
-                } else {
-                    video.pause();
-                }
+                if (data) applySync(data);
             });
         }
 
-        // سیستم چت
-        function sendMsg() {
+        // چت
+        document.getElementById('send-btn').onclick = () => {
             const text = document.getElementById('chat-input').value.trim();
-            if (text) {
-                push(chatRef, { user: myName, text: text });
-                document.getElementById('chat-input').value = '';
-            }
-        }
-
-        document.getElementById('send-btn').onclick = sendMsg;
-        document.getElementById('chat-input').onkeypress = (e) => { if(e.key === 'Enter') sendMsg(); };
+            if (text) { push(chatRef, { user: myName, text: text }); document.getElementById('chat-input').value = ''; }
+        };
 
         onChildAdded(chatRef, (snapshot) => {
             const data = snapshot.val();
             const msgDiv = document.createElement('div');
             msgDiv.className = 'msg' + (data.user === myName ? ' mine' : '');
             msgDiv.innerHTML = `<strong>${data.user}</strong>${data.text}`;
-            const chatBox = document.getElementById('chat-messages');
-            chatBox.appendChild(msgDiv);
-            chatBox.scrollTop = chatBox.scrollHeight;
+            const box = document.getElementById('chat-messages');
+            box.appendChild(msgDiv);
+            box.scrollTop = box.scrollHeight;
         });
     </script>
 </body>
