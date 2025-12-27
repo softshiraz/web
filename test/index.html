@@ -89,208 +89,148 @@
         </div>
     </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
-        import { getDatabase, ref, set, push, onValue, onChildAdded, update } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
+<script type="module">
+    // استفاده از نسخه پایدارتر
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+    import { getDatabase, ref, set, push, onValue, onChildAdded, update } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
 
-        // --- 1. تنظیمات (رمزها و کانفیگ) ---
-        // رمزها را اینجا تنظیم کنید
-        const CONFIG = {
-            adminPass: "1234",  // رمز مالک اتاق
-            userPass: "1111",   // رمز کاربر عادی
-        };
+    const CONFIG = {
+        adminPass: "1234", 
+        userPass: "1111",   
+    };
 
-        // تنظیمات فایربیس شما که جایگزین شد:
-        const firebaseConfig = {
-            apiKey: "AIzaSyCZVi8SyjtW6dxMHDX7D0lZEdF5XPLtwJA",
-            authDomain: "softshiraz-2ddce.firebaseapp.com",
-            databaseURL: "https://softshiraz-2ddce-default-rtdb.firebaseio.com/", // این خط را حتما چک کنید
-            projectId: "softshiraz-2ddce",
-            storageBucket: "softshiraz-2ddce.firebasestorage.app",
-            messagingSenderId: "760975223534",
-            appId: "1:760975223534:web:3008a1fbcc09a2ae2fe1ff",
-            measurementId: "G-MRLRFEVB3D"
-        };
+    const firebaseConfig = {
+        apiKey: "AIzaSyCZVi8SyjtW6dxMHDX7D0lZEdF5XPLtwJA",
+        authDomain: "softshiraz-2ddce.firebaseapp.com",
+        databaseURL: "https://softshiraz-2ddce-default-rtdb.firebaseio.com/",
+        projectId: "softshiraz-2ddce",
+        storageBucket: "softshiraz-2ddce.firebasestorage.app",
+        messagingSenderId: "760975223534",
+        appId: "1:760975223534:web:3008a1fbcc09a2ae2fe1ff",
+        measurementId: "G-MRLRFEVB3D"
+    };
 
-        // شروع برنامه
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
-        
-        // مسیرهای دیتابیس
-        const roomRef = ref(db, 'cinema/status');
-        const chatRef = ref(db, 'cinema/chat');
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const roomRef = ref(db, 'cinema/status');
+    const chatRef = ref(db, 'cinema/chat');
 
-        // متغیرهای وضعیت
-        let isAdmin = false;
-        let myName = localStorage.getItem('chatName') || '';
+    let isAdmin = false;
+    let myName = localStorage.getItem('chatName') || '';
+    
+    // المان‌ها
+    const els = {
+        video: document.getElementById('myVideo'),
+        blocker: document.getElementById('blocker'),
+        loginModal: document.getElementById('login-modal'),
+        inpName: document.getElementById('inpName'),
+        inpPass: document.getElementById('inpPass'),
+        btnLogin: document.getElementById('btnLogin'),
+        adminPanel: document.getElementById('admin-controls'),
+        urlInput: document.getElementById('urlInput'),
+        changeUrlBtn: document.getElementById('changeUrlBtn'),
+        chatMsgs: document.getElementById('chat-messages'),
+        chatInput: document.getElementById('chat-input'),
+        sendBtn: document.getElementById('send-btn'),
+        currentUsername: document.getElementById('current-username')
+    };
 
-        // المان‌های صفحه
-        const els = {
-            video: document.getElementById('myVideo'),
-            blocker: document.getElementById('blocker'),
-            loginModal: document.getElementById('login-modal'),
-            inpName: document.getElementById('inpName'),
-            inpPass: document.getElementById('inpPass'),
-            btnLogin: document.getElementById('btnLogin'),
-            loginError: document.getElementById('loginError'),
-            adminPanel: document.getElementById('admin-controls'),
-            urlInput: document.getElementById('urlInput'),
-            changeUrlBtn: document.getElementById('changeUrlBtn'),
-            chatMsgs: document.getElementById('chat-messages'),
-            chatInput: document.getElementById('chat-input'),
-            sendBtn: document.getElementById('send-btn'),
-            currentUsername: document.getElementById('current-username'),
-            editNameBtn: document.getElementById('edit-name-btn')
-        };
+    // ورود
+    els.btnLogin.onclick = () => {
+        const pass = els.inpPass.value;
+        const name = els.inpName.value.trim();
+        if (!name) return alert("نام وارد نشده");
 
-        // --- 2. سیستم ورود و صدا (Audio Context) ---
-        if (myName) els.inpName.value = myName; // پر کردن نام اگر قبلا بوده
+        if (pass === CONFIG.adminPass) isAdmin = true;
+        else if (pass === CONFIG.userPass) isAdmin = false;
+        else return alert("رمز اشتباه");
 
-        els.btnLogin.onclick = () => {
-            const pass = els.inpPass.value;
-            const name = els.inpName.value.trim();
+        myName = name;
+        localStorage.setItem('chatName', myName);
+        els.currentUsername.innerText = myName;
+        els.loginModal.style.display = 'none';
 
-            if (!name) return alert("لطفا نام خود را وارد کنید");
-            
-            // چک کردن رمز
-            if (pass === CONFIG.adminPass) {
-                isAdmin = true;
-                setupAdmin();
-            } else if (pass === CONFIG.userPass) {
-                isAdmin = false;
-                setupViewer();
-            } else {
-                els.loginError.style.display = 'block';
-                return;
-            }
+        // آنمیوت برای اجازه مرورگر
+        els.video.muted = false;
+        if(isAdmin) setupAdmin(); else setupViewer();
+    };
 
-            // ذخیره نام و ورود
-            myName = name;
-            localStorage.setItem('chatName', myName);
-            els.currentUsername.innerText = myName;
-            els.loginModal.style.display = 'none';
+    function setupAdmin() {
+        els.adminPanel.style.display = 'block';
+        els.video.controls = true;
 
-            // **مهم: فعال کردن صدا**
-            // چون کاربر کلیک کرده، مرورگر اجازه پخش صدا می‌دهد.
-            // یک لحظه ویدیو را آنمیوت می‌کنیم تا اجازه صادر شود
-            els.video.muted = false;
-            els.video.play().then(() => {
-                if(!isAdmin) els.video.pause(); // اگر کاربر است استپ کن تا دیتا بیاید
-            }).catch(e => console.log("Audio logic ready"));
-        };
-
-        // --- 3. ویرایش نام ---
-        els.editNameBtn.onclick = () => {
-            const newName = prompt("نام جدید را وارد کنید:", myName);
-            if (newName && newName.trim() !== "") {
-                myName = newName;
-                localStorage.setItem('chatName', myName);
-                els.currentUsername.innerText = myName;
-            }
-        };
-
-        // --- 4. منطق ویدیو و سینک ---
-        function setupAdmin() {
-            els.adminPanel.style.display = 'block';
-            els.blocker.style.display = 'none'; // ادمین می‌تواند کلیک کند
-            els.video.controls = true;
-
-            // تغییر لینک
-            els.changeUrlBtn.onclick = () => {
-                const url = els.urlInput.value;
-                if(url) {
-                    update(roomRef, {
-                        videoUrl: url,
-                        timestamp: 0,
-                        state: 'paused',
-                        updatedAt: Date.now()
-                    });
-                    els.video.src = url;
-                }
-            };
-
-            // ارسال ایونت‌های پلیر به دیتابیس
-            ['play', 'pause', 'seeked'].forEach(event => {
-                els.video.addEventListener(event, () => {
-                    // جلوگیری از لوپ: فقط وقتی ادمین واقعا کلیک کرده بفرست
-                    // (ساده‌سازی شده: همیشه وضعیت را آپدیت می‌کنیم)
-                    update(roomRef, {
-                        state: els.video.paused ? 'paused' : 'playing',
-                        timestamp: els.video.currentTime,
-                        updatedAt: Date.now()
-                    });
+        els.changeUrlBtn.onclick = () => {
+            const url = els.urlInput.value;
+            if(url) {
+                set(roomRef, {
+                    videoUrl: url,
+                    timestamp: 0,
+                    state: 'playing', // شروع خودکار
+                    updatedAt: Date.now()
                 });
+            }
+        };
+
+        // آپدیت وضعیت زمان پخش
+        els.video.onplay = () => syncAdmin('playing');
+        els.video.onpause = () => syncAdmin('paused');
+        els.video.onseeked = () => syncAdmin(els.video.paused ? 'paused' : 'playing');
+
+        function syncAdmin(state) {
+            update(roomRef, {
+                state: state,
+                timestamp: els.video.currentTime,
+                updatedAt: Date.now()
             });
         }
+    }
 
-        function setupViewer() {
-            els.adminPanel.style.display = 'none';
-            els.blocker.style.display = 'block'; // کاربر نمی‌تواند کلیک کند
-            els.video.controls = false; // حذف کنترل‌ها
-
-            // گوش دادن به تغییرات دیتابیس
-            onValue(roomRef, (snapshot) => {
-                const data = snapshot.val();
-                if (!data) return;
-
-                // 1. چک کردن لینک ویدیو
-                const currentSrc = els.video.getAttribute('src');
-                if (data.videoUrl && data.videoUrl !== currentSrc) {
-                    els.video.src = data.videoUrl;
-                    // وقتی سورس عوض شد، صبر کن تا لود شود بعد تایم را ست کن
-                }
-
-                // 2. محاسبه تاخیر و سینک
-                // (اگر ویدیو تازه لود شده باشد ممکن است خطا بدهد، با try هندل می‌کنیم)
-                try {
-                    const networkLatency = (Date.now() - data.updatedAt) / 1000;
-                    const targetTime = data.timestamp + (data.state === 'playing' ? networkLatency : 0);
-
-                    // اگر اختلاف زمان زیاد بود (بیش از 1 ثانیه) پرش کن
-                    if (Math.abs(els.video.currentTime - targetTime) > 1) {
-                        els.video.currentTime = targetTime;
-                    }
-
-                    if (data.state === 'playing') {
-                        els.video.play().catch(e => console.log("Waiting for interaction"));
-                    } else {
-                        els.video.pause();
-                    }
-                } catch (e) { console.log(e); }
-            });
-        }
-
-        // --- 5. سیستم چت ---
+    function setupViewer() {
+        els.blocker.style.display = 'block';
         
-        // ارسال پیام
-        function sendMessage() {
-            const text = els.chatInput.value.trim();
-            if (!text) return;
-            
-            push(chatRef, {
-                user: myName,
-                text: text,
-                time: Date.now()
-            });
+        onValue(roomRef, (snapshot) => {
+            const data = snapshot.val();
+            if (!data) return;
+
+            // تغییر لینک فیلم برای کاربر
+            if (data.videoUrl && els.video.src !== data.videoUrl) {
+                els.video.src = data.videoUrl;
+            }
+
+            // محاسبه زمان دقیق حتی اگر ادمین آنلاین نباشد
+            const timePassedSinceUpdate = (Date.now() - data.updatedAt) / 1000;
+            let targetTime = data.timestamp;
+
+            if (data.state === 'playing') {
+                targetTime += timePassedSinceUpdate;
+                els.video.play().catch(() => console.log("Click required"));
+            } else {
+                els.video.pause();
+            }
+
+            if (Math.abs(els.video.currentTime - targetTime) > 2) {
+                els.video.currentTime = targetTime;
+            }
+        });
+    }
+
+    // چت (بدون تغییر، فقط آدرس ایمپورت اصلاح شد)
+    els.sendBtn.onclick = () => {
+        const text = els.chatInput.value.trim();
+        if (text) {
+            push(chatRef, { user: myName, text: text, time: Date.now() });
             els.chatInput.value = '';
         }
+    };
 
-        els.sendBtn.onclick = sendMessage;
-        els.chatInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') sendMessage();
-        });
-
-        // دریافت پیام‌ها (تاریخچه + جدید)
-        onChildAdded(chatRef, (snapshot) => {
-            const msg = snapshot.val();
-            const div = document.createElement('div');
-            div.className = 'msg ' + (msg.user === myName ? 'mine' : '');
-            div.innerHTML = `<strong>${msg.user}</strong>${msg.text}`;
-            els.chatMsgs.appendChild(div);
-            // اسکرول به پایین
-            els.chatMsgs.scrollTop = els.chatMsgs.scrollHeight;
-        });
-
-    </script>
+    onChildAdded(chatRef, (snapshot) => {
+        const msg = snapshot.val();
+        const div = document.createElement('div');
+        div.className = 'msg ' + (msg.user === myName ? 'mine' : '');
+        div.innerHTML = `<strong>${msg.user}</strong>${msg.text}`;
+        els.chatMsgs.appendChild(div);
+        els.chatMsgs.scrollTop = els.chatMsgs.scrollHeight;
+    });
+</script>
 </body>
 </html>
