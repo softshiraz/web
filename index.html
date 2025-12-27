@@ -7,22 +7,22 @@
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0">
     <meta name="google-site-verification" content="fK12FesLb14L29h1lu9QVGq_JaWn68Bd-LFlawjNwPU" />
-    
+   
     <!-- عنوان سایت -->
-    <title>🎬 سافت شیراز : SoftShiraz 🎬</title>
-    
+    <title>سافت شیراز | @soft_shiraz | قدیمی‌ترین پخش‌کننده انیمه و انیمیشن در شیراز</title>
+   
     <!-- توضیحات سایت -->
     <meta name="description" content="@soft_shiraz - سافت شیراز، قدیمی‌ترین و معتبرترین برگزارکننده اکران فیلم انیمه، انیمیشن و ایونت‌های کتابخوانی در شیراز. رزرو بلیط اکران‌های آینده انیمه روی پرده سینما با @soft_shiraz.">
-    
+   
     <!-- کلمات کلیدی -->
     <meta name="keywords" content="سافت شیراز, @soft_shiraz, soft_shiraz, اکران انیمه شیراز, انیمیشن سینما شیراز, قدیمی‌ترین پخش‌کننده انیمه شیراز, ایونت انیمه شیراز, رزرو بلیط انیمه شیراز">
-    
+   
     <meta name="robots" content="index, follow">
     <meta name="author" content="@soft_shiraz - سافت شیراز">
-    
+   
     <!-- رنگ تم برای مرورگر موبایل -->
     <meta name="theme-color" content="#ffd700">
-    
+   
     <!-- Open Graph (تلگرام، اینستاگرام، واتساپ و ...) -->
     <meta property="og:title" content="سافت شیراز | @soft_shiraz | اکران انیمه و انیمیشن در شیراز">
     <meta property="og:description" content="@soft_shiraz - قدیمی‌ترین برگزارکننده اکران انیمه روی پرده سینما در شیراز. اکران‌های آینده و رزرو بلیط را از دست ندهید!">
@@ -31,17 +31,17 @@
     <meta property="og:type" content="website">
     <meta property="og:locale" content="fa_IR">
     <meta property="og:site_name" content="@soft_shiraz">
-    
+   
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="سافت شیراز | @soft_shiraz | اکران انیمه در شیراز">
     <meta name="twitter:description" content="@soft_shiraz - قدیمی‌ترین پخش‌کننده فیلم انیمه و انیمیشن روی پرده سینما در شیراز">
     <meta name="twitter:image" content="https://raw.githubusercontent.com/softshiraz/web/refs/heads/main/png/0.png">
     <meta name="twitter:site" content="@soft_shiraz">
-    
+   
     <!-- لینک کانونیکال -->
     <link rel="canonical" href="https://softshiraz.github.io/web/">
-    
+   
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
     {
@@ -58,11 +58,11 @@
       "description": "@soft_shiraz - قدیمی‌ترین برگزارکننده اکران انیمه و انیمیشن روی پرده سینما در شیراز"
     }
     </script>
-    
+   
     <!-- فونت و آیکون‌ها -->
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/dist/font-face.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    
+   
     <!-- Manifest برای PWA -->
     <link rel="manifest" href="data:application/manifest+json,{
       \"name\":\"سافت شیراز - اکران‌های آینده\",
@@ -89,13 +89,13 @@
         }
       ]
     }">
-    
+   
     <!-- آیکون اپل (برای iOS) -->
     <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/softshiraz/web/refs/heads/main/png/0.png">
-    
+   
     <!-- favicon (عکس کوچک در تب مرورگر) -->
     <link rel="icon" href="https://raw.githubusercontent.com/softshiraz/web/refs/heads/main/png/0.png" type="image/png">
-    
+   
     <style>
     :root {
         --color-primary: #ffd700;
@@ -437,7 +437,6 @@
     <div class="circle"></div>
   </div>
 </div>
-
 <header>
     <button class="hamburger-btn" id="hamburger" aria-controls="side-menu" aria-expanded="false" aria-label="باز کردن منو">
         <span class="hamburger-inner" aria-hidden="true"><span></span><span></span><span></span></span>
@@ -446,9 +445,7 @@
         <div class="logo-fa">Soft Shiraz</div>
     </a>
 </header>
-
 <div id="menu-backdrop" tabindex="-1"></div>
-
 <nav id="side-menu" aria-hidden="true">
     <div class="menu-header">
         <div class="menu-controls">
@@ -476,7 +473,6 @@
     </div>
     <div class="side-footer-text">ساخته شده توسط فلوکی</div>
 </nav>
-
 <main style="padding-top:0px;">
     <section class="section">
         <div class="section-title-wrapper">
@@ -487,7 +483,6 @@
         <div class="movies-grid" id="cards-container" style="margin-bottom: 45px;"></div>
     </section>
 </main>
-
 <script>
 // تغییر تم
 const body = document.body;
@@ -532,7 +527,6 @@ prefersDark.addEventListener('change', (e) => {
 });
 initializeTheme();
 themeToggle.addEventListener('click', toggleTheme);
-
 // لودر
 const overlay = document.getElementById('loading-overlay');
 const minDuration = 5000;
@@ -548,7 +542,6 @@ window.addEventListener('load', () => {
         clearTimeout(maxTimeout);
     }, delay);
 });
-
 // لود کارت‌ها
 const container = document.getElementById("cards-container");
 let openCard = null;
@@ -568,7 +561,6 @@ async function loadCardsStrictly() {
     }
 }
 loadCardsStrictly();
-
 // رزرو بلیط
 document.addEventListener("click", function(e) {
     const reserveBtn = e.target.closest(".reserve-bar a");
@@ -590,7 +582,6 @@ document.addEventListener("click", function(e) {
     const encoded = encodeURIComponent(message);
     window.open(`https://t.me/${adminId}?text=${encoded}`, "_blank");
 });
-
 // فلیپ کارت
 document.addEventListener("click", function(e) {
     if (e.target.closest(".reserve-bar")) return;
@@ -601,7 +592,6 @@ document.addEventListener("click", function(e) {
         openCard = cardInner.classList.contains("flipped") ? cardInner : null;
     }
 });
-
 // منوی همبرگری
 const hamburger = document.getElementById('hamburger');
 const sideMenu = document.getElementById('side-menu');
@@ -626,7 +616,6 @@ menuClose.addEventListener('click', e => { e.stopPropagation(); closeMenu(); });
 backdrop.addEventListener('click', closeMenu);
 document.addEventListener('keydown', e => { if (e.key==='Escape') closeMenu(); });
 sideMenu.addEventListener('click', e => e.stopPropagation());
-
 // انیمیشن ذرات
 (() => {
   const canvas = document.createElement('canvas');
@@ -688,7 +677,6 @@ sideMenu.addEventListener('click', e => e.stopPropagation());
   init();
   frame();
 })();
-
 // نصب PWA
 let deferredPrompt;
 const installBtn = document.getElementById('install-button');
