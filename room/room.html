@@ -1,99 +1,285 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<title>پلیر گروهی بدون سرور</title>
-<style>
-body{background:#111;color:#fff;font-family:tahoma;text-align:center;margin:0;padding:20px}
-input,button{padding:8px;margin:3px}
-video{width:90%;max-width:800px;margin:20px auto;display:block;background:black}
-#chat{width:90%;max-width:800px;margin:20px auto;background:#222;padding:10px}
-#messages{height:150px;background:#000;overflow-y:auto;margin-bottom:10px;padding:5px;text-align:left}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SoftShiraz Cinema | سینمای مدرن</title>
+    <style>
+        :root {
+            --accent: #00d1b2;
+            --accent-glow: rgba(0, 209, 178, 0.3);
+            --bg-dark: #09090b;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --chat-w: 380px;
+        }
+
+        * { box-sizing: border-box; transition: all 0.2s ease; }
+        body, html { 
+            margin: 0; padding: 0; height: 100%; overflow: hidden; 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-dark);
+            background-image: radial-gradient(circle at 50% -20%, #1e293b, #09090b);
+            color: #e2e8f0;
+        }
+
+        /* هدر شیشه‌ای */
+        .header {
+            height: 65px;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            display: flex; align-items: center; padding: 0 25px;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+        }
+
+        .logo-link {
+            color: #fff; text-decoration: none; font-weight: 700;
+            background: linear-gradient(45deg, var(--accent), #00b8d4);
+            padding: 8px 20px; border-radius: 12px;
+            box-shadow: 0 4px 15px var(--accent-glow);
+            font-size: 14px;
+        }
+
+        #main-layout { display: flex; height: calc(100vh - 65px); }
+
+        /* بخش ویدیو */
+        #video-section { flex: 1; display: flex; flex-direction: column; padding: 20px; position: relative; }
+        
+        #admin-panel {
+            background: var(--glass); backdrop-filter: blur(10px);
+            padding: 15px; border-radius: 15px; margin-bottom: 15px;
+            display: none; gap: 10px; border: 1px solid var(--glass-border);
+        }
+        #admin-panel input {
+            flex: 1; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border);
+            border-radius: 10px; color: white; padding: 12px; outline: none;
+        }
+
+        .v-container {
+            flex: 1; border-radius: 20px; overflow: hidden;
+            background: #000; border: 1px solid var(--glass-border);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            display: flex; align-items: center; justify-content: center;
+        }
+        video { width: 100%; height: auto; max-height: 100%; }
+
+        /* بخش چت حرفه‌ای */
+        #chat-section {
+            width: var(--chat-w); background: var(--glass);
+            backdrop-filter: blur(15px); border-right: 1px solid var(--glass-border);
+            display: flex; flex-direction: column;
+        }
+
+        #chat-messages {
+            flex: 1; overflow-y: auto; padding: 20px;
+            display: flex; flex-direction: column; gap: 15px;
+        }
+
+        /* استایل حباب پیام */
+        .msg {
+            max-width: 85%; padding: 12px 16px; border-radius: 18px;
+            font-size: 14px; line-height: 1.5; position: relative;
+            background: #27272a; border: 1px solid var(--glass-border);
+            animation: fadeIn 0.3s ease;
+        }
+        .msg.mine {
+            align-self: flex-end; background: var(--accent);
+            color: #000; font-weight: 500; border: none;
+            box-shadow: 0 4px 12px var(--accent-glow);
+        }
+        .msg strong { display: block; font-size: 11px; opacity: 0.7; margin-bottom: 4px; }
+
+        #chat-input-area {
+            padding: 20px; background: rgba(0,0,0,0.2);
+            display: flex; gap: 12px; align-items: center;
+        }
+        #chat-input {
+            flex: 1; background: #18181b; border: 1px solid var(--glass-border);
+            padding: 14px 20px; border-radius: 15px; color: white; outline: none;
+        }
+        #chat-input:focus { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-glow); }
+
+        #send-btn {
+            background: var(--accent); border: none; width: 48px; height: 48px;
+            border-radius: 12px; cursor: pointer; display: flex; align-items: center;
+            justify-content: center; font-size: 20px;
+        }
+
+        /* ورود مدرن */
+        #login-modal {
+            position: fixed; inset: 0; background: #000; z-index: 9999;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .login-box {
+            background: #18181b; padding: 40px; border-radius: 24px;
+            width: 90%; max-width: 400px; text-align: center;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5);
+        }
+        .login-box input {
+            width: 100%; padding: 15px; margin: 10px 0; border-radius: 12px;
+            border: 1px solid var(--glass-border); background: #09090b; color: white;
+        }
+        .login-box button {
+            width: 100%; padding: 15px; background: var(--accent);
+            border: none; border-radius: 12px; font-weight: 700; cursor: pointer;
+            margin-top: 20px; font-size: 16px;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* ریسپانسیو برای موبایل */
+        @media (max-width: 900px) {
+            #main-layout { flex-direction: column; }
+            #chat-section { width: 100%; flex: 1; }
+            #video-section { flex: none; height: 300px; padding: 10px; }
+            .header { padding: 0 15px; }
+        }
+    </style>
 </head>
 <body>
 
-<h2>🎬 پلیر گروهی بدون سرور</h2>
+    <header class="header">
+        <a href="../index.html" class="logo-link">بازگشت به پنل</a>
+        <div id="user-display" style="font-weight: 600; color: var(--accent);">Cinema Live</div>
+    </header>
 
-<input id="videoUrl" style="width:60%" placeholder="لینک مستقیم ویدیو (mp4)">
-<button onclick="loadVideo()">پخش</button>
-<button onclick="copyLink()">📎 لینک اتاق</button>
+    <div id="login-modal">
+        <div class="login-box">
+            <h1 style="color:var(--accent); margin-bottom:10px;">SoftShiraz</h1>
+            <p style="opacity:0.6; margin-bottom:30px;">وارد حساب خود شوید</p>
+            <input type="text" id="inpName" placeholder="نام کاربری">
+            <input type="password" id="inpPass" placeholder="رمز عبور">
+            <button id="btnLogin">شروع تماشا</button>
+        </div>
+    </div>
 
-<video id="player" controls></video>
+    <div id="main-layout">
+        <section id="chat-section">
+            <div id="chat-messages"></div>
+            <div id="chat-input-area">
+                <input type="text" id="chat-input" placeholder="نوشتن پیام...">
+                <button id="send-btn">➤</button>
+            </div>
+        </section>
 
-<div id="chat">
-  <div id="messages"></div>
-  <input id="msg" style="width:70%" placeholder="پیام...">
-  <button onclick="sendMsg()">ارسال</button>
-</div>
+        <section id="video-section">
+            <div id="admin-panel">
+                <input type="text" id="urlInput" placeholder="لینک مستقیم MP4 را وارد کنید">
+                <button id="changeUrlBtn" style="background:var(--accent); border:none; padding:10px 20px; border-radius:10px; cursor:pointer; font-weight:bold;">انتشار</button>
+            </div>
+            <div class="v-container">
+                <video id="myVideo" playsinline preload="auto">
+                    <source src="" type="video/mp4">
+                </video>
+            </div>
+        </section>
+    </div>
 
-<script>
-// --- متغیرها ---
-const video = document.getElementById("player");
-const messages = document.getElementById("messages");
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+        import { getDatabase, ref, set, push, onValue, onChildAdded, update } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
 
-// --- لینک اتاق ---
-function copyLink(){
-    const url = new URL(window.location.href);
-    url.searchParams.set('video', document.getElementById('videoUrl').value);
-    navigator.clipboard.writeText(url.toString());
-    alert("لینک اتاق کپی شد!");
-}
+        const firebaseConfig = {
+            apiKey: "AIzaSyCZVi8SyjtW6dxMHDX7D0lZEdF5XPLtwJA",
+            authDomain: "softshiraz-2ddce.firebaseapp.com",
+            databaseURL: "https://softshiraz-2ddce-default-rtdb.firebaseio.com/",
+            projectId: "softshiraz-2ddce",
+            storageBucket: "softshiraz-2ddce.firebasestorage.app",
+            messagingSenderId: "760975223534",
+            appId: "1:760975223534:web:3008a1fbcc09a2ae2fe1ff"
+        };
 
-// --- بارگذاری ویدیو از URL ---
-function loadVideo(){
-    const urlInput = document.getElementById('videoUrl');
-    if(!urlInput.value) return;
-    video.src = urlInput.value;
-    video.play();
-    // ذخیره در URL
-    const url = new URL(window.location.href);
-    url.searchParams.set('video', urlInput.value);
-    history.replaceState(null,null,url);
-}
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const roomRef = ref(db, 'cinema/status');
+        const chatRef = ref(db, 'cinema/chat');
 
-// --- چک کردن URL هنگام بارگذاری ---
-window.onload = () => {
-    const params = new URLSearchParams(window.location.search);
-    const videoParam = params.get('video');
-    if(videoParam){
-        document.getElementById('videoUrl').value = videoParam;
-        video.src = videoParam;
-    }
-    // بررسی وضعیت ویدیو هر 2 ثانیه
-    setInterval(syncVideo,2000);
-}
+        let isAdmin = false;
+        let myName = localStorage.getItem('chatName') || '';
+        let lastServerData = null;
+        const video = document.getElementById('myVideo');
 
-// --- همزمان سازی ساده ---
-function syncVideo(){
-    const params = new URLSearchParams(window.location.search);
-    const timeParam = parseFloat(params.get('time'));
-    if(!isNaN(timeParam)){
-        // اگر اختلاف بیشتر از 1 ثانیه بود، سینک کن
-        if(Math.abs(video.currentTime - timeParam) > 1){
-            video.currentTime = timeParam;
+        document.getElementById('btnLogin').onclick = () => {
+            const name = document.getElementById('inpName').value.trim();
+            const pass = document.getElementById('inpPass').value;
+            if (!name) return alert("نام را وارد کنید");
+            if (pass === "1234") isAdmin = true;
+            else if (pass === "1111") isAdmin = false;
+            else return alert("رمز عبور اشتباه است");
+
+            myName = name;
+            localStorage.setItem('chatName', myName);
+            document.getElementById('login-modal').style.display = 'none';
+            document.getElementById('user-display').innerText = myName;
+
+            video.muted = false;
+            video.controls = true;
+            initCinema();
+        };
+
+        function initCinema() {
+            onValue(roomRef, (snap) => {
+                lastServerData = snap.val();
+                if (lastServerData) {
+                    if (video.src !== lastServerData.videoUrl) {
+                        video.src = lastServerData.videoUrl;
+                        video.load();
+                    }
+                    if (!isAdmin) syncPlayerLocally(lastServerData);
+                }
+            });
+            if (isAdmin) setupAdmin(); else setupViewer();
         }
-    }
-}
 
-// --- ارسال پیام ---
-function sendMsg(){
-    const msgInput = document.getElementById("msg");
-    if(!msgInput.value) return;
-    const div = document.createElement("div");
-    div.textContent = msgInput.value;
-    messages.appendChild(div);
-    msgInput.value = "";
-    messages.scrollTop = messages.scrollHeight;
-}
+        function syncPlayerLocally(data) {
+            if (data.state === 'playing' && !video.paused) {
+                const elapsed = (Date.now() - data.updatedAt) / 1000;
+                const target = data.timestamp + elapsed;
+                if (Math.abs(video.currentTime - target) > 3) video.currentTime = target;
+            }
+        }
 
-// --- همزمان سازی زمان ویدیو با URL ---
-video.addEventListener("timeupdate", ()=>{
-    const url = new URL(window.location.href);
-    url.searchParams.set('time', video.currentTime);
-    history.replaceState(null,null,url);
-});
-</script>
+        function setupViewer() {
+            video.onplay = () => {
+                if (lastServerData) {
+                    const elapsed = (Date.now() - lastServerData.updatedAt) / 1000;
+                    video.currentTime = lastServerData.timestamp + (lastServerData.state === 'playing' ? elapsed : 0);
+                }
+            };
+        }
 
+        function setupAdmin() {
+            document.getElementById('admin-panel').style.display = 'flex';
+            document.getElementById('changeUrlBtn').onclick = () => {
+                const url = document.getElementById('urlInput').value.trim();
+                if (url) set(roomRef, { videoUrl: url, timestamp: 0, state: 'playing', updatedAt: Date.now() });
+            };
+            const updateFB = () => {
+                update(roomRef, { state: video.paused ? 'paused' : 'playing', timestamp: video.currentTime, updatedAt: Date.now() });
+            };
+            video.onpause = updateFB; video.onplay = updateFB; video.onseeked = updateFB;
+        }
+
+        // چت
+        function sendMessage() {
+            const txt = document.getElementById('chat-input').value.trim();
+            if (txt) { push(chatRef, { user: myName, text: txt }); document.getElementById('chat-input').value = ''; }
+        }
+        document.getElementById('send-btn').onclick = sendMessage;
+        document.getElementById('chat-input').onkeypress = (e) => { if(e.key==='Enter') sendMessage(); };
+
+        onChildAdded(chatRef, (snap) => {
+            const d = snap.val();
+            const div = document.createElement('div');
+            div.className = 'msg' + (d.user === myName ? ' mine' : '');
+            div.innerHTML = `<strong>${d.user}</strong>${d.text}`;
+            const box = document.getElementById('chat-messages');
+            box.appendChild(div);
+            box.scrollTop = box.scrollHeight;
+        });
+    </script>
 </body>
 </html>
