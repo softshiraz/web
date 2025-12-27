@@ -20,13 +20,11 @@ header{
   align-items:center;
   justify-content:space-between;
   padding:0 15px;
-  font-size:14px;
 }
 main{
   display:flex;
-  flex-direction:column;
-  align-items:center;
   justify-content:center;
+  align-items:center;
   height:calc(100vh - 56px);
 }
 video{
@@ -34,31 +32,25 @@ video{
   max-width:900px;
   background:#000;
 }
-.login{
+.login-box{
   max-width:320px;
   width:100%;
   padding:20px;
 }
-.login input, .login button{
+.login-box input,.login-box button{
   width:100%;
   padding:12px;
   margin-top:10px;
-  border-radius:8px;
   border:none;
+  border-radius:8px;
   font-size:16px;
 }
-.login button{
+.login-box button{
   background:#e50914;
   color:white;
 }
 .hidden{display:none}
-.role{
-  font-size:12px;
-  color:#aaa;
-}
-@media(max-width:768px){
-  video{height:auto}
-}
+.role{font-size:12px;color:#aaa}
 </style>
 </head>
 
@@ -66,19 +58,19 @@ video{
 
 <header>
   <div>🎬 ببینیم باهم</div>
-  <div id="userLabel"></div>
+  <div id="userInfo"></div>
 </header>
 
 <!-- LOGIN -->
-<div id="login" class="login">
-  <input id="username" placeholder="نام شما">
-  <input id="password" type="password" placeholder="رمز ورود">
-  <button onclick="login()">ورود</button>
+<div id="loginBox" class="login-box">
+  <input id="usernameInput" placeholder="نام شما">
+  <input id="passwordInput" type="password" placeholder="رمز ورود">
+  <button id="loginBtn">ورود</button>
 </div>
 
 <!-- PLAYER -->
 <main id="playerBox" class="hidden">
-  <video id="video">
+  <video id="videoPlayer">
     <source src="https://s1.dlserfes.info/dl1/2018/Tag%202018/Tag_2018_720p_BrRip_YIFY.mp4?md5=JgOv4DHH-E856mk-iRe8Aw&u=288589&expires=1766897453" type="video/mp4">
   </video>
 </main>
@@ -88,7 +80,7 @@ video{
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
 <script>
-/* 🔥 FIREBASE */
+/* 🔥 Firebase */
 firebase.initializeApp({
   apiKey: "AIzaSyCZVi8SyjtW6dxMHDX7D0lZEdF5XPLtwJA",
   authDomain: "softshiraz-2ddce.firebaseapp.com",
@@ -97,68 +89,79 @@ firebase.initializeApp({
 });
 const db = firebase.database();
 
-/* 🔐 PASSWORDS */
+/* 🔐 Passwords */
 const OWNER_PASS = "1111";
 const VIEWER_PASS = "2222";
 
-const video = document.getElementById("video");
-const label = document.getElementById("userLabel");
+/* 🧱 Elements */
+const loginBox = document.getElementById("loginBox");
+const playerBox = document.getElementById("playerBox");
+const usernameInput = document.getElementById("usernameInput");
+const passwordInput = document.getElementById("passwordInput");
+const loginBtn = document.getElementById("loginBtn");
+const userInfo = document.getElementById("userInfo");
+const video = document.getElementById("videoPlayer");
 
 /* 💾 restore name */
-username.value = localStorage.getItem("name") || "";
+usernameInput.value = localStorage.getItem("name") || "";
 
-function login(){
-  const name = username.value.trim();
-  const pass = password.value;
+/* 🚪 Login */
+loginBtn.onclick = () => {
+  const name = usernameInput.value.trim();
+  const pass = passwordInput.value;
 
-  if(!name) return alert("نام وارد نشده");
+  if(!name){
+    alert("نام را وارد کنید");
+    return;
+  }
 
   localStorage.setItem("name", name);
-  login.classList.add("hidden");
-  playerBox.classList.remove("hidden");
 
   if(pass === OWNER_PASS){
-    label.innerHTML = `${name} <span class="role">(مالک)</span>`;
-    initOwner();
+    enterOwner(name);
   }
   else if(pass === VIEWER_PASS){
-    label.innerHTML = `${name} <span class="role">(بیننده)</span>`;
-    initViewer();
+    enterViewer(name);
   }
   else{
-    alert("رمز اشتباه");
-    location.reload();
+    alert("رمز اشتباه است");
   }
-}
+};
 
-/* 👑 OWNER */
-function initOwner(){
+/* 👑 Owner */
+function enterOwner(name){
+  loginBox.classList.add("hidden");
+  playerBox.classList.remove("hidden");
+  userInfo.innerHTML = `${name} <span class="role">(مالک)</span>`;
   video.controls = true;
 
-  function sync(){
+  const sync = () => {
     db.ref("room").set({
-      t: video.currentTime,
-      p: !video.paused
+      time: video.currentTime,
+      playing: !video.paused
     });
-  }
+  };
 
   video.addEventListener("play", sync);
   video.addEventListener("pause", sync);
   video.addEventListener("seeked", sync);
 }
 
-/* 👀 VIEWER */
-function initViewer(){
+/* 👀 Viewer */
+function enterViewer(name){
+  loginBox.classList.add("hidden");
+  playerBox.classList.remove("hidden");
+  userInfo.innerHTML = `${name} <span class="role">(بیننده)</span>`;
   video.controls = false;
 
-  db.ref("room").on("value", s=>{
-    const d = s.val();
+  db.ref("room").on("value", snap => {
+    const d = snap.val();
     if(!d) return;
 
-    if(Math.abs(video.currentTime - d.t) > 0.6)
-      video.currentTime = d.t;
+    if(Math.abs(video.currentTime - d.time) > 0.5)
+      video.currentTime = d.time;
 
-    d.p ? video.play() : video.pause();
+    d.playing ? video.play() : video.pause();
   });
 }
 </script>
