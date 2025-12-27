@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Watch Together - حرفه‌ای</title>
+<title>Watch Together حرفه‌ای</title>
 <style>
 body{margin:0;font-family:tahoma;background:#0b0b0b;color:#fff}
 header{height:56px;background:#111;display:flex;align-items:center;justify-content:space-between;padding:0 15px}
@@ -20,7 +20,7 @@ video{width:100%;max-width:900px;background:#000}
 </head>
 <body>
 
-<!-- ورود -->
+<!-- فرم ورود -->
 <div class="login" id="loginBox">
   <div style="width:100%">
     <input type="text" id="nameInput" placeholder="نام خود را وارد کنید">
@@ -58,7 +58,7 @@ const db = firebase.database();
 const OWNER_PASS = "1111";
 const USER_PASS = "2222";
 
-// لینک فیلم
+// لینک فیلم (می‌توانید لینک Worker یا سرور خودتان را بگذارید)
 const VIDEO_URL = "https://s1.dlserfes.info/dl1/2018/Tag%202018/Tag_2018_720p_BrRip_YIFY.mp4?md5=JgOv4DHH-E856mk-iRe8Aw&u=288589&expires=1766897453";
 
 // المان‌ها
@@ -105,6 +105,7 @@ function goBack(){
 // 🔗 سینک ویدیو
 function initVideoSync(){
   video.src = VIDEO_URL;
+  video.preload = "auto";
   video.load();
   let isSeeking=false;
   const videoRef = db.ref("watchroom/video");
@@ -120,29 +121,31 @@ function initVideoSync(){
     const state = snap.val();
     if(!state) return;
 
-    const ownerOnline = Date.now()-state.lastSeen<5000;
+    const ownerOnline = Date.now()-state.lastSeen<1500; // بررسی آنلاین بودن مالک
     notice.classList.toggle("hidden",ownerOnline);
 
-    if(Math.abs(video.currentTime-state.currentTime)>0.5)
-      video.currentTime=state.currentTime;
+    const diff = state.currentTime - video.currentTime;
+    if(Math.abs(diff) > 0.25){ // threshold کمتر
+      video.currentTime += diff * 0.1; // linear interpolation برای حرکت روان
+    }
 
-    state.playing?video.play().catch(()=>{}):video.pause();
+    state.playing ? video.play().catch(()=>{}) : video.pause();
   });
 
   // پخش اولیه
   videoRef.once("value").then(snap=>{
     const state = snap.val();
     if(state && state.playing){
-      video.currentTime=state.currentTime||0;
+      video.currentTime = state.currentTime || 0;
       video.play().catch(()=>{});
     }
   });
 
-  // heartbeat مالک
+  // heartbeat مالک هر 500ms
   if(isOwner){
     setInterval(()=>{
-      videoRef.update({lastSeen:Date.now(),currentTime:video.currentTime});
-    },2000);
+      videoRef.update({lastSeen:Date.now(),currentTime:video.currentTime,playing:!video.paused});
+    },500);
   }
 }
 </script>
