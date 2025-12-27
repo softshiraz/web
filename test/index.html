@@ -1,188 +1,295 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>تبلیغ ویژه | سایت ما</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سینمای آنلاین خصوصی</title>
     <style>
-        * {
-            box-sizing: border-box;
-        }
+        /* --- استایل‌های کلی --- */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #121212; color: #e0e0e0; margin: 0; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+        
+        /* --- لایوت صفحه --- */
+        #main-layout { display: flex; flex: 1; height: 100%; }
+        #video-section { flex: 3; position: relative; display: flex; flex-direction: column; justify-content: center; background: #000; }
+        #chat-section { flex: 1; border-right: 1px solid #333; display: flex; flex-direction: column; background: #1e1e1e; min-width: 300px; }
 
-        body {
-            margin: 0;
-            height: 100vh;
-            font-family: Tahoma, sans-serif;
-            background: radial-gradient(circle at top, #1e3c72, #000);
-            overflow: hidden;
-            color: white;
-            direction: rtl;
-        }
+        /* --- ویدیو --- */
+        video { width: 100%; max-height: 100%; outline: none; }
+        #blocker { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; display: none; } /* مانع کلیک */
+        
+        /* --- پنل ادمین --- */
+        #admin-controls { padding: 10px; background: #2c2c2c; display: none; border-bottom: 1px solid #444; }
+        #admin-controls input { width: 70%; padding: 8px; border-radius: 4px; border: none; background: #444; color: white; }
+        #admin-controls button { padding: 8px 15px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
 
-        /* بک‌گراند متحرک */
-        .glow {
-            position: absolute;
-            width: 400px;
-            height: 400px;
-            background: #00ffd5;
-            filter: blur(150px);
-            opacity: 0.3;
-            animation: moveGlow 10s infinite alternate;
-        }
+        /* --- چت --- */
+        #chat-messages { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 10px; }
+        .msg { background: #333; padding: 8px 12px; border-radius: 8px; font-size: 0.9em; max-width: 90%; }
+        .msg strong { color: #4db6ac; display: block; margin-bottom: 4px; font-size: 0.8em; }
+        .msg.mine { align-self: flex-end; background: #2e7d32; }
+        
+        #chat-input-area { padding: 15px; background: #252525; display: flex; gap: 5px; }
+        #chat-input { flex: 1; padding: 10px; border-radius: 20px; border: none; background: #444; color: white; }
+        #send-btn { background: #00897b; color: white; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-weight: bold; }
+        
+        #username-edit { padding: 5px 15px; font-size: 0.8em; color: #888; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center; }
+        #edit-name-btn { cursor: pointer; color: #4db6ac; text-decoration: underline; }
 
-        @keyframes moveGlow {
-            from {
-                top: -100px;
-                left: -100px;
-            }
-            to {
-                top: 300px;
-                left: 600px;
-            }
-        }
+        /* --- مودال ورود (Login) --- */
+        #login-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; display: flex; justify-content: center; align-items: center; }
+        .login-box { background: #2c2c2c; padding: 30px; border-radius: 10px; width: 300px; text-align: center; box-shadow: 0 0 20px rgba(0,255,200,0.1); }
+        .login-box input { width: 90%; margin: 10px 0; padding: 12px; border-radius: 5px; border: 1px solid #444; background: #1a1a1a; color: white; }
+        .login-box button { width: 100%; padding: 12px; margin-top: 10px; background: #00897b; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1.1em; }
+        .error { color: #ff5252; margin-top: 10px; font-size: 0.9em; display: none; }
 
-        .container {
-            position: relative;
-            z-index: 2;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .ad-box {
-            background: rgba(0, 0, 0, 0.7);
-            border-radius: 25px;
-            padding: 45px;
-            width: 90%;
-            max-width: 550px;
-            text-align: center;
-            box-shadow: 0 0 40px rgba(0,255,200,0.3);
-            animation: popIn 1s ease;
-        }
-
-        @keyframes popIn {
-            from {
-                transform: scale(0.7);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
-        .ad-box h1 {
-            font-size: 32px;
-            margin-bottom: 20px;
-            color: #00ffd5;
-            text-shadow: 0 0 10px rgba(0,255,200,0.7);
-        }
-
-        .ad-box p {
-            font-size: 18px;
-            line-height: 1.9;
-            margin-bottom: 15px;
-        }
-
-        .visitor {
-            margin-top: 25px;
-            font-size: 22px;
-            font-weight: bold;
-            color: #ffd700;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        .cta {
-            margin-top: 30px;
-        }
-
-        .cta a {
-            display: inline-block;
-            padding: 15px 35px;
-            border-radius: 40px;
-            background: linear-gradient(135deg, #00ffd5, #00aaff);
-            color: black;
-            text-decoration: none;
-            font-size: 18px;
-            font-weight: bold;
-            transition: 0.3s;
-            box-shadow: 0 0 20px rgba(0,255,200,0.6);
-        }
-
-        .cta a:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 40px rgba(0,255,200,1);
-        }
-
-        .footer {
-            margin-top: 20px;
-            font-size: 14px;
-            opacity: 0.7;
+        /* ریسپانسیو برای موبایل */
+        @media (max-width: 768px) {
+            #main-layout { flex-direction: column; }
+            #video-section { flex: 0 0 auto; }
+            #chat-section { flex: 1; min-width: auto; }
+            #admin-controls { display: flex; flex-direction: column; gap: 5px; }
+            #admin-controls input { width: 95%; }
         }
     </style>
 </head>
 <body>
 
-<div class="glow"></div>
-
-<div class="container">
-    <div class="ad-box">
-        <h1>🚀 خوش اومدی به دنیای خفن ما!</h1>
-
-        <p>
-            اینجا جاییه که <strong>ایده‌های خاص</strong>،
-            <strong>آموزش‌های ناب</strong> و
-            <strong>ابزارهای حرفه‌ای</strong> منتظرته 😎
-        </p>
-
-        <p>
-            هر کسی که این لینک رو باز می‌کنه،
-            عضو یک جمع خاص میشه ✨
-        </p>
-
-        <div class="visitor" id="visitorNumber">
-            در حال شناسایی شما...
-        </div>
-
-        <div class="cta">
-            <a href="https://example.com" target="_blank">
-                ورود به سایت اصلی 🔥
-            </a>
-        </div>
-
-        <div class="footer">
-            © تمامی حقوق محفوظ است
+    <div id="login-modal">
+        <div class="login-box">
+            <h2>ورود به سینما</h2>
+            <input type="text" id="inpName" placeholder="نام نمایشی شما">
+            <input type="password" id="inpPass" placeholder="رمز ورود (ادمین یا کاربر)">
+            <button id="btnLogin">ورود به اتاق</button>
+            <div class="error" id="loginError">رمز اشتباه است!</div>
         </div>
     </div>
-</div>
 
-<script>
-    let visitorNumber = localStorage.getItem("visitor_number");
+    <div id="main-layout">
+        <div id="video-section">
+            <div id="admin-controls">
+                <input type="text" id="urlInput" placeholder="لینک مستقیم ویدیو (mp4, mkv...)">
+                <button id="changeUrlBtn">تغییر فیلم</button>
+            </div>
+            <video id="myVideo" playsinline>
+                <source src="" type="video/mp4">
+            </video>
+            <div id="blocker"></div>
+        </div>
 
-    if (visitorNumber === null) {
-        let counter = localStorage.getItem("counter");
+        <div id="chat-section">
+            <div id="username-edit">
+                <span>کاربر: <span id="current-username">...</span></span>
+                <span id="edit-name-btn">ویرایش نام</span>
+            </div>
+            <div id="chat-messages"></div>
+            <div id="chat-input-area">
+                <input type="text" id="chat-input" placeholder="پیام...">
+                <button id="send-btn">➤</button>
+            </div>
+        </div>
+    </div>
 
-        if (counter === null) {
-            counter = 1;
-        } else {
-            counter = parseInt(counter) + 1;
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+        import { getDatabase, ref, set, push, onValue, onChildAdded, update } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
+
+        // --- 1. تنظیمات (رمزها و کانفیگ) ---
+        // رمزها را اینجا تنظیم کنید
+        const CONFIG = {
+            adminPass: "1234",  // رمز مالک اتاق
+            userPass: "1111",   // رمز کاربر عادی
+        };
+
+        // تنظیمات فایربیس خود را اینجا بگذارید
+        const firebaseConfig = {
+            apiKey: "AIzaSyXXXXXXXXXXXXXXXXXXXXXXXXX",
+            authDomain: "YOUR_PROJECT.firebaseapp.com",
+            databaseURL: "https://YOUR_PROJECT-default-rtdb.firebaseio.com",
+            projectId: "YOUR_PROJECT",
+            storageBucket: "YOUR_PROJECT.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123456789:web:xxxxxx"
+        };
+
+        // شروع برنامه
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        
+        // مسیرهای دیتابیس
+        const roomRef = ref(db, 'cinema/status');
+        const chatRef = ref(db, 'cinema/chat');
+
+        // متغیرهای وضعیت
+        let isAdmin = false;
+        let myName = localStorage.getItem('chatName') || '';
+
+        // المان‌های صفحه
+        const els = {
+            video: document.getElementById('myVideo'),
+            blocker: document.getElementById('blocker'),
+            loginModal: document.getElementById('login-modal'),
+            inpName: document.getElementById('inpName'),
+            inpPass: document.getElementById('inpPass'),
+            btnLogin: document.getElementById('btnLogin'),
+            loginError: document.getElementById('loginError'),
+            adminPanel: document.getElementById('admin-controls'),
+            urlInput: document.getElementById('urlInput'),
+            changeUrlBtn: document.getElementById('changeUrlBtn'),
+            chatMsgs: document.getElementById('chat-messages'),
+            chatInput: document.getElementById('chat-input'),
+            sendBtn: document.getElementById('send-btn'),
+            currentUsername: document.getElementById('current-username'),
+            editNameBtn: document.getElementById('edit-name-btn')
+        };
+
+        // --- 2. سیستم ورود و صدا (Audio Context) ---
+        if (myName) els.inpName.value = myName; // پر کردن نام اگر قبلا بوده
+
+        els.btnLogin.onclick = () => {
+            const pass = els.inpPass.value;
+            const name = els.inpName.value.trim();
+
+            if (!name) return alert("لطفا نام خود را وارد کنید");
+            
+            // چک کردن رمز
+            if (pass === CONFIG.adminPass) {
+                isAdmin = true;
+                setupAdmin();
+            } else if (pass === CONFIG.userPass) {
+                isAdmin = false;
+                setupViewer();
+            } else {
+                els.loginError.style.display = 'block';
+                return;
+            }
+
+            // ذخیره نام و ورود
+            myName = name;
+            localStorage.setItem('chatName', myName);
+            els.currentUsername.innerText = myName;
+            els.loginModal.style.display = 'none';
+
+            // **مهم: فعال کردن صدا**
+            // چون کاربر کلیک کرده، مرورگر اجازه پخش صدا می‌دهد.
+            // یک لحظه ویدیو را آنمیوت می‌کنیم تا اجازه صادر شود
+            els.video.muted = false;
+            els.video.play().then(() => {
+                if(!isAdmin) els.video.pause(); // اگر کاربر است استپ کن تا دیتا بیاید
+            }).catch(e => console.log("Audio logic ready"));
+        };
+
+        // --- 3. ویرایش نام ---
+        els.editNameBtn.onclick = () => {
+            const newName = prompt("نام جدید را وارد کنید:", myName);
+            if (newName && newName.trim() !== "") {
+                myName = newName;
+                localStorage.setItem('chatName', myName);
+                els.currentUsername.innerText = myName;
+            }
+        };
+
+        // --- 4. منطق ویدیو و سینک ---
+        function setupAdmin() {
+            els.adminPanel.style.display = 'block';
+            els.blocker.style.display = 'none'; // ادمین می‌تواند کلیک کند
+            els.video.controls = true;
+
+            // تغییر لینک
+            els.changeUrlBtn.onclick = () => {
+                const url = els.urlInput.value;
+                if(url) {
+                    update(roomRef, {
+                        videoUrl: url,
+                        timestamp: 0,
+                        state: 'paused',
+                        updatedAt: Date.now()
+                    });
+                    els.video.src = url;
+                }
+            };
+
+            // ارسال ایونت‌های پلیر به دیتابیس
+            ['play', 'pause', 'seeked'].forEach(event => {
+                els.video.addEventListener(event, () => {
+                    // جلوگیری از لوپ: فقط وقتی ادمین واقعا کلیک کرده بفرست
+                    // (ساده‌سازی شده: همیشه وضعیت را آپدیت می‌کنیم)
+                    update(roomRef, {
+                        state: els.video.paused ? 'paused' : 'playing',
+                        timestamp: els.video.currentTime,
+                        updatedAt: Date.now()
+                    });
+                });
+            });
         }
 
-        localStorage.setItem("counter", counter);
-        localStorage.setItem("visitor_number", counter);
-        visitorNumber = counter;
-    }
+        function setupViewer() {
+            els.adminPanel.style.display = 'none';
+            els.blocker.style.display = 'block'; // کاربر نمی‌تواند کلیک کند
+            els.video.controls = false; // حذف کنترل‌ها
 
-    document.getElementById("visitorNumber").innerText =
-        "✨ شما بازدیدکننده شماره " + visitorNumber + " هستید!";
-</script>
+            // گوش دادن به تغییرات دیتابیس
+            onValue(roomRef, (snapshot) => {
+                const data = snapshot.val();
+                if (!data) return;
 
+                // 1. چک کردن لینک ویدیو
+                const currentSrc = els.video.getAttribute('src');
+                if (data.videoUrl && data.videoUrl !== currentSrc) {
+                    els.video.src = data.videoUrl;
+                    // وقتی سورس عوض شد، صبر کن تا لود شود بعد تایم را ست کن
+                }
+
+                // 2. محاسبه تاخیر و سینک
+                // (اگر ویدیو تازه لود شده باشد ممکن است خطا بدهد، با try هندل می‌کنیم)
+                try {
+                    const networkLatency = (Date.now() - data.updatedAt) / 1000;
+                    const targetTime = data.timestamp + (data.state === 'playing' ? networkLatency : 0);
+
+                    // اگر اختلاف زمان زیاد بود (بیش از 1 ثانیه) پرش کن
+                    if (Math.abs(els.video.currentTime - targetTime) > 1) {
+                        els.video.currentTime = targetTime;
+                    }
+
+                    if (data.state === 'playing') {
+                        els.video.play().catch(e => console.log("Waiting for interaction"));
+                    } else {
+                        els.video.pause();
+                    }
+                } catch (e) { console.log(e); }
+            });
+        }
+
+        // --- 5. سیستم چت ---
+        
+        // ارسال پیام
+        function sendMessage() {
+            const text = els.chatInput.value.trim();
+            if (!text) return;
+            
+            push(chatRef, {
+                user: myName,
+                text: text,
+                time: Date.now()
+            });
+            els.chatInput.value = '';
+        }
+
+        els.sendBtn.onclick = sendMessage;
+        els.chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        // دریافت پیام‌ها (تاریخچه + جدید)
+        onChildAdded(chatRef, (snapshot) => {
+            const msg = snapshot.val();
+            const div = document.createElement('div');
+            div.className = 'msg ' + (msg.user === myName ? 'mine' : '');
+            div.innerHTML = `<strong>${msg.user}</strong>${msg.text}`;
+            els.chatMsgs.appendChild(div);
+            // اسکرول به پایین
+            els.chatMsgs.scrollTop = els.chatMsgs.scrollHeight;
+        });
+
+    </script>
 </body>
 </html>
