@@ -88,9 +88,7 @@
             </div>
         </div>
     </div>
-
 <script type="module">
-    // استفاده از نسخه پایدارتر
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
     import { getDatabase, ref, set, push, onValue, onChildAdded, update } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
 
@@ -116,9 +114,9 @@
     const chatRef = ref(db, 'cinema/chat');
 
     let isAdmin = false;
+    // بازیابی نام از حافظه مرورگر
     let myName = localStorage.getItem('chatName') || '';
     
-    // المان‌ها
     const els = {
         video: document.getElementById('myVideo'),
         blocker: document.getElementById('blocker'),
@@ -135,7 +133,11 @@
         currentUsername: document.getElementById('current-username')
     };
 
-    // ورود
+    // نمایش نام قبلی در کادر ورودی اگر وجود داشته باشد
+    if (myName) {
+        els.inpName.value = myName;
+    }
+
     els.btnLogin.onclick = () => {
         const pass = els.inpPass.value;
         const name = els.inpName.value.trim();
@@ -146,12 +148,15 @@
         else return alert("رمز اشتباه");
 
         myName = name;
-        localStorage.setItem('chatName', myName);
+        localStorage.setItem('chatName', myName); // ذخیره دائمی نام
         els.currentUsername.innerText = myName;
         els.loginModal.style.display = 'none';
 
-        // آنمیوت برای اجازه مرورگر
-        els.video.muted = false;
+        // فعال‌سازی صدا و پخش اولیه (بسیار مهم برای Autoplay)
+        els.video.play().then(() => {
+            if(!isAdmin) els.video.pause();
+        }).catch(() => console.log("User must interact first"));
+
         if(isAdmin) setupAdmin(); else setupViewer();
     };
 
@@ -160,29 +165,32 @@
         els.video.controls = true;
 
         els.changeUrlBtn.onclick = () => {
-            const url = els.urlInput.value;
+            const url = els.urlInput.value.trim();
             if(url) {
                 set(roomRef, {
                     videoUrl: url,
                     timestamp: 0,
-                    state: 'playing', // شروع خودکار
+                    state: 'playing',
                     updatedAt: Date.now()
                 });
+                els.video.src = url;
+                els.video.load(); // بارگذاری فیلم جدید
+                els.video.play();
             }
         };
 
-        // آپدیت وضعیت زمان پخش
-        els.video.onplay = () => syncAdmin('playing');
-        els.video.onpause = () => syncAdmin('paused');
-        els.video.onseeked = () => syncAdmin(els.video.paused ? 'paused' : 'playing');
-
-        function syncAdmin(state) {
+        // هماهنگ‌سازی زمان با دیتابیس
+        const syncAdmin = (state) => {
             update(roomRef, {
                 state: state,
                 timestamp: els.video.currentTime,
                 updatedAt: Date.now()
             });
-        }
+        };
+
+        els.video.onplay = () => syncAdmin('playing');
+        els.video.onpause = () => syncAdmin('paused');
+        els.video.onseeked = () => syncAdmin(els.video.paused ? 'paused' : 'playing');
     }
 
     function setupViewer() {
@@ -192,29 +200,31 @@
             const data = snapshot.val();
             if (!data) return;
 
-            // تغییر لینک فیلم برای کاربر
-            if (data.videoUrl && els.video.src !== data.videoUrl) {
+            // اگر لینک فیلم عوض شده باشد
+            if (data.videoUrl && els.video.getAttribute('src') !== data.videoUrl) {
                 els.video.src = data.videoUrl;
+                els.video.load(); // بارگذاری فیلم جدید برای کاربر
             }
 
-            // محاسبه زمان دقیق حتی اگر ادمین آنلاین نباشد
-            const timePassedSinceUpdate = (Date.now() - data.updatedAt) / 1000;
-            let targetTime = data.timestamp;
-
-            if (data.state === 'playing') {
-                targetTime += timePassedSinceUpdate;
-                els.video.play().catch(() => console.log("Click required"));
-            } else {
-                els.video.pause();
-            }
+            // محاسبه زمان دقیق
+            const timePassed = (Date.now() - data.updatedAt) / 1000;
+            let targetTime = data.timestamp + (data.state === 'playing' ? timePassed : 0);
 
             if (Math.abs(els.video.currentTime - targetTime) > 2) {
                 els.video.currentTime = targetTime;
             }
+
+            if (data.state === 'playing') {
+                els.video.play().catch(() => {
+                    console.log("مرورگر اجازه پخش خودکار نداد. کاربر باید یک بار روی صفحه کلیک کند.");
+                });
+            } else {
+                els.video.pause();
+            }
         });
     }
 
-    // چت (بدون تغییر، فقط آدرس ایمپورت اصلاح شد)
+    // بخش چت
     els.sendBtn.onclick = () => {
         const text = els.chatInput.value.trim();
         if (text) {
