@@ -2,152 +2,80 @@
 <html lang="fa">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Watch Together حرفه‌ای</title>
+<title>پلیر گروهی ساده</title>
 <style>
-body{margin:0;font-family:tahoma;background:#0b0b0b;color:#fff}
-header{height:56px;background:#111;display:flex;align-items:center;justify-content:space-between;padding:0 15px}
-main{display:flex;flex-direction:column;align-items:center;justify-content:center;height:calc(100vh - 56px)}
-video{width:100%;max-width:900px;background:#000}
-.login{max-width:320px;width:100%;padding:20px;position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);backdrop-filter:blur(10px)}
-.login input, .login button{width:100%;padding:12px;margin-top:10px;border:none;border-radius:8px;font-size:16px}
-.login button{background:#e50914;color:#fff;cursor:pointer}
-.hidden{display:none}
-.role{font-size:12px;color:#aaa}
-.notice{font-size:13px;color:#f1c40f;margin-top:8px}
-.back-btn{margin-top:10px;background:#333;color:#fff;padding:10px;border:none;border-radius:8px;cursor:pointer}
+body{
+    background:#111;
+    color:#fff;
+    font-family:tahoma;
+    text-align:center;
+    margin:0;
+    padding:20px;
+}
+input,button{
+    padding:8px;
+    font-size:14px;
+}
+video{
+    width:90%;
+    max-width:800px;
+    margin:20px auto;
+    display:block;
+    background:black;
+}
+#chat{
+    width:90%;
+    max-width:800px;
+    margin:20px auto;
+    background:#222;
+    padding:10px;
+}
+#messages{
+    height:150px;
+    background:#000;
+    overflow-y:auto;
+    margin-bottom:10px;
+    padding:5px;
+    text-align:left;
+}
 </style>
 </head>
 <body>
 
-<!-- فرم ورود -->
-<div class="login" id="loginBox">
-  <div style="width:100%">
-    <input type="text" id="nameInput" placeholder="نام خود را وارد کنید">
-    <input type="password" id="passInput" placeholder="رمز ورود">
-    <button onclick="login('owner')">ورود به عنوان مالک</button>
-    <button onclick="login('user')">ورود به عنوان کاربر</button>
-    <p id="errorMsg" style="color:#ff6b6b;margin-top:10px"></p>
-  </div>
+<h2>🎬 پلیر گروهی فیلم</h2>
+
+<input id="videoUrl" style="width:60%" placeholder="لینک مستقیم ویدیو (mp4)">
+<button onclick="loadVideo()">پخش</button>
+
+<video id="player" controls></video>
+
+<div id="chat">
+    <div id="messages"></div>
+    <input id="msg" style="width:70%" placeholder="پیام...">
+    <button onclick="sendMsg()">ارسال</button>
 </div>
 
-<!-- پلیر -->
-<main id="playerBox" class="hidden">
-  <header>
-    <div id="userInfo"></div>
-    <button class="back-btn" onclick="goBack()">🔙 بازگشت</button>
-  </header>
-  <video id="videoPlayer" playsinline></video>
-  <div id="notice" class="notice hidden">مالک جلسه را ترک کرده است</div>
-</main>
-
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-
 <script>
-// 🔥 Firebase
-firebase.initializeApp({
-  apiKey: "AIzaSyCZVi8SyjtW6dxMHDX7D0lZEdF5XPLtwJA",
-  authDomain: "softshiraz-2ddce.firebaseapp.com",
-  databaseURL: "https://softshiraz-2ddce-default-rtdb.firebaseio.com/",
-  projectId: "softshiraz-2ddce"
-});
-const db = firebase.database();
+const player = document.getElementById("player");
+const messages = document.getElementById("messages");
 
-// 🔑 رمزها
-const OWNER_PASS = "1111";
-const USER_PASS = "2222";
-
-// لینک فیلم (می‌توانید لینک Worker یا سرور خودتان را بگذارید)
-const VIDEO_URL = "https://s1.dlserfes.info/dl1/2018/Tag%202018/Tag_2018_720p_BrRip_YIFY.mp4?md5=JgOv4DHH-E856mk-iRe8Aw&u=288589&expires=1766897453";
-
-// المان‌ها
-const loginBox = document.getElementById("loginBox");
-const playerBox = document.getElementById("playerBox");
-const nameInput = document.getElementById("nameInput");
-const passInput = document.getElementById("passInput");
-const errorMsg = document.getElementById("errorMsg");
-const video = document.getElementById("videoPlayer");
-const userInfo = document.getElementById("userInfo");
-const notice = document.getElementById("notice");
-
-let isOwner = false;
-let userName = "";
-
-// ✅ ورود
-function login(role){
-  const name = nameInput.value.trim();
-  const pass = passInput.value;
-  errorMsg.textContent = "";
-
-  if(!name){ errorMsg.textContent = "نام خود را وارد کنید"; return; }
-  if(role==="owner" && pass!==OWNER_PASS){ errorMsg.textContent="رمز مالک اشتباه است"; return; }
-  if(role==="user" && pass!==USER_PASS){ errorMsg.textContent="رمز کاربر اشتباه است"; return; }
-
-  userName = name;
-  isOwner = (role==="owner");
-
-  loginBox.classList.add("hidden");
-  playerBox.classList.remove("hidden");
-
-  userInfo.textContent = `${userName} (${isOwner?"مالک":"کاربر"})`;
-
-  initVideoSync();
+function loadVideo(){
+    const url = document.getElementById("videoUrl").value;
+    if(!url) return;
+    player.src = url;
+    player.play();
 }
 
-// 🔄 برگشت به ورود
-function goBack(){
-  video.pause();
-  playerBox.classList.add("hidden");
-  loginBox.classList.remove("hidden");
-}
-
-// 🔗 سینک ویدیو
-function initVideoSync(){
-  video.src = VIDEO_URL;
-  video.preload = "auto";
-  video.load();
-  let isSeeking=false;
-  const videoRef = db.ref("watchroom/video");
-
-  // مالک کنترل
-  video.addEventListener("play",()=>{ if(isOwner && !isSeeking) videoRef.update({playing:true,currentTime:video.currentTime,lastSeen:Date.now()}); });
-  video.addEventListener("pause",()=>{ if(isOwner && !isSeeking) videoRef.update({playing:false,currentTime:video.currentTime,lastSeen:Date.now()}); });
-  video.addEventListener("seeking",()=>{ isSeeking=true; });
-  video.addEventListener("seeked",()=>{ if(isOwner) videoRef.update({currentTime:video.currentTime,lastSeen:Date.now()}); isSeeking=false; });
-
-  // بیننده دریافت تغییرات
-  videoRef.on("value",snap=>{
-    const state = snap.val();
-    if(!state) return;
-
-    const ownerOnline = Date.now()-state.lastSeen<1500; // بررسی آنلاین بودن مالک
-    notice.classList.toggle("hidden",ownerOnline);
-
-    const diff = state.currentTime - video.currentTime;
-    if(Math.abs(diff) > 0.25){ // threshold کمتر
-      video.currentTime += diff * 0.1; // linear interpolation برای حرکت روان
-    }
-
-    state.playing ? video.play().catch(()=>{}) : video.pause();
-  });
-
-  // پخش اولیه
-  videoRef.once("value").then(snap=>{
-    const state = snap.val();
-    if(state && state.playing){
-      video.currentTime = state.currentTime || 0;
-      video.play().catch(()=>{});
-    }
-  });
-
-  // heartbeat مالک هر 500ms
-  if(isOwner){
-    setInterval(()=>{
-      videoRef.update({lastSeen:Date.now(),currentTime:video.currentTime,playing:!video.paused});
-    },500);
-  }
+function sendMsg(){
+    const msgInput = document.getElementById("msg");
+    if(!msgInput.value) return;
+    const div = document.createElement("div");
+    div.textContent = msgInput.value;
+    messages.appendChild(div);
+    msgInput.value = "";
+    messages.scrollTop = messages.scrollHeight;
 }
 </script>
+
 </body>
 </html>
