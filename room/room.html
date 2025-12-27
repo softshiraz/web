@@ -7,205 +7,214 @@
   <style>
     body { 
       margin:0; 
+      padding:0; 
       font-family: Tahoma, sans-serif; 
-      background:#111; 
+      background:#000; 
       color:#eee; 
       height:100vh; 
-      display:flex; 
-      flex-direction:column; 
+      overflow:hidden; 
     }
     header { 
-      background:#1a1a1a; 
-      padding:15px; 
+      position:fixed; 
+      top:0; left:0; right:0; 
+      background:rgba(0,0,0,0.7); 
+      backdrop-filter:blur(8px); 
+      padding:10px 15px; 
+      z-index:100; 
       display:flex; 
       justify-content:space-between; 
       align-items:center; 
-      border-bottom:2px solid #333; 
+      border-bottom:1px solid rgba(255,255,255,0.1); 
     }
     .logo-link { 
       color:#4da6ff; 
       text-decoration:none; 
       font-weight:bold; 
-      font-size:1.3em; 
+      font-size:1.1em; 
     }
     .user-info { 
-      font-size:0.9em; 
-      color:#aaa; 
+      font-size:0.85em; 
       display:flex; 
       align-items:center; 
       gap:10px; 
     }
+    #changeNameBtn, #ownerPassBtn {
+      background:#4da6ff; 
+      color:white; 
+      border:none; 
+      padding:5px 10px; 
+      border-radius:6px; 
+      cursor:pointer; 
+      font-size:0.8em; 
+    }
+    #ownerPassBtn { background:#e74c3c; }
+    #ownerPassBtn:hover { background:#c0392b; }
+    #changeNameBtn:hover { background:#3b8ed9; }
+
     .container { 
-      flex:1; 
-      display:flex; 
-      overflow:hidden; 
-    }
-    .video-section { 
-      flex:3; 
-      background:black; 
-      position:relative; 
-    }
-    .chat-section { 
-      flex:1; 
-      background:#0f0f0f; 
+      height:100vh; 
       display:flex; 
       flex-direction:column; 
-      min-width:300px; 
-      border-left:2px solid #333; 
+    }
+    .video-section { 
+      flex:1; 
+      position:relative; 
+      background:#000; 
     }
     #video-player { 
       width:100%; 
       height:100%; 
       object-fit:contain; 
     }
+    .chat-overlay { 
+      position:absolute; 
+      bottom:0; left:0; right:0; 
+      height:35%; 
+      background:rgba(0,0,0,0.6); 
+      backdrop-filter:blur(10px); 
+      border-top:1px solid rgba(255,255,255,0.1); 
+      display:flex; 
+      flex-direction:column; 
+      z-index:50; 
+    }
     #messages { 
       flex:1; 
       padding:15px; 
       overflow-y:auto; 
+      font-size:0.95em; 
     }
     .message { 
       margin:8px 0; 
-      padding:10px 15px; 
-      border-radius:15px; 
-      max-width:85%; 
+      padding:8px 12px; 
+      border-radius:12px; 
+      max-width:80%; 
       word-wrap:break-word; 
     }
     .message.self { 
       background:#4da6ff; 
-      align-self:flex-end; 
       margin-left:auto; 
     }
     .message.other { 
-      background:#333; 
-      align-self:flex-start; 
+      background:rgba(255,255,255,0.15); 
     }
     .username { 
       font-weight:bold; 
-      font-size:0.9em; 
+      font-size:0.85em; 
       display:block; 
       margin-bottom:3px; 
       color:#a0d8ff; 
     }
     #chat-form { 
       display:flex; 
-      padding:10px; 
-      border-top:1px solid #333; 
+      padding:10px 15px; 
+      border-top:1px solid rgba(255,255,255,0.1); 
     }
     #message-input { 
       flex:1; 
-      padding:12px; 
+      padding:10px 15px; 
       border:none; 
       border-radius:20px 0 0 20px; 
-      background:#222; 
+      background:rgba(255,255,255,0.1); 
       color:white; 
     }
-    button { 
-      padding:12px 25px; 
+    button[type="submit"] { 
+      padding:10px 20px; 
       border:none; 
       background:#4da6ff; 
       color:white; 
       border-radius:0 20px 20px 0; 
       cursor:pointer; 
     }
-    button:hover { 
-      background:#3b8ed9; 
-    }
-    .login-box { 
-      position:absolute; 
-      top:50%; 
-      left:50%; 
-      transform:translate(-50%,-50%); 
-      background:#222; 
-      padding:30px; 
-      border-radius:15px; 
-      box-shadow:0 0 20px rgba(0,0,0,0.8); 
-      z-index:100; 
-      width:320px; 
-      text-align:center; 
-    }
-    .login-box input { 
-      width:100%; 
-      padding:12px; 
-      margin:10px 0; 
-      border:none; 
-      border-radius:8px; 
-      background:#333; 
-      color:white; 
-    }
-    .login-box button { 
-      width:100%; 
-      padding:12px; 
-      background:#4da6ff; 
-      color:white; 
-      border:none; 
-      border-radius:8px; 
-      cursor:pointer; 
-      margin-top:15px; 
-    }
-    .overlay { 
-      display:none; 
-      position:fixed; 
-      top:0; 
-      left:0; 
-      width:100%; 
-      height:100%; 
-      background:rgba(0,0,0,0.9); 
-      z-index:99; 
-    }
+    button[type="submit"]:hover { background:#3b8ed9; }
+
     .status { 
       position:absolute; 
-      bottom:10px; 
-      left:10px; 
+      top:10px; left:50%; 
+      transform:translateX(-50%); 
       background:rgba(0,0,0,0.7); 
-      padding:5px 10px; 
+      padding:6px 12px; 
       border-radius:8px; 
       font-size:0.8em; 
+      z-index:60; 
     }
-    #changeNameBtn {
-      background: #555;
-      color: white;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 0.8em;
+
+    .overlay { 
+      position:fixed; 
+      inset:0; 
+      background:rgba(0,0,0,0.9); 
+      display:flex; 
+      align-items:center; 
+      justify-content:center; 
+      z-index:200; 
     }
-    #changeNameBtn:hover {
-      background: #666;
+    .overlay-content { 
+      background:#222; 
+      padding:30px; 
+      border-radius:12px; 
+      width:90%; max-width:360px; 
+      text-align:center; 
+    }
+    .overlay-content input { 
+      width:100%; padding:12px; margin:10px 0; 
+      border:none; border-radius:8px; background:#333; color:white; 
+    }
+    .overlay-content button { 
+      width:100%; padding:12px; margin-top:10px; 
+      background:#4da6ff; color:white; border:none; border-radius:8px; cursor:pointer; 
+    }
+    .error { color:#ff6b6b; margin-top:10px; font-size:0.9em; }
+
+    @media (min-width: 768px) {
+      .chat-overlay { height:40%; }
+      .status { top:20px; }
     }
   </style>
 </head>
 <body>
 
 <header>
-  <a href="../index.html" class="logo-link">← بازگشت به سایت</a>
+  <a href="../index.html" class="logo-link">← بازگشت</a>
   <div class="user-info">
-    خوش آمدید: <span id="displayName">...</span>
-    <button id="changeNameBtn" style="display:none;">تغییر نام</button>
+    <span id="displayName">...</span>
+    <button id="changeNameBtn">تغییر نام</button>
+    <button id="ownerPassBtn">تنظیم رمز مالک</button>
   </div>
 </header>
 
-<div class="overlay" id="nameOverlay">
-  <div class="login-box">
-    <h2>انتخاب نام نمایشی</h2>
-    <input type="text" id="usernameInput" placeholder="نام خود را وارد کنید" required />
-    <button onclick="saveName()">تأیید</button>
-    <p id="nameError" style="color:red; margin-top:10px;"></p>
-  </div>
-</div>
-
-<div class="container" id="mainContainer" style="display:none;">
+<div class="container">
   <div class="video-section">
     <video id="video-player" controls></video>
     <div class="status">در حال سینک با دیگران...</div>
-  </div>
 
-  <div class="chat-section">
-    <div id="messages"></div>
-    <form id="chat-form">
-      <input type="text" id="message-input" placeholder="پیام بنویس..." autocomplete="off" required />
-      <button type="submit">ارسال</button>
-    </form>
+    <!-- چت شفاف روی ویدیو -->
+    <div class="chat-overlay">
+      <div id="messages"></div>
+      <form id="chat-form">
+        <input type="text" id="message-input" placeholder="پیام بنویس..." autocomplete="off" required />
+        <button type="submit">ارسال</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- فرم انتخاب نام -->
+<div class="overlay" id="nameOverlay">
+  <div class="overlay-content">
+    <h2>انتخاب نام نمایشی</h2>
+    <input type="text" id="usernameInput" placeholder="نام خود را وارد کنید" required />
+    <button onclick="saveName()">تأیید</button>
+    <p class="error" id="nameError"></p>
+  </div>
+</div>
+
+<!-- فرم رمز مالک (فقط یک بار) -->
+<div class="overlay" id="ownerPassOverlay" style="display:none;">
+  <div class="overlay-content">
+    <h2>تنظیم رمز مالک</h2>
+    <p style="font-size:0.9em; color:#aaa; margin-bottom:15px;">این رمز فقط برای شما ذخیره می‌شود و برای کنترل پخش استفاده می‌شود.</p>
+    <input type="password" id="ownerPasswordInput" placeholder="رمز مالک (حداقل ۴ کاراکتر)" required />
+    <button onclick="setOwnerPassword()">ذخیره رمز</button>
+    <p class="error" id="passError"></p>
   </div>
 </div>
 
@@ -215,7 +224,6 @@
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
 <script>
-// ==== تنظیمات Firebase خودت رو اینجا بذار ====
 const firebaseConfig = {
   apiKey: "AIzaSyCZVi8SyjtW6dxMHDX7D0lZEdF5XPLtwJA",
   authDomain: "softshiraz-2ddce.firebaseapp.com",
@@ -232,15 +240,18 @@ const db = firebase.database();
 
 // مراجع دیتابیس
 const videoStateRef = db.ref('watchparty/videoState');
-const messagesRef = db.ref('watchparty/messages').limitToLast(200);
+const messagesRef = db.ref('watchparty/messages').limitToLast(300);
+const ownerPassRef = db.ref('watchparty/ownerPass');
 
 // متغیرهای محلی
 let currentUser = { uid: null, displayName: null };
+let isOwner = false;
 
-// گرفتن یا ساختن UID و نام از localStorage
+// گرفتن UID و نام از localStorage
 function getOrCreateUser() {
   let uid = localStorage.getItem('watchparty_uid');
   let name = localStorage.getItem('watchparty_name');
+  let ownerPass = localStorage.getItem('watchparty_ownerPass');
 
   if (!uid) {
     uid = 'user_' + Math.random().toString(36).substr(2, 9);
@@ -250,59 +261,80 @@ function getOrCreateUser() {
   if (!name) {
     showNamePrompt();
     return false;
-  } else {
-    currentUser = { uid, displayName: name };
-    document.getElementById('displayName').textContent = name;
-    document.getElementById('changeNameBtn').style.display = 'inline';
-    return true;
-  }
-}
-
-// نمایش فرم انتخاب نام
-function showNamePrompt() {
-  document.getElementById('nameOverlay').style.display = 'block';
-  document.getElementById('mainContainer').style.display = 'none';
-}
-
-// ذخیره نام جدید
-function saveName() {
-  const nameInput = document.getElementById('usernameInput').value.trim();
-  const errorEl = document.getElementById('nameError');
-
-  if (nameInput.length < 2 || nameInput.length > 20) {
-    errorEl.textContent = 'نام باید بین ۲ تا ۲۰ کاراکتر باشد';
-    return;
   }
 
-  localStorage.setItem('watchparty_name', nameInput);
-  currentUser.displayName = nameInput;
-  document.getElementById('displayName').textContent = nameInput;
+  currentUser = { uid, displayName: name };
+  document.getElementById('displayName').textContent = name;
   document.getElementById('changeNameBtn').style.display = 'inline';
 
+  // چک کردن اینکه آیا این کاربر مالک است یا نه
+  if (ownerPass) {
+    ownerPassRef.once('value').then(snap => {
+      if (snap.val() === ownerPass) {
+        isOwner = true;
+        document.getElementById('ownerPassBtn').textContent = 'مالک هستید';
+        document.getElementById('ownerPassBtn').disabled = true;
+        document.getElementById('ownerPassBtn').style.background = '#27ae60';
+      }
+    });
+  }
+
+  return true;
+}
+
+// نمایش فرم نام
+function showNamePrompt() {
+  document.getElementById('nameOverlay').style.display = 'flex';
+}
+
+// ذخیره نام
+function saveName() {
+  const name = document.getElementById('usernameInput').value.trim();
+  if (name.length < 2 || name.length > 20) {
+    document.getElementById('nameError').textContent = 'نام باید ۲ تا ۲۰ کاراکتر باشد';
+    return;
+  }
+  localStorage.setItem('watchparty_name', name);
+  currentUser.displayName = name;
+  document.getElementById('displayName').textContent = name;
+  document.getElementById('changeNameBtn').style.display = 'inline';
   document.getElementById('nameOverlay').style.display = 'none';
-  document.getElementById('mainContainer').style.display = 'flex';
-  errorEl.textContent = '';
+  document.getElementById('nameError').textContent = '';
 
   initVideoSync();
   loadMessages();
 }
 
-// تغییر نام
-document.getElementById('changeNameBtn').addEventListener('click', () => {
-  document.getElementById('usernameInput').value = currentUser.displayName;
-  document.getElementById('nameOverlay').style.display = 'block';
-  document.getElementById('mainContainer').style.display = 'none';
-});
+// تنظیم رمز مالک
+document.getElementById('ownerPassBtn').onclick = function() {
+  document.getElementById('ownerPassOverlay').style.display = 'flex';
+};
 
-// پخش ویدیو و سینک
-const VIDEO_URL = "https://s1.dlserfes.info/dl1/2018/Tag%202018/Tag_2018_720p_BrRip_YIFY.mkv?md5=JgOv4DHH-E856mk-iRe8Aw&u=288589&expires=1766897453";
-// یا MP4:
-// const VIDEO_URL = "https://media.githubusercontent.com/media/USERNAME/REPO/main/video.mp4";
+function setOwnerPassword() {
+  const pass = document.getElementById('ownerPasswordInput').value.trim();
+  if (pass.length < 4) {
+    document.getElementById('passError').textContent = 'رمز باید حداقل ۴ کاراکتر باشد';
+    return;
+  }
 
+  ownerPassRef.set(pass).then(() => {
+    localStorage.setItem('watchparty_ownerPass', pass);
+    isOwner = true;
+    document.getElementById('ownerPassBtn').textContent = 'مالک هستید';
+    document.getElementById('ownerPassBtn').disabled = true;
+    document.getElementById('ownerPassBtn').style.background = '#27ae60';
+    document.getElementById('ownerPassOverlay').style.display = 'none';
+  }).catch(err => {
+    document.getElementById('passError').textContent = 'خطا در ذخیره رمز';
+  });
+}
+
+// سینک ویدیو (فقط مالک می‌تواند کنترل کند)
 let isUserSeeking = false;
 
 function initVideoSync() {
   const video = document.getElementById('video-player');
+  const VIDEO_URL = "https://s1.dlserfes.info/dl1/2018/Tag%202018/Tag_2018_720p_BrRip_YIFY.mkv?md5=JgOv4DHH-E856mk-iRe8Aw&u=288589&expires=1766897453"; // لینک HLS یا MP4 خودت رو اینجا بذار
 
   if (Hls.isSupported() && VIDEO_URL.includes('.m3u8')) {
     const hls = new Hls();
@@ -312,23 +344,26 @@ function initVideoSync() {
     video.src = VIDEO_URL;
   }
 
-  video.addEventListener('play', () => { if (!isUserSeeking) videoStateRef.update({ playing: true }); });
-  video.addEventListener('pause', () => { if (!isUserSeeking) videoStateRef.update({ playing: false }); });
+  // فقط مالک می‌تواند تغییرات اعمال کند
+  video.addEventListener('play', () => { 
+    if (isOwner && !isUserSeeking) videoStateRef.update({ playing: true }); 
+  });
+  video.addEventListener('pause', () => { 
+    if (isOwner && !isUserSeeking) videoStateRef.update({ playing: false }); 
+  });
   video.addEventListener('seeking', () => { isUserSeeking = true; });
   video.addEventListener('seeked', () => {
-    videoStateRef.update({ currentTime: video.currentTime });
+    if (isOwner) {
+      videoStateRef.update({ currentTime: video.currentTime });
+    }
     isUserSeeking = false;
   });
-  video.addEventListener('timeupdate', () => {
-    if (!isUserSeeking && Math.abs(video.currentTime - (videoStateRef.currentTime || 0)) > 2) {
-      video.currentTime = videoStateRef.currentTime || 0;
-    }
-  });
 
+  // دریافت تغییرات از همه (سینک)
   videoStateRef.on('value', snapshot => {
     const state = snapshot.val();
     if (!state) return;
-    if (state.playing && video.paused) video.play();
+    if (state.playing && video.paused) video.play().catch(()=>{});
     if (!state.playing && !video.paused) video.pause();
     if (Math.abs(video.currentTime - state.currentTime) > 2) {
       video.currentTime = state.currentTime;
@@ -364,9 +399,14 @@ document.getElementById('chat-form').addEventListener('submit', e => {
   }
 });
 
+// تغییر نام
+document.getElementById('changeNameBtn').addEventListener('click', () => {
+  document.getElementById('usernameInput').value = currentUser.displayName;
+  document.getElementById('nameOverlay').style.display = 'flex';
+});
+
 // شروع برنامه
 if (getOrCreateUser()) {
-  document.getElementById('mainContainer').style.display = 'flex';
   initVideoSync();
   loadMessages();
 }
