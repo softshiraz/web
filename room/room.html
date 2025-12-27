@@ -6,51 +6,48 @@
 <title>Watch Together</title>
 
 <style>
-*{box-sizing:border-box}
-body{
-  margin:0;
-  background:#0b0b0b;
-  color:#fff;
-  font-family:tahoma;
-}
+body{margin:0;background:#0b0b0b;color:#fff;font-family:tahoma}
 header{
   height:56px;
   background:#111;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:0 15px;
+  padding:0 15px
 }
 main{
   display:flex;
-  justify-content:center;
+  flex-direction:column;
   align-items:center;
-  height:calc(100vh - 56px);
+  justify-content:center;
+  height:calc(100vh - 56px)
 }
 video{
   width:100%;
   max-width:900px;
-  background:#000;
+  background:#000
 }
-.login-box{
+.login{
   max-width:320px;
   width:100%;
-  padding:20px;
+  padding:20px
 }
-.login-box input,.login-box button{
+input,button{
   width:100%;
   padding:12px;
   margin-top:10px;
   border:none;
   border-radius:8px;
-  font-size:16px;
+  font-size:16px
 }
-.login-box button{
-  background:#e50914;
-  color:white;
-}
+button{background:#e50914;color:#fff}
 .hidden{display:none}
 .role{font-size:12px;color:#aaa}
+.notice{font-size:13px;color:#f1c40f;margin-top:8px}
+.back-btn{
+  margin-top:10px;
+  background:#333
+}
 </style>
 </head>
 
@@ -62,25 +59,30 @@ video{
 </header>
 
 <!-- LOGIN -->
-<div id="loginBox" class="login-box">
-  <input id="usernameInput" placeholder="نام شما">
-  <input id="passwordInput" type="password" placeholder="رمز ورود">
+<div id="loginBox" class="login">
+  <input id="nameInput" placeholder="نام شما">
+  <input id="passInput" type="password" placeholder="رمز ورود">
   <button id="loginBtn">ورود</button>
 </div>
 
 <!-- PLAYER -->
 <main id="playerBox" class="hidden">
-  <video id="videoPlayer">
+  <video id="video" playsinline>
     <source src="https://s1.dlserfes.info/dl1/2018/Tag%202018/Tag_2018_720p_BrRip_YIFY.mp4?md5=JgOv4DHH-E856mk-iRe8Aw&u=288589&expires=1766897453" type="video/mp4">
   </video>
+
+  <div id="notice" class="notice hidden">
+    مالک جلسه را ترک کرده است
+  </div>
+
+  <button class="back-btn" onclick="goBack()">🔙 بازگشت</button>
 </main>
 
-<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
 <script>
-/* 🔥 Firebase */
+/* FIREBASE */
 firebase.initializeApp({
   apiKey: "AIzaSyCZVi8SyjtW6dxMHDX7D0lZEdF5XPLtwJA",
   authDomain: "softshiraz-2ddce.firebaseapp.com",
@@ -89,80 +91,85 @@ firebase.initializeApp({
 });
 const db = firebase.database();
 
-/* 🔐 Passwords */
+/* PASSWORDS */
 const OWNER_PASS = "1111";
 const VIEWER_PASS = "2222";
 
-/* 🧱 Elements */
+/* ELEMENTS */
 const loginBox = document.getElementById("loginBox");
 const playerBox = document.getElementById("playerBox");
-const usernameInput = document.getElementById("usernameInput");
-const passwordInput = document.getElementById("passwordInput");
-const loginBtn = document.getElementById("loginBtn");
+const nameInput = document.getElementById("nameInput");
+const passInput = document.getElementById("passInput");
+const video = document.getElementById("video");
+const notice = document.getElementById("notice");
 const userInfo = document.getElementById("userInfo");
-const video = document.getElementById("videoPlayer");
 
-/* 💾 restore name */
-usernameInput.value = localStorage.getItem("name") || "";
+/* RESTORE NAME */
+nameInput.value = localStorage.getItem("name") || "";
 
-/* 🚪 Login */
+/* LOGIN */
 loginBtn.onclick = () => {
-  const name = usernameInput.value.trim();
-  const pass = passwordInput.value;
-
-  if(!name){
-    alert("نام را وارد کنید");
-    return;
-  }
+  const name = nameInput.value.trim();
+  const pass = passInput.value;
+  if(!name) return alert("نام وارد نشده");
 
   localStorage.setItem("name", name);
-
-  if(pass === OWNER_PASS){
-    enterOwner(name);
-  }
-  else if(pass === VIEWER_PASS){
-    enterViewer(name);
-  }
-  else{
-    alert("رمز اشتباه است");
-  }
-};
-
-/* 👑 Owner */
-function enterOwner(name){
   loginBox.classList.add("hidden");
   playerBox.classList.remove("hidden");
+
+  if(pass === OWNER_PASS) enterOwner(name);
+  else if(pass === VIEWER_PASS) enterViewer(name);
+  else { alert("رمز اشتباه"); location.reload(); }
+};
+
+/* OWNER */
+function enterOwner(name){
   userInfo.innerHTML = `${name} <span class="role">(مالک)</span>`;
   video.controls = true;
+  notice.classList.add("hidden");
 
-  const sync = () => {
+  function sync(){
     db.ref("room").set({
       time: video.currentTime,
-      playing: !video.paused
+      playing: !video.paused,
+      ownerLastSeen: Date.now()
     });
-  };
+  }
 
   video.addEventListener("play", sync);
   video.addEventListener("pause", sync);
   video.addEventListener("seeked", sync);
+
+  setInterval(()=>{
+    if(!video.paused) sync();
+  },2000);
 }
 
-/* 👀 Viewer */
+/* VIEWER */
 function enterViewer(name){
-  loginBox.classList.add("hidden");
-  playerBox.classList.remove("hidden");
   userInfo.innerHTML = `${name} <span class="role">(بیننده)</span>`;
   video.controls = false;
 
-  db.ref("room").on("value", snap => {
+  db.ref("room").on("value", snap=>{
     const d = snap.val();
     if(!d) return;
 
-    if(Math.abs(video.currentTime - d.time) > 0.5)
+    const ownerOnline = Date.now() - d.ownerLastSeen < 5000;
+    notice.classList.toggle("hidden", ownerOnline);
+
+    if(Math.abs(video.currentTime - d.time) > 0.6)
       video.currentTime = d.time;
 
     d.playing ? video.play() : video.pause();
   });
+}
+
+/* BACK */
+function goBack(){
+  video.pause();
+  playerBox.classList.add("hidden");
+  loginBox.classList.remove("hidden");
+  userInfo.innerHTML = "";
 }
 </script>
 
