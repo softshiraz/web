@@ -163,11 +163,6 @@
       background:#4da6ff; color:white; border:none; border-radius:8px; cursor:pointer; 
     }
     .error { color:#ff6b6b; margin-top:10px; font-size:0.9em; }
-
-    @media (min-width: 768px) {
-      .chat-overlay { height:40%; }
-      .status { top:20px; }
-    }
   </style>
 </head>
 <body>
@@ -211,10 +206,21 @@
 <div class="overlay" id="ownerPassOverlay" style="display:none;">
   <div class="overlay-content">
     <h2>تنظیم رمز مالک</h2>
-    <p style="font-size:0.9em; color:#aaa; margin-bottom:15px;">این رمز فقط برای شما ذخیره می‌شود و برای کنترل پخش استفاده می‌شود.</p>
-    <input type="password" id="ownerPasswordInput" placeholder="رمز مالک (حداقل ۴ کاراکتر)" required />
+    <p style="font-size:0.9em; color:#aaa; margin-bottom:15px;">رمز پیش‌فرض: <strong>0000</strong></p>
+    <input type="password" id="ownerPasswordInput" placeholder="رمز مالک" required />
     <button onclick="setOwnerPassword()">ذخیره رمز</button>
     <p class="error" id="passError"></p>
+  </div>
+</div>
+
+<!-- فرم ورود رمز کاربر -->
+<div class="overlay" id="userPassOverlay">
+  <div class="overlay-content">
+    <h2>ورود به اتاق</h2>
+    <p style="font-size:0.9em; color:#aaa; margin-bottom:15px;">رمز کاربر: <strong>1234</strong></p>
+    <input type="password" id="userPasswordInput" placeholder="رمز کاربر (1234)" required />
+    <button onclick="checkUserPassword()">ورود</button>
+    <p class="error" id="userPassError"></p>
   </div>
 </div>
 
@@ -246,6 +252,26 @@ const ownerPassRef = db.ref('watchparty/ownerPass');
 let currentUser = { uid: null, displayName: null };
 let isOwner = false;
 
+// رمزهای پیش‌فرض
+const DEFAULT_OWNER_PASS = "0000";
+const DEFAULT_USER_PASS = "1234";
+
+// چک کردن رمز کاربر برای ورود به صفحه
+function checkUserPassword() {
+  const inputPass = document.getElementById('userPasswordInput').value.trim();
+  if (inputPass === DEFAULT_USER_PASS) {
+    document.getElementById('userPassOverlay').style.display = 'none';
+    document.getElementById('userPassError').textContent = '';
+    // حالا کاربر وارد شده، ادامه بده
+    if (getOrCreateUser()) {
+      initVideoSync();
+      loadMessages();
+    }
+  } else {
+    document.getElementById('userPassError').textContent = 'رمز اشتباه است!';
+  }
+}
+
 // گرفتن UID و نام از localStorage
 function getOrCreateUser() {
   let uid = localStorage.getItem('watchparty_uid');
@@ -266,7 +292,7 @@ function getOrCreateUser() {
   document.getElementById('displayName').textContent = name;
   document.getElementById('changeNameBtn').style.display = 'inline';
 
-  // چک کردن اینکه آیا این کاربر مالک است یا نه
+  // چک کردن مالک بودن
   if (ownerPass) {
     ownerPassRef.once('value').then(snap => {
       if (snap.val() === ownerPass) {
@@ -335,11 +361,9 @@ function initVideoSync() {
   const video = document.getElementById('video-player');
   const VIDEO_URL = "https://s1.dlserfes.info/dl1/2018/Tag%202018/Tag_2018_720p_BrRip_YIFY.mkv?md5=JgOv4DHH-E856mk-iRe8Aw&u=288589&expires=1766897453";
 
-  // تنظیم منبع ویدیو
   video.src = VIDEO_URL;
   video.load();
 
-  // فقط مالک می‌تواند تغییرات اعمال کند
   video.addEventListener('play', () => { 
     if (isOwner && !isUserSeeking) videoStateRef.update({ playing: true }); 
   });
@@ -354,7 +378,6 @@ function initVideoSync() {
     isUserSeeking = false;
   });
 
-  // دریافت تغییرات از همه (سینک)
   videoStateRef.on('value', snapshot => {
     const state = snapshot.val();
     if (!state) return;
@@ -365,10 +388,7 @@ function initVideoSync() {
     }
   });
 
-  // تلاش برای پخش خودکار
-  video.play().catch(() => {
-    console.log("اتوپلی بلاک شد، کاربر باید کلیک کند");
-  });
+  video.play().catch(() => {});
 }
 
 // چت
@@ -403,11 +423,8 @@ document.getElementById('changeNameBtn').addEventListener('click', () => {
   document.getElementById('nameOverlay').style.display = 'flex';
 });
 
-// شروع برنامه
-if (getOrCreateUser()) {
-  initVideoSync();
-  loadMessages();
-}
+// شروع برنامه: اول رمز کاربر رو چک کن
+checkUserPassword();
 </script>
 </body>
 </html>
