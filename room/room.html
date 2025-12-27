@@ -3,224 +3,283 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>اتاق پخش فیلم - واچ پارتی</title>
+  <title>واچ پارتی - فیلم تگ (۲۰۱۸)</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    body { 
-      margin:0; 
-      padding:0; 
-      font-family: Tahoma, sans-serif; 
-      background:#000; 
-      color:#eee; 
-      height:100vh; 
-      overflow:hidden; 
-    }
-    header { 
-      position:fixed; 
-      top:0; left:0; right:0; 
-      background:rgba(0,0,0,0.7); 
-      backdrop-filter:blur(8px); 
-      padding:10px 15px; 
-      z-index:100; 
-      display:flex; 
-      justify-content:space-between; 
-      align-items:center; 
-      border-bottom:1px solid rgba(255,255,255,0.1); 
-    }
-    .logo-link { 
-      color:#4da6ff; 
-      text-decoration:none; 
-      font-weight:bold; 
-      font-size:1.1em; 
-    }
-    .user-info { 
-      font-size:0.85em; 
-      display:flex; 
-      align-items:center; 
-      gap:10px; 
-    }
-    #changeNameBtn, #ownerPassBtn {
-      background:#4da6ff; 
-      color:white; 
-      border:none; 
-      padding:5px 10px; 
-      border-radius:6px; 
-      cursor:pointer; 
-      font-size:0.8em; 
-    }
-    #ownerPassBtn { background:#e74c3c; }
-    #ownerPassBtn:hover { background:#c0392b; }
-    #changeNameBtn:hover { background:#3b8ed9; }
+    @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700&display=swap');
 
-    .container { 
-      height:100vh; 
-      display:flex; 
-      flex-direction:column; 
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    .video-section { 
-      flex:1; 
-      position:relative; 
-      background:#000; 
-    }
-    #video-player { 
-      width:100%; 
-      height:100%; 
-      object-fit:contain; 
-    }
-    .chat-overlay { 
-      position:absolute; 
-      bottom:0; left:0; right:0; 
-      height:35%; 
-      background:rgba(0,0,0,0.6); 
-      backdrop-filter:blur(10px); 
-      border-top:1px solid rgba(255,255,255,0.1); 
-      display:flex; 
-      flex-direction:column; 
-      z-index:50; 
-    }
-    #messages { 
-      flex:1; 
-      padding:15px; 
-      overflow-y:auto; 
-      font-size:0.95em; 
-    }
-    .message { 
-      margin:8px 0; 
-      padding:8px 12px; 
-      border-radius:12px; 
-      max-width:80%; 
-      word-wrap:break-word; 
-    }
-    .message.self { 
-      background:#4da6ff; 
-      margin-left:auto; 
-    }
-    .message.other { 
-      background:rgba(255,255,255,0.15); 
-    }
-    .username { 
-      font-weight:bold; 
-      font-size:0.85em; 
-      display:block; 
-      margin-bottom:3px; 
-      color:#a0d8ff; 
-    }
-    #chat-form { 
-      display:flex; 
-      padding:10px 15px; 
-      border-top:1px solid rgba(255,255,255,0.1); 
-    }
-    #message-input { 
-      flex:1; 
-      padding:10px 15px; 
-      border:none; 
-      border-radius:20px 0 0 20px; 
-      background:rgba(255,255,255,0.1); 
-      color:white; 
-    }
-    button[type="submit"] { 
-      padding:10px 20px; 
-      border:none; 
-      background:#4da6ff; 
-      color:white; 
-      border-radius:0 20px 20px 0; 
-      cursor:pointer; 
-    }
-    button[type="submit"]:hover { background:#3b8ed9; }
-
-    .status { 
-      position:absolute; 
-      top:10px; left:50%; 
-      transform:translateX(-50%); 
-      background:rgba(0,0,0,0.7); 
-      padding:6px 12px; 
-      border-radius:8px; 
-      font-size:0.8em; 
-      z-index:60; 
+    body {
+      font-family: 'Vazirmatn', sans-serif;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      color: #e0e0ff;
+      height: 100vh;
+      overflow: hidden;
+      background-attachment: fixed;
     }
 
-    .overlay { 
-      position:fixed; 
-      inset:0; 
-      background:rgba(0,0,0,0.9); 
-      display:flex; 
-      align-items:center; 
-      justify-content:center; 
-      z-index:200; 
+    /* فرم ورود اصلی - جذاب و مدرن */
+    .login-screen {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
     }
-    .overlay-content { 
-      background:#222; 
-      padding:30px; 
-      border-radius:12px; 
-      width:90%; max-width:360px; 
-      text-align:center; 
+    .login-card {
+      background: rgba(30, 30, 60, 0.85);
+      backdrop-filter: blur(12px);
+      border-radius: 24px;
+      padding: 40px 35px;
+      width: 90%;
+      max-width: 420px;
+      border: 1px solid rgba(100, 100, 255, 0.2);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      animation: fadeIn 0.6s ease-out;
     }
-    .overlay-content input { 
-      width:100%; padding:12px; margin:10px 0; 
-      border:none; border-radius:8px; background:#333; color:white; 
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-    .overlay-content button { 
-      width:100%; padding:12px; margin-top:10px; 
-      background:#4da6ff; color:white; border:none; border-radius:8px; cursor:pointer; 
+    .login-title {
+      font-size: 2em;
+      margin-bottom: 30px;
+      text-align: center;
+      color: #a0c4ff;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
     }
-    .error { color:#ff6b6b; margin-top:10px; font-size:0.9em; }
+    .input-group {
+      margin-bottom: 20px;
+      position: relative;
+    }
+    .input-group input {
+      width: 100%;
+      padding: 14px 18px;
+      border: none;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.08);
+      color: white;
+      font-size: 1.05em;
+      transition: all 0.3s;
+    }
+    .input-group input:focus {
+      outline: none;
+      background: rgba(255,255,255,0.15);
+      box-shadow: 0 0 0 3px rgba(100, 150, 255, 0.4);
+    }
+    .input-group label {
+      position: absolute;
+      top: 50%;
+      right: 18px;
+      transform: translateY(-50%);
+      color: #aaa;
+      pointer-events: none;
+      transition: all 0.3s;
+    }
+    .input-group input:focus + label,
+    .input-group input:not(:placeholder-shown) + label {
+      top: -10px;
+      right: 18px;
+      font-size: 0.85em;
+      background: rgba(30,30,60,0.85);
+      padding: 0 8px;
+      color: #a0c4ff;
+    }
+    .btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 10px;
+    }
+    .btn-owner {
+      background: linear-gradient(90deg, #ff6b6b, #ff8e53);
+      color: white;
+    }
+    .btn-user {
+      background: linear-gradient(90deg, #4da6ff, #6b8cff);
+      color: white;
+    }
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+    }
+    .error-msg {
+      color: #ff6b6b;
+      text-align: center;
+      margin-top: 15px;
+      font-size: 0.95em;
+    }
+
+    /* صفحه اصلی */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: rgba(10,10,30,0.8);
+      backdrop-filter: blur(12px);
+      padding: 12px 20px;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .logo-link {
+      color: #a0c4ff;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.2em;
+    }
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.9em;
+    }
+    .role-badge {
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.8em;
+      font-weight: 600;
+    }
+    .owner-badge { background: #ff6b6b; }
+    .user-badge { background: #4da6ff; }
+
+    .main-container {
+      height: 100vh;
+      position: relative;
+    }
+    #video-player {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #000;
+    }
+    .chat-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 38%;
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(255,255,255,0.15);
+      display: flex;
+      flex-direction: column;
+      z-index: 50;
+    }
+    #messages {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    .message {
+      margin: 10px 0;
+      padding: 10px 16px;
+      border-radius: 14px;
+      max-width: 80%;
+      word-wrap: break-word;
+      line-height: 1.5;
+    }
+    .message.self {
+      background: linear-gradient(135deg, #4da6ff, #6b8cff);
+      margin-left: auto;
+    }
+    .message.other {
+      background: rgba(255,255,255,0.12);
+    }
+    .username {
+      font-weight: 700;
+      font-size: 0.9em;
+      display: block;
+      margin-bottom: 4px;
+      color: #a0c4ff;
+    }
+    #chat-form {
+      display: flex;
+      padding: 15px 20px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    #message-input {
+      flex: 1;
+      padding: 12px 18px;
+      border: none;
+      border-radius: 30px 0 0 30px;
+      background: rgba(255,255,255,0.1);
+      color: white;
+    }
+    #chat-form button {
+      padding: 12px 24px;
+      border: none;
+      background: #4da6ff;
+      color: white;
+      border-radius: 0 30px 30px 0;
+      cursor: pointer;
+    }
+    .status {
+      position: absolute;
+      top: 70px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.7);
+      padding: 8px 16px;
+      border-radius: 30px;
+      font-size: 0.9em;
+      z-index: 60;
+    }
   </style>
 </head>
 <body>
 
-<header>
-  <a href="../index.html" class="logo-link">← بازگشت</a>
-  <div class="user-info">
-    <span id="displayName">...</span>
-    <button id="changeNameBtn">تغییر نام</button>
-    <button id="ownerPassBtn">تنظیم رمز مالک</button>
-  </div>
-</header>
-
-<div class="container">
-  <div class="video-section">
-    <video id="video-player" controls></video>
-    <div class="status">در حال سینک با دیگران...</div>
-
-    <!-- چت شفاف روی ویدیو -->
-    <div class="chat-overlay">
-      <div id="messages"></div>
-      <form id="chat-form">
-        <input type="text" id="message-input" placeholder="پیام بنویس..." autocomplete="off" required />
-        <button type="submit">ارسال</button>
-      </form>
+<!-- فرم ورود اولیه -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-card">
+    <h1 class="login-title">واچ پارتی</h1>
+    
+    <div class="input-group">
+      <input type="text" id="username" placeholder=" " required>
+      <label for="username">نام نمایشی</label>
     </div>
+
+    <div class="input-group">
+      <input type="password" id="password" placeholder=" " required>
+      <label for="password">رمز عبور</label>
+    </div>
+
+    <button class="btn btn-owner" onclick="login('owner')">ورود به عنوان مالک</button>
+    <button class="btn btn-user" onclick="login('user')">ورود به عنوان کاربر</button>
+
+    <p class="error-msg" id="loginError"></p>
   </div>
 </div>
 
-<!-- فرم انتخاب نام -->
-<div class="overlay" id="nameOverlay">
-  <div class="overlay-content">
-    <h2>انتخاب نام نمایشی</h2>
-    <input type="text" id="usernameInput" placeholder="نام خود را وارد کنید" required />
-    <button onclick="saveName()">تأیید</button>
-    <p class="error" id="nameError"></p>
-  </div>
-</div>
+<!-- صفحه اصلی -->
+<div class="main-container" id="mainContainer" style="display:none;">
+  <header>
+    <a href="../index.html" class="logo-link">← بازگشت</a>
+    <div class="user-info">
+      <span id="displayName">...</span>
+      <span class="role-badge" id="roleBadge">کاربر</span>
+    </div>
+  </header>
 
-<!-- فرم رمز مالک (فقط یک بار) -->
-<div class="overlay" id="ownerPassOverlay" style="display:none;">
-  <div class="overlay-content">
-    <h2>تنظیم رمز مالک</h2>
-    <p style="font-size:0.9em; color:#aaa; margin-bottom:15px;">رمز پیش‌فرض: <strong>0000</strong></p>
-    <input type="password" id="ownerPasswordInput" placeholder="رمز مالک" required />
-    <button onclick="setOwnerPassword()">ذخیره رمز</button>
-    <p class="error" id="passError"></p>
-  </div>
-</div>
+  <video id="video-player" controls></video>
+  <div class="status" id="status">در حال اتصال...</div>
 
-<!-- فرم ورود رمز کاربر -->
-<div class="overlay" id="userPassOverlay">
-  <div class="overlay-content">
-    <h2>ورود به اتاق</h2>
-    <p style="font-size:0.9em; color:#aaa; margin-bottom:15px;">رمز کاربر: <strong>1234</strong></p>
-    <input type="password" id="userPasswordInput" placeholder="رمز کاربر (1234)" required />
-    <button onclick="checkUserPassword()">ورود</button>
-    <p class="error" id="userPassError"></p>
+  <div class="chat-overlay">
+    <div id="messages"></div>
+    <form id="chat-form">
+      <input type="text" id="message-input" placeholder="پیام خود را بنویسید..." autocomplete="off" />
+      <button type="submit"><i class="fas fa-paper-plane"></i></button>
+    </form>
   </div>
 </div>
 
@@ -243,152 +302,104 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-// مراجع دیتابیس
 const videoStateRef = db.ref('watchparty/videoState');
 const messagesRef = db.ref('watchparty/messages').limitToLast(300);
-const ownerPassRef = db.ref('watchparty/ownerPass');
 
-// متغیرهای محلی
-let currentUser = { uid: null, displayName: null };
+let currentUser = { uid: null, displayName: null, role: 'user' };
 let isOwner = false;
 
-// رمزهای پیش‌فرض
-const DEFAULT_OWNER_PASS = "0000";
-const DEFAULT_USER_PASS = "1234";
+const VIDEO_URL = "https://s1.dlserfes.info/dl1/2018/Tag%202018/Tag_2018_720p_BrRip_YIFY.mkv?md5=JgOv4DHH-E856mk-iRe8Aw&u=288589&expires=1766897453";
 
-// چک کردن رمز کاربر برای ورود به صفحه
-function checkUserPassword() {
-  const inputPass = document.getElementById('userPasswordInput').value.trim();
-  if (inputPass === DEFAULT_USER_PASS) {
-    document.getElementById('userPassOverlay').style.display = 'none';
-    document.getElementById('userPassError').textContent = '';
-    // حالا کاربر وارد شده، ادامه بده
-    if (getOrCreateUser()) {
-      initVideoSync();
-      loadMessages();
-    }
-  } else {
-    document.getElementById('userPassError').textContent = 'رمز اشتباه است!';
-  }
-}
+const OWNER_PASS = "0000";
+const USER_PASS = "1234";
 
-// گرفتن UID و نام از localStorage
-function getOrCreateUser() {
-  let uid = localStorage.getItem('watchparty_uid');
-  let name = localStorage.getItem('watchparty_name');
-  let ownerPass = localStorage.getItem('watchparty_ownerPass');
+// لاگین
+function login(role) {
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value.trim();
+  const errorEl = document.getElementById('loginError');
 
-  if (!uid) {
-    uid = 'user_' + Math.random().toString(36).substr(2, 9);
-    localStorage.setItem('watchparty_uid', uid);
-  }
-
-  if (!name) {
-    showNamePrompt();
-    return false;
-  }
-
-  currentUser = { uid, displayName: name };
-  document.getElementById('displayName').textContent = name;
-  document.getElementById('changeNameBtn').style.display = 'inline';
-
-  // چک کردن مالک بودن
-  if (ownerPass) {
-    ownerPassRef.once('value').then(snap => {
-      if (snap.val() === ownerPass) {
-        isOwner = true;
-        document.getElementById('ownerPassBtn').textContent = 'مالک هستید';
-        document.getElementById('ownerPassBtn').disabled = true;
-        document.getElementById('ownerPassBtn').style.background = '#27ae60';
-      }
-    });
-  }
-
-  return true;
-}
-
-// نمایش فرم نام
-function showNamePrompt() {
-  document.getElementById('nameOverlay').style.display = 'flex';
-}
-
-// ذخیره نام
-function saveName() {
-  const name = document.getElementById('usernameInput').value.trim();
-  if (name.length < 2 || name.length > 20) {
-    document.getElementById('nameError').textContent = 'نام باید ۲ تا ۲۰ کاراکتر باشد';
+  if (!username) {
+    errorEl.textContent = 'لطفاً نام خود را وارد کنید';
     return;
   }
-  localStorage.setItem('watchparty_name', name);
-  currentUser.displayName = name;
-  document.getElementById('displayName').textContent = name;
-  document.getElementById('changeNameBtn').style.display = 'inline';
-  document.getElementById('nameOverlay').style.display = 'none';
-  document.getElementById('nameError').textContent = '';
+
+  if (role === 'owner' && password !== OWNER_PASS) {
+    errorEl.textContent = 'رمز مالک اشتباه است!';
+    return;
+  }
+  if (role === 'user' && password !== USER_PASS) {
+    errorEl.textContent = 'رمز کاربر اشتباه است!';
+    return;
+  }
+
+  // ذخیره اطلاعات کاربر
+  currentUser = {
+    uid: 'user_' + Math.random().toString(36).substr(2, 9),
+    displayName: username,
+    role: role
+  };
+  isOwner = (role === 'owner');
+
+  localStorage.setItem('watchparty_user', JSON.stringify(currentUser));
+
+  // نمایش صفحه اصلی
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('mainContainer').style.display = 'block';
+
+  document.getElementById('displayName').textContent = username;
+  document.getElementById('roleBadge').textContent = isOwner ? 'مالک' : 'کاربر';
+  document.getElementById('roleBadge').className = `role-badge ${isOwner ? 'owner-badge' : 'user-badge'}`;
 
   initVideoSync();
   loadMessages();
 }
 
-// تنظیم رمز مالک
-document.getElementById('ownerPassBtn').onclick = function() {
-  document.getElementById('ownerPassOverlay').style.display = 'flex';
-};
-
-function setOwnerPassword() {
-  const pass = document.getElementById('ownerPasswordInput').value.trim();
-  if (pass.length < 4) {
-    document.getElementById('passError').textContent = 'رمز باید حداقل ۴ کاراکتر باشد';
-    return;
-  }
-
-  ownerPassRef.set(pass).then(() => {
-    localStorage.setItem('watchparty_ownerPass', pass);
-    isOwner = true;
-    document.getElementById('ownerPassBtn').textContent = 'مالک هستید';
-    document.getElementById('ownerPassBtn').disabled = true;
-    document.getElementById('ownerPassBtn').style.background = '#27ae60';
-    document.getElementById('ownerPassOverlay').style.display = 'none';
-  }).catch(err => {
-    document.getElementById('passError').textContent = 'خطا در ذخیره رمز';
-  });
-}
-
-// سینک ویدیو (فقط مالک می‌تواند کنترل کند)
+// سینک ویدیو
 let isUserSeeking = false;
 
 function initVideoSync() {
   const video = document.getElementById('video-player');
-  const VIDEO_URL = "https://s1.dlserfes.info/dl1/2018/Tag%202018/Tag_2018_720p_BrRip_YIFY.mkv?md5=JgOv4DHH-E856mk-iRe8Aw&u=288589&expires=1766897453";
-
   video.src = VIDEO_URL;
   video.load();
 
+  // فقط مالک می‌تواند کنترل کند
   video.addEventListener('play', () => { 
-    if (isOwner && !isUserSeeking) videoStateRef.update({ playing: true }); 
+    if (isOwner && !isUserSeeking) videoStateRef.update({ playing: true, currentTime: video.currentTime }); 
   });
   video.addEventListener('pause', () => { 
-    if (isOwner && !isUserSeeking) videoStateRef.update({ playing: false }); 
+    if (isOwner && !isUserSeeking) videoStateRef.update({ playing: false, currentTime: video.currentTime }); 
   });
   video.addEventListener('seeking', () => { isUserSeeking = true; });
   video.addEventListener('seeked', () => {
-    if (isOwner) {
-      videoStateRef.update({ currentTime: video.currentTime });
-    }
+    if (isOwner) videoStateRef.update({ currentTime: video.currentTime });
     isUserSeeking = false;
   });
 
+  // دریافت وضعیت از Firebase
   videoStateRef.on('value', snapshot => {
     const state = snapshot.val();
     if (!state) return;
-    if (state.playing && video.paused) video.play().catch(()=>{});
-    if (!state.playing && !video.paused) video.pause();
-    if (Math.abs(video.currentTime - state.currentTime) > 2) {
+
+    if (Math.abs(video.currentTime - state.currentTime) > 3) {
       video.currentTime = state.currentTime;
+    }
+
+    if (state.playing && video.paused) {
+      video.play().catch(() => {});
+    } else if (!state.playing && !video.paused) {
+      video.pause();
     }
   });
 
-  video.play().catch(() => {});
+  // پخش خودکار (اگر قبلاً شروع شده)
+  videoStateRef.once('value').then(snap => {
+    const state = snap.val();
+    if (state && state.playing) {
+      video.currentTime = state.currentTime || 0;
+      video.play().catch(() => {});
+    }
+  });
 }
 
 // چت
@@ -417,14 +428,22 @@ document.getElementById('chat-form').addEventListener('submit', e => {
   }
 });
 
-// تغییر نام
-document.getElementById('changeNameBtn').addEventListener('click', () => {
-  document.getElementById('usernameInput').value = currentUser.displayName;
-  document.getElementById('nameOverlay').style.display = 'flex';
-});
+// شروع برنامه - اگر قبلاً وارد شده بود
+const savedUser = localStorage.getItem('watchparty_user');
+if (savedUser) {
+  currentUser = JSON.parse(savedUser);
+  isOwner = currentUser.role === 'owner';
+  
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('mainContainer').style.display = 'block';
 
-// شروع برنامه: اول رمز کاربر رو چک کن
-checkUserPassword();
+  document.getElementById('displayName').textContent = currentUser.displayName;
+  document.getElementById('roleBadge').textContent = isOwner ? 'مالک' : 'کاربر';
+  document.getElementById('roleBadge').className = `role-badge ${isOwner ? 'owner-badge' : 'user-badge'}`;
+
+  initVideoSync();
+  loadMessages();
+}
 </script>
 </body>
 </html>
