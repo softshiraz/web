@@ -23,7 +23,7 @@
     <!-- رنگ تم برای مرورگر موبایل -->
     <meta name="theme-color" content="#ffd700">
    
-    <!-- Open Graph (تلگرام، اینستاگرام، واتساپ و ...) -->
+    <!-- Open Graph -->
     <meta property="og:title" content="سافت شیراز | @soft_shiraz | اکران انیمه و انیمیشن در شیراز">
     <meta property="og:description" content="@soft_shiraz - قدیمی‌ترین برگزارکننده اکران انیمه روی پرده سینما در شیراز. اکران‌های آینده و رزرو بلیط را از دست ندهید!">
     <meta property="og:image" content="https://raw.githubusercontent.com/softshiraz/web/refs/heads/main/png/0.png">
@@ -63,37 +63,13 @@
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/dist/font-face.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
    
-    <!-- Manifest برای PWA -->
-    <link rel="manifest" href="data:application/manifest+json,{
-      \"name\":\"سافت شیراز - اکران‌های آینده\",
-      \"short_name\":\"سافت شیراز\",
-      \"description\":\"ایونت‌های طلایی سافت شیراز - اکران فیلم و کتابخوانی\",
-      \"start_url\":\"/web/\",
-      \"scope\":\"/web/\",
-      \"display\":\"standalone\",
-      \"background_color\":\"#0e0e0f\",
-      \"theme_color\":\"#ffd700\",
-      \"orientation\":\"portrait-primary\",
-      \"icons\":[
-        {
-          \"src\":\"https://raw.githubusercontent.com/softshiraz/web/refs/heads/main/png/0.png\",
-          \"sizes\":\"192x192\",
-          \"type\":\"image/png\",
-          \"purpose\":\"any maskable\"
-        },
-        {
-          \"src\":\"https://raw.githubusercontent.com/softshiraz/web/refs/heads/main/png/0.png\",
-          \"sizes\":\"512x512\",
-          \"type\":\"image/png\",
-          \"purpose\":\"any maskable\"
-        }
-      ]
-    }">
+    <!-- Manifest برای PWA (فایل جداگانه) -->
+    <link rel="manifest" href="/web/manifest.json">
    
     <!-- آیکون اپل (برای iOS) -->
     <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/softshiraz/web/refs/heads/main/png/0.png">
    
-    <!-- favicon (عکس کوچک در تب مرورگر) -->
+    <!-- favicon -->
     <link rel="icon" href="https://raw.githubusercontent.com/softshiraz/web/refs/heads/main/png/0.png" type="image/png">
    
     <style>
@@ -342,7 +318,7 @@
     .card-front { display:flex; flex-direction:column; position: relative; }
     .img-bar { flex:1; overflow:hidden; }
     .img-bar img { width:100%; height:100%; object-fit:cover; transition:transform 0.4s; }
-    .movie-card:hover .img-bar img { transform:scale(1.08); }
+    /* حذف افکت بزرگ شدن هنگام هاور */
     .date-bar {
         height:52px !important; line-height:52px !important; padding:0 10px; text-align:center;
         background: rgba(255,215,0,0.12);
@@ -527,6 +503,7 @@ prefersDark.addEventListener('change', (e) => {
 });
 initializeTheme();
 themeToggle.addEventListener('click', toggleTheme);
+
 // لودر
 const overlay = document.getElementById('loading-overlay');
 const minDuration = 5000;
@@ -542,6 +519,7 @@ window.addEventListener('load', () => {
         clearTimeout(maxTimeout);
     }, delay);
 });
+
 // لود کارت‌ها
 const container = document.getElementById("cards-container");
 let openCard = null;
@@ -561,6 +539,7 @@ async function loadCardsStrictly() {
     }
 }
 loadCardsStrictly();
+
 // رزرو بلیط
 document.addEventListener("click", function(e) {
     const reserveBtn = e.target.closest(".reserve-bar a");
@@ -582,16 +561,23 @@ document.addEventListener("click", function(e) {
     const encoded = encodeURIComponent(message);
     window.open(`https://t.me/${adminId}?text=${encoded}`, "_blank");
 });
-// فلیپ کارت
+
+// فلیپ کارت + بستن با کلیک خارج
 document.addEventListener("click", function(e) {
     if (e.target.closest(".reserve-bar")) return;
     const cardInner = e.target.closest(".card-inner");
     if (cardInner) {
-        if (openCard && openCard !== cardInner) openCard.classList.remove("flipped");
+        if (openCard && openCard !== cardInner) {
+            openCard.classList.remove("flipped");
+        }
         cardInner.classList.toggle("flipped");
         openCard = cardInner.classList.contains("flipped") ? cardInner : null;
+    } else if (openCard) {
+        openCard.classList.remove("flipped");
+        openCard = null;
     }
 });
+
 // منوی همبرگری
 const hamburger = document.getElementById('hamburger');
 const sideMenu = document.getElementById('side-menu');
@@ -616,6 +602,7 @@ menuClose.addEventListener('click', e => { e.stopPropagation(); closeMenu(); });
 backdrop.addEventListener('click', closeMenu);
 document.addEventListener('keydown', e => { if (e.key==='Escape') closeMenu(); });
 sideMenu.addEventListener('click', e => e.stopPropagation());
+
 // انیمیشن ذرات
 (() => {
   const canvas = document.createElement('canvas');
@@ -677,48 +664,44 @@ sideMenu.addEventListener('click', e => e.stopPropagation());
   init();
   frame();
 })();
+
 // نصب PWA
 let deferredPrompt;
 const installBtn = document.getElementById('install-button');
+
 window.addEventListener('beforeinstallprompt', (e) => {
+  console.log('رویداد beforeinstallprompt فعال شد');
   e.preventDefault();
   deferredPrompt = e;
   installBtn.style.display = 'flex';
 });
+
 installBtn.addEventListener('click', async (e) => {
   e.stopPropagation();
-  if (!deferredPrompt) return;
+  if (!deferredPrompt) {
+    console.log('deferredPrompt موجود نیست');
+    return;
+  }
   deferredPrompt.prompt();
   const { outcome } = await deferredPrompt.userChoice;
+  console.log('نتیجه نصب:', outcome);
   if (outcome === 'accepted') {
     console.log('کاربر اپ رو نصب کرد');
   }
   deferredPrompt = null;
   installBtn.style.display = 'none';
 });
+
+// ثبت Service Worker
 if ('serviceWorker' in navigator) {
-  const swCode = `
-    const CACHE = 'softshiraz-web-v1';
-    const files = ['/web/', '/web/index.html'];
-    self.addEventListener('install', e => {
-      e.waitUntil(caches.open(CACHE).then(cache => cache.addAll(files)));
-      self.skipWaiting();
-    });
-    self.addEventListener('activate', e => {
-      e.waitUntil(self.clients.claim());
-    });
-    self.addEventListener('fetch', e => {
-      e.respondWith(
-        caches.match(e.request).then(res => res || fetch(e.request))
-      );
-    });
-  `;
-  const blob = new Blob([swCode], {type: 'application/javascript'});
-  const swUrl = URL.createObjectURL(blob);
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register(swUrl, {scope: '/web/'})
-      .then(reg => console.log('Service Worker ثبت شد'))
-      .catch(err => console.log('خطا در ثبت SW:', err));
+    navigator.serviceWorker.register('/web/sw.js', { scope: '/web/' })
+      .then(reg => {
+        console.log('Service Worker با موفقیت ثبت شد:', reg);
+      })
+      .catch(err => {
+        console.error('خطا در ثبت Service Worker:', err);
+      });
   });
 }
 </script>
