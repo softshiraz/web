@@ -3,121 +3,207 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>اتاق پخش فیلم + چت</title>
+  <title>اتاق پخش فیلم - واچ پارتی</title>
   <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #111;
-      color: #eee;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
+    body { 
+      margin:0; 
+      font-family: Tahoma, sans-serif; 
+      background:#111; 
+      color:#eee; 
+      height:100vh; 
+      display:flex; 
+      flex-direction:column; 
     }
-    header {
-      background: #1a1a1a;
-      padding: 10px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #333;
+    header { 
+      background:#1a1a1a; 
+      padding:15px; 
+      display:flex; 
+      justify-content:space-between; 
+      align-items:center; 
+      border-bottom:2px solid #333; 
     }
-    .logo-link {
-      color: #4da6ff;
-      text-decoration: none;
-      font-size: 1.2em;
-      font-weight: bold;
+    .logo-link { 
+      color:#4da6ff; 
+      text-decoration:none; 
+      font-weight:bold; 
+      font-size:1.3em; 
     }
-    .container {
-      flex: 1;
-      display: flex;
-      overflow: hidden;
+    .user-info { 
+      font-size:0.9em; 
+      color:#aaa; 
+      display:flex; 
+      align-items:center; 
+      gap:10px; 
     }
-    .video-section {
-      flex: 3;
-      background: black;
-      position: relative;
+    .container { 
+      flex:1; 
+      display:flex; 
+      overflow:hidden; 
     }
-    .chat-section {
-      flex: 1;
-      background: #0d0d0d;
-      display: flex;
-      flex-direction: column;
-      min-width: 300px;
+    .video-section { 
+      flex:3; 
+      background:black; 
+      position:relative; 
     }
-    #video-player {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
+    .chat-section { 
+      flex:1; 
+      background:#0f0f0f; 
+      display:flex; 
+      flex-direction:column; 
+      min-width:300px; 
+      border-left:2px solid #333; 
     }
-    #messages {
-      flex: 1;
-      padding: 10px;
-      overflow-y: auto;
-      background: #111;
+    #video-player { 
+      width:100%; 
+      height:100%; 
+      object-fit:contain; 
     }
-    .message {
-      margin: 8px 0;
-      padding: 8px 12px;
-      border-radius: 12px;
-      max-width: 80%;
+    #messages { 
+      flex:1; 
+      padding:15px; 
+      overflow-y:auto; 
     }
-    .message.self {
-      background: #4da6ff;
-      align-self: flex-end;
-      margin-left: auto;
+    .message { 
+      margin:8px 0; 
+      padding:10px 15px; 
+      border-radius:15px; 
+      max-width:85%; 
+      word-wrap:break-word; 
     }
-    .message.other {
-      background: #333;
+    .message.self { 
+      background:#4da6ff; 
+      align-self:flex-end; 
+      margin-left:auto; 
     }
-    #chat-form {
-      display: flex;
-      padding: 10px;
-      border-top: 1px solid #333;
+    .message.other { 
+      background:#333; 
+      align-self:flex-start; 
     }
-    #message-input {
-      flex: 1;
-      padding: 10px;
-      border: none;
-      border-radius: 20px 0 0 20px;
-      background: #222;
+    .username { 
+      font-weight:bold; 
+      font-size:0.9em; 
+      display:block; 
+      margin-bottom:3px; 
+      color:#a0d8ff; 
+    }
+    #chat-form { 
+      display:flex; 
+      padding:10px; 
+      border-top:1px solid #333; 
+    }
+    #message-input { 
+      flex:1; 
+      padding:12px; 
+      border:none; 
+      border-radius:20px 0 0 20px; 
+      background:#222; 
+      color:white; 
+    }
+    button { 
+      padding:12px 25px; 
+      border:none; 
+      background:#4da6ff; 
+      color:white; 
+      border-radius:0 20px 20px 0; 
+      cursor:pointer; 
+    }
+    button:hover { 
+      background:#3b8ed9; 
+    }
+    .login-box { 
+      position:absolute; 
+      top:50%; 
+      left:50%; 
+      transform:translate(-50%,-50%); 
+      background:#222; 
+      padding:30px; 
+      border-radius:15px; 
+      box-shadow:0 0 20px rgba(0,0,0,0.8); 
+      z-index:100; 
+      width:320px; 
+      text-align:center; 
+    }
+    .login-box input { 
+      width:100%; 
+      padding:12px; 
+      margin:10px 0; 
+      border:none; 
+      border-radius:8px; 
+      background:#333; 
+      color:white; 
+    }
+    .login-box button { 
+      width:100%; 
+      padding:12px; 
+      background:#4da6ff; 
+      color:white; 
+      border:none; 
+      border-radius:8px; 
+      cursor:pointer; 
+      margin-top:15px; 
+    }
+    .overlay { 
+      display:none; 
+      position:fixed; 
+      top:0; 
+      left:0; 
+      width:100%; 
+      height:100%; 
+      background:rgba(0,0,0,0.9); 
+      z-index:99; 
+    }
+    .status { 
+      position:absolute; 
+      bottom:10px; 
+      left:10px; 
+      background:rgba(0,0,0,0.7); 
+      padding:5px 10px; 
+      border-radius:8px; 
+      font-size:0.8em; 
+    }
+    #changeNameBtn {
+      background: #555;
       color: white;
-    }
-    button {
-      padding: 10px 20px;
       border: none;
-      background: #4da6ff;
-      color: white;
-      border-radius: 0 20px 20px 0;
+      padding: 6px 12px;
+      border-radius: 6px;
       cursor: pointer;
+      font-size: 0.8em;
     }
-    button:hover {
-      background: #3b8ed9;
+    #changeNameBtn:hover {
+      background: #666;
     }
   </style>
 </head>
 <body>
 
 <header>
-  <a href="../index.html" class="logo-link">بازگشت به سایت اصلی</a>
-  <span>اتاق پخش فیلم</span>
+  <a href="../index.html" class="logo-link">← بازگشت به سایت</a>
+  <div class="user-info">
+    خوش آمدید: <span id="displayName">...</span>
+    <button id="changeNameBtn" style="display:none;">تغییر نام</button>
+  </div>
 </header>
 
-<div class="container">
+<div class="overlay" id="nameOverlay">
+  <div class="login-box">
+    <h2>انتخاب نام نمایشی</h2>
+    <input type="text" id="usernameInput" placeholder="نام خود را وارد کنید" required />
+    <button onclick="saveName()">تأیید</button>
+    <p id="nameError" style="color:red; margin-top:10px;"></p>
+  </div>
+</div>
+
+<div class="container" id="mainContainer" style="display:none;">
   <div class="video-section">
-    <video id="video-player" controls autoplay muted>
-      <!-- لینک ویدیو رو اینجا عوض کن -->
-      <source src="https://customer-YOURCODE.cloudflarestream.com/VIDEO_UID/manifest/video.m3u8" type="application/x-mpegURL">
-      <!-- یا اگر ویدیو MP4 روی GitHub داری (فقط برای فایل‌های کوچک): -->
-      <!-- <source src="https://media.githubusercontent.com/media/USERNAME/REPO/main/videos/film.mp4" type="video/mp4"> -->
-      مرورگر شما از پخش ویدیو پشتیبانی نمی‌کند.
-    </video>
+    <video id="video-player" controls></video>
+    <div class="status">در حال سینک با دیگران...</div>
   </div>
 
   <div class="chat-section">
     <div id="messages"></div>
     <form id="chat-form">
-      <input type="text" id="message-input" placeholder="پیام خود را بنویسید..." autocomplete="off"/>
+      <input type="text" id="message-input" placeholder="پیام بنویس..." autocomplete="off" required />
       <button type="submit">ارسال</button>
     </form>
   </div>
@@ -126,74 +212,163 @@
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
-<!-- hls.js برای پخش m3u8 روی مرورگرهای غیرسافاری -->
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
 <script>
-// تنظیمات Firebase خودت رو اینجا بذار (از Firebase Console بگیر)
+// ==== تنظیمات Firebase خودت رو اینجا بذار ====
 const firebaseConfig = {
-  apiKey: "AIzaSyXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-  authDomain: "YOUR-PROJECT.firebaseapp.com",
-  databaseURL: "https://YOUR-PROJECT-default-rtdb.firebaseio.com",
-  projectId: "YOUR-PROJECT",
-  storageBucket: "YOUR-PROJECT.appspot.com",
-  messagingSenderId: "XXXXXXXXXXXX",
-  appId: "1:XXXXXXXXXXXX:web:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+  apiKey: "AIzaSyCZVi8SyjtW6dxMHDX7D0lZEdF5XPLtwJA",
+  authDomain: "softshiraz-2ddce.firebaseapp.com",
+  databaseURL: "https://softshiraz-2ddce-default-rtdb.firebaseio.com/",
+  projectId: "softshiraz-2ddce",
+  storageBucket: "softshiraz-2ddce.firebasestorage.app",
+  messagingSenderId: "760975223534",
+  appId: "1:760975223534:web:3008a1fbcc09a2ae2fe1ff",
+  measurementId: "G-MRLRFEVB3D"
 };
 
-// مقداردهی اولیه Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-// چت
-const messagesRef = db.ref('watchparty/messages');
-const messagesDiv = document.getElementById('messages');
-const chatForm = document.getElementById('chat-form');
-const input = document.getElementById('message-input');
+// مراجع دیتابیس
+const videoStateRef = db.ref('watchparty/videoState');
+const messagesRef = db.ref('watchparty/messages').limitToLast(200);
 
-// دریافت پیام‌های جدید
-messagesRef.on('child_added', (snapshot) => {
-  const msg = snapshot.val();
-  const div = document.createElement('div');
-  div.classList.add('message', msg.self ? 'self' : 'other');
-  div.textContent = `${msg.name || 'ناشناس'}: ${msg.text}`;
-  messagesDiv.appendChild(div);
-  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+// متغیرهای محلی
+let currentUser = { uid: null, displayName: null };
+
+// گرفتن یا ساختن UID و نام از localStorage
+function getOrCreateUser() {
+  let uid = localStorage.getItem('watchparty_uid');
+  let name = localStorage.getItem('watchparty_name');
+
+  if (!uid) {
+    uid = 'user_' + Math.random().toString(36).substr(2, 9);
+    localStorage.setItem('watchparty_uid', uid);
+  }
+
+  if (!name) {
+    showNamePrompt();
+    return false;
+  } else {
+    currentUser = { uid, displayName: name };
+    document.getElementById('displayName').textContent = name;
+    document.getElementById('changeNameBtn').style.display = 'inline';
+    return true;
+  }
+}
+
+// نمایش فرم انتخاب نام
+function showNamePrompt() {
+  document.getElementById('nameOverlay').style.display = 'block';
+  document.getElementById('mainContainer').style.display = 'none';
+}
+
+// ذخیره نام جدید
+function saveName() {
+  const nameInput = document.getElementById('usernameInput').value.trim();
+  const errorEl = document.getElementById('nameError');
+
+  if (nameInput.length < 2 || nameInput.length > 20) {
+    errorEl.textContent = 'نام باید بین ۲ تا ۲۰ کاراکتر باشد';
+    return;
+  }
+
+  localStorage.setItem('watchparty_name', nameInput);
+  currentUser.displayName = nameInput;
+  document.getElementById('displayName').textContent = nameInput;
+  document.getElementById('changeNameBtn').style.display = 'inline';
+
+  document.getElementById('nameOverlay').style.display = 'none';
+  document.getElementById('mainContainer').style.display = 'flex';
+  errorEl.textContent = '';
+
+  initVideoSync();
+  loadMessages();
+}
+
+// تغییر نام
+document.getElementById('changeNameBtn').addEventListener('click', () => {
+  document.getElementById('usernameInput').value = currentUser.displayName;
+  document.getElementById('nameOverlay').style.display = 'block';
+  document.getElementById('mainContainer').style.display = 'none';
 });
 
-// ارسال پیام
-chatForm.addEventListener('submit', (e) => {
+// پخش ویدیو و سینک
+const VIDEO_URL = "https://s1.dlserfes.info/dl1/2018/Tag%202018/Tag_2018_720p_BrRip_YIFY.mkv?md5=JgOv4DHH-E856mk-iRe8Aw&u=288589&expires=1766897453";
+// یا MP4:
+// const VIDEO_URL = "https://media.githubusercontent.com/media/USERNAME/REPO/main/video.mp4";
+
+let isUserSeeking = false;
+
+function initVideoSync() {
+  const video = document.getElementById('video-player');
+
+  if (Hls.isSupported() && VIDEO_URL.includes('.m3u8')) {
+    const hls = new Hls();
+    hls.loadSource(VIDEO_URL);
+    hls.attachMedia(video);
+  } else {
+    video.src = VIDEO_URL;
+  }
+
+  video.addEventListener('play', () => { if (!isUserSeeking) videoStateRef.update({ playing: true }); });
+  video.addEventListener('pause', () => { if (!isUserSeeking) videoStateRef.update({ playing: false }); });
+  video.addEventListener('seeking', () => { isUserSeeking = true; });
+  video.addEventListener('seeked', () => {
+    videoStateRef.update({ currentTime: video.currentTime });
+    isUserSeeking = false;
+  });
+  video.addEventListener('timeupdate', () => {
+    if (!isUserSeeking && Math.abs(video.currentTime - (videoStateRef.currentTime || 0)) > 2) {
+      video.currentTime = videoStateRef.currentTime || 0;
+    }
+  });
+
+  videoStateRef.on('value', snapshot => {
+    const state = snapshot.val();
+    if (!state) return;
+    if (state.playing && video.paused) video.play();
+    if (!state.playing && !video.paused) video.pause();
+    if (Math.abs(video.currentTime - state.currentTime) > 2) {
+      video.currentTime = state.currentTime;
+    }
+  });
+
+  video.play().catch(() => {});
+}
+
+// چت
+function loadMessages() {
+  messagesRef.on('child_added', snapshot => {
+    const msg = snapshot.val();
+    const div = document.createElement('div');
+    div.className = `message ${msg.uid === currentUser.uid ? 'self' : 'other'}`;
+    div.innerHTML = `<span class="username">${msg.displayName}</span>${msg.text}`;
+    document.getElementById('messages').appendChild(div);
+    document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
+  });
+}
+
+document.getElementById('chat-form').addEventListener('submit', e => {
   e.preventDefault();
-  const text = input.value.trim();
-  if (text) {
+  const text = document.getElementById('message-input').value.trim();
+  if (text && currentUser.displayName) {
     messagesRef.push({
       text: text,
-      name: "مهمان", // می‌تونی نام کاربر رو اضافه کنی
-      self: true,   // فقط برای نمایش سمت خودت آبی بشه
+      displayName: currentUser.displayName,
+      uid: currentUser.uid,
       timestamp: firebase.database.ServerValue.TIMESTAMP
     });
-    input.value = '';
+    document.getElementById('message-input').value = '';
   }
 });
 
-// پخش ویدیو با HLS (برای Cloudflare Stream)
-const video = document.getElementById('video-player');
-const videoSrc = video.querySelector('source').src;
-
-if (Hls.isSupported()) {
-  const hls = new Hls();
-  hls.loadSource(videoSrc);
-  hls.attachMedia(video);
-  hls.on(Hls.Events.MANIFEST_PARSED, () => {
-    video.play().catch(() => {
-      console.log("اتوپلی بلاک شد، کاربر باید کلیک کنه");
-    });
-  });
-} else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-  video.src = videoSrc;
-  video.addEventListener('loadedmetadata', () => {
-    video.play().catch(() => {});
-  });
+// شروع برنامه
+if (getOrCreateUser()) {
+  document.getElementById('mainContainer').style.display = 'flex';
+  initVideoSync();
+  loadMessages();
 }
 </script>
 </body>
