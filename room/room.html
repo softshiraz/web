@@ -2,70 +2,81 @@
 <html lang="fa">
 <head>
 <meta charset="UTF-8">
-<title>پلیر گروهی ساده</title>
+<title>پلیر گروهی بدون سرور</title>
 <style>
-body{
-    background:#111;
-    color:#fff;
-    font-family:tahoma;
-    text-align:center;
-    margin:0;
-    padding:20px;
-}
-input,button{
-    padding:8px;
-    font-size:14px;
-}
-video{
-    width:90%;
-    max-width:800px;
-    margin:20px auto;
-    display:block;
-    background:black;
-}
-#chat{
-    width:90%;
-    max-width:800px;
-    margin:20px auto;
-    background:#222;
-    padding:10px;
-}
-#messages{
-    height:150px;
-    background:#000;
-    overflow-y:auto;
-    margin-bottom:10px;
-    padding:5px;
-    text-align:left;
-}
+body{background:#111;color:#fff;font-family:tahoma;text-align:center;margin:0;padding:20px}
+input,button{padding:8px;margin:3px}
+video{width:90%;max-width:800px;margin:20px auto;display:block;background:black}
+#chat{width:90%;max-width:800px;margin:20px auto;background:#222;padding:10px}
+#messages{height:150px;background:#000;overflow-y:auto;margin-bottom:10px;padding:5px;text-align:left}
 </style>
 </head>
 <body>
 
-<h2>🎬 پلیر گروهی فیلم</h2>
+<h2>🎬 پلیر گروهی بدون سرور</h2>
 
 <input id="videoUrl" style="width:60%" placeholder="لینک مستقیم ویدیو (mp4)">
 <button onclick="loadVideo()">پخش</button>
+<button onclick="copyLink()">📎 لینک اتاق</button>
 
 <video id="player" controls></video>
 
 <div id="chat">
-    <div id="messages"></div>
-    <input id="msg" style="width:70%" placeholder="پیام...">
-    <button onclick="sendMsg()">ارسال</button>
+  <div id="messages"></div>
+  <input id="msg" style="width:70%" placeholder="پیام...">
+  <button onclick="sendMsg()">ارسال</button>
 </div>
 
 <script>
-const player = document.getElementById("player");
+// --- متغیرها ---
+const video = document.getElementById("player");
 const messages = document.getElementById("messages");
 
-function loadVideo(){
-    const url = document.getElementById("videoUrl").value;
-    if(!url) return;
-    player.src = url;
-    player.play();
+// --- لینک اتاق ---
+function copyLink(){
+    const url = new URL(window.location.href);
+    url.searchParams.set('video', document.getElementById('videoUrl').value);
+    navigator.clipboard.writeText(url.toString());
+    alert("لینک اتاق کپی شد!");
 }
 
+// --- بارگذاری ویدیو از URL ---
+function loadVideo(){
+    const urlInput = document.getElementById('videoUrl');
+    if(!urlInput.value) return;
+    video.src = urlInput.value;
+    video.play();
+    // ذخیره در URL
+    const url = new URL(window.location.href);
+    url.searchParams.set('video', urlInput.value);
+    history.replaceState(null,null,url);
+}
+
+// --- چک کردن URL هنگام بارگذاری ---
+window.onload = () => {
+    const params = new URLSearchParams(window.location.search);
+    const videoParam = params.get('video');
+    if(videoParam){
+        document.getElementById('videoUrl').value = videoParam;
+        video.src = videoParam;
+    }
+    // بررسی وضعیت ویدیو هر 2 ثانیه
+    setInterval(syncVideo,2000);
+}
+
+// --- همزمان سازی ساده ---
+function syncVideo(){
+    const params = new URLSearchParams(window.location.search);
+    const timeParam = parseFloat(params.get('time'));
+    if(!isNaN(timeParam)){
+        // اگر اختلاف بیشتر از 1 ثانیه بود، سینک کن
+        if(Math.abs(video.currentTime - timeParam) > 1){
+            video.currentTime = timeParam;
+        }
+    }
+}
+
+// --- ارسال پیام ---
 function sendMsg(){
     const msgInput = document.getElementById("msg");
     if(!msgInput.value) return;
@@ -75,6 +86,13 @@ function sendMsg(){
     msgInput.value = "";
     messages.scrollTop = messages.scrollHeight;
 }
+
+// --- همزمان سازی زمان ویدیو با URL ---
+video.addEventListener("timeupdate", ()=>{
+    const url = new URL(window.location.href);
+    url.searchParams.set('time', video.currentTime);
+    history.replaceState(null,null,url);
+});
 </script>
 
 </body>
