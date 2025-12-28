@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- SEO Tags -->
+    <!-- ================== SEO Tags (START) ================== -->
     <title>دل‌پلیر</title>
     <meta name="description" content="با دل‌پلیر به راحتی و به صورت همزمان با دوست یا پارتنر خود فیلم و سریال تماشا کنید. فقط کافیست لینک یا فایل ویدیو را وارد کرده و با شناسه مخصوص به هم متصل شوید.">
     <meta name="keywords" content="تماشای همزمان فیلم, دیدن فیلم با دوستان, پخش همزمان ویدیو, تماشای همزمان یوتیوب, سینما آنلاین, دل پلیر, delplayer">
@@ -25,11 +25,20 @@
         "name": "دل‌پلیر",
         "operatingSystem": "WEB",
         "applicationCategory": "MultimediaApplication",
-        "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.8", "ratingCount": "150" },
-        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "IRR" }
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "ratingCount": "150"
+        },
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "IRR"
+        }
     }
     </script>
-    <!-- Google Analytics -->
+    <!-- ================== SEO Tags (END) ================== -->
+    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-V87N2NQJLV"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -37,17 +46,24 @@
         gtag('js', new Date());
         gtag('config', 'G-V87N2NQJLV');
     </script>
-    <!-- Fonts & Tailwind -->
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🎬</text></svg>">
     <style>
         body {
             font-family: 'Vazirmatn', sans-serif;
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+        }
+        /* افکت شیشه‌ای (glassmorphism) */
+        .glass {
+            background: rgba(30, 30, 30, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
         }
         video::-webkit-media-controls-timeline {
-            background-color: rgba(0, 123, 255, 0.5);
+            background-color: rgba(255, 215, 0, 0.3);
             border-radius: 4px;
             height: 8px;
         }
@@ -56,6 +72,14 @@
             color: #fff;
             text-shadow: 1px 1px 2px black;
         }
+        /* رنگ طلایی و مشکی */
+        .text-gold { color: #ffd700; }
+        .bg-gold { background-color: #ffd700; }
+        .bg-gold-dark { background-color: #b8860b; }
+        .border-gold { border-color: #ffd700; }
+        .hover\:bg-gold:hover { background-color: #ffd700; }
+        .hover\:bg-gold-dark:hover { background-color: #b8860b; }
+        /* Style for the emoji picker */
         emoji-picker {
             position: absolute;
             bottom: 60px;
@@ -64,159 +88,148 @@
         }
     </style>
 </head>
-<body class="bg-gray-950 text-white min-h-screen flex flex-col items-center p-4 md:p-8">
-    <div class="w-full max-w-5xl space-y-8">
-        <!-- Main Card -->
-        <div class="bg-gray-900/80 backdrop-blur-md rounded-3xl shadow-2xl p-6 md:p-10 border border-gray-800">
-            <div class="text-center mb-8">
-                <h1 class="text-4xl md:text-5xl font-bold text-cyan-400 mb-3">
-                    🎬 دل‌پلیر
-                </h1>
-                <p class="text-xl text-gray-300">
-                    تماشای همزمان فیلم و سریال با دوست یا پارتنرت از راه دور
-                </p>
+<body class="text-white flex flex-col items-center justify-center min-h-screen p-4">
+    <div class="w-full max-w-4xl glass rounded-2xl shadow-2xl p-6 space-y-6">
+        <div class="text-center">
+            <h1 class="text-3xl font-bold text-gold">🎬 دل‌پلیر: تماشای فیلم با هم</h1>
+            <p class="text-gray-300 mt-2">لینک ویدیو (مستقیم یا یوتیوب) را وارد کنید یا فایل آن را انتخاب کنید. سپس شناسه خود را به دوستتان بدهید یا شناسه او را وارد کنید.</p>
+        </div>
+
+        <div class="glass p-4 rounded-lg space-y-4">
+            <div class="flex flex-col sm:flex-row items-center gap-2">
+                <input type="text" id="video-url-input" placeholder="لینک مستقیم ویدیو یا لینک یوتیوب را اینجا وارد کنید"
+                       class="w-full bg-black/40 border border-gold/50 rounded-md px-4 py-2 text-center focus:outline-none focus:ring-2 focus:ring-gold">
+                <button id="load-url-btn" class="w-full sm:w-auto bg-gold hover:bg-gold-dark text-black font-bold py-2 px-4 rounded-md transition-colors flex-shrink-0">
+                    بارگذاری لینک
+                </button>
             </div>
+            <div class="text-center text-gray-400">یا</div>
+            <div class="flex justify-center flex-col items-center gap-2">
+                <label for="video-file-input" class="w-full sm:w-auto flex items-center justify-center px-6 py-3 border-2 border-dashed border-gold/50 rounded-lg cursor-pointer hover:bg-gold/10 hover:border-gold transition-colors">
+                    <svg class="w-8 h-8 text-gold/70" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+                    </svg>
+                    <span class="ml-3 text-lg font-medium text-gold">انتخاب فایل فیلم</span>
+                </label>
+                <input type="file" id="video-file-input" accept="video/*,.mkv" class="hidden">
 
-            <!-- Video / YouTube Container -->
-            <div class="relative bg-black rounded-2xl overflow-hidden aspect-video mb-6 shadow-2xl">
-                <video id="my-video" class="w-full h-full" controls playsinline></video>
-                <div id="youtube-player-container" class="w-full h-full hidden">
-                    <div id="youtube-player"></div>
-                </div>
-                <div id="loading-overlay" class="absolute inset-0 bg-black/70 flex items-center justify-center hidden">
-                    <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-cyan-500"></div>
-                </div>
-            </div>
-
-            <!-- Input Section -->
-            <div class="space-y-6">
-                <div class="flex flex-col md:flex-row gap-4">
-                    <input type="text" id="video-url-input"
-                           placeholder="لینک مستقیم ویدیو یا لینک یوتیوب..."
-                           class="flex-1 bg-gray-800 border border-gray-700 rounded-xl px-6 py-4 text-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition">
-                    <button id="load-url-btn"
-                            class="bg-gradient-to-r from-cyan-600 to-teal-600 hover:from-cyan-700 hover:to-teal-700 text-white font-bold px-8 py-4 rounded-xl transition text-lg">
-                        بارگذاری لینک
-                    </button>
-                </div>
-
-                <div class="text-center text-gray-400 text-lg">یا</div>
-
-                <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <label for="video-file-input"
-                           class="flex-1 flex items-center justify-center px-6 py-5 border-2 border-dashed border-gray-600 rounded-xl cursor-pointer hover:border-cyan-500 transition text-lg">
-                        <svg class="w-8 h-8 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
-                        </svg>
-                        انتخاب فایل ویدیو
-                    </label>
-                    <input type="file" id="video-file-input" accept="video/*,.mkv" class="hidden">
-
-                    <label for="subtitle-file-input"
-                           class="flex-1 flex items-center justify-center px-6 py-5 border-2 border-dashed border-gray-600 rounded-xl cursor-pointer hover:border-cyan-500 transition text-lg">
-                        <svg class="w-8 h-8 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 13l-5 5m0 0l-5-5m5 5V6"></path>
-                        </svg>
-                        اضافه کردن زیرنویس
-                    </label>
-                    <input type="file" id="subtitle-file-input" accept=".srt,.vtt" class="hidden">
-                </div>
-            </div>
-
-            <!-- Connection Section -->
-            <div class="mt-8 bg-gray-800/50 p-6 rounded-2xl border border-gray-700">
-                <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-                    <div class="text-center md:text-right">
-                        <span class="text-gray-400 block mb-2 text-lg">شناسه شما:</span>
-                        <span id="my-id" class="font-mono text-2xl bg-gray-700 text-cyan-300 px-6 py-3 rounded-xl cursor-pointer select-all inline-block"
-                              title="کلیک کنید تا کپی شود">در حال بارگذاری...</span>
-                        <span id="copy-hint" class="text-green-400 text-sm mr-3 hidden">کپی شد!</span>
-                    </div>
-
-                    <div class="flex flex-col sm:flex-row items-center gap-4">
-                        <div id="connect-success-tick" class="text-green-500 text-3xl hidden">✔</div>
-                        <input type="text" id="partner-id-input" maxlength="7" placeholder="شناسه دوستت رو وارد کن"
-                               class="bg-gray-800 border border-gray-700 rounded-xl px-6 py-4 text-lg w-full sm:w-64 focus:outline-none focus:ring-2 focus:ring-cyan-500">
-                        <button id="connect-btn"
-                                class="bg-cyan-600 hover:bg-cyan-700 text-white font-bold px-8 py-4 rounded-xl transition w-full sm:w-auto text-lg">
-                            اتصال
-                        </button>
-                        <button id="disconnect-btn"
-                                class="bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-4 rounded-xl transition hidden w-full sm:w-auto text-lg">
-                            قطع اتصال
-                        </button>
-                    </div>
-                </div>
-
-                <div id="status" class="text-center mt-6 text-lg font-semibold">
-                    <span class="bg-gray-700 text-yellow-400 px-6 py-2 rounded-full">منتظر اتصال</span>
-                </div>
-
-                <div id="length-warning" class="text-center font-bold text-red-500 mt-4 hidden text-lg"></div>
-            </div>
-
-            <!-- Chat Section -->
-            <div class="mt-8 bg-gray-800/50 p-6 rounded-2xl border border-gray-700">
-                <div class="font-bold text-cyan-400 text-2xl mb-4">چت همزمان</div>
-                <div id="chat-messages" class="bg-gray-900 rounded-xl p-4 h-48 md:h-64 overflow-y-auto text-base space-y-3"></div>
-                <div class="mt-4 flex gap-3 relative">
-                    <textarea id="chat-input" rows="1"
-                              placeholder="پیام خود را بنویسید..."
-                              class="flex-1 bg-gray-800 border border-gray-700 rounded-xl px-5 py-4 text-lg resize-none focus:outline-none focus:ring-2 focus:ring-cyan-500"
-                              style="direction: rtl; text-align: right;"></textarea>
-                    <button id="emoji-btn" class="p-4 bg-gray-700 hover:bg-gray-600 rounded-xl text-2xl">😊</button>
-                    <button id="chat-send"
-                            class="bg-cyan-600 hover:bg-cyan-700 text-white font-bold px-8 rounded-xl transition text-lg">
-                        ارسال
-                    </button>
-                    <emoji-picker class="light hidden"></emoji-picker>
-                </div>
+                <label for="subtitle-file-input" class="w-full sm:w-auto flex items-center justify-center px-6 py-3 border-2 border-dashed border-gold/50 rounded-lg cursor-pointer hover:bg-gold/10 hover:border-gold transition-colors mt-2">
+                    <svg class="w-6 h-6 text-gold/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17l4 4 4-4m0-5V3m-8 4v2a4 4 0 004 4h4"></path>
+                    </svg>
+                    <span class="ml-3 text-md font-medium text-gold">انتخاب زیرنویس (SRT یا VTT)</span>
+                </label>
+                <input type="file" id="subtitle-file-input" accept=".vtt,.srt" class="hidden">
             </div>
         </div>
 
-        <!-- How it works -->
-        <div class="bg-gray-900/80 backdrop-blur-md rounded-3xl shadow-2xl p-8 border border-gray-800">
-            <h2 class="text-3xl font-bold text-cyan-400 text-center mb-10">دل‌پلیر چگونه کار می‌کند؟</h2>
-            <div class="grid md:grid-cols-3 gap-8 text-center">
-                <div class="bg-gray-800/50 p-6 rounded-2xl border border-gray-700">
-                    <div class="text-6xl mb-4">1️⃣</div>
-                    <h3 class="text-2xl font-bold mb-3">ویدیو را انتخاب کنید</h3>
-                    <p class="text-gray-300 text-lg">لینک مستقیم، یوتیوب یا فایل ویدیویی خود را بارگذاری کنید.</p>
-                </div>
-                <div class="bg-gray-800/50 p-6 rounded-2xl border border-gray-700">
-                    <div class="text-6xl mb-4">2️⃣</div>
-                    <h3 class="text-2xl font-bold mb-3">شناسه را به اشتراک بگذارید</h3>
-                    <p class="text-gray-300 text-lg">شناسه منحصر به فرد خود را برای دوستتان بفرستید یا شناسه او را وارد کنید.</p>
-                </div>
-                <div class="bg-gray-800/50 p-6 rounded-2xl border border-gray-700">
-                    <div class="text-6xl mb-4">3️⃣</div>
-                    <h3 class="text-2xl font-bold mb-3">متصل شوید و لذت ببرید!</h3>
-                    <p class="text-gray-300 text-lg">فیلم همزمان پخش می‌شود و چت کنید.</p>
-                </div>
+        <video id="my-video" class="w-full rounded-lg bg-black" controls></video>
+        <div id="youtube-player-container" class="w-full rounded-lg bg-black aspect-video" style="display: none;">
+            <div id="youtube-player"></div>
+        </div>
+
+        <div id="status" class="text-center font-semibold p-2 rounded-md transition-all">
+            <span class="bg-black/60 text-gold px-4 py-1 rounded-full">منتظر اتصال</span>
+        </div>
+        <div id="length-warning" class="text-center font-bold text-red-500 mb-2" style="display:none"></div>
+
+        <div class="glass p-4 rounded-lg space-y-4 md:space-y-0 md:flex md:items-center md:justify-between">
+            <div class="text-center md:text-right">
+                <span class="text-gray-300">شناسه شما:</span>
+                <span id="my-id" class="font-mono bg-black/50 text-gold px-3 py-1 rounded-md cursor-pointer" title="برای کپی کلیک کنید">در حال بارگذاری...</span>
+                <span id="copy-hint" class="text-gold text-xs ml-2" style="display:none"></span>
+            </div>
+            <div class="flex flex-col sm:flex-row items-center gap-2 justify-center">
+                <span id="connect-success-tick" class="hidden text-gold text-xl ml-2">✅</span>
+                <input type="text" id="partner-id-input" maxlength="7" placeholder="شناسه دوستتان را وارد کنید"
+                       class="w-full sm:w-auto bg-black/40 border border-gold/50 rounded-md px-4 py-2 text-center focus:outline-none focus:ring-2 focus:ring-gold">
+                <button id="connect-btn" class="w-full sm:w-auto bg-gold hover:bg-gold-dark text-black font-bold py-2 px-4 rounded-md transition-colors">
+                    اتصال
+                </button>
+                <button id="disconnect-btn" class="w-full sm:w-auto bg-red-800 hover:bg-red-900 text-white font-bold py-2 px-4 rounded-md transition-colors hidden">
+                    قطع اتصال
+                </button>
             </div>
         </div>
 
-        <!-- Footer -->
-        <footer class="text-center py-8 text-gray-400 text-lg">
-            ساخته شده با ❤️ در ایران • 
-            <a href="https://daramet.com/delplayer" target="_blank" class="text-cyan-400 hover:underline">
-                یه قهوه مهمونم کن ☕
-            </a>
-        </footer>
+        <div class="glass p-4 rounded-lg mb-4 w-full relative">
+            <div class="mb-2 font-bold text-gold">چت</div>
+            <div id="chat-messages" class="bg-black/40 rounded p-2 h-32 overflow-y-auto text-sm mb-2" style="direction: ltr; text-align: left;"></div>
+            <div class="flex gap-2 flex-nowrap">
+                <button id="chat-send" class="w-auto bg-gold hover:bg-gold-dark text-black font-bold px-6 py-1 rounded-md">
+                    ارسال
+                </button>
+                <textarea id="chat-input" rows="1" class="w-full sm:flex-1 bg-black/40 border border-gold/50 rounded-md px-3 py-1 text-white focus:outline-none focus:ring-2 focus:ring-gold"
+                          placeholder="پیام خود را بنویسید..." style="resize: none; direction: rtl; text-align: right;"></textarea>
+                <button id="emoji-btn" class="p-2 bg-black/50 hover:bg-gold/20 rounded-md text-gold">😊</button>
+            </div>
+            <emoji-picker class="light" style="display:none;"></emoji-picker>
+        </div>
     </div>
 
-    <!-- Scripts -->
+    <!-- بخش توضیحات -->
+    <div class="w-full max-w-4xl glass rounded-2xl shadow-2xl p-6 space-y-6 mt-8">
+        <div class="text-center border-b border-gold/30 pb-4">
+            <h2 class="text-2xl font-bold text-gold">دل‌پلیر چگونه کار می‌کند؟</h2>
+            <p class="text-gray-300 mt-2">تماشای فیلم با دوستتان در سه مرحله ساده!</p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-6 text-center pt-4">
+            <div>
+                <div class="text-4xl mb-2">1️⃣</div>
+                <h3 class="text-xl font-semibold text-gold mb-2">ویدیو را انتخاب کنید</h3>
+                <p class="text-gray-300">لینک مستقیم ویدیو، لینک یوتیوب یا فایل ویدیوی خود را در برنامه بارگذاری کنید.</p>
+            </div>
+            <div>
+                <div class="text-4xl mb-2">2️⃣</div>
+                <h3 class="text-xl font-semibold text-gold mb-2">شناسه را به اشتراک بگذارید</h3>
+                <p class="text-gray-300">شناسه منحصر به فرد خود را کپی کرده و برای دوستی که می‌خواهید با او فیلم ببینید، ارسال کنید یا شناسه او را وارد کنید.</p>
+            </div>
+            <div>
+                <div class="text-4xl mb-2">3️⃣</div>
+                <h3 class="text-xl font-semibold text-gold mb-2">متصل شوید و لذت ببرید!</h3>
+                <p class="text-gray-300">اتصال برقرار می‌شود و پخش ویدیو برای هر دو نفر همزمان خواهد شد.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ویژگی‌های کلیدی -->
+    <div class="w-full max-w-4xl glass rounded-2xl shadow-2xl p-6 space-y-4 mt-8">
+        <div class="text-center border-b border-gold/30 pb-4">
+            <h2 class="text-2xl font-bold text-gold">ویژگی‌های کلیدی</h2>
+        </div>
+        <ul class="list-disc list-inside text-gray-300 space-y-2 pt-4 pr-4">
+            <li><strong>همگام‌سازی دقیق:</strong> پخش، توقف، و جلو/عقب بردن ویدیو به صورت کاملا هماهنگ برای هردوطرف.</li>
+            <li><strong>مصرف اینترنت بسیار کم:</strong> در حد چند کیلوبایت در هر دقیقه تماشای فیلم (در حالت پخش با فایل محلی)</li>
+            <li><strong>پشتیبانی از یوتیوب:</strong> هر ویدیویی از یوتیوب را به سادگی و به صورت همزمان تماشا کنید.</li>
+            <li><strong>پشتیبانی از فایل محلی:</strong> فایل‌های ویدیویی خود را مستقیماً از کامپیوترتان پخش کنید.</li>
+            <li><strong>پشتیبانی از زیرنویس:</strong> فایل‌های زیرنویس با فرمت SRT یا VTT را به راحتی اضافه کنید.</li>
+            <li><strong>چت داخلی:</strong> همزمان با تماشای فیلم با دوستان خود گفتگو کنید.</li>
+            <li><strong>بدون نیاز به ثبت‌نام:</strong> سریع، رایگان و بدون نیاز به ساخت حساب کاربری.</li>
+        </ul>
+    </div>
+
+    <footer class="text-center py-4 mt-8">
+        <p class="text-gray-400">
+            اگه دل‌پلیر رو دوست داشتی، 
+            <a href="https://daramet.com/delplayer" target="_blank" rel="noopener noreferrer" class="text-gold hover:underline">
+                یه قهوه من رو مهمون کن
+            </a> ☕
+        </p>
+    </footer>
+
     <script src="https://www.youtube.com/iframe_api"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
     <script>
-        // --- همان اسکریپت قبلی با تغییرات جزئی برای ظاهر بهتر ---
-        // (اسکریپت اصلی شما رو بدون تغییر اساسی اینجا کپی کردم)
-
-        // YouTube Player Globals
+        // --- YouTube Player Globals ---
         var ytPlayer;
         var isYouTubeMode = false;
 
-        function onYouTubeIframeAPIReady() {}
+        // This function is called by the YouTube API script.
+        // It must be in the global scope.
+        function onYouTubeIframeAPIReady() {
+            // The player object (ytPlayer) will be initialized
+            // when the user loads the first YouTube video.
+        }
 
         window.addEventListener('load', () => {
             // --- توابع اصلی ---
@@ -258,8 +271,8 @@
             let audioCtx;
             let reconnectAttempts = 0;
             const MAX_RECONNECT_INTERVAL = 90000;
-            let replyingTo = null;
-
+            let replyingTo = null; // آبجکتی برای نگهداری اطلاعات پیام در حال ریپلای
+            const replyPreviewContainer = document.createElement('div');
             myIdSpan.textContent = myId;
 
             // --- Emoji Picker Logic ---
@@ -288,8 +301,11 @@
                 isYouTubeMode = isYouTube;
                 videoPlayer.style.display = isYouTube ? 'none' : 'block';
                 youtubePlayerContainer.style.display = isYouTube ? 'block' : 'none';
-                if (isYouTube) videoPlayer.pause();
-                else if (ytPlayer) ytPlayer.pauseVideo();
+                if (isYouTube) {
+                    videoPlayer.pause();
+                } else if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
+                    ytPlayer.pauseVideo();
+                }
             }
 
             function createYouTubePlayer(videoId) {
@@ -300,7 +316,12 @@
                     height: '100%',
                     width: '100%',
                     videoId: videoId,
-                    playerVars: { 'playsinline': 1, 'controls': 1, 'rel': 0, 'modestbranding': 1 },
+                    playerVars: {
+                        'playsinline': 1,
+                        'controls': 1,
+                        'rel': 0,
+                        'modestbranding': 1
+                    },
                     events: {
                         'onReady': onPlayerReady,
                         'onStateChange': onPlayerStateChange,
@@ -341,14 +362,14 @@
 
             function updateStatus(message, type) {
                 const statusClasses = {
-                    success: 'bg-green-600 text-white',
-                    connected: 'bg-cyan-600 text-white',
+                    success: 'bg-gold/80 text-black',
+                    connected: 'bg-gold text-black',
                     error: 'bg-red-600 text-white',
-                    disconnected: 'bg-gray-700 text-yellow-400',
-                    connecting: 'bg-yellow-500 text-black animate-pulse'
+                    disconnected: 'bg-black/60 text-gold',
+                    connecting: 'bg-gold/50 text-black animate-pulse'
                 };
-                const className = statusClasses[type] || 'bg-gray-700 text-yellow-400';
-                statusDiv.innerHTML = `<span class="${className} px-6 py-2 rounded-full">${message}</span>`;
+                const className = statusClasses[type] || 'bg-black/60 text-gold';
+                statusDiv.innerHTML = `<span class="${className} px-4 py-1 rounded-full">${message}</span>`;
             }
 
             function connectWebSocket() {
@@ -356,11 +377,13 @@
                 ws.onopen = () => {
                     ws.send(JSON.stringify({ type: 'register', id: myId }));
                     reconnectAttempts = 0;
+                    // اگر قبل از قطعی به کسی متصل بودیم
                     if (partnerId) {
-                        updateStatus(`اتصال مجدد به ${partnerId}...`, 'connecting');
+                        updateStatus(`اتصال با سرور برقرار شد، در تلاش برای اتصال مجدد به ${partnerId}...`, 'connecting');
+                        // یک درخواست اتصال مجدد آرام ارسال می‌کنیم
                         sendDataTo(partnerId, { type: 'reconnect_request' });
                     } else {
-                        updateStatus('آماده', 'success');
+                        updateStatus(`آماده`, 'success');
                     }
                 };
                 ws.onmessage = (event) => {
@@ -376,8 +399,10 @@
                 ws.onclose = () => {
                     const delay = Math.min(MAX_RECONNECT_INTERVAL, Math.pow(2, reconnectAttempts) * 1000);
                     reconnectAttempts++;
-                    updateStatus(`تلاش مجدد تا ${Math.round(delay / 1000)} ثانیه دیگر...`, 'error');
-                    if (!partnerId) resetConnectionState('اتصال با سرور قطع شد', false);
+                    updateStatus(`ارتباط با سرور قطع شد. تلاش مجدد تا ${Math.round(delay / 1000)} ثانیه دیگر...`, 'error');
+                    if (!partnerId) {
+                        resetConnectionState('اتصال با سرور قطع شد', false);
+                    }
                     setTimeout(connectWebSocket, delay);
                 };
                 ws.onerror = (error) => {
@@ -398,7 +423,7 @@
             function resetConnectionState(reason = 'اتصال قطع شد', regenerateId = true) {
                 videoPlayer.pause();
                 if (isYouTubeMode && ytPlayer) ytPlayer.pauseVideo();
-                if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+                if (document.fullscreenElement) document.exitFullscreen().catch(err => console.error(`Error attempting to exit fullscreen: ${err.message}`));
                 partnerId = '';
                 partnerIdInput.value = '';
                 updateStatus(reason, 'disconnected');
@@ -409,10 +434,16 @@
                 heartbeatInterval = null;
                 updateChatUIState(false);
                 if (regenerateId && ws && ws.readyState === WebSocket.OPEN) {
-                    if (myId) ws.send(JSON.stringify({ type: 'unregister', id: myId }));
+                    // ۱. ثبت‌نام شناسه قدیمی را لغو کن
+                    if (myId) {
+                        ws.send(JSON.stringify({ type: 'unregister', id: myId }));
+                    }
+                    // ۲. یک شناسه جدید بساز
                     myId = randomId();
                     myIdSpan.textContent = myId;
+                    // ۳. شناسه جدید را بلافاصله در سرور ثبت کن
                     ws.send(JSON.stringify({ type: 'register', id: myId }));
+                    console.log(`Re-registered with new ID: ${myId}`);
                 }
             }
 
@@ -420,6 +451,7 @@
                 if (heartbeatInterval) clearInterval(heartbeatInterval);
                 lastPongReceivedTime = Date.now();
                 const PING_INTERVAL = 5000;
+                const TIMEOUT = 8000;
                 heartbeatInterval = setInterval(() => {
                     if (!partnerId) {
                         clearInterval(heartbeatInterval);
@@ -427,10 +459,12 @@
                         return;
                     }
                     if (Date.now() - lastPongReceivedTime > 8000) {
-                        updateStatus('ارتباط ناپایدار است...', 'connecting');
+                        console.error("Heartbeat failed. Peer seems disconnected.");
+                        updateStatus('ارتباط با طرف مقابل ناپایدار است. منتظر اتصال مجدد...', 'connecting');
                         updateChatUIState(false);
                         videoPlayer.pause();
                         if (isYouTubeMode && ytPlayer) ytPlayer.pauseVideo();
+                        if (document.fullscreenElement) document.exitFullscreen().catch(err => console.error(`Error attempting to exit fullscreen: ${err.message}`));
                     }
                     sendDataTo(partnerId, { type: 'ping' });
                 }, PING_INTERVAL);
@@ -441,12 +475,12 @@
                     try {
                         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                     } catch (e) {
-                        console.error("Web Audio API not supported");
+                        console.error("Web Audio API is not supported in this browser");
                         return;
                     }
                 }
                 if (audioCtx.state === 'suspended') audioCtx.resume();
-                const notes = [1046.50, 1318.51, 1567.98];
+                const notes = [1046.50, 1318.51, 1567.98]; // C6, E6, G6
                 const now = audioCtx.currentTime;
                 const attackTime = 0.01;
                 const releaseTime = 0.15;
@@ -469,7 +503,8 @@
 
             function handleReceivedData(data, fromId) {
                 if (fromId === partnerId && !heartbeatInterval) {
-                    updateStatus(`اتصال مجدد با ${fromId}`, 'connected');
+                    console.log("Peer has reconnected. Restarting heartbeat.");
+                    updateStatus(`اتصال با ${fromId} مجددا برقرار شد`, 'connected');
                     updateChatUIState(true);
                     startHeartbeat();
                 }
@@ -480,7 +515,7 @@
                 if (data.type === 'pong' && fromId === partnerId) {
                     lastPongReceivedTime = Date.now();
                     if (statusDiv.textContent.includes('ناپایدار')) {
-                        updateStatus(`اتصال برقرار شد`, 'connected');
+                        updateStatus(`اتصال با ${fromId} برقرار شد`, 'connected');
                     }
                     updateChatUIState(true);
                     return;
@@ -511,82 +546,83 @@
                 }
                 if (data.type === 'reconnect_request') {
                     if (fromId === partnerId) {
-                        updateStatus(`اتصال مجدد با ${fromId}`, 'connected');
+                        updateStatus(`اتصال با ${fromId} مجددا برقرار شد`, 'connected');
                         updateChatUIState(true);
-                        if (!heartbeatInterval) startHeartbeat();
+                        if (!heartbeatInterval) {
+                            startHeartbeat();
+                        }
                         sendDataTo(fromId, { type: 'reconnect_confirm' });
                     }
                     return;
                 }
                 if (data.type === 'reconnect_confirm') {
                     if (fromId === partnerId) {
-                        updateStatus(`اتصال مجدد با ${fromId}`, 'connected');
+                        updateStatus(`اتصال با ${fromId} مجددا برقرار شد`, 'connected');
                         updateChatUIState(true);
-                        if (!heartbeatInterval) startHeartbeat();
+                        if (!heartbeatInterval) {
+                            startHeartbeat();
+                        }
                     }
                     return;
                 }
                 if (fromId !== partnerId) return;
-
                 if (data.type === 'request_source') {
-                    if (isYouTubeMode && ytPlayer) {
+                    if (isYouTubeMode && ytPlayer && typeof ytPlayer.getVideoData === 'function') {
                         const videoId = ytPlayer.getVideoData().video_id;
-                        if (videoId) broadcastData({ type: 'load_youtube', videoId });
+                        if (videoId) broadcastData({ type: 'load_youtube', videoId: videoId });
                     } else if (videoPlayer.src && !videoPlayer.src.startsWith('blob:')) {
                         broadcastData({ type: 'load_url', url: videoPlayer.src });
                     }
                     return;
                 }
-
                 if (data.type === 'load_url') {
                     switchToPlayerMode(false);
                     if (videoPlayer.src !== data.url) {
                         videoPlayer.src = data.url;
                         videoUrlInput.value = data.url;
-                        updateStatus('ویدیو از طرف مقابل بارگذاری شد', 'success');
+                        updateStatus(`ویدیو از طرف مقابل بارگذاری شد`, 'success');
                     }
                     return;
                 }
-
                 if (data.type === 'load_youtube') {
                     switchToPlayerMode(true);
-                    updateStatus('ویدیو یوتیوب بارگذاری شد', 'success');
+                    updateStatus(`ویدیو یوتیوب از طرف مقابل بارگذاری شد`, 'success');
                     createYouTubePlayer(data.videoId);
                     videoUrlInput.value = `https://www.youtube.com/watch?v=${data.videoId}`;
                     return;
                 }
-
                 if (data.type === 'chat') {
                     appendChatMessage(data.data, false);
                     playNotificationSound();
                     return;
                 }
-
                 if (data.type === 'disconnect') {
                     resetConnectionState('اتصال توسط طرف مقابل قطع شد');
                     return;
                 }
-
                 if (data.type === 'sync') {
                     isSyncing = true;
                     if (data.mode === 'html5' && !isYouTubeMode) {
                         partnerVideoDuration = data.duration || null;
                         if (videoPlayer.playbackRate !== data.rate) videoPlayer.playbackRate = data.rate;
                         if (Math.abs(videoPlayer.currentTime - data.value) > 1.8) videoPlayer.currentTime = data.value;
-                        if (data.playing && videoPlayer.paused) videoPlayer.play().catch(() => {});
+                        if (data.playing && videoPlayer.paused) videoPlayer.play().catch(e => {});
                         else if (!data.playing && !videoPlayer.paused) videoPlayer.pause();
                         checkVideoLength();
                         setTimeout(() => { isSyncing = false; }, 500);
                     } else if (data.mode === 'youtube' && isYouTubeMode) {
-                        if (!ytPlayer) {
+                        if (!ytPlayer || typeof ytPlayer.getPlayerState !== 'function') {
                             isSyncing = false;
                             return;
                         }
                         if (ytPlayer.getPlaybackRate() !== data.rate) ytPlayer.setPlaybackRate(data.rate);
                         if (Math.abs(ytPlayer.getCurrentTime() - data.value) > 2.0) ytPlayer.seekTo(data.value, true);
-                        const state = ytPlayer.getPlayerState();
-                        if (data.playing && state !== YT.PlayerState.PLAYING) ytPlayer.playVideo();
-                        else if (!data.playing && state === YT.PlayerState.PLAYING) ytPlayer.pauseVideo();
+                        const currentState = ytPlayer.getPlayerState();
+                        if (data.playing && currentState !== YT.PlayerState.PLAYING) {
+                            ytPlayer.playVideo();
+                        } else if (!data.playing && currentState === YT.PlayerState.PLAYING) {
+                            ytPlayer.pauseVideo();
+                        }
                         setTimeout(() => { isSyncing = false; }, 1200);
                     } else {
                         isSyncing = false;
@@ -597,42 +633,40 @@
             function appendChatMessage(data, isMe) {
                 const { message, messageId, replyTo } = data;
                 const chatRow = document.createElement('div');
-                chatRow.className = `group flex items-center gap-3 ${isMe ? 'justify-end' : 'justify-start'}`;
-
+                chatRow.className = `group flex items-center gap-2 w-full ${isMe ? 'justify-end' : 'justify-start'}`;
                 const msgDiv = document.createElement('div');
                 msgDiv.id = messageId;
-                msgDiv.className = `px-5 py-3 max-w-[80%] break-words rounded-2xl shadow-md ${isMe ? 'bg-cyan-600 text-white rounded-br-none' : 'bg-gray-800 text-white rounded-bl-none'}`;
+                msgDiv.className = `px-3 py-2 mb-1 max-w-[80%] break-words shadow rounded-xl ${isMe ? 'bg-gold text-black rounded-br-lg' : 'bg-black/60 text-white rounded-bl-lg'}`;
                 msgDiv.style.direction = 'rtl';
                 msgDiv.style.textAlign = 'right';
-
                 if (replyTo) {
                     const replyBox = document.createElement('div');
-                    replyBox.className = 'bg-black/30 p-3 rounded-lg mb-2 border-r-4 border-cyan-500 cursor-pointer hover:bg-black/40';
-                    replyBox.textContent = replyTo.text.substring(0, 40) + (replyTo.text.length > 40 ? '...' : '');
+                    replyBox.className = 'bg-black/30 p-2 rounded-md mb-2 border-l-2 border-gold cursor-pointer hover:bg-gold/20';
+                    replyBox.textContent = replyTo.text.substring(0, 30) + (replyTo.text.length > 30 ? '...' : '');
                     replyBox.onclick = () => {
-                        const el = document.getElementById(replyTo.id);
-                        if (el) {
-                            chatMessages.scrollTo({ top: el.offsetTop - 100, behavior: 'smooth' });
-                            el.classList.add('bg-cyan-900');
-                            setTimeout(() => el.classList.remove('bg-cyan-900'), 1500);
+                        const originalMessage = document.getElementById(replyTo.id);
+                        if (originalMessage) {
+                            chatMessages.scrollTo({ top: originalMessage.offsetTop - chatMessages.offsetTop, behavior: 'smooth' });
+                            originalMessage.classList.add('bg-gold/30');
+                            originalMessage.style.transition = 'background-color 300ms';
+                            setTimeout(() => {
+                                originalMessage.classList.remove('bg-gold/30');
+                            }, 1500);
                         }
                     };
-                    msgDiv.appendChild(replyBox);
+                    msgDiv.insertBefore(replyBox, msgDiv.firstChild);
                 }
-
                 const textSpan = document.createElement('span');
                 textSpan.textContent = message;
                 msgDiv.appendChild(textSpan);
-
                 const replyButton = document.createElement('button');
-                replyButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 17 4 12 9 7"></polyline><path d="M20 18v-2a4 4 0 00-4-4H4"></path></svg>`;
-                replyButton.className = 'opacity-0 group-hover:opacity-100 transition p-2';
+                replyButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400 hover:text-gold"><polyline points="9 17 4 12 9 7"></polyline><path d="M20 18v-2a4 4 0 0 0-4-4H4"></path></svg>`;
+                replyButton.className = 'transition-opacity opacity-0 group-hover:opacity-100 focus:opacity-100';
                 replyButton.onclick = () => {
                     replyingTo = { id: messageId, text: message };
                     updateReplyPreview();
                     chatInput.focus();
                 };
-
                 if (isMe) {
                     chatRow.appendChild(replyButton);
                     chatRow.appendChild(msgDiv);
@@ -640,7 +674,6 @@
                     chatRow.appendChild(msgDiv);
                     chatRow.appendChild(replyButton);
                 }
-
                 chatMessages.appendChild(chatRow);
                 chatMessages.scrollTop = chatMessages.scrollHeight;
             }
@@ -664,12 +697,12 @@
                 if (isSyncing || !partnerId) return;
                 let syncData;
                 if (isYouTubeMode) {
-                    if (!ytPlayer) return;
+                    if (!ytPlayer || typeof ytPlayer.getPlayerState !== 'function') return;
                     const state = ytPlayer.getPlayerState();
                     syncData = {
                         type: 'sync',
                         mode: 'youtube',
-                        playing: state === YT.PlayerState.PLAYING,
+                        playing: (state === YT.PlayerState.PLAYING),
                         value: ytPlayer.getCurrentTime(),
                         rate: ytPlayer.getPlaybackRate()
                     };
@@ -698,12 +731,13 @@
                     return;
                 }
                 if (Math.abs(myDuration - partnerVideoDuration) > 1.5) {
-                    warningDiv.textContent = '⚠️ طول ویدیوهای شما یکسان نیست! لطفاً فایل یکسان انتخاب کنید.';
+                    warningDiv.textContent = '⚠️ طول ویدیوی شما و طرف مقابل یکسان نیست. لطفاً هر دو یک فایل یکسان انتخاب کنید.';
                     warningDiv.style.display = 'block';
                 } else {
                     warningDiv.style.display = 'none';
                 }
             }
+
             setInterval(checkVideoLength, 3000);
 
             // --- Event Listeners ---
@@ -714,9 +748,15 @@
 
             connectBtn.addEventListener('click', () => {
                 const idToConnect = partnerIdInput.value.trim();
-                if (!idToConnect) return alert('شناسه دوستت رو وارد کن!');
-                if (idToConnect === myId) return alert('نمی‌تونی به خودت وصل شی!');
-                updateStatus(`در حال اتصال به ${idToConnect}...`, 'connecting');
+                if (!idToConnect) {
+                    alert('لطفا شناسه دوستتان را وارد کنید.');
+                    return;
+                }
+                if (idToConnect === myId) {
+                    alert('نمی‌توانید به خودتان متصل شوید.');
+                    return;
+                }
+                updateStatus(`درخواست اتصال به ${idToConnect} ارسال شد...`, 'connecting');
                 sendDataTo(idToConnect, { type: 'connect_request' });
             });
 
@@ -727,11 +767,14 @@
 
             loadUrlBtn.addEventListener('click', () => {
                 const url = videoUrlInput.value.trim();
-                if (!url) return alert('لینک رو وارد کن!');
+                if (!url) {
+                    alert('لطفاً لینک را وارد کنید.');
+                    return;
+                }
                 const youTubeVideoId = getYouTubeVideoId(url);
                 if (youTubeVideoId) {
                     switchToPlayerMode(true);
-                    updateStatus('در حال بارگذاری یوتیوب...', 'connecting');
+                    updateStatus(`در حال بارگذاری ویدیوی یوتیوب...`, 'connecting');
                     createYouTubePlayer(youTubeVideoId);
                     if (partnerId) broadcastData({ type: 'load_youtube', videoId: youTubeVideoId });
                 } else {
@@ -739,71 +782,87 @@
                     try {
                         new URL(url);
                         videoPlayer.src = url;
-                        updateStatus('در حال بارگذاری ویدیو...', 'connecting');
-                        if (partnerId) broadcastData({ type: 'load_url', url });
-                    } catch {
-                        updateStatus('لینک نامعتبر است!', 'error');
-                        alert('لینک معتبر (مستقیم یا یوتیوب) وارد کن!');
+                        updateStatus(`در حال بارگذاری ویدیو از لینک...`, 'connecting');
+                        if (partnerId) broadcastData({ type: 'load_url', url: url });
+                    } catch (e) {
+                        updateStatus('لینک وارد شده معتبر نیست.', 'error');
+                        alert('لطفاً یک لینک معتبر (مستقیم یا یوتیوب) وارد کنید.');
                     }
                 }
             });
 
-            videoFileInput.addEventListener('change', (e) => {
-                const file = e.target.files[0];
+            videoFileInput.addEventListener('change', (event) => {
+                const file = event.target.files[0];
                 if (file) {
                     switchToPlayerMode(false);
-                    videoPlayer.src = URL.createObjectURL(file);
+                    const fileURL = URL.createObjectURL(file);
+                    videoPlayer.src = fileURL;
                     videoUrlInput.value = '';
                     updateStatus(`فایل بارگذاری شد: ${file.name}`, 'success');
-                    if (partnerId) alert('دوستت هم باید همین فایل رو انتخاب کنه.');
+                    if (partnerId) alert('شما یک فایل محلی را بارگذاری کردید. دوست شما نیز باید همین فایل را به صورت دستی انتخاب کند.');
                 }
             });
 
             videoPlayer.addEventListener('loadeddata', () => {
-                updateStatus('ویدیو بارگذاری شد.', 'success');
+                updateStatus('ویدیو با موفقیت بارگذاری شد.', 'success');
                 sendSyncData();
                 checkVideoLength();
             });
 
             videoPlayer.addEventListener('error', () => {
-                updateStatus('خطا در بارگذاری ویدیو!', 'error');
+                updateStatus('خطا در بارگذاری ویدیو. لینک ممکن است نامعتبر یا غیرقابل دسترس باشد.', 'error');
             });
 
-            subtitleFileInput.addEventListener('change', (e) => {
-                const file = e.target.files[0];
+            subtitleFileInput.addEventListener('change', (event) => {
+                const file = event.target.files[0];
                 if (!file) return;
                 const oldTrack = videoPlayer.querySelector('track');
-                if (oldTrack) oldTrack.remove();
+                if(oldTrack) oldTrack.remove();
                 const reader = new FileReader();
-                reader.onload = function(ev) {
-                    let content = ev.target.result;
+                reader.onload = function(e) {
+                    let content = e.target.result;
                     let url;
                     if (file.name.endsWith('.srt')) {
-                        const vtt = 'WEBVTT\n\n' + content.replace(/\r/g, '').replace(/(\d{2}:\d{2}:\d{2}),(\d{3})/g, '$1.$2').replace(/^\d+$/gm, '');
-                        const blob = new Blob([vtt], { type: 'text/vtt' });
+                        const vttContent = 'WEBVTT\n\n' + content.replace(/\r/g, '').replace(/(\d{2}:\d{2}:\d{2}),(\d{3})/g, '$1.$2').replace(/^\d+$/gm, '');
+                        const blob = new Blob([vttContent], { type: 'text/vtt' });
                         url = URL.createObjectURL(blob);
                     } else {
                         url = URL.createObjectURL(file);
                     }
-                    const track = document.createElement('track');
-                    track.kind = 'subtitles';
-                    track.label = 'فارسی';
-                    track.srclang = 'fa';
-                    track.src = url;
-                    track.default = true;
-                    videoPlayer.appendChild(track);
-                    videoPlayer.textTracks[0].mode = 'showing';
+                    addSubtitleTrack(url, 'fa', 'فارسی');
                 };
                 reader.readAsText(file);
             });
 
+            function addSubtitleTrack(url, lang, label) {
+                const track = document.createElement('track');
+                track.kind = 'subtitles';
+                track.label = label;
+                track.srclang = lang;
+                track.src = url;
+                track.default = true;
+                videoPlayer.appendChild(track);
+                videoPlayer.textTracks[0].mode = 'showing';
+            }
+
             myIdSpan.addEventListener('click', () => {
                 if (!myId) return;
-                navigator.clipboard.writeText(myId).then(() => {
+                const textArea = document.createElement('textarea');
+                textArea.value = myId;
+                textArea.style.position = 'fixed';
+                textArea.style.left = '-9999px';
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    document.execCommand('copy');
                     copyHint.textContent = 'کپی شد!';
                     copyHint.style.display = 'inline';
-                    setTimeout(() => copyHint.style.display = 'none', 2000);
-                });
+                    setTimeout(() => { copyHint.style.display = 'none'; }, 2000);
+                } catch (err) {
+                    console.error('Fallback: Oops, unable to copy', err);
+                }
+                document.body.removeChild(textArea);
             });
 
             chatSend.addEventListener('click', sendChatMessage);
@@ -814,16 +873,15 @@
                 }
             });
 
-            // --- Reply Preview ---
-            const replyPreviewContainer = document.createElement('div');
-            replyPreviewContainer.className = 'bg-gray-700 p-3 rounded-t-xl text-sm text-gray-300 hidden flex items-center justify-between';
+            // --- تنظیمات اولیه پیش‌نمایش ریپلای ---
+            replyPreviewContainer.className = 'bg-black/60 p-2 rounded-t-lg text-sm text-gray-300 hidden items-center justify-between';
             chatInput.parentElement.parentElement.insertBefore(replyPreviewContainer, chatInput.parentElement);
 
             function updateReplyPreview() {
                 if (replyingTo) {
                     replyPreviewContainer.innerHTML = `
-                        <span>در پاسخ به: <em class="text-cyan-300">${replyingTo.text.substring(0, 30)}...</em></span>
-                        <button id="cancel-reply" class="text-red-400 text-xl font-bold">&times;</button>
+                        <span>در پاسخ به: <em class="text-gold">${replyingTo.text.substring(0, 30)}...</em></span>
+                        <button id="cancel-reply" class="font-bold text-red-500 text-lg">&times;</button>
                     `;
                     replyPreviewContainer.classList.remove('hidden');
                     replyPreviewContainer.classList.add('flex');
