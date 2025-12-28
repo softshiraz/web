@@ -3,49 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- ================== SEO Tags (START) ================== -->
     <title>دل‌پلیر</title>
-    <meta name="description" content="با دل‌پلیر به راحتی و به صورت همزمان با دوست یا پارتنر خود فیلم و سریال تماشا کنید. فقط کافیست لینک یا فایل ویدیو را وارد کرده و با شناسه مخصوص به هم متصل شوید.">
-    <meta name="keywords" content="تماشای همزمان فیلم, دیدن فیلم با دوستان, پخش همزمان ویدیو, تماشای همزمان یوتیوب, سینما آنلاین, دل پلیر, delplayer">
-    <link rel="canonical" href="https://delplayer.ir">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://delplayer.ir">
-    <meta property="og:title" content="دل‌پلیر: با پارتنرت از راه دور همزمان فیلم ببین">
-    <meta property="og:description" content="با دل‌پلیر به راحتی و به صورت همزمان با پارتنر خود از راه دور فیلم و سریال تماشا کنید.">
-    <meta property="og:image" content="https://placehold.co/1200x630/0D1117/7DF9FF?text=Delplayer">
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://delplayer.ir">
-    <meta property="twitter:title" content="دل‌پلیر: با پارتنرت از راه دور همزمان فیلم ببین">
-    <meta property="twitter:description" content="با دل‌پلیر به راحتی و به صورت همزمان با پارتنر خود از راه دور فیلم و سریال تماشا کنید.">
-    <meta property="twitter:image" content="https://placehold.co/1200x630/0D1117/7DF9FF?text=Delplayer">
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "دل‌پلیر",
-        "operatingSystem": "WEB",
-        "applicationCategory": "MultimediaApplication",
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.8",
-            "ratingCount": "150"
-        },
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "IRR"
-        }
-    }
-    </script>
-    <!-- ================== SEO Tags (END) ================== -->
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V87N2NQJLV"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-V87N2NQJLV');
-    </script>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🎬</text></svg>">
@@ -167,31 +125,6 @@
         </div>
     </div>
 
-    <!-- بخش توضیحات -->
-    <div class="w-full max-w-4xl glass rounded-2xl shadow-2xl p-6 space-y-6 mt-8">
-        <div class="text-center border-b border-gold/30 pb-4">
-            <h2 class="text-2xl font-bold text-gold">دل‌پلیر چگونه کار می‌کند؟</h2>
-            <p class="text-gray-300 mt-2">تماشای فیلم با دوستتان در سه مرحله ساده!</p>
-        </div>
-        <div class="grid md:grid-cols-3 gap-6 text-center pt-4">
-            <div>
-                <div class="text-4xl mb-2">1️⃣</div>
-                <h3 class="text-xl font-semibold text-gold mb-2">ویدیو را انتخاب کنید</h3>
-                <p class="text-gray-300">لینک مستقیم ویدیو، لینک یوتیوب یا فایل ویدیوی خود را در برنامه بارگذاری کنید.</p>
-            </div>
-            <div>
-                <div class="text-4xl mb-2">2️⃣</div>
-                <h3 class="text-xl font-semibold text-gold mb-2">شناسه را به اشتراک بگذارید</h3>
-                <p class="text-gray-300">شناسه منحصر به فرد خود را کپی کرده و برای دوستی که می‌خواهید با او فیلم ببینید، ارسال کنید یا شناسه او را وارد کنید.</p>
-            </div>
-            <div>
-                <div class="text-4xl mb-2">3️⃣</div>
-                <h3 class="text-xl font-semibold text-gold mb-2">متصل شوید و لذت ببرید!</h3>
-                <p class="text-gray-300">اتصال برقرار می‌شود و پخش ویدیو برای هر دو نفر همزمان خواهد شد.</p>
-            </div>
-        </div>
-    </div>
-
     <!-- ویژگی‌های کلیدی -->
     <div class="w-full max-w-4xl glass rounded-2xl shadow-2xl p-6 space-y-4 mt-8">
         <div class="text-center border-b border-gold/30 pb-4">
@@ -224,11 +157,8 @@
         var ytPlayer;
         var isYouTubeMode = false;
 
-        // This function is called by the YouTube API script.
-        // It must be in the global scope.
         function onYouTubeIframeAPIReady() {
-            // The player object (ytPlayer) will be initialized
-            // when the user loads the first YouTube video.
+            // The player object (ytPlayer) will be initialized when needed
         }
 
         window.addEventListener('load', () => {
@@ -271,7 +201,7 @@
             let audioCtx;
             let reconnectAttempts = 0;
             const MAX_RECONNECT_INTERVAL = 90000;
-            let replyingTo = null; // آبجکتی برای نگهداری اطلاعات پیام در حال ریپلای
+            let replyingTo = null;
             const replyPreviewContainer = document.createElement('div');
             myIdSpan.textContent = myId;
 
@@ -377,10 +307,8 @@
                 ws.onopen = () => {
                     ws.send(JSON.stringify({ type: 'register', id: myId }));
                     reconnectAttempts = 0;
-                    // اگر قبل از قطعی به کسی متصل بودیم
                     if (partnerId) {
                         updateStatus(`اتصال با سرور برقرار شد، در تلاش برای اتصال مجدد به ${partnerId}...`, 'connecting');
-                        // یک درخواست اتصال مجدد آرام ارسال می‌کنیم
                         sendDataTo(partnerId, { type: 'reconnect_request' });
                     } else {
                         updateStatus(`آماده`, 'success');
@@ -434,14 +362,11 @@
                 heartbeatInterval = null;
                 updateChatUIState(false);
                 if (regenerateId && ws && ws.readyState === WebSocket.OPEN) {
-                    // ۱. ثبت‌نام شناسه قدیمی را لغو کن
                     if (myId) {
                         ws.send(JSON.stringify({ type: 'unregister', id: myId }));
                     }
-                    // ۲. یک شناسه جدید بساز
                     myId = randomId();
                     myIdSpan.textContent = myId;
-                    // ۳. شناسه جدید را بلافاصله در سرور ثبت کن
                     ws.send(JSON.stringify({ type: 'register', id: myId }));
                     console.log(`Re-registered with new ID: ${myId}`);
                 }
@@ -480,7 +405,7 @@
                     }
                 }
                 if (audioCtx.state === 'suspended') audioCtx.resume();
-                const notes = [1046.50, 1318.51, 1567.98]; // C6, E6, G6
+                const notes = [1046.50, 1318.51, 1567.98];
                 const now = audioCtx.currentTime;
                 const attackTime = 0.01;
                 const releaseTime = 0.15;
