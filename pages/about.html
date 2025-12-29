@@ -1,37 +1,372 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>درباره ما | سافت شیراز - قدیمی ترین پخش کننده انیمه در شیراز</title>
-    <meta name="description" content="درباره سافت شیراز، قدیمی ترین و معتبرترین برگزارکننده اکران انیمه و انیمیشن روی پرده سینما در شیراز. تاریخچه، ایونت های طلایی و دلیل برتری ما.">
-    <meta name="keywords" content="درباره سافت شیراز, قدیمی ترین انیمه شیراز, تاریخچه سافت شیراز, ایونت انیمه شیراز">
-    
-    <!-- همان لینک‌های فونت و آیکون -->
-    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/dist/font-face.css?v=3" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css?v=3">
-    
-    <style>
-    /* استایل مشابه صفحه اصلی */
-    body { font-family: "Vazirmatn", sans-serif; background:#0e0e0f; color:#fff; }
-    .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; text-align: right; line-height: 1.9; font-size: 16px; }
-    h1 { color: #ffd700; text-align: center; font-size: 32px; margin-bottom: 40px; text-shadow: 0 0 10px rgba(255,215,0,0.4); }
-    p { margin-bottom: 20px; }
-    strong { color: #ffd700; }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>درباره ما | سافت شیراز — قدیمی‌ترین پخش‌کننده اکران انیمه در شیراز</title>
+  <meta name="description" content="سافت شیراز — قدیمی‌ترین و معتبرترین برگزارکننده اکران انیمه و رویدادهای فرهنگی در شیراز. تاریخچه، ارزش‌ها، تیم و نحوه رزرو بلیت." />
+  <meta name="keywords" content="سافت شیراز, اکران انیمه, انیمه شیراز, ایونت انیمه" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="درباره سافت شیراز — اکران انیمه در شیراز" />
+  <meta property="og:description" content="قدیمی‌ترین برگزارکننده اکران انیمه و انیمیشن در شیراز. همراه با تاریخچه، ایونت‌های برجسته و راه‌های رزرو." />
+  <meta property="og:locale" content="fa_IR" />
+  <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/dist/font-face.css?v=3" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css?v=3">
+
+  <style>
+    :root{
+      --bg:#0e0e0f;
+      --card:#121214;
+      --muted:#b9b9bd;
+      --gold:#ffd700;
+      --glass: rgba(255,255,255,0.04);
+      --radius:14px;
+      --container:1200px;
+    }
+    *{box-sizing:border-box; margin:0; padding:0}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:"Vazirmatn","Helvetica Neue",Arial; background:linear-gradient(180deg,#09090a 0%, #0f0f11 100%); color:#fff; -webkit-font-smoothing:antialiased; line-height:1.7;
+      -webkit-text-size-adjust:100%;
+    }
+    a{color:var(--gold); text-decoration:none}
+    .container{max-width:var(--container); margin:0 auto; padding:28px 20px}
+
+    /* header */
+    header{display:flex; align-items:center; justify-content:space-between; gap:20px; padding:12px 0; flex-wrap:wrap; position:relative; z-index:10}
+    .brand{display:flex; align-items:center; gap:12px}
+    .logo{width:54px; height:54px; border-radius:12px; background:linear-gradient(135deg,var(--gold),#ffb84d); display:flex; align-items:center; justify-content:center; box-shadow:0 6px 20px rgba(0,0,0,0.6);}
+    .logo i{color:#111; font-size:24px}
+
+    /* دکمه بازگشت */
+    .back-btn{
+      background:linear-gradient(135deg, var(--gold), #ffcc54);
+      color:#111;
+      padding:12px 24px;
+      border-radius:50px;
+      font-weight:700;
+      font-size:16px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      box-shadow:0 6px 20px rgba(255,215,0,0.3);
+      transition:all .3s ease;
+    }
+    .back-btn:hover{
+      transform:translateY(-3px);
+      box-shadow:0 10px 30px rgba(255,215,0,0.4);
+    }
+    .back-btn i{font-size:18px}
+
+    /* hero */
+    .hero{display:grid; grid-template-columns:1fr 420px; gap:32px; align-items:start; margin-top:24px}
+    .hero-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:32px; border-radius:18px; box-shadow:0 8px 30px rgba(0,0,0,0.6);}
+    .eyebrow{color:var(--muted); font-size:14px; margin-bottom:8px}
+    h1{color:var(--gold); margin:0 0 12px; font-size:34px; text-shadow:0 6px 30px rgba(255,215,0,0.06)}
+    .lead{color:#e6e6e8; margin-bottom:20px; font-size:17px}
+    .stats{display:flex; gap:16px; flex-wrap:wrap}
+    .stat{background:var(--glass); padding:12px 16px; border-radius:12px; text-align:center; min-width:100px}
+    .stat strong{display:block; color:var(--gold); font-size:20px}
+
+    /* sidebar */
+    .card-cta{background:linear-gradient(180deg,#111 0%, #0f0f11 100%); padding:24px; border-radius:16px; box-shadow:0 6px 20px rgba(0,0,0,0.5)}
+    .card-cta h3{margin:0 0 12px; font-size:20px}
+    .reserve{display:block; margin-top:16px; padding:14px; border-radius:12px; text-align:center; font-weight:700; background:var(--gold); color:#111; transition:background .2s}
+    .reserve:hover{background:#ffea80}
+    .small{font-size:14px; color:var(--muted); line-height:1.6}
+
+    /* timeline */
+    .timeline{margin-top:32px}
+    .timeline-item{display:flex; gap:16px; align-items:flex-start; padding:16px 0; border-top:1px dashed rgba(255,255,255,0.03)}
+    .timeline-item:first-child{border-top:none}
+    .time-bullet{min-width:60px; text-align:center}
+    .time-bullet .dot{width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,var(--gold),#ffb84d); display:flex; align-items:center; justify-content:center; color:#111; font-weight:700; font-size:16px}
+    .timeline-body{flex:1}
+    .timeline-body h4{margin:0 0 8px; font-size:18px}
+    .muted{color:var(--muted)}
+
+    /* grid sections */
+    .grid-section{display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:32px}
+    .card-item{background:var(--card); padding:24px; border-radius:16px; transition:transform .3s}
+    .card-item:hover{transform:translateY(-8px)}
+    .card-item h4{margin:0 0 10px; font-size:19px}
+
+    /* team */
+    .team{display:flex; gap:16px; flex-wrap:wrap; justify-content:center; margin-top:32px}
+    .member{display:flex; gap:16px; align-items:center; background:var(--glass); padding:16px; border-radius:16px; min-width:280px; flex:1}
+    .avatar{width:64px;height:64px;border-radius:12px; background:linear-gradient(135deg,#444,#222); display:flex; align-items:center; justify-content:center; font-size:28px}
+
+    /* gallery */
+    .gallery{display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:20px; margin-top:20px}
+    .gallery img{width:100%; height:auto; aspect-ratio:16/9; object-fit:cover; border-radius:var(--radius); box-shadow:0 8px 20px rgba(0,0,0,0.5); transition:transform .3s}
+    .gallery img:hover{transform:scale(1.03)}
+
+    /* quotes */
+    .quote{background:var(--glass); padding:20px; border-radius:14px; border-right:5px solid var(--gold); margin:16px 0; font-style:italic; font-size:16px; backdrop-filter:blur(4px)}
+
+    /* faq */
+    details{background:var(--glass); padding:16px; border-radius:14px; margin-bottom:16px}
+    summary{font-weight:700; color:var(--gold); cursor:pointer; font-size:17px}
+    details[open]{padding-bottom:20px}
+
+    /* footer */
+    footer{margin-top:48px; padding:24px 0; border-top:1px solid rgba(255,255,255,0.03); color:var(--muted); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px}
+
+    /* animations */
+    .fade-up{opacity:0; transform:translateY(20px); transition:all 600ms cubic-bezier(.2,.9,.3,1)}
+    .fade-up.in{opacity:1; transform:none}
+
+    /* موبایل: دکمه بازگشت ثابت در بالا-راست (مناسب RTL) */
+    @media (max-width:680px){
+      .container{padding-top:90px} /* فضا برای دکمه ثابت */
+      .back-btn{
+        position:fixed;
+        top:16px;
+        right:16px;
+        z-index:1000;
+        padding:12px 20px;
+        font-size:15px;
+        border-radius:40px;
+        box-shadow:0 6px 20px rgba(255,215,0,0.5);
+      }
+      header{
+        justify-content:center;
+        align-items:center;
+      }
+      .brand{margin-top:10px}
+      .grid-section{grid-template-columns:1fr}
+      .team{flex-direction:column; align-items:stretch}
+      .logo{width:48px; height:48px}
+      h1{font-size:28px}
+      .hero-card{padding:24px}
+    }
+
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr; gap:32px}
+      .grid-section{grid-template-columns:repeat(2,1fr)}
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>درباره سافت شیراز</h1>
-        
-        <p>سافت شیراز از سال‌های دور به عنوان <strong>قدیمی ترین و معتبرترین برگزارکننده اکران انیمه و انیمیشن در شیراز</strong> شناخته می‌شود. ما اولین گروهی هستیم که تجربه تماشای فیلم‌های انیمه ژاپنی محبوب را روی پرده بزرگ سینما به علاقه‌مندان شیرازی هدیه دادیم. از انیمه‌های کلاسیک مانند آثار استودیو جیبلی تا جدیدترین انیمه‌های روز دنیا، همه را با کیفیت بالا و جو طلایی اکران می‌کنیم.</p>
-        <p>اگر به دنبال <strong>اکران انیمه در شیراز</strong>، <strong>رزرو بلیط انیمیشن روی پرده</strong>، یا شرکت در ایونت‌های کتابخوانی و فرهنگی هستید، سافت شیراز بهترین و قدیمی‌ترین انتخاب شماست. ما جامعه‌ای بزرگ از علاقه‌مندان به انیمه ایجاد کرده‌ایم که هر هفته دور هم جمع می‌شویم و از دنیای شگفت‌انگیز انیمه لذت می‌بریم.</p>
-        <p>چرا سافت شیراز؟ چون ما <strong>ایونت های طلایی</strong> برگزار می‌کنیم: کیفیت صدای دالبی، تصویر فول اچ‌دی، جو دوستانه، و گاهی سورپرایزهای ویژه مثل کاسپلی و بحث پس از فیلم. رزرو بلیط از طریق تلگرام ساده و سریع است. ما قدیمی‌ترین هستیم چون سال‌هاست این کار را با عشق انجام می‌دهیم و هنوز بهترینیم!</p>
-        <p>جستجو برای <strong>انیمه سینما شیراز</strong>، <strong>فیلم انیمیشن روی پرده شیراز</strong>، <strong>ایونت انیمه شیراز</strong> یا <strong>قدیمی ترین پخش کننده انیمه شیراز</strong> شما را به ما می‌رساند. اکران‌های آینده را چک کنید و همین امروز بلیط رزرو کنید!</p>
-        
-        <p style="text-align:center; margin-top:40px;">
-            <a href="../index.html" style="color:#ffd700; font-weight:bold;">← بازگشت به صفحه اصلی</a>
-        </p>
-    </div>
+  <div class="container">
+    <header aria-label="سربرگ سایت">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"><i class="fa-solid fa-film"></i></div>
+        <div>
+          <div style="font-weight:800; font-size:17px">سافت شیراز</div>
+          <div style="font-size:13px; color:var(--muted)">قدیمی‌ترین پخش‌کننده اکران انیمه</div>
+        </div>
+      </div>
+
+      <!-- دکمه بازگشت (در موبایل ثابت می‌شود) -->
+      <a href="#" onclick="history.back(); return false;" class="back-btn">
+        <i class="fa-solid fa-arrow-left-long"></i>
+        بازگشت
+      </a>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-card fade-up" id="heroText">
+          <div class="eyebrow">از سال‌ها پیش همراه شما — فیلم، سریال، انیمه و انیمیشن</div>
+          <h1>سافت شیراز — تجربهٔ اکران روی پردهٔ بزرگ</h1>
+          <p class="lead">ما نه تنها پخش انیمه بلکه <strong>پخش فیلم، سریال، انیمه و انیمیشن</strong> را با استاندارد سینمایی در شیراز ارائه می‌دهیم. از آثار کلاسیک تا جدیدترین عناوین بین‌المللی — همگی با کیفیت صدا و تصویر حرفه‌ای و فضایی گرم و جمعی نمایش داده می‌شوند.</p>
+
+          <div class="stats" role="list" aria-label="آمار ما">
+            <div class="stat" role="listitem"><small class="muted">تعداد اکران</small><strong>۱٬۰۰۰+</strong></div>
+            <div class="stat" role="listitem"><small class="muted">ایونت‌ها</small><strong>۱۰۰+</strong></div>
+            <div class="stat" role="listitem"><small class="muted">شرکت‌کننده‌ها</small><strong>۴٬۰۰۰+</strong></div>
+            <div class="stat" role="listitem"><small class="muted">سال فعالیت</small><strong>۱۳+</strong></div>
+          </div>
+
+          <div class="timeline" aria-hidden="false">
+            <div class="timeline-item">
+              <div class="time-bullet"><div class="dot">۲۰۱۲</div></div>
+              <div class="timeline-body">
+                <h4>آغاز رسمی</h4>
+                <div class="muted">نخستین اکران رسمی انیمه در شیراز توسط سافت شیراز — پایه‌گذاری جامعه علاقه‌مندان.</div>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="time-bullet"><div class="dot">۲۰۱۸</div></div>
+              <div class="timeline-body">
+                <h4>گسترش ایونت‌ها</h4>
+                <div class="muted">اضافه شدن بردگیم، گیم‌نت، مسابقات، گردشگری و برنامه‌های تخصصی.</div>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="time-bullet"><div class="dot">۲۰۲۳</div></div>
+              <div class="timeline-body">
+                <h4>رشد جامعه</h4>
+                <div class="muted">همکاری با سالن‌های محلی و تشکیل گروه‌های فعال برای تجربه بهتر.</div>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="time-bullet"><div class="dot">۲۰۲۵</div></div>
+              <div class="timeline-body">
+                <h4>استانداردهای جدید</h4>
+                <div class="muted">ارتقای تجهیزات صوتی-تصویری به سطح دالبی و فول‌اچ‌دی کامل و گسترش برنامه‌های فرهنگی.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="card-cta fade-up" id="heroSide">
+          <h3>رزرو و اطلاعات</h3>
+          <p class="small">برای رزرو بلیط، دریافت برنامه ایونت‌ها یا هر سؤالی کافیست پیام بدهید. سریع پاسخ می‌دهیم!</p>
+          <a class="reserve" href="https://t.me/softshiraz" target="_blank" rel="noopener noreferrer">ارسال پیام در تلگرام</a>
+
+          <div style="margin-top:16px; font-size:14px; color:var(--muted); line-height:1.8">
+            <div><strong>کیفیت</strong>: صدای دالبی — تصویر فول اچ‌دی</div>
+            <div><strong>جو</strong>: دوستانه، امن، مناسب همه سنین</div>
+            <div><strong>قیمت</strong>: مقرون‌به‌صرفه و دانشجویی</div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="fade-up">
+        <h3 style="margin-bottom:20px; font-size:24px; color:var(--gold)">ارزش‌های ما</h3>
+        <div class="grid-section">
+          <div class="card-item">
+            <h4>کیفیت فنی برتر</h4>
+            <p class="muted">استفاده از بهترین تجهیزات صدا و تصویر برای تجربه‌ای نزدیک به سینما.</p>
+          </div>
+          <div class="card-item">
+            <h4>جامعه‌سازی واقعی</h4>
+            <p class="muted">ایجاد فضایی برای ارتباط، تبادل نظر و دوستی بین علاقه‌مندان.</p>
+          </div>
+          <div class="card-item">
+            <h4>تنوع و دسترسی</h4>
+            <p class="muted">اکران آثار کلاسیک تا جدید، برای همه سلیقه‌ها و با قیمت مناسب.</p>
+          </div>
+          <div class="card-item">
+            <h4>احترام و امنیت</h4>
+            <p class="muted">فضای امن، محترمانه و مناسب خانواده در تمام برنامه‌ها.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="team fade-up" id="team">
+        <h3 style="margin-bottom:20px; font-size:24px; color:var(--gold); text-align:center">تیم ما</h3>
+        <div class="member">
+          <div class="avatar" aria-hidden="true"><i class="fa-solid fa-user-tie"></i></div>
+          <div>
+            <div style="font-weight:700">سید</div>
+            <div class="muted">مالک و بنیان‌گذار — هماهنگی سانس‌ها، انتخاب آثار و مدیریت کلی</div>
+          </div>
+        </div>
+
+        <div class="member">
+          <div class="avatar" aria-hidden="true"><i class="fa-solid fa-user-gear"></i></div>
+          <div>
+            <div style="font-weight:700">پدرام</div>
+            <div class="muted">مدیر اجرایی — برنامه‌ریزی ایونت‌ها، ادمین کانال و ارتباط با مخاطبان</div>
+          </div>
+        </div>
+
+        <div class="member">
+          <div class="avatar" aria-hidden="true"><i class="fa-solid fa-film"></i></div>
+          <div>
+            <div style="font-weight:700">عرفان</div>
+            <div class="muted">ادیتور و مترجم — آماده‌سازی زیرنویس و ویرایش فنی آثار</div>
+          </div>
+        </div>
+
+        <div class="member">
+          <div class="avatar" aria-hidden="true"><i class="fa-solid fa-images"></i></div>
+          <div>
+            <div style="font-weight:700">ایکو</div>
+            <div class="muted">طراح گرافیک — طراحی بلیط‌ها، پوسترها و محتوای بصری</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="hero-card fade-up" style="margin-top:32px">
+        <h3 style="margin-top:0">پیام ما به شما</h3>
+        <p class="muted">سافت شیراز فقط یک پخش‌کننده نیست؛ یک خانه برای همه دوست‌داران انیمه، فیلم و فرهنگ پاپ است. اینجا می‌توانید آثار مورد علاقه‌تان را روی پرده بزرگ ببینید، با افراد هم‌سلیقه آشنا شوید و لحظات خاطره‌انگیزی بسازید. ما به تنوع، احترام، کیفیت و تجربه مشترک اعتقاد داریم.</p>
+
+        <div style="display:flex; gap:16px; margin-top:20px; align-items:center; flex-wrap:wrap">
+          <a class="cta" style="background:linear-gradient(90deg,var(--gold),#ffcc54); color:#111; padding:14px 20px; border-radius:12px; font-weight:700" href="../events.html">ایونت‌های آینده</a>
+          <a href="../tickets.html" style="padding:14px 20px; border-radius:12px; background:transparent; border:1px solid rgba(255,255,255,0.1)">درخواست همکاری</a>
+        </div>
+      </section>
+
+      <section class="hero-card fade-up" style="margin-top:32px">
+        <h3 style="margin-top:0">گالری ایونت‌ها</h3>
+        <div class="gallery">
+          <img src="https://placehold.co/600x400" alt="اکران انیمه در شیراز">
+          <img src="https://placehold.co/600x400" alt="ایونت انیمه شیراز">
+          <img src="https://placehold.co/600x400" alt="سافت شیراز">
+          <img src="https://placehold.co/600x400" alt="شرکت‌کنندگان سافت شیراز">
+          <img src="https://placehold.co/600x400" alt="پرده بزرگ اکران">
+          <img src="https://placehold.co/600x400" alt="جو دوستانه ایونت">
+        </div>
+      </section>
+
+      <section class="hero-card fade-up" style="margin-top:32px">
+        <h3 style="margin-top:0">نظر شرکت‌کنندگان</h3>
+        <blockquote class="quote">«بهترین تجربه دیدن انیمه روی پرده بزرگ، جو فوق‌العاده و حرفه‌ای!»</blockquote>
+        <blockquote class="quote">«اولین بار بود حس سینمایی واقعی برای انیمه گرفتم. عالی!»</blockquote>
+        <blockquote class="quote">«کیفیت صدا و تصویر بی‌نظیر بود، حتماً دوباره میام.»</blockquote>
+        <blockquote class="quote">«فضای دوستانه و امن، مناسب همه سنین — خیلی لذت بردیم.»</blockquote>
+      </section>
+
+      <section class="hero-card fade-up" style="margin-top:32px">
+        <h3 style="margin-top:0">سوالات متداول</h3>
+        <details>
+          <summary>چطور بلیط رزرو کنیم؟</summary>
+          <p class="muted">از طریق تلگرام (@softshiraz) پیام بدهید، برنامه و لینک رزرو ارسال می‌شود.</p>
+        </details>
+        <details>
+          <summary>اکران‌ها سانسور شده هستند؟</summary>
+          <p class="muted">تمام اکران‌ها مطابق قوانین و مناسب جمع عمومی هستند.</p>
+        </details>
+        <details>
+          <summary>آیا برای کودکان مناسب است؟</summary>
+          <p class="muted">بله، بسیاری از برنامه‌ها خانوادگی و مناسب همه سنین هستند.</p>
+        </details>
+        <details>
+          <summary>قیمت بلیط چقدر است؟</summary>
+          <p class="muted">قیمت‌ها مقرون‌به‌صرفه و اغلب با تخفیف دانشجویی — جزئیات در تلگرام.</p>
+        </details>
+        <details>
+          <summary>آیا زیرنویس فارسی دارد؟</summary>
+          <p class="muted">بله، تمام آثار با زیرنویس حرفه‌ای فارسی نمایش داده می‌شوند.</p>
+        </details>
+      </section>
+    </main>
+
+    <footer>
+      <div>
+        © <strong>سافت شیراز</strong> — همه حقوق برای تیم محفوظ است.
+      </div>
+      <div style="display:flex; gap:16px; align-items:center">
+        <a href="https://t.me/softshiraz" aria-label="تلگرام" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-telegram fa-lg"></i></a>
+        <a href="https://www.instagram.com/soft_shiraz" aria-label="اینستاگرام" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram fa-lg"></i></a>
+        <a href="mailto:info@softshiraz.example" aria-label="ایمیل"><i class="fa-solid fa-envelope fa-lg"></i></a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      const els = document.querySelectorAll('.fade-up');
+      const obs = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); })
+      }, {threshold: 0.15});
+      els.forEach(el=>obs.observe(el));
+    });
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Organization",
+    "name":"سافت شیراز",
+    "url":"https://softshiraz.github.io/web/",
+    "logo":"https://softshiraz.github.io/web/assets/logo.png",
+    "sameAs":["https://t.me/softshiraz","https://www.instagram.com/soft_shiraz"]
+  }
+  </script>
 </body>
 </html>
