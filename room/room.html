@@ -3,118 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>چت روم ایمن</title>
+    <title>تـالار طلایـی</title>
     <style>
-        body { font-family: tahoma; background: #f4f7f6; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        #auth-box, #chat-box { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 350px; }
-        #chat-box { width: 90%; max-width: 500px; height: 80vh; display: none; flex-direction: column; }
-        .hidden { display: none !important; }
-        input { width: 90%; padding: 10px; margin: 5px 0; border: 1px solid #ddd; border-radius: 5px; }
-        button { padding: 10px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; }
-        #messages { flex: 1; overflow-y: auto; border: 1px solid #eee; margin: 10px 0; padding: 10px; display: flex; flex-direction: column; }
-        .msg { margin-bottom: 10px; padding: 8px; border-radius: 8px; background: #e9ecef; position: relative; }
-        .my-msg { background: #d1e7dd; align-self: flex-end; }
-        .admin-msg { border: 2px solid #ffc107; }
-        .delete-btn { color: red; cursor: pointer; font-size: 10px; float: left; }
-        .user-header { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 10px; color: #666; }
+        :root { --gold: #d4af37; --black: #121212; --gray: #222; --white: #ffffff; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--black); color: var(--white); margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
+        #auth-box { background: var(--gray); padding: 40px; border-radius: 20px; border: 1px solid var(--gold); box-shadow: 0 0 30px rgba(212, 175, 55, 0.15); width: 320px; text-align: center; }
+        input { width: 100%; padding: 12px; margin: 10px 0; background: #333; border: 1px solid #444; border-radius: 10px; color: white; box-sizing: border-box; outline: none; transition: 0.3s; }
+        input:focus { border-color: var(--gold); box-shadow: 0 0 10px rgba(212, 175, 55, 0.2); }
+        button { width: 100%; padding: 12px; background: linear-gradient(45deg, #aa8a2e, #d4af37); border: none; border-radius: 10px; color: black; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        button:hover { transform: scale(1.02); box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4); }
+        #chat-box { width: 95%; max-width: 700px; height: 90vh; background: var(--gray); border-radius: 25px; display: none; flex-direction: column; border: 1px solid var(--gold); position: relative; }
+        .header { padding: 15px 25px; background: rgba(0,0,0,0.5); border-bottom: 1px solid var(--gold); display: flex; justify-content: space-between; align-items: center; }
+        #messages { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
+        .msg { max-width: 85%; padding: 12px 18px; border-radius: 15px 15px 0 15px; background: #333; border-right: 3px solid var(--gold); align-self: flex-start; animation: fadeIn 0.3s; }
+        .my-msg { align-self: flex-end; background: #444; border-right: none; border-left: 3px solid var(--gold); border-radius: 15px 15px 15px 0; }
+        .msg b { color: var(--gold); font-size: 0.85em; display: block; margin-bottom: 5px; }
+        .time { font-size: 0.7em; color: #888; margin-top: 5px; display: flex; justify-content: space-between; align-items: center; }
+        .delete-btn { color: #ff4444; cursor: pointer; padding-right: 10px; }
+        .input-area { padding: 20px; background: rgba(0,0,0,0.3); display: flex; gap: 10px; border-radius: 0 0 25px 25px; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        #messages::-webkit-scrollbar { width: 5px; }
+        #messages::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
     </style>
 </head>
 <body>
 
     <div id="auth-box">
-        <h3>ورود به چت</h3>
-        <input type="text" id="username" placeholder="نام کاربری">
-        <input type="password" id="password" placeholder="رمز عبور">
-        <button onclick="login()">ورود</button>
-        <p style="font-size: 11px;">رمز کاربر: 1404 | رمز مدیر: 1111</p>
+        <h2 style="color: var(--gold);">ورود به تالار</h2>
+        <input type="text" id="username" placeholder="نام کاربری...">
+        <input type="password" id="password" placeholder="رمز عبور...">
+        <button onclick="login()">تایید و ورود</button>
     </div>
 
     <div id="chat-box">
-        <div class="user-header">
-            <span id="display-name"></span>
-            <button onclick="logout()" style="background:#dc3545; padding:2px 5px; font-size:10px;">تغییر اسم (خروج)</button>
+        <div class="header">
+            <span id="display-name" style="color: var(--gold); font-weight: bold;"></span>
+            <button onclick="logout()" style="width: auto; padding: 5px 15px; background: transparent; border: 1px solid #ff4444; color: #ff4444;">تغییر نام</button>
         </div>
         <div id="messages"></div>
-        <div style="display: flex; gap: 5px;">
-            <input type="text" id="msgInput" placeholder="پیام...">
-            <button onclick="send()">ارسال</button>
+        <div class="input-area">
+            <input type="text" id="msgInput" placeholder="پیام خود را بنویسید..." autocomplete="off">
+            <button onclick="send()" style="width: 100px;">ارسال</button>
         </div>
     </div>
 
 <script>
     const WORKER_URL = "https://room.softshiraz.workers.dev/";
 
-    // بررسی ورود قبلی
     window.onload = () => {
-        if(localStorage.getItem('chat_user')) {
-            showChat();
-        }
+        if(localStorage.getItem('chat_user')) showChat();
     };
 
     async function login() {
-        const u = document.getElementById('username').value;
-        const p = document.getElementById('password').value;
-        if(!u || !p) return alert("فیلدها را پر کنید");
+        const u = document.getElementById('username').value.trim();
+        const p = document.getElementById('password').value.trim();
+        if(!u || !p) return alert("فیلدها خالی است");
+        
+        try {
+            const res = await fetch(WORKER_URL, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ type: 'login', username: u, password: p })
+            });
 
-        const res = await fetch(WORKER_URL, {
-            method: 'POST',
-            body: JSON.stringify({ type: 'register', username: u, password: p })
-        });
-
-        if(res.ok) {
-            localStorage.setItem('chat_user', u);
-            localStorage.setItem('chat_pass', p);
-            showChat();
-        } else {
-            const data = await res.json();
-            alert(data.error || "خطا در ورود");
-        }
+            if(res.ok) {
+                localStorage.setItem('chat_user', u);
+                localStorage.setItem('chat_pass', p);
+                showChat();
+            } else {
+                const data = await res.json();
+                alert(data.error);
+            }
+        } catch(e) { alert("خطا در اتصال به سرور"); }
     }
 
     function showChat() {
-        document.getElementById('auth-box').classList.add('hidden');
+        document.getElementById('auth-box').style.display = 'none';
         document.getElementById('chat-box').style.display = 'flex';
-        document.getElementById('display-name').innerText = "خوش آمدی " + localStorage.getItem('chat_user');
+        document.getElementById('display-name').innerText = "👑 " + localStorage.getItem('chat_user');
         loadMessages();
         setInterval(loadMessages, 3000);
     }
 
     async function loadMessages() {
-        const res = await fetch(WORKER_URL);
-        const msgs = await res.json();
-        const container = document.getElementById('messages');
-        const myUser = localStorage.getItem('chat_user');
-        const myPass = localStorage.getItem('chat_pass');
+        try {
+            const res = await fetch(WORKER_URL);
+            const msgs = await res.json();
+            const container = document.getElementById('messages');
+            const myUser = localStorage.getItem('chat_user');
+            const myPass = localStorage.getItem('chat_pass');
 
-        container.innerHTML = msgs.map(m => `
-            <div class="msg ${m.username === myUser ? 'my-msg' : ''} ${m.isAdmin ? 'admin-msg' : ''}">
-                <b style="font-size:10px">${m.username} ${m.isAdmin ? '(مدیر)' : ''}</b>: ${m.text}
-                ${myPass === '1111' ? `<span class="delete-btn" onclick="deleteMsg('${m.id}')">حذف</span>` : ''}
-                <div style="font-size:8px; text-align:left">${m.time}</div>
-            </div>
-        `).join('');
+            const isAtBottom = container.scrollHeight - container.scrollTop <= container.clientHeight + 100;
+
+            container.innerHTML = msgs.map(m => `
+                <div class="msg ${m.username === myUser ? 'my-msg' : ''}">
+                    <b>${m.username} ${m.isAdmin ? '👑' : ''}</b>
+                    <span style="color: white;">${m.text}</span>
+                    <div class="time">
+                        ${m.time}
+                        ${myPass === '1111' ? `<span class="delete-btn" onclick="deleteMsg('${m.id}')">حذف</span>` : ''}
+                    </div>
+                </div>
+            `).join('');
+
+            if(isAtBottom) container.scrollTop = container.scrollHeight;
+        } catch(e) {}
     }
 
     async function send() {
         const input = document.getElementById('msgInput');
-        if(!input.value) return;
+        if(!input.value.trim()) return;
         
+        const text = input.value;
+        input.value = '';
+
         await fetch(WORKER_URL, {
             method: 'POST',
+            headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
                 username: localStorage.getItem('chat_user'),
                 password: localStorage.getItem('chat_pass'),
-                text: input.value
+                text: text
             })
         });
-        input.value = '';
         loadMessages();
     }
 
     async function deleteMsg(id) {
-        if(!confirm("حذف شود؟")) return;
+        if(!confirm("این پیام حذف شود؟")) return;
         await fetch(WORKER_URL, {
             method: 'DELETE',
+            headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ messageId: id, adminPassword: localStorage.getItem('chat_pass') })
         });
         loadMessages();
@@ -124,6 +143,10 @@
         localStorage.clear();
         location.reload();
     }
+
+    document.getElementById('msgInput').addEventListener("keypress", (e) => {
+        if (e.key === "Enter") send();
+    });
 </script>
 </body>
 </html>
