@@ -289,6 +289,16 @@
       .glass-card { padding: 25px; }
       .page-header { justify-content: center; }
     }
+    /* تغییر رنگ متن معرفی در دارک و لایت */
+    .intro-text {
+        color: #ffffff; /* سفید در دارک مود */
+        font-size: 18px;
+        margin-bottom: 25px;
+        text-align: justify;
+    }
+    .light-mode .intro-text {
+        color: #000000; /* سیاه در لایت مود */
+    }
     </style>
 </head>
 <body>
@@ -350,7 +360,7 @@
   <main>
     <section class="glass-card">
       <h1>بیش از 8 سال همراهی با جامعه انیمه</h1>
-      <p style="font-size: 18px; color: #000000; margin-bottom: 25px; text-align: justify;">
+      <p class="intro-text">
         سافت شیراز از سال ۲۰۱۲ فعالیت خود را با هدف ایجاد یک فضای تخصصی برای طرفداران انیمه و سینما در شیراز آغاز کرد. ما باور داریم تماشای یک اثر هنری روی پرده بزرگ، تجربه‌ای فراتر از دیدن تصویر است؛ این تجربه‌ای از اشتراک احساسات با دوستانی است که مثل شما فکر می‌کنند. طی این سال‌ها، با تکیه بر استانداردهای بالای فنی در تصویر 4K و صدای دالبی، پاتوقی امن و حرفه‌ای برای تمامی سنین ساخته‌ایم.
       </p>
       <div class="stats-grid">
