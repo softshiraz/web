@@ -3,223 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>چت روم کلودفلر</title>
+    <title>چت روم ایمن</title>
     <style>
-        :root {
-            --bg-color: #f0f2f5;
-            --chat-bg: #ffffff;
-            --primary: #0084ff;
-            --text: #050505;
-            --secondary-text: #65676b;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            height: 100vh;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 600px;
-            background: var(--chat-bg);
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        header {
-            padding: 15px;
-            background: var(--primary);
-            color: white;
-            text-align: center;
-            font-weight: bold;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        #chat-window {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .message {
-            background: #e4e6eb;
-            padding: 10px 15px;
-            border-radius: 18px;
-            max-width: 80%;
-            align-self: flex-start;
-            position: relative;
-        }
-
-        .message.my-message {
-            background: var(--primary);
-            color: white;
-            align-self: flex-end;
-        }
-
-        .username {
-            font-size: 0.75rem;
-            color: var(--secondary-text);
-            margin-bottom: 4px;
-            display: block;
-        }
-
-        .message.my-message .username {
-            color: #e0e0e0;
-            text-align: left;
-        }
-
-        .input-area {
-            padding: 20px;
-            border-top: 1px solid #ddd;
-            display: flex;
-            gap: 10px;
-            background: var(--chat-bg);
-        }
-
-        input[type="text"] {
-            flex: 1;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 20px;
-            outline: none;
-        }
-
-        button {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        button:hover {
-            opacity: 0.9;
-        }
-
-        /* اسکرول بار زیبا */
-        #chat-window::-webkit-scrollbar {
-            width: 6px;
-        }
-        #chat-window::-webkit-scrollbar-thumb {
-            background-color: #ccc;
-            border-radius: 4px;
-        }
+        body { font-family: tahoma; background: #f4f7f6; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        #auth-box, #chat-box { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 350px; }
+        #chat-box { width: 90%; max-width: 500px; height: 80vh; display: none; flex-direction: column; }
+        .hidden { display: none !important; }
+        input { width: 90%; padding: 10px; margin: 5px 0; border: 1px solid #ddd; border-radius: 5px; }
+        button { padding: 10px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        #messages { flex: 1; overflow-y: auto; border: 1px solid #eee; margin: 10px 0; padding: 10px; display: flex; flex-direction: column; }
+        .msg { margin-bottom: 10px; padding: 8px; border-radius: 8px; background: #e9ecef; position: relative; }
+        .my-msg { background: #d1e7dd; align-self: flex-end; }
+        .admin-msg { border: 2px solid #ffc107; }
+        .delete-btn { color: red; cursor: pointer; font-size: 10px; float: left; }
+        .user-header { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 10px; color: #666; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <header>چت روم عمومی</header>
-    
-    <div id="chat-window">
-        <div style="text-align: center; color: #888; margin-top: 20px;">در حال بارگذاری پیام‌ها...</div>
+    <div id="auth-box">
+        <h3>ورود به چت</h3>
+        <input type="text" id="username" placeholder="نام کاربری">
+        <input type="password" id="password" placeholder="رمز عبور">
+        <button onclick="login()">ورود</button>
+        <p style="font-size: 11px;">رمز کاربر: 1404 | رمز مدیر: 1111</p>
     </div>
 
-    <div class="input-area">
-        <input type="text" id="username-input" placeholder="نام شما" style="width: 20%;">
-        <input type="text" id="message-input" placeholder="پیام خود را بنویسید...">
-        <button onclick="sendMessage()">ارسال</button>
+    <div id="chat-box">
+        <div class="user-header">
+            <span id="display-name"></span>
+            <button onclick="logout()" style="background:#dc3545; padding:2px 5px; font-size:10px;">تغییر اسم (خروج)</button>
+        </div>
+        <div id="messages"></div>
+        <div style="display: flex; gap: 5px;">
+            <input type="text" id="msgInput" placeholder="پیام...">
+            <button onclick="send()">ارسال</button>
+        </div>
     </div>
-</div>
 
 <script>
-    // ********* تنظیمات مهم *********
-    // آدرس ورکر خود را اینجا قرار دهید
-    const WORKER_URL = "https://room.softshiraz.workers.dev/"; 
-    // ******************************
+    const WORKER_URL = "https://room.softshiraz.workers.dev/";
 
-    const chatWindow = document.getElementById('chat-window');
-    const msgInput = document.getElementById('message-input');
-    const userInput = document.getElementById('username-input');
-
-    // ذخیره نام کاربر در حافظه مرورگر برای راحتی
-    if(localStorage.getItem('chat_username')) {
-        userInput.value = localStorage.getItem('chat_username');
-    }
-
-    // تابع دریافت پیام‌ها
-    async function fetchMessages() {
-        try {
-            const response = await fetch(WORKER_URL);
-            const messages = await response.json();
-            renderMessages(messages);
-        } catch (error) {
-            console.error("Error fetching messages:", error);
+    // بررسی ورود قبلی
+    window.onload = () => {
+        if(localStorage.getItem('chat_user')) {
+            showChat();
         }
-    }
+    };
 
-    // نمایش پیام‌ها در HTML
-    function renderMessages(messages) {
-        chatWindow.innerHTML = '';
-        const myName = userInput.value.trim();
+    async function login() {
+        const u = document.getElementById('username').value;
+        const p = document.getElementById('password').value;
+        if(!u || !p) return alert("فیلدها را پر کنید");
 
-        messages.forEach(msg => {
-            const div = document.createElement('div');
-            const isMe = msg.username === myName;
-            
-            div.className = `message ${isMe ? 'my-message' : ''}`;
-            div.innerHTML = `
-                <span class="username">${msg.username}</span>
-                ${msg.text}
-            `;
-            chatWindow.appendChild(div);
+        const res = await fetch(WORKER_URL, {
+            method: 'POST',
+            body: JSON.stringify({ type: 'register', username: u, password: p })
         });
+
+        if(res.ok) {
+            localStorage.setItem('chat_user', u);
+            localStorage.setItem('chat_pass', p);
+            showChat();
+        } else {
+            const data = await res.json();
+            alert(data.error || "خطا در ورود");
+        }
+    }
+
+    function showChat() {
+        document.getElementById('auth-box').classList.add('hidden');
+        document.getElementById('chat-box').style.display = 'flex';
+        document.getElementById('display-name').innerText = "خوش آمدی " + localStorage.getItem('chat_user');
+        loadMessages();
+        setInterval(loadMessages, 3000);
+    }
+
+    async function loadMessages() {
+        const res = await fetch(WORKER_URL);
+        const msgs = await res.json();
+        const container = document.getElementById('messages');
+        const myUser = localStorage.getItem('chat_user');
+        const myPass = localStorage.getItem('chat_pass');
+
+        container.innerHTML = msgs.map(m => `
+            <div class="msg ${m.username === myUser ? 'my-msg' : ''} ${m.isAdmin ? 'admin-msg' : ''}">
+                <b style="font-size:10px">${m.username} ${m.isAdmin ? '(مدیر)' : ''}</b>: ${m.text}
+                ${myPass === '1111' ? `<span class="delete-btn" onclick="deleteMsg('${m.id}')">حذف</span>` : ''}
+                <div style="font-size:8px; text-align:left">${m.time}</div>
+            </div>
+        `).join('');
+    }
+
+    async function send() {
+        const input = document.getElementById('msgInput');
+        if(!input.value) return;
         
-        // اسکرول به پایین
-        chatWindow.scrollTop = chatWindow.scrollHeight;
+        await fetch(WORKER_URL, {
+            method: 'POST',
+            body: JSON.stringify({
+                username: localStorage.getItem('chat_user'),
+                password: localStorage.getItem('chat_pass'),
+                text: input.value
+            })
+        });
+        input.value = '';
+        loadMessages();
     }
 
-    // ارسال پیام
-    async function sendMessage() {
-        const text = msgInput.value.trim();
-        const username = userInput.value.trim();
-
-        if (!text || !username) {
-            alert("لطفا نام و پیام را وارد کنید");
-            return;
-        }
-
-        // ذخیره نام برای استفاده‌های بعدی
-        localStorage.setItem('chat_username', username);
-
-        // پاک کردن ورودی
-        msgInput.value = '';
-
-        try {
-            await fetch(WORKER_URL, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ username, text })
-            });
-            // بروزرسانی سریع پیام‌ها پس از ارسال
-            fetchMessages();
-        } catch (error) {
-            alert("خطا در ارسال پیام");
-        }
+    async function deleteMsg(id) {
+        if(!confirm("حذف شود؟")) return;
+        await fetch(WORKER_URL, {
+            method: 'DELETE',
+            body: JSON.stringify({ messageId: id, adminPassword: localStorage.getItem('chat_pass') })
+        });
+        loadMessages();
     }
 
-    // ارسال با زدن دکمه Enter
-    msgInput.addEventListener("keypress", function(event) {
-        if (event.key === "Enter") sendMessage();
-    });
-
-    // دریافت پیام‌ها هر ۲ ثانیه (Polling)
-    setInterval(fetchMessages, 2000);
-    
-    // دریافت اولیه
-    fetchMessages();
-
+    function logout() {
+        localStorage.clear();
+        location.reload();
+    }
 </script>
-
 </body>
 </html>
