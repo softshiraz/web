@@ -3,86 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>تـالار طلایـی | Voice & Online</title>
+    <title>تـالار مجلسی | طلایی</title>
     <style>
-        /* استایل‌های قبلی ثابت + استایل‌های جدید */
-        :root { --gold: #d4af37; --black: #0f0f0f; --gray: #1e1e1e; }
-        body { background: var(--black); color: white; font-family: Tahoma; margin: 0; overflow: hidden; height: 100vh; display: flex; flex-direction: column; }
+        :root { --gold: #d4af37; --black: #0a0a0a; --gray: #1a1a1a; --white: #ffffff; }
+        * { box-sizing: border-box; font-family: Tahoma, sans-serif; }
+        body { background: var(--black); color: var(--white); margin: 0; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
         
-        #auth-page { display: flex; justify-content: center; align-items: center; height: 100%; }
-        .login-card { background: var(--gray); padding: 30px; border-radius: 20px; border: 1px solid var(--gold); text-align: center; }
-        
+        /* لاگین */
+        #auth-page { display: flex; justify-content: center; align-items: center; height: 100%; padding: 20px; }
+        .card { background: var(--gray); padding: 30px; border-radius: 20px; border: 1px solid var(--gold); width: 100%; max-width: 350px; text-align: center; box-shadow: 0 0 20px rgba(212,175,55,0.2); }
+        input { width: 100%; padding: 12px; margin: 10px 0; background: #222; border: 1px solid #444; border-radius: 10px; color: white; outline: none; }
+        input:focus { border-color: var(--gold); }
+        .btn { width: 100%; padding: 12px; background: var(--gold); border: none; border-radius: 10px; font-weight: bold; cursor: pointer; color: black; }
+
+        /* تالار چت */
         #chat-page { display: none; flex-direction: column; height: 100%; }
-        header { background: var(--gray); padding: 10px 20px; border-bottom: 1px solid var(--gold); display: flex; justify-content: space-between; align-items: center; }
-        
-        #online-count { font-size: 11px; color: #4caf50; background: rgba(76, 175, 80, 0.1); padding: 2px 8px; border-radius: 10px; }
-        #message-area { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 10px; }
-        
-        .msg-bubble { max-width: 80%; padding: 10px; border-radius: 15px; background: #2a2a2a; align-self: flex-start; border-right: 3px solid var(--gold); }
-        .my-bubble { align-self: flex-end; background: #3a3a3a; border-right: none; border-left: 3px solid var(--gold); }
-        
-        .input-bar { background: var(--gray); padding: 15px; display: flex; gap: 8px; align-items: center; }
-        input { flex: 1; padding: 12px; border-radius: 25px; border: 1px solid #444; background: #222; color: white; outline: none; }
-        
-        .btn-gold { background: var(--gold); border: none; padding: 10px 15px; border-radius: 25px; font-weight: bold; cursor: pointer; }
-        #voice-btn { background: #444; color: white; border: none; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+        header { padding: 10px 20px; background: var(--gray); border-bottom: 1px solid var(--gold); display: flex; justify-content: space-between; align-items: center; }
+        #online-bar { font-size: 11px; color: #4caf50; }
+
+        #msg-container { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 12px; background: url('https://www.transparenttextures.com/patterns/carbon-fibre.png'); }
+        .msg { max-width: 85%; padding: 10px 15px; border-radius: 18px; position: relative; background: var(--gray); border-right: 3px solid var(--gold); align-self: flex-start; }
+        .my-msg { align-self: flex-end; background: #333; border-right: none; border-left: 3px solid var(--gold); }
+        .msg b { color: var(--gold); font-size: 12px; }
+        .time { font-size: 9px; color: #888; display: flex; justify-content: space-between; margin-top: 5px; }
+
+        .input-area { padding: 15px; background: var(--gray); display: flex; gap: 10px; align-items: center; padding-bottom: calc(15px + env(safe-area-inset-bottom)); }
+        #voice-btn { width: 45px; height: 45px; border-radius: 50%; border: none; background: #333; color: white; cursor: pointer; font-size: 20px; display: flex; align-items: center; justify-content: center; }
         #voice-btn.recording { background: #ff4444; animation: pulse 1s infinite; }
         
-        audio { max-width: 100%; height: 35px; margin-top: 5px; }
+        audio { height: 30px; width: 200px; margin-top: 5px; filter: sepia(100%) saturate(200%) hue-rotate(10deg); }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
     </style>
 </head>
 <body>
 
     <div id="auth-page">
-        <div class="login-card">
-            <h2 style="color: var(--gold)">ورود تالار</h2>
-            <input type="text" id="uInp" placeholder="نام">
-            <input type="password" id="pInp" placeholder="رمز">
-            <button class="btn-gold" style="width:100%; margin-top:10px" onclick="login()">ورود</button>
+        <div class="card">
+            <h2 style="color:var(--gold)">ورود به تالار</h2>
+            <input type="text" id="u" placeholder="نام نمایشی">
+            <input type="password" id="p" placeholder="رمز عبور">
+            <button class="btn" onclick="login()">ورود اشرافی</button>
         </div>
     </div>
 
     <div id="chat-page">
         <header>
             <div>
-                <b id="user-display" style="color:var(--gold)"></b>
-                <div id="online-count">در حال بارگذاری...</div>
+                <div id="online-bar">در حال اتصال...</div>
+                <small id="me-display" style="color:var(--gold)"></small>
             </div>
-            <button onclick="location.reload()" style="background:none; border:1px solid #ff4444; color:#ff4444; border-radius:5px; font-size:10px">خروج</button>
+            <button onclick="location.reload()" style="background:none; border:1px solid #ff4444; color:#ff4444; border-radius:5px; padding:2px 8px; font-size:10px">خروج</button>
         </header>
 
-        <div id="message-area"></div>
+        <div id="msg-container"></div>
 
-        <div class="input-bar">
+        <div class="input-area">
             <button id="voice-btn" onmousedown="startRecord()" onmouseup="stopRecord()" ontouchstart="startRecord()" ontouchend="stopRecord()">🎤</button>
-            <input type="text" id="mInp" placeholder="پیام..." autocomplete="off">
-            <button class="btn-gold" onclick="sendText()">ارسال</button>
+            <input type="text" id="m" placeholder="پیام بنویسید..." autocomplete="off">
+            <button class="btn" style="width:80px" onclick="sendText()">ارسال</button>
         </div>
     </div>
 
 <script>
     const API = "https://room.softshiraz.workers.dev/";
-    let mediaRecorder;
-    let audioChunks = [];
+    let recorder;
+    let chunks = [];
 
     async function login() {
-        const u = document.getElementById('uInp').value;
-        const p = document.getElementById('pInp').value;
+        const u = document.getElementById('u').value.trim();
+        const p = document.getElementById('p').value.trim();
+        if(!u || !p) return;
+
         const res = await fetch(API, { method: 'POST', body: JSON.stringify({ type: 'login', password: p }) });
         if(res.ok) {
             localStorage.setItem('chat_u', u);
             localStorage.setItem('chat_p', p);
-            startChat();
-        } else alert("خطا در ورود");
+            init();
+        } else alert("رمز اشتباه است");
     }
 
-    function startChat() {
+    function init() {
         document.getElementById('auth-page').style.display = 'none';
         document.getElementById('chat-page').style.display = 'flex';
-        document.getElementById('user-display').innerText = localStorage.getItem('chat_u');
+        document.getElementById('me-display').innerText = "خوش آمدید، " + localStorage.getItem('chat_u');
         
-        setInterval(heartbeat, 5000);
+        setInterval(heartbeat, 7000);
         setInterval(refresh, 3000);
         refresh();
     }
@@ -92,71 +97,89 @@
     }
 
     async function refresh() {
-        const res = await fetch(API);
-        const data = await res.json();
-        
-        document.getElementById('online-count').innerText = "آنلاین: " + data.onlineUsers.length + " نفر (" + data.onlineUsers.join(', ') + ")";
-        
-        const area = document.getElementById('message-area');
-        const myU = localStorage.getItem('chat_u');
-        const isBottom = area.scrollHeight - area.scrollTop <= area.clientHeight + 100;
+        try {
+            const res = await fetch(API);
+            const data = await res.json();
+            
+            document.getElementById('online-bar').innerText = "🟢 آنلاین: " + data.onlineUsers.length + " نفر (" + data.onlineUsers.join(', ') + ")";
+            
+            const area = document.getElementById('msg-container');
+            const myU = localStorage.getItem('chat_u');
+            const myP = localStorage.getItem('chat_p');
+            const isBottom = area.scrollHeight - area.scrollTop <= area.clientHeight + 100;
 
-        area.innerHTML = data.messages.map(m => `
-            <div class="msg-bubble ${m.username === myU ? 'my-bubble' : ''}">
-                <small style="color:var(--gold)">${m.username}</small>
-                <div>${m.text}</div>
-                ${m.audio ? `<audio controls src="${m.audio}"></audio>` : ''}
-                <div style="font-size:8px; color:#888; margin-top:5px">${m.time}</div>
-            </div>
-        `).join('');
+            area.innerHTML = data.messages.map(m => `
+                <div class="msg ${m.username === myU ? 'my-msg' : ''}">
+                    <b>${m.username} ${m.isAdmin ? '👑' : ''}</b>
+                    <div>${m.text}</div>
+                    ${m.audio ? `<audio controls src="${m.audio}"></audio>` : ''}
+                    <div class="time">
+                        ${m.time}
+                        ${myP === '1111' ? `<span style="color:#ff4444;cursor:pointer" onclick="del('${m.id}')">حذف</span>` : ''}
+                    </div>
+                </div>
+            `).join('');
 
-        if(isBottom) area.scrollTop = area.scrollHeight;
+            if(isBottom) area.scrollTop = area.scrollHeight;
+        } catch(e) {}
     }
 
     async function sendText() {
-        const inp = document.getElementById('mInp');
-        if(!inp.value) return;
-        await postData({ text: inp.value });
+        const inp = document.getElementById('m');
+        if(!inp.value.trim()) return;
+        const txt = inp.value;
         inp.value = "";
+        await post({ text: txt });
     }
 
-    async function postData(obj) {
+    async function post(data) {
         await fetch(API, {
             method: 'POST',
             body: JSON.stringify({
                 username: localStorage.getItem('chat_u'),
                 password: localStorage.getItem('chat_p'),
-                ...obj
+                ...data
             })
         });
         refresh();
     }
 
-    // --- مدیریت ضبط صدا ---
+    async function del(id) {
+        if(!confirm("حذف؟")) return;
+        await fetch(API, {
+            method: 'DELETE',
+            body: JSON.stringify({ messageId: id, adminPassword: localStorage.getItem('chat_p') })
+        });
+        refresh();
+    }
+
+    // ضبط صدا
     async function startRecord() {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        mediaRecorder = new MediaRecorder(stream);
-        audioChunks = [];
-        document.getElementById('voice-btn').classList.add('recording');
-        
-        mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
-        mediaRecorder.onstop = async () => {
-            const blob = new Blob(audioChunks, { type: 'audio/webm' });
-            const reader = new FileReader();
-            reader.readAsDataURL(blob);
-            reader.onloadend = () => postData({ audio: reader.result });
-        };
-        mediaRecorder.start();
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            recorder = new MediaRecorder(stream);
+            chunks = [];
+            document.getElementById('voice-btn').classList.add('recording');
+            recorder.ondataavailable = e => chunks.push(e.data);
+            recorder.onstop = () => {
+                const blob = new Blob(chunks, { type: 'audio/webm' });
+                const reader = new FileReader();
+                reader.readAsDataURL(blob);
+                reader.onloadend = () => post({ audio: reader.result });
+            };
+            recorder.start();
+        } catch(e) { alert("اجازه میکروفون داده نشد"); }
     }
 
     function stopRecord() {
-        if(mediaRecorder) {
-            mediaRecorder.stop();
+        if(recorder && recorder.state !== "inactive") {
+            recorder.stop();
             document.getElementById('voice-btn').classList.remove('recording');
         }
     }
 
-    if(localStorage.getItem('chat_u')) startChat();
+    document.getElementById('m').onkeypress = e => { if(e.key==='Enter') sendText(); };
+    if(localStorage.getItem('chat_u')) init();
 </script>
 </body>
 </html>
