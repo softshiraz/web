@@ -3,192 +3,184 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>تـالار VIP | نسخه نهایی</title>
+    <title>تـالار هوشمند VIP</title>
     <style>
         :root { --gold: #d4af37; --black: #0d0d0d; --gray: #1a1a1a; }
-        * { box-sizing: border-box; font-family: Tahoma, sans-serif; }
+        * { box-sizing: border-box; font-family: Tahoma, sans-serif; transition: 0.2s; }
         body { background: var(--black); color: white; margin: 0; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
         
-        #auth-page { display: flex; justify-content: center; align-items: center; height: 100%; padding: 20px; background: #000; }
-        .card { background: var(--gray); padding: 30px; border-radius: 20px; border: 1px solid var(--gold); width: 100%; max-width: 350px; text-align: center; }
+        /* آواتار */
+        .avatar { width: 35px; height: 35px; border-radius: 50%; border: 1px solid var(--gold); vertical-align: middle; margin-left: 8px; }
         
-        input { width: 100%; padding: 12px; margin: 10px 0; background: #222; border: 1px solid #444; border-radius: 10px; color: white; outline: none; }
-        .btn { padding: 12px 20px; background: var(--gold); border: none; border-radius: 10px; font-weight: bold; cursor: pointer; color: black; }
+        header { padding: 10px; background: var(--gray); border-bottom: 1px solid var(--gold); font-size: 11px; }
+        #typing-status { color: var(--gold); height: 15px; margin-top: 5px; font-style: italic; }
 
-        header { padding: 10px 15px; background: var(--gray); border-bottom: 1px solid var(--gold); display: flex; justify-content: space-between; align-items: center; }
-        #online-list { font-size: 11px; color: #4caf50; }
+        .room-selector { display: flex; background: #000; padding: 5px; gap: 5px; }
+        .room-btn { flex: 1; padding: 8px; font-size: 11px; background: #222; color: #888; border: none; cursor: pointer; border-radius: 5px; }
+        .room-btn.active { background: var(--gold); color: black; font-weight: bold; }
 
-        #pin-bar { background: rgba(212, 175, 55, 0.15); border-bottom: 1px dashed var(--gold); padding: 8px 15px; display: none; align-items: center; gap: 10px; color: var(--gold); font-size: 13px; }
+        #chat-area { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 15px; }
+        .msg { max-width: 85%; padding: 10px; border-radius: 15px; background: var(--gray); position: relative; border-right: 3px solid var(--gold); }
+        .my-msg { align-self: flex-end; border-right: none; border-left: 3px solid var(--gold); background: #252525; }
+        
+        .reply-box { background: rgba(255,255,255,0.05); border-radius: 5px; padding: 5px; margin-bottom: 5px; border-right: 2px solid var(--gold); font-size: 10px; color: #aaa; }
+        
+        .input-bar { padding: 15px; background: var(--gray); display: flex; flex-direction: column; gap: 5px; }
+        #reply-indicator { display: none; background: #333; padding: 5px 10px; font-size: 11px; border-radius: 5px; justify-content: space-between; color: var(--gold); }
 
-        #chat-area { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 12px; }
-        .msg { max-width: 85%; padding: 10px 15px; border-radius: 18px; background: var(--gray); border-right: 3px solid var(--gold); align-self: flex-start; }
-        .my-msg { align-self: flex-end; background: #333; border-right: none; border-left: 3px solid var(--gold); }
-        .msg b { color: var(--gold); font-size: 11px; display: block; }
-        .ops { font-size: 9px; margin-top: 6px; display: flex; gap: 10px; opacity: 0.6; }
-
-        .input-bar { padding: 15px; background: var(--gray); display: flex; gap: 8px; align-items: center; padding-bottom: calc(15px + env(safe-area-inset-bottom)); }
-        #voice-btn { width: 45px; height: 45px; border-radius: 50%; border: none; background: #333; color: white; cursor: pointer; font-size: 20px; }
+        #voice-btn { width: 45px; height: 45px; border-radius: 50%; border: none; background: #333; color: white; cursor: pointer; }
         #voice-btn.recording { background: #ff4444; animation: pulse 1s infinite; }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
-        audio { height: 30px; width: 180px; filter: sepia(1); margin-top: 5px; }
+        
+        .btn-send { background: var(--gold); border: none; padding: 10px 15px; border-radius: 20px; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <div id="auth-page">
-        <div class="card">
-            <h2 style="color:var(--gold)">ورود تـالار</h2>
-            <input type="text" id="u" placeholder="نام">
-            <input type="password" id="p" placeholder="رمز">
-            <button class="btn" style="width:100%" onclick="login()">ورود</button>
+    <div id="auth-page" style="display:flex; justify-content:center; align-items:center; height:100%; background:#000;">
+        <div style="background:var(--gray); padding:30px; border-radius:20px; border:1px solid var(--gold); width:300px; text-align:center;">
+            <h3 style="color:var(--gold)">ورود هوشمند</h3>
+            <input type="text" id="u" placeholder="نام" style="width:100%; padding:10px; margin:10px 0; background:#222; color:white; border:1px solid #444; border-radius:8px;">
+            <input type="password" id="p" placeholder="رمز" style="width:100%; padding:10px; margin-bottom:15px; background:#222; color:white; border:1px solid #444; border-radius:8px;">
+            <button class="btn-send" style="width:100%" onclick="login()">تایید</button>
         </div>
     </div>
 
     <div id="chat-page" style="display:none; flex-direction:column; height:100%;">
-        <header>
-            <div id="online-list">در حال دریافت...</div>
-            <button onclick="logout()" style="background:none; border:1px solid #ff4444; color:#ff4444; border-radius:5px; font-size:10px; padding:4px 10px; cursor:pointer">خروج</button>
-        </header>
-
-        <div id="pin-bar">
-            <span>📌</span>
-            <marquee id="pin-text" style="flex:1"></marquee>
-            <b id="unpin-btn" onclick="unpin()" style="cursor:pointer; display:none">✖</b>
+        <div class="room-selector">
+            <button class="room-btn active" id="btn-general" onclick="changeRoom('general')">تالار عمومی</button>
+            <button class="room-btn" id="btn-vip" onclick="changeRoom('vip')">بخش ویژه ادمین</button>
         </div>
+        <header>
+            <div id="online-list">🟢 در حال دریافت لیست آنلاین...</div>
+            <div id="typing-status"></div>
+        </header>
 
         <div id="chat-area"></div>
 
-        <div class="input-bar">
-            <button id="voice-btn" onmousedown="startRec()" onmouseup="stopRec()" ontouchstart="startRec()" ontouchend="stopRec()">🎤</button>
-            <input type="text" id="m" placeholder="پیام..." autocomplete="off">
-            <button class="btn" onclick="sendText()">ارسال</button>
+        <div class="input-area">
+            <div id="reply-indicator">
+                <span id="reply-text"></span>
+                <b onclick="cancelReply()" style="cursor:pointer">✖</b>
+            </div>
+            <div class="input-bar" style="flex-direction:row">
+                <button id="voice-btn" onmousedown="startRec()" onmouseup="stopRec()" ontouchstart="startRec()" ontouchend="stopRec()">🎤</button>
+                <input type="text" id="m" placeholder="پیام..." style="flex:1; padding:12px; border-radius:20px; background:#222; border:1px solid #444; color:white;" oninput="imTyping()">
+                <button class="btn-send" onclick="send()">ارسال</button>
+            </div>
         </div>
     </div>
 
 <script>
     const API = "https://room.softshiraz.workers.dev/";
-    let recorder, chunks = [], refreshInterval, heartInterval;
+    let currentRoom = 'general', replyTo = null, isTyping = false;
+    let refreshInt, heartInt;
 
     async function login() {
-        const u = document.getElementById('u').value.trim(), p = document.getElementById('p').value.trim();
-        if(!u || !p) return alert("فیلدها خالی است");
-        
+        const u = document.getElementById('u').value, p = document.getElementById('p').value;
         const res = await fetch(API, { method: 'POST', body: JSON.stringify({ type: 'login', password: p }) });
-        const data = await res.json();
-        
-        if(data.success) {
-            localStorage.setItem('chat_u', u);
-            localStorage.setItem('chat_p', p);
-            startChat();
-        } else { alert("رمز اشتباه است"); }
+        if((await res.json()).success) {
+            localStorage.setItem('chat_u', u); localStorage.setItem('chat_p', p);
+            init();
+        } else alert("رمز غلط");
     }
 
-    function startChat() {
+    function init() {
         document.getElementById('auth-page').style.display = 'none';
         document.getElementById('chat-page').style.display = 'flex';
-        
-        // تنظیم اینتروال‌ها و ذخیره آی‌دی آن‌ها برای پاکسازی در خروج
-        heartInterval = setInterval(() => {
-            fetch(API, { method: 'POST', body: JSON.stringify({ type: 'heartbeat', username: localStorage.getItem('chat_u') }) });
-        }, 8000);
-        
-        refreshInterval = setInterval(refresh, 3000);
+        heartInt = setInterval(heartbeat, 4000);
+        refreshInt = setInterval(refresh, 3000);
+        refresh();
+    }
+
+    function imTyping() { isTyping = true; setTimeout(() => isTyping = false, 2000); }
+
+    async function heartbeat() {
+        fetch(`${API}?room=${currentRoom}`, { method: 'POST', body: JSON.stringify({ type: 'heartbeat', username: localStorage.getItem('chat_u'), isTyping }) });
+    }
+
+    function changeRoom(r) {
+        currentRoom = r;
+        document.querySelectorAll('.room-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(`btn-${r}`).classList.add('active');
+        document.getElementById('chat-area').innerHTML = "";
         refresh();
     }
 
     async function refresh() {
-        try {
-            const res = await fetch(API);
-            const data = await res.json();
-            const myU = localStorage.getItem('chat_u'), myP = localStorage.getItem('chat_p'), isAdmin = myP === '1111';
-            
-            document.getElementById('online-list').innerText = "🟢 آنلاین: " + data.onlineUsers.length + " نفر (" + data.onlineUsers.join(', ') + ")";
-            
-            if(data.pinned) {
-                document.getElementById('pin-bar').style.display = 'flex';
-                document.getElementById('pin-text').innerText = data.pinned.username + ": " + (data.pinned.text || "پیام صوتی");
-                document.getElementById('unpin-btn').style.display = isAdmin ? 'block' : 'none';
-            } else { document.getElementById('pin-bar').style.display = 'none'; }
+        const res = await fetch(`${API}?room=${currentRoom}`);
+        const data = await res.json();
+        const myU = localStorage.getItem('chat_u'), isAdmin = localStorage.getItem('chat_p') === '1111';
+        
+        const typing = data.onlineUsers.filter(u => u.isTyping && u.name !== myU).map(u => u.name);
+        document.getElementById('typing-status').innerText = typing.length ? `${typing.join(' و ')} در حال نوشتن...` : "";
+        document.getElementById('online-list').innerText = "🟢 آنلاین: " + data.onlineUsers.map(u => u.name).join('، ');
 
-            const area = document.getElementById('chat-area');
-            const isBottom = area.scrollHeight - area.scrollTop <= area.clientHeight + 100;
+        const area = document.getElementById('chat-area');
+        const isBottom = area.scrollHeight - area.scrollTop <= area.clientHeight + 100;
 
-            area.innerHTML = data.messages.map(m => `
-                <div class="msg ${m.username === myU ? 'my-msg' : ''}">
-                    <b>${m.username} ${m.isAdmin ? '👑' : ''}</b>
-                    <div>${m.text}</div>
-                    ${m.audio ? `<audio controls src="${m.audio}"></audio>` : ''}
-                    <div class="ops">
-                        <span>${m.time}</span>
-                        ${isAdmin ? `<span onclick="pin('${m.id}')" style="color:var(--gold);cursor:pointer">📌 پین</span>` : ''}
-                        ${isAdmin ? `<span onclick="del('${m.id}')" style="color:#ff4444;cursor:pointer">حذف</span>` : ''}
-                    </div>
+        area.innerHTML = data.messages.map(m => `
+            <div class="msg ${m.username === myU ? 'my-msg' : ''}" onclick="setReply('${m.username}')">
+                <img class="avatar" src="https://api.dicebear.com/7.x/bottts/svg?seed=${m.username}">
+                <b>${m.username} ${m.isAdmin ? '👑' : ''}</b>
+                ${m.replyTo ? `<div class="reply-box">پاسخ به: ${m.replyTo}</div>` : ''}
+                <div>${m.text}</div>
+                ${m.audio ? `<audio controls src="${m.audio}" style="width:180px; height:30px; filter:sepia(1);"></audio>` : ''}
+                <div style="font-size:9px; color:#888; margin-top:5px;">
+                    ${m.time} ${isAdmin ? `<span onclick="del('${m.id}')" style="color:#ff4444; cursor:pointer; margin-right:10px;">حذف</span>` : ''}
                 </div>
-            `).join('');
-
-            if(isBottom) area.scrollTop = area.scrollHeight;
-        } catch(e) {}
+            </div>
+        `).join('');
+        if(isBottom) area.scrollTop = area.scrollHeight;
     }
 
-    async function sendText() {
-        const inp = document.getElementById('m'); if(!inp.value.trim()) return;
-        const t = inp.value; inp.value = "";
-        await post({ text: t });
+    function setReply(name) {
+        replyTo = name;
+        document.getElementById('reply-indicator').style.display = 'flex';
+        document.getElementById('reply-text').innerText = `پاسخ به: ${name}`;
     }
 
-    async function post(d) {
-        await fetch(API, { method: 'POST', body: JSON.stringify({ username: localStorage.getItem('chat_u'), password: localStorage.getItem('chat_p'), ...d }) });
-        refresh();
+    function cancelReply() { replyTo = null; document.getElementById('reply-indicator').style.display = 'none'; }
+
+    async function send() {
+        const m = document.getElementById('m'); if(!m.value) return;
+        const text = m.value; m.value = "";
+        await fetch(`${API}?room=${currentRoom}`, { method: 'POST', body: JSON.stringify({
+            username: localStorage.getItem('chat_u'), password: localStorage.getItem('chat_p'),
+            text, replyTo
+        })});
+        cancelReply(); refresh();
     }
 
-    // عملیات مدیریت
-    async function pin(id) {
-        const res = await fetch(API); const d = await res.json();
-        const msg = d.messages.find(m => m.id === id);
-        await fetch(API, { method: 'POST', body: JSON.stringify({ type: 'pin', password: localStorage.getItem('chat_p'), msgData: msg }) });
-        refresh();
-    }
-    async function unpin() {
-        await fetch(API, { method: 'POST', body: JSON.stringify({ type: 'unpin', password: localStorage.getItem('chat_p') }) });
-        refresh();
-    }
-    async function del(id) {
-        if(!confirm("حذف پیام؟")) return;
-        await fetch(API, { method: 'DELETE', body: JSON.stringify({ messageId: id, adminPassword: localStorage.getItem('chat_p') }) });
-        refresh();
-    }
-
-    // ضبط ویس
+    // بخش ویس (مشابه قبل با آدرس Room)
+    let recorder, chunks = [];
     async function startRec() {
-        try {
-            const s = await navigator.mediaDevices.getUserMedia({ audio: true });
-            recorder = new MediaRecorder(s); chunks = [];
-            document.getElementById('voice-btn').classList.add('recording');
-            recorder.ondataavailable = e => chunks.push(e.data);
-            recorder.onstop = () => {
-                const b = new Blob(chunks, { type: 'audio/webm' });
-                const r = new FileReader(); r.readAsDataURL(b);
-                r.onloadend = () => post({ audio: r.result });
+        const s = await navigator.mediaDevices.getUserMedia({ audio: true });
+        recorder = new MediaRecorder(s); chunks = [];
+        document.getElementById('voice-btn').classList.add('recording');
+        recorder.ondataavailable = e => chunks.push(e.data);
+        recorder.onstop = () => {
+            const b = new Blob(chunks, { type: 'audio/webm' });
+            const r = new FileReader(); r.readAsDataURL(b);
+            r.onloadend = () => {
+                fetch(`${API}?room=${currentRoom}`, { method: 'POST', body: JSON.stringify({
+                    username: localStorage.getItem('chat_u'), password: localStorage.getItem('chat_p'),
+                    audio: r.result, replyTo
+                })});
+                cancelReply();
             };
-            recorder.start();
-        } catch(e) { alert("خطا در میکروفون"); }
+        };
+        recorder.start();
     }
-    function stopRec() { if(recorder && recorder.state !== "inactive") { recorder.stop(); document.getElementById('voice-btn').classList.remove('recording'); } }
+    function stopRec() { if(recorder) { recorder.stop(); document.getElementById('voice-btn').classList.remove('recording'); } }
 
-    // تابع خروج کاملاً اصلاح شده
-    function logout() {
-        if(!confirm("آیا می‌خواهید خارج شوید؟")) return;
-        // ۱. توقف تمام اینتروال‌ها
-        clearInterval(refreshInterval);
-        clearInterval(heartInterval);
-        // ۲. پاکسازی حافظه مرورگر
-        localStorage.clear();
-        // ۳. هدایت به صفحه ورود و نوسازی صفحه
-        window.location.reload();
+    async function del(id) {
+        if(!confirm("حذف؟")) return;
+        await fetch(`${API}?room=${currentRoom}`, { method: 'DELETE', body: JSON.stringify({ messageId: id, adminPassword: localStorage.getItem('chat_p') }) });
+        refresh();
     }
 
-    document.getElementById('m').onkeypress = e => { if(e.key==='Enter') sendText(); };
-    if(localStorage.getItem('chat_u')) startChat();
+    if(localStorage.getItem('chat_u')) init();
 </script>
 </body>
 </html>
