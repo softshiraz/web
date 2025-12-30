@@ -3,109 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>تـالار مجلسی | طلایی</title>
+    <title>تـالار مجلل VIP</title>
     <style>
-        :root { --gold: #d4af37; --black: #0a0a0a; --gray: #1a1a1a; --white: #ffffff; }
+        :root { --gold: #d4af37; --black: #0d0d0d; --gray: #1a1a1a; }
         * { box-sizing: border-box; font-family: Tahoma, sans-serif; }
-        body { background: var(--black); color: var(--white); margin: 0; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+        body { background: var(--black); color: white; margin: 0; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
         
         /* لاگین */
-        #auth-page { display: flex; justify-content: center; align-items: center; height: 100%; padding: 20px; }
-        .card { background: var(--gray); padding: 30px; border-radius: 20px; border: 1px solid var(--gold); width: 100%; max-width: 350px; text-align: center; box-shadow: 0 0 20px rgba(212,175,55,0.2); }
-        input { width: 100%; padding: 12px; margin: 10px 0; background: #222; border: 1px solid #444; border-radius: 10px; color: white; outline: none; }
+        #auth-page { display: flex; justify-content: center; align-items: center; height: 100%; padding: 20px; background: radial-gradient(circle, #222 0%, #000 100%); }
+        .card { background: var(--gray); padding: 30px; border-radius: 20px; border: 1px solid var(--gold); width: 100%; max-width: 350px; box-shadow: 0 0 30px rgba(212,175,55,0.2); text-align: center; }
+        input { width: 100%; padding: 12px; margin: 10px 0; background: #222; border: 1px solid #444; border-radius: 10px; color: white; outline: none; transition: 0.3s; }
         input:focus { border-color: var(--gold); }
-        .btn { width: 100%; padding: 12px; background: var(--gold); border: none; border-radius: 10px; font-weight: bold; cursor: pointer; color: black; }
+        .btn { padding: 12px 20px; background: var(--gold); border: none; border-radius: 10px; font-weight: bold; cursor: pointer; color: black; }
 
-        /* تالار چت */
-        #chat-page { display: none; flex-direction: column; height: 100%; }
-        header { padding: 10px 20px; background: var(--gray); border-bottom: 1px solid var(--gold); display: flex; justify-content: space-between; align-items: center; }
-        #online-bar { font-size: 11px; color: #4caf50; }
+        /* هدر و آنلاین‌ها */
+        header { padding: 10px 15px; background: var(--gray); border-bottom: 1px solid var(--gold); display: flex; justify-content: space-between; align-items: center; }
+        #online-list { font-size: 10px; color: #4caf50; max-width: 70%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 
-        #msg-container { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 12px; background: url('https://www.transparenttextures.com/patterns/carbon-fibre.png'); }
-        .msg { max-width: 85%; padding: 10px 15px; border-radius: 18px; position: relative; background: var(--gray); border-right: 3px solid var(--gold); align-self: flex-start; }
+        /* نوار پین */
+        #pin-bar { background: rgba(212, 175, 55, 0.15); border-bottom: 1px dashed var(--gold); padding: 8px 15px; display: none; align-items: center; gap: 10px; font-size: 13px; color: var(--gold); }
+
+        /* بخش پیام‌ها */
+        #chat-area { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 12px; }
+        .msg { max-width: 85%; padding: 10px 15px; border-radius: 18px; background: var(--gray); border-right: 3px solid var(--gold); align-self: flex-start; }
         .my-msg { align-self: flex-end; background: #333; border-right: none; border-left: 3px solid var(--gold); }
-        .msg b { color: var(--gold); font-size: 12px; }
-        .time { font-size: 9px; color: #888; display: flex; justify-content: space-between; margin-top: 5px; }
+        .msg b { color: var(--gold); font-size: 11px; display: block; margin-bottom: 4px; }
+        .ops { font-size: 9px; margin-top: 6px; display: flex; gap: 10px; opacity: 0.6; }
 
-        .input-area { padding: 15px; background: var(--gray); display: flex; gap: 10px; align-items: center; padding-bottom: calc(15px + env(safe-area-inset-bottom)); }
-        #voice-btn { width: 45px; height: 45px; border-radius: 50%; border: none; background: #333; color: white; cursor: pointer; font-size: 20px; display: flex; align-items: center; justify-content: center; }
-        #voice-btn.recording { background: #ff4444; animation: pulse 1s infinite; }
-        
-        audio { height: 30px; width: 200px; margin-top: 5px; filter: sepia(100%) saturate(200%) hue-rotate(10deg); }
+        /* نوار ورودی */
+        .input-bar { padding: 15px; background: var(--gray); display: flex; gap: 8px; align-items: center; padding-bottom: calc(15px + env(safe-area-inset-bottom)); }
+        #voice-btn { width: 45px; height: 45px; border-radius: 50%; border: none; background: #333; color: white; cursor: pointer; font-size: 20px; transition: 0.2s; }
+        #voice-btn.recording { background: #ff4444; animation: pulse 1s infinite; scale: 1.1; }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+        audio { height: 30px; width: 180px; filter: sepia(1) saturate(2); margin-top: 5px; }
     </style>
 </head>
 <body>
 
     <div id="auth-page">
         <div class="card">
-            <h2 style="color:var(--gold)">ورود به تالار</h2>
-            <input type="text" id="u" placeholder="نام نمایشی">
+            <h2 style="color:var(--gold)">تـالار VIP</h2>
+            <input type="text" id="u" placeholder="نام نمایشی شما">
             <input type="password" id="p" placeholder="رمز عبور">
-            <button class="btn" onclick="login()">ورود اشرافی</button>
+            <button class="btn" style="width:100%" onclick="login()">ورود به مجلس</button>
         </div>
     </div>
 
-    <div id="chat-page">
+    <div id="chat-page" style="display:none; flex-direction:column; height:100%;">
         <header>
-            <div>
-                <div id="online-bar">در حال اتصال...</div>
-                <small id="me-display" style="color:var(--gold)"></small>
-            </div>
-            <button onclick="location.reload()" style="background:none; border:1px solid #ff4444; color:#ff4444; border-radius:5px; padding:2px 8px; font-size:10px">خروج</button>
+            <div id="online-list">در حال دریافت لیست...</div>
+            <button onclick="location.reload()" style="background:none; border:1px solid #ff4444; color:#ff4444; border-radius:5px; font-size:10px; cursor:pointer">خروج</button>
         </header>
 
-        <div id="msg-container"></div>
+        <div id="pin-bar">
+            <span>📌</span>
+            <marquee id="pin-text"></marquee>
+            <b id="unpin-btn" onclick="unpin()" style="cursor:pointer; display:none; color:white">✖</b>
+        </div>
 
-        <div class="input-area">
-            <button id="voice-btn" onmousedown="startRecord()" onmouseup="stopRecord()" ontouchstart="startRecord()" ontouchend="stopRecord()">🎤</button>
-            <input type="text" id="m" placeholder="پیام بنویسید..." autocomplete="off">
-            <button class="btn" style="width:80px" onclick="sendText()">ارسال</button>
+        <div id="chat-area"></div>
+
+        <div class="input-bar">
+            <button id="voice-btn" onmousedown="startRec()" onmouseup="stopRec()" ontouchstart="startRec()" ontouchend="stopRec()">🎤</button>
+            <input type="text" id="m" placeholder="چیزی بنویسید..." autocomplete="off">
+            <button class="btn" onclick="sendText()">ارسال</button>
         </div>
     </div>
 
 <script>
-    const API = "https://room.softshiraz.workers.dev/";
-    let recorder;
-    let chunks = [];
+    // --- آدرس ورکر خود را اینجا بگذارید ---
+    const API = "https://room.softshiraz.workers.dev/"; 
+    
+    let recorder, chunks = [];
 
     async function login() {
-        const u = document.getElementById('u').value.trim();
-        const p = document.getElementById('p').value.trim();
-        if(!u || !p) return;
-
+        const u = document.getElementById('u').value, p = document.getElementById('p').value;
+        if(!u || !p) return alert("فیلدها را پر کنید");
         const res = await fetch(API, { method: 'POST', body: JSON.stringify({ type: 'login', password: p }) });
-        if(res.ok) {
-            localStorage.setItem('chat_u', u);
-            localStorage.setItem('chat_p', p);
-            init();
-        } else alert("رمز اشتباه است");
+        const data = await res.json();
+        if(data.success) {
+            localStorage.setItem('chat_u', u); localStorage.setItem('chat_p', p);
+            start();
+        } else alert("رمز عبور اشتباه است");
     }
 
-    function init() {
+    function start() {
         document.getElementById('auth-page').style.display = 'none';
         document.getElementById('chat-page').style.display = 'flex';
-        document.getElementById('me-display').innerText = "خوش آمدید، " + localStorage.getItem('chat_u');
-        
-        setInterval(heartbeat, 7000);
+        // اجرای ضربان قلب هر 8 ثانیه برای اعلام حضور
+        setInterval(() => fetch(API, { method: 'POST', body: JSON.stringify({ type: 'heartbeat', username: localStorage.getItem('chat_u') }) }), 8000);
         setInterval(refresh, 3000);
         refresh();
     }
 
-    async function heartbeat() {
-        fetch(API, { method: 'POST', body: JSON.stringify({ type: 'heartbeat', username: localStorage.getItem('chat_u') }) });
-    }
-
     async function refresh() {
         try {
-            const res = await fetch(API);
+            const res = await fetch(API); 
             const data = await res.json();
+            const myU = localStorage.getItem('chat_u'), myP = localStorage.getItem('chat_p'), isAdmin = myP === '1111';
             
-            document.getElementById('online-bar').innerText = "🟢 آنلاین: " + data.onlineUsers.length + " نفر (" + data.onlineUsers.join(', ') + ")";
-            
-            const area = document.getElementById('msg-container');
-            const myU = localStorage.getItem('chat_u');
-            const myP = localStorage.getItem('chat_p');
+            // نمایش آنلاین‌ها
+            document.getElementById('online-list').innerText = `🟢 آنلاین (${data.onlineUsers.length}): ` + data.onlineUsers.join('، ');
+
+            // نمایش پین
+            if(data.pinned) {
+                document.getElementById('pin-bar').style.display = 'flex';
+                document.getElementById('pin-text').innerText = data.pinned.username + ": " + (data.pinned.text || "پیام صوتی");
+                document.getElementById('unpin-btn').style.display = isAdmin ? 'block' : 'none';
+            } else { document.getElementById('pin-bar').style.display = 'none'; }
+
+            const area = document.getElementById('chat-area');
             const isBottom = area.scrollHeight - area.scrollTop <= area.clientHeight + 100;
 
             area.innerHTML = data.messages.map(m => `
@@ -113,73 +120,64 @@
                     <b>${m.username} ${m.isAdmin ? '👑' : ''}</b>
                     <div>${m.text}</div>
                     ${m.audio ? `<audio controls src="${m.audio}"></audio>` : ''}
-                    <div class="time">
-                        ${m.time}
-                        ${myP === '1111' ? `<span style="color:#ff4444;cursor:pointer" onclick="del('${m.id}')">حذف</span>` : ''}
+                    <div class="ops">
+                        <span>${m.time}</span>
+                        ${isAdmin ? `<span onclick="pin('${m.id}')" style="color:var(--gold);cursor:pointer">📌 پین</span>` : ''}
+                        ${isAdmin ? `<span onclick="del('${m.id}')" style="color:#ff4444;cursor:pointer">حذف</span>` : ''}
                     </div>
                 </div>
             `).join('');
 
             if(isBottom) area.scrollTop = area.scrollHeight;
-        } catch(e) {}
+        } catch(e) { console.error("Refresh Error"); }
     }
 
     async function sendText() {
-        const inp = document.getElementById('m');
-        if(!inp.value.trim()) return;
-        const txt = inp.value;
-        inp.value = "";
-        await post({ text: txt });
+        const i = document.getElementById('m'); if(!i.value.trim()) return;
+        await post({ text: i.value }); i.value = "";
     }
 
-    async function post(data) {
-        await fetch(API, {
-            method: 'POST',
-            body: JSON.stringify({
-                username: localStorage.getItem('chat_u'),
-                password: localStorage.getItem('chat_p'),
-                ...data
-            })
-        });
+    async function post(d) {
+        await fetch(API, { method: 'POST', body: JSON.stringify({ username: localStorage.getItem('chat_u'), password: localStorage.getItem('chat_p'), ...d }) });
         refresh();
     }
 
+    // عملیات مدیریت
+    async function pin(id) {
+        const res = await fetch(API); const d = await res.json();
+        const msg = d.messages.find(m => m.id === id);
+        await fetch(API, { method: 'POST', body: JSON.stringify({ type: 'pin', password: localStorage.getItem('chat_p'), msgData: msg }) });
+        refresh();
+    }
+    async function unpin() {
+        await fetch(API, { method: 'POST', body: JSON.stringify({ type: 'unpin', password: localStorage.getItem('chat_p') }) });
+        refresh();
+    }
     async function del(id) {
-        if(!confirm("حذف؟")) return;
-        await fetch(API, {
-            method: 'DELETE',
-            body: JSON.stringify({ messageId: id, adminPassword: localStorage.getItem('chat_p') })
-        });
+        if(!confirm("این پیام حذف شود؟")) return;
+        await fetch(API, { method: 'DELETE', body: JSON.stringify({ messageId: id, adminPassword: localStorage.getItem('chat_p') }) });
         refresh();
     }
 
-    // ضبط صدا
-    async function startRecord() {
+    // ضبط ویس
+    async function startRec() {
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-            recorder = new MediaRecorder(stream);
-            chunks = [];
+            recorder = new MediaRecorder(stream); chunks = [];
             document.getElementById('voice-btn').classList.add('recording');
             recorder.ondataavailable = e => chunks.push(e.data);
             recorder.onstop = () => {
                 const blob = new Blob(chunks, { type: 'audio/webm' });
-                const reader = new FileReader();
-                reader.readAsDataURL(blob);
-                reader.onloadend = () => post({ audio: reader.result });
+                const r = new FileReader(); r.readAsDataURL(blob);
+                r.onloadend = () => post({ audio: r.result });
             };
             recorder.start();
-        } catch(e) { alert("اجازه میکروفون داده نشد"); }
+        } catch(e) { alert("خطا در دسترسی به میکروفون"); }
     }
+    function stopRec() { if(recorder && recorder.state !== "inactive") { recorder.stop(); document.getElementById('voice-btn').classList.remove('recording'); } }
 
-    function stopRecord() {
-        if(recorder && recorder.state !== "inactive") {
-            recorder.stop();
-            document.getElementById('voice-btn').classList.remove('recording');
-        }
-    }
-
-    document.getElementById('m').onkeypress = e => { if(e.key==='Enter') sendText(); };
-    if(localStorage.getItem('chat_u')) init();
+    document.getElementById('m').onkeypress = e => { if(e.key === 'Enter') sendText(); };
+    if(localStorage.getItem('chat_u')) start();
 </script>
 </body>
 </html>
