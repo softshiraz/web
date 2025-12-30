@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>تـالار VIP طلایی</title>
+    <title>تـالار هوشمند VIP</title>
     <style>
         :root { --gold: #d4af37; --black: #0d0d0d; --gray: #1a1a1a; }
         * { box-sizing: border-box; font-family: Tahoma, sans-serif; transition: 0.2s; }
@@ -26,11 +26,17 @@
         .my-msg { align-self: flex-end; border-right: none; border-left: 3px solid var(--gold); background: #333; }
         .msg-av { width: 30px; height: 30px; border-radius: 50%; vertical-align: middle; margin-left: 5px; }
 
+        /* استایل پیام حذف شده */
+        .msg.is-deleted { opacity: 0.5; border-color: #555; background: #111; }
+        .deleted-text { font-style: italic; color: #777; font-size: 11px; }
+        .admin-view-deleted { border: 1px dashed red; padding: 2px 5px; border-radius: 5px; font-size: 10px; color: #ff6b6b; margin-bottom: 5px; display: block; }
+
         .input-bar { padding: 10px; background: var(--gray); display: flex; gap: 8px; align-items: center; padding-bottom: calc(10px + env(safe-area-inset-bottom)); }
         .icon-btn { background: none; border: none; color: white; font-size: 24px; cursor: pointer; }
         #m { flex: 1; padding: 10px; border-radius: 20px; background: #222; border: 1px solid #444; color: white; }
 
         .reply-tag { font-size: 10px; color: var(--gold); background: rgba(255,255,255,0.05); padding: 3px; border-radius: 5px; margin-bottom: 5px; border-right: 2px solid var(--gold); }
+        .del-link { color: #ff4444; cursor: pointer; font-size: 9px; margin-right: 10px; }
     </style>
 </head>
 <body>
@@ -91,7 +97,7 @@
         if((await res.json()).success) {
             localStorage.setItem('chat_u', u); localStorage.setItem('chat_p', p); localStorage.setItem('chat_av', selectedAv);
             start();
-        } else alert("رمز عبور اشتباه است (۱۱۱۱ یا ۱۴۰۴)");
+        } else alert("رمز اشتباه است");
     }
 
     function start() {
@@ -110,25 +116,39 @@
         try {
             const res = await fetch(`${API}?room=${currentRoom}`);
             const d = await res.json();
-            const myU = localStorage.getItem('chat_u'), myP = localStorage.getItem('chat_p');
+            const myU = localStorage.getItem('chat_u'), myP = localStorage.getItem('chat_p'), isAdmin = myP==='1111';
 
             document.getElementById('online-info').innerText = "🟢 آنلاین: " + d.onlineUsers.length + " نفر (" + d.onlineUsers.map(u=>u.name).join('، ') + ")";
 
             const area = document.getElementById('chat-area');
             const isBottom = area.scrollHeight - area.scrollTop <= area.clientHeight + 100;
 
-            area.innerHTML = d.messages.map(m => `
-                <div class="msg ${m.username === myU ? 'my-msg' : ''}" onclick="setReply('${m.username}')">
+            area.innerHTML = d.messages.map(m => {
+                // اگر پیام حذف شده باشد و ادمین نباشد، متن حذف شده نمایش بده
+                if (m.isDeleted && !isAdmin) {
+                    return `<div class="msg ${m.username === myU ? 'my-msg' : ''} is-deleted">
+                                <b style="font-size:10px; color:#666;">${m.username}</b>
+                                <div class="deleted-text">🚫 این پیام پاک شده است</div>
+                            </div>`;
+                }
+
+                return `
+                <div class="msg ${m.username === myU ? 'my-msg' : ''} ${m.isDeleted ? 'is-deleted':''}" onclick="setReply('${m.username}')">
                     <img class="msg-av" src="https://api.dicebear.com/7.x/bottts/svg?seed=${m.av}">
                     <b style="color:var(--gold); font-size:11px;">${m.username} ${m.isAdmin?'👑':''}</b>
+                    
+                    ${m.isDeleted && isAdmin ? `<span class="admin-view-deleted">[حذف شده توسط کاربر]</span>` : ''}
+                    
                     ${m.replyTo ? `<div class="reply-tag">↩ در پاسخ به: ${m.replyTo}</div>` : ''}
                     ${m.text ? `<div>${m.text}</div>` : ''}
                     ${m.audio ? `<audio controls src="${m.audio}" style="width:180px; height:30px; filter:sepia(1); margin-top:5px;"></audio>` : ''}
+                    
                     <div style="font-size:8px; opacity:0.5; margin-top:5px;">
-                        ${m.time} ${myP==='1111' ? `<span onclick="del('${m.id}')" style="color:red; margin-right:10px; cursor:pointer">حذف</span>`:''}
+                        ${m.time} 
+                        ${(!m.isDeleted && (m.username === myU || isAdmin)) ? `<span onclick="del('${m.id}')" class="del-link">حذف</span>` : ''}
                     </div>
-                </div>
-            `).join('');
+                </div>`;
+            }).join('');
             if(isBottom) area.scrollTop = area.scrollHeight;
         } catch(e){}
     }
@@ -152,8 +172,7 @@
     function setReply(u) { replyTo = u; document.getElementById('reply-info').style.display='flex'; document.getElementById('reply-to').innerText="پاسخ به: " + u; }
     function cancelReply() { replyTo = null; document.getElementById('reply-info').style.display='none'; }
     function setRoom(r) { currentRoom = r; document.getElementById('b-gen').style.background = r==='general'?'var(--gold)':'#333'; document.getElementById('b-vip').style.background = r==='vip'?'var(--gold)':'#333'; refresh(); }
-    
-    function logout() { if(confirm("آیا خارج می‌شوید؟")){ clearInterval(refreshInt); clearInterval(heartInt); localStorage.clear(); location.reload(); } }
+    function logout() { if(confirm("خروج؟")){ clearInterval(refreshInt); clearInterval(heartInt); localStorage.clear(); location.reload(); } }
 
     async function startRec() {
         try {
@@ -171,7 +190,19 @@
         } catch(e) { alert("دسترسی به میکروفون داده نشد."); }
     }
     function stopRec() { if(recorder && recorder.state !== "inactive") recorder.stop(); }
-    async function del(id) { await fetch(`${API}?room=${currentRoom}`, { method:'DELETE', body: JSON.stringify({messageId:id, adminPassword:localStorage.getItem('chat_p')})}); refresh(); }
+
+    async function del(id) { 
+        if(!confirm("آیا پیام پاک شود؟")) return;
+        await fetch(`${API}?room=${currentRoom}`, { 
+            method:'DELETE', 
+            body: JSON.stringify({
+                messageId: id, 
+                password: localStorage.getItem('chat_p'),
+                username: localStorage.getItem('chat_u')
+            })
+        }); 
+        refresh(); 
+    }
 
     document.getElementById('m').oninput = () => { isTyping=true; setTimeout(()=>isTyping=false, 2000); };
     document.getElementById('m').onkeypress = e => { if(e.key==='Enter') send(); };
