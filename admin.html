@@ -218,7 +218,6 @@
                     <div><label>امتیاز</label><input type="text" id="rate" oninput="updatePreview()"></div>
                     <div><label>رده سنی</label><input type="text" id="age" oninput="updatePreview()"></div>
                     <div><label>مدت زمان</label><input type="text" id="duration" oninput="updatePreview()" placeholder="مثلا: هر قسمت حدودا 50 دقیقه"></div>
-                    <div><label>تخفیف (درصد)</label><input type="text" id="discount" placeholder="مثلا: ۲۰%" oninput="updatePreview()"></div>
                 </div>
                 <label>خلاصه داستان</label>
                 <textarea id="summary" rows="5" oninput="updatePreview()"></textarea>
@@ -255,7 +254,6 @@
                                 <p><strong>امتیاز : </strong><span id="p-back-rate">-</span></p>
                                 <p><strong>رده سنی : </strong><span id="p-back-age">-</span></p>
                                 <p><strong>مدت زمان : </strong><span id="p-back-duration">-</span></p>
-                                <p><strong>تخفیف : </strong><span id="p-back-discount">-</span></p>
                                 <p><strong>خلاصه : </strong><span id="p-back-summary">-</span></p>
                             </div>
                         </div>
@@ -272,7 +270,7 @@
         let globalPass = "";
         let allFiles = [];
         let currentAdminId = "-";
-        let currentFilePath = ""; // مسیر فعلی فایل برای تشخیص تغییر نام
+        let currentFilePath = "";
 
         function login() {
             if(document.getElementById('admin-pass').value === "3339") {
@@ -377,8 +375,7 @@
             document.getElementById('rate').value = ps[2]?.innerText.split(': ')[1] || "";
             document.getElementById('age').value = ps[3]?.innerText.split(': ')[1] || "";
             document.getElementById('duration').value = ps[4]?.innerText.split(': ')[1] || "";
-            document.getElementById('discount').value = ps[5]?.innerText.split(': ')[1] || "";
-            document.getElementById('summary').value = ps[6]?.innerText.split(': ')[1] || "";
+            document.getElementById('summary').value = ps[5]?.innerText.split(': ')[1] || "";
 
             const reserveBtn = doc.querySelector('.reserve-btn');
             const isDisabled = reserveBtn?.classList.contains('disabled');
@@ -402,7 +399,6 @@
             document.getElementById('p-back-rate').innerText = document.getElementById('rate').value || "-";
             document.getElementById('p-back-age').innerText = document.getElementById('age').value || "-";
             document.getElementById('p-back-duration').innerText = document.getElementById('duration').value || "-";
-            document.getElementById('p-back-discount').innerText = document.getElementById('discount').value || "-";
             document.getElementById('p-back-summary').innerText = document.getElementById('summary').value || "-";
 
             const mode = document.getElementById('t_status').value;
@@ -416,7 +412,7 @@
         }
 
         function clearForm() {
-            ['num','title','time','img','genre','rate','age','duration','discount','summary','admin_id'].forEach(id => document.getElementById(id).value = "");
+            ['num','title','time','img','genre','rate','age','duration','summary','admin_id'].forEach(id => document.getElementById(id).value = "");
             document.getElementById('content_type').value = "انیمیشن";
             document.getElementById('t_status').value = "blue";
             currentAdminId = "-";
@@ -448,8 +444,6 @@
                 const t_color = t_mode === 'blue' ? '#0037ff' : '#000000';
                 const type = document.getElementById('content_type').value;
                 const adminId = document.getElementById('admin_id').value.trim() || "softshirazadmin2";
-                const discount = document.getElementById('discount').value.trim();
-                const discountLine = discount ? `<p><strong>تخفیف : </strong>${discount}</p>` : "";
                 
                 const html = `<div class="card-inner">
 <div class="card-front" data-admin-id="${adminId}">
@@ -464,20 +458,18 @@
 <p><strong>امتیاز : </strong>${document.getElementById('rate').value}</p>
 <p><strong>رده سنی : </strong>${document.getElementById('age').value}</p>
 <p><strong>مدت زمان : </strong>${document.getElementById('duration').value}</p>
-${discountLine}
 <p><strong>خلاصه : </strong>${document.getElementById('summary').value}</p>
 </div></div>`.trim();
                 content = btoa(unescape(encodeURIComponent(html)));
                 currentAdminId = adminId;
             }
 
-            // اگر نام فایل تغییر کرده باشد، اول فایل قبلی را حذف کن (اگر وجود داشت)
+            // اگر نام فایل تغییر کرده باشد، اول فایل قبلی را حذف کن
             if(action === 'save' && currentFilePath && currentFilePath !== targetPath) {
                 const deleteOld = await fetch(WORKER_URL, {
                     method: "POST",
                     body: JSON.stringify({ password: globalPass, path: currentFilePath, action: 'delete' })
                 });
-                // نادیده گرفتن خطای حذف (اگر فایل وجود نداشته باشد)
             }
 
             const res = await fetch(WORKER_URL, {
@@ -487,7 +479,7 @@ ${discountLine}
 
             if(res.ok) {
                 status.innerText = "✅ با موفقیت انجام شد";
-                currentFilePath = targetPath; // به‌روزرسانی مسیر فعلی
+                currentFilePath = targetPath;
                 loadList();
                 if(action === 'delete') clearForm();
             } else {
