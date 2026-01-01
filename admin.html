@@ -3,154 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>پنل فوق پیشرفته سافت شیراز</title>
+    <title>پنل مدیریت حرفه‌ای سافت شیراز</title>
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/dist/font-face.css" rel="stylesheet">
     <style>
-        :root { --bg: #0e0e0f; --card: #1c1c1e; --gold: #ffd700; --text: #fff; --green: #2e7d32; --red: #ff4444; --blue: #0037ff; }
-        body { font-family: "Vazirmatn", sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; direction: rtl; }
+        :root { --bg: #0e0e0f; --card: #1c1c1e; --gold: #ffd700; --text: #fff; --blue: #0037ff; }
+        body { font-family: "Vazirmatn", sans-serif; background: var(--bg); color: var(--text); margin: 0; direction: rtl; }
+        #login-page { display: flex; align-items: center; justify-content: center; height: 100vh; }
+        .box { background: var(--card); border: 1px solid #333; border-radius: 15px; padding: 20px; }
+        #admin-panel { display: none; grid-template-columns: 320px 1fr 320px; gap: 20px; padding: 20px; }
+        @media (max-width: 1100px) { #admin-panel { grid-template-columns: 1fr; } }
         
-        /* Login Page */
-        #login-page { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; }
-        .login-box { background: var(--card); padding: 30px; border-radius: 20px; border: 1px solid #333; width: 300px; text-align: center; }
-
-        /* Admin Layout */
-        #admin-panel { display: none; grid-template-columns: 320px 1fr 350px; gap: 20px; padding: 20px; max-width: 1600px; margin: auto; }
-        @media (max-width: 1200px) { #admin-panel { grid-template-columns: 300px 1fr; } .preview-sidebar { grid-column: span 2; } }
-        @media (max-width: 900px) { #admin-panel { grid-template-columns: 1fr; } .sidebar, .preview-sidebar { order: 2; } .main-form { order: 1; } }
-
-        /* Shared Styles */
-        .box { background: var(--card); border: 1px solid #333; border-radius: 15px; padding: 20px; height: fit-content; }
-        input, textarea, select { width: 100%; padding: 10px; background: #000; border: 1px solid #444; color: #fff; border-radius: 8px; box-sizing: border-box; font-family: inherit; margin-top: 5px; }
-        label { font-size: 12px; color: #888; }
-        button { padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.2s; font-family: inherit; }
-
-        /* Sidebar & Search */
-        .file-list { background: #000; border-radius: 10px; height: 500px; overflow-y: auto; margin-top: 10px; border: 1px solid #222; }
-        .file-item { padding: 10px; border-bottom: 1px solid #111; cursor: pointer; display: flex; justify-content: space-between; font-size: 13px; }
-        .file-item:hover { background: #1a1a1a; color: var(--gold); }
-        .search-box { margin-bottom: 10px; border-color: var(--gold); }
-
-        /* Preview Card (Styled like your main site) */
-        .preview-container { position: sticky; top: 20px; text-align: center; }
-        .card-preview-box { background: #000; border-radius: 15px; overflow: hidden; border: 1px solid #444; width: 260px; margin: auto; }
-        .p-img { width: 100%; height: 350px; object-fit: cover; }
-        .p-title { padding: 10px; background: #111; font-weight: bold; color: var(--gold); border-top: 1px solid #333; }
-        .p-date { padding: 8px; font-size: 12px; background: #000; }
-        .p-btn { padding: 10px; background: #111; border-top: 1px solid #333; font-weight: bold; }
-
-        .save-btn { background: var(--gold); color: #000; width: 100%; margin-top: 10px; }
-        .del-btn { background: var(--red); color: #fff; width: 100%; margin-top: 5px; }
-        .add-btn { background: var(--green); color: #fff; width: 100%; margin-bottom: 10px; }
+        .file-list { background: #000; height: 500px; overflow-y: auto; border-radius: 10px; border: 1px solid #444; margin-top: 10px; }
+        .file-item { padding: 12px; border-bottom: 1px solid #222; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
+        .click-badge { background: var(--blue); color: #fff; padding: 2px 8px; border-radius: 10px; font-size: 10px; }
+        
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        input, textarea, select { width: 100%; padding: 10px; background: #000; border: 1px solid #444; color: #fff; border-radius: 8px; box-sizing: border-box; font-family: inherit; }
+        label { font-size: 11px; color: #888; display: block; margin-bottom: 3px; }
+        
+        button { padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.2s; font-family: inherit; width: 100%; }
+        .save-btn { background: var(--gold); color: #000; margin-top: 15px; }
+        .add-btn { background: #2e7d32; color: #fff; margin-bottom: 10px; }
+        
+        .preview-card { background: #000; border-radius: 15px; overflow: hidden; border: 1px solid #444; width: 250px; margin: auto; text-align: center; }
+        .p-img { width: 100%; height: 320px; object-fit: cover; background: #111; }
     </style>
 </head>
 <body>
 
 <div id="login-page">
-    <div class="login-box">
-        <h2 style="color:var(--gold)">ورود ادمین</h2>
+    <div class="box" style="width:300px; text-align:center;">
+        <h2 style="color:var(--gold)">ورود مدیریت</h2>
         <input type="password" id="admin-pass" placeholder="رمز ۳۳۳۹">
-        <button class="save-btn" onclick="login()" style="margin-top:20px">ورود به پنل</button>
+        <button class="save-btn" onclick="login()">ورود</button>
     </div>
 </div>
 
 <div id="admin-panel">
     <div class="sidebar box">
-        <h3 style="margin-top:0">📂 لیست کارت‌ها</h3>
-        <input type="text" id="search" class="search-box" placeholder="🔍 جستجو نام فیلم..." oninput="filterFiles()">
-        <button class="add-btn" style="width:100%" onclick="clearForm()">➕ ساخت کارت جدید</button>
-        <div class="file-list" id="file-list">در حال بارگذاری...</div>
+        <h3 style="margin:0 0 10px 0;">📂 مدیریت کارت‌ها</h3>
+        <input type="text" id="search" placeholder="🔍 جستجو نام فیلم..." oninput="filterFiles()" style="border-color:var(--gold); margin-bottom:10px;">
+        <button class="add-btn" onclick="resetForm()">➕ افزودن کارت جدید</button>
+        <div class="file-list" id="file-list">در حال لود لیست و آمار...</div>
     </div>
 
     <div class="main-form box">
-        <h3 style="margin-top:0; color:var(--gold)">✏️ ویرایش اطلاعات</h3>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-            <div><label>شماره فایل</label><input type="number" id="num" oninput="updatePreview()"></div>
-            <div><label>نام انیمیشن</label><input type="text" id="title" oninput="updatePreview()"></div>
-            <div><label>تاریخ و زمان (متنی یا انتخابگر)</label><input type="text" id="time" oninput="updatePreview()" placeholder="مثلا: ۱۰ دی - ۱۶:۰۰"></div>
-            <div><label>لینک پوستر</label><input type="text" id="img" oninput="updatePreview()"></div>
-            <div><label>ژانر</label><input type="text" id="genre" oninput="updatePreview()"></div>
-            <div><label>امتیاز</label><input type="text" id="rate" oninput="updatePreview()"></div>
-            <div><label>رده سنی</label><input type="text" id="age" oninput="updatePreview()"></div>
-            <div><label>مدت زمان</label><input type="text" id="duration" oninput="updatePreview()"></div>
+        <h3 style="margin:0 0 15px 0; color:var(--gold)">✏️ ویرایش محتوا</h3>
+        <div class="form-grid">
+            <div><label>شماره فایل</label><input type="number" id="num" oninput="livePre()"></div>
+            <div><label>نام انیمیشن</label><input type="text" id="title" oninput="livePre()"></div>
+            <div><label>زمان اکران</label><input type="text" id="time" oninput="livePre()"></div>
+            <div><label>لینک پوستر</label><input type="text" id="img" oninput="livePre()"></div>
+            <div><label>ژانر</label><input type="text" id="genre"></div>
+            <div><label>امتیاز</label><input type="text" id="rate"></div>
+            <div><label>رده سنی</label><input type="text" id="age"></div>
+            <div><label>مدت زمان</label><input type="text" id="duration"></div>
         </div>
-        <label>خلاصه داستان</label>
-        <textarea id="summary" rows="4" oninput="updatePreview()"></textarea>
+        <label style="margin-top:10px;">خلاصه داستان</label>
+        <textarea id="summary" rows="3" oninput="livePre()"></textarea>
         
-        <label>وضعیت اکران</label>
-        <select id="t_status" onchange="updatePreview()">
+        <label style="margin-top:10px;">وضعیت ظرفیت</label>
+        <select id="t_status" onchange="livePre()">
             <option value="blue">فعال (آبی)</option>
-            <option value="black">ظرفیت تکمیل (مشکی)</option>
+            <option value="black">تکمیل (مشکی)</option>
         </select>
 
-        <button class="save-btn" onclick="submit('save')">💾 ذخیره و انتشار نهایی</button>
-        <button class="del-btn" onclick="submit('delete')">🗑️ حذف این کارت</button>
-        <div id="status" style="margin-top:10px; text-align:center"></div>
-        <div style="text-align:center; margin-top:10px; font-size:12px; color:#888;">📈 آمار کلیک‌ها به زودی در این بخش...</div>
+        <button class="save-btn" onclick="send('save')">💾 ذخیره و انتشار</button>
+        <button style="background:#ff4444; color:#fff; margin-top:5px;" onclick="send('delete')">🗑️ حذف کارت</button>
+        <div id="status" style="margin-top:10px; text-align:center; font-size:12px;"></div>
     </div>
 
-    <div class="preview-sidebar preview-container">
-        <h3 style="margin-top:0">👀 پیش‌نمایش زنده</h3>
-        <div class="card-preview-box">
-            <div id="pre-img-div"><img src="" id="p-img" class="p-img"></div>
-            <div id="p-title" class="p-title">نام انیمیشن</div>
-            <div id="p-date" class="p-date">تاریخ اکران</div>
-            <div id="p-btn" class="p-btn" style="color:var(--blue)">تهیه بلیط</div>
+    <div class="preview box" style="text-align:center;">
+        <h3 style="margin:0 0 15px 0;">👁️ پیش‌نمایش</h3>
+        <div class="preview-card">
+            <img src="" id="pre-img" class="p-img">
+            <div id="pre-title" style="padding:10px; font-weight:bold; color:var(--gold); border-top:1px solid #333;">نام فیلم</div>
+            <div id="pre-time" style="font-size:12px; padding-bottom:10px;">زمان اکران</div>
+            <div id="pre-btn" style="padding:10px; background:#111; border-top:1px solid #222;">تهیه بلیط</div>
         </div>
-        <p style="font-size:11px; color:#666; margin-top:15px;">این پیش‌نمایش دقیقاً مشابه ظاهر سایت شماست.</p>
+        <div id="stats-view" style="margin-top:20px; font-size:13px; color:var(--gold);"></div>
     </div>
 </div>
 
 <script>
-    const WORKER_URL = "https://admin.softshiraz.workers.dev/";
+    const WORKER = "https://admin.softshiraz.workers.dev/";
     let globalPass = "";
-    let allFiles = [];
+    let cachedFiles = []; 
+    let statsData = {};
 
     function login() {
         if(document.getElementById('admin-pass').value === "3339") {
             globalPass = "3339";
             document.getElementById('login-page').style.display = "none";
             document.getElementById('admin-panel').style.display = "grid";
-            loadList();
-        } else alert("رمز اشتباه");
+            refreshList();
+        } else alert("خطا");
     }
 
-    async function loadList() {
-        const res = await fetch(`${WORKER_URL}?pass=${globalPass}`);
-        allFiles = await res.json();
-        allFiles.sort((a,b) => (parseInt(a.name)||0) - (parseInt(b.name)||0));
-        renderList(allFiles);
+    async function refreshList() {
+        const res = await fetch(`${WORKER}?pass=${globalPass}`);
+        const data = await res.json();
+        cachedFiles = data.files;
+        statsData = data.stats;
+        renderList(cachedFiles);
     }
 
     function renderList(files) {
         const list = document.getElementById('file-list');
         list.innerHTML = "";
+        files.sort((a,b) => (parseInt(a.name)||0) - (parseInt(b.name)||0));
         files.forEach(f => {
             if(f.name.endsWith('.html')) {
-                const d = document.createElement('div');
-                d.className = 'file-item';
-                d.innerHTML = `<span>کارت ${f.name.replace('.html','')}</span> <span>⚙️</span>`;
-                d.onclick = () => loadFile(f.path);
-                list.appendChild(d);
+                const id = f.name.replace('.html','');
+                const div = document.createElement('div');
+                div.className = 'file-item';
+                div.innerHTML = `<span>کارت ${id}</span> <span class="click-badge">${statsData[id] || 0} کلیک</span>`;
+                div.onclick = () => loadFile(f.path);
+                list.appendChild(div);
             }
         });
     }
 
+    // جستجوی پیشرفته در نام فیلم (نیازمند Fetch محتوا برای دقت ۱۰۰٪ است، اما اینجا بر اساس شماره فیلتر می‌کند)
+    // برای جستجوی نام فیلم، لیست کارت‌ها را اسکن می‌کنیم
     function filterFiles() {
         const term = document.getElementById('search').value.toLowerCase();
-        // در گیت‌هاب برای فیلتر بر اساس "نام فیلم" باید ابتدا تمام فایل‌ها لود شوند. 
-        // فعلا بر اساس شماره فایل فیلتر می‌کند
-        const filtered = allFiles.filter(f => f.name.includes(term));
+        const filtered = cachedFiles.filter(f => f.name.includes(term));
         renderList(filtered);
     }
 
     async function loadFile(path) {
-        document.getElementById('status').innerText = "در حال لود...";
-        const res = await fetch(`${WORKER_URL}?pass=${globalPass}&path=${path}`);
+        const res = await fetch(`${WORKER}?pass=${globalPass}&path=${path}`);
         const data = await res.json();
         const html = decodeURIComponent(escape(atob(data.content)));
         const doc = new DOMParser().parseFromString(html, 'text/html');
         
-        document.getElementById('num').value = path.replace('cards/','').replace('.html','');
+        const id = path.replace('cards/','').replace('.html','');
+        document.getElementById('num').value = id;
         document.getElementById('title').value = doc.querySelector('.date-bar')?.innerText || "";
         document.getElementById('time').value = doc.querySelector('.title-bar')?.innerText || "";
         document.getElementById('img').value = doc.querySelector('img')?.src || "";
@@ -160,39 +149,39 @@
         document.getElementById('age').value = ps[3]?.innerText.split(': ')[1] || "";
         document.getElementById('duration').value = ps[4]?.innerText.split(': ')[1] || "";
         document.getElementById('summary').value = ps[5]?.innerText.split(': ')[1] || "";
-        updatePreview();
+        
+        document.getElementById('stats-view').innerText = `📊 کل کلیک روی این کارت: ${statsData[id] || 0}`;
+        livePre();
     }
 
-    function updatePreview() {
-        document.getElementById('p-title').innerText = document.getElementById('title').value || "نام انیمیشن";
-        document.getElementById('p-date').innerText = document.getElementById('time').value || "تاریخ اکران";
-        document.getElementById('p-img').src = document.getElementById('img').value || "";
-        const mode = document.getElementById('t_status').value;
-        const btn = document.getElementById('p-btn');
-        btn.innerText = mode === 'blue' ? 'تهیه بلیط' : 'ظرفیت تکمیل شده';
-        btn.style.color = mode === 'blue' ? 'var(--blue)' : '#555';
+    function livePre() {
+        document.getElementById('pre-title').innerText = document.getElementById('title').value || "نام فیلم";
+        document.getElementById('pre-time').innerText = document.getElementById('time').value || "زمان اکران";
+        document.getElementById('pre-img').src = document.getElementById('img').value;
+        const s = document.getElementById('t_status').value;
+        document.getElementById('pre-btn').innerText = s === 'blue' ? 'تهیه بلیط' : 'ظرفیت تکمیل شده';
+        document.getElementById('pre-btn').style.color = s === 'blue' ? 'var(--blue)' : '#555';
     }
 
-    function clearForm() {
-        ['num','title','time','img','genre','rate','age','duration','summary'].forEach(id => document.getElementById(id).value = "");
-        updatePreview();
+    function resetForm() {
+        ['num','title','time','img','genre','rate','age','duration','summary'].forEach(i => document.getElementById(i).value="");
+        livePre();
     }
 
-    async function submit(action) {
+    async function send(action) {
         const num = document.getElementById('num').value;
         const status = document.getElementById('status');
-        status.innerText = "ارسال به گیت‌هاب...";
+        status.innerText = "در حال پردازش...";
         
         let content = "";
         if(action === 'save') {
-            const t_mode = document.getElementById('t_status').value;
-            const t_color = t_mode === 'blue' ? '#0037ff' : '#000000';
+            const s = document.getElementById('t_status').value;
             const html = `<div class="card-inner">
 <div class="card-front" data-admin-id="softshirazadmin2">
 <div class="date-bar" style="border-top-width: 0px;">${document.getElementById('title').value}</div>
 <div class="img-bar"><img src="${document.getElementById('img').value}" alt="p"></div> 
 <div class="title-bar" style="border-top-width: 0px;">${document.getElementById('time').value}</div>
-<div class="reserve-bar" style="border-top-width: 0px;"><a class="reserve-btn ${t_mode==='black'?'disabled':''}" style="color: ${t_color} !important;">${t_mode==='blue'?'تهیه بلیط':'ظرفیت تکمیل شده'}</a></div>
+<div class="reserve-bar" style="border-top-width: 0px;"><a class="reserve-btn ${s==='black'?'disabled':''}" style="color: ${s==='blue'?'#0037ff':'#000000'} !important;">${s==='blue'?'تهیه بلیط':'ظرفیت تکمیل شده'}</a></div>
 </div>
 <div class="card-back">
 <p><strong>انیمیشن : </strong>${document.getElementById('title').value}</p>
@@ -205,11 +194,11 @@
             content = btoa(unescape(encodeURIComponent(html)));
         }
 
-        const res = await fetch(WORKER_URL, {
+        const res = await fetch(WORKER, {
             method: "POST",
             body: JSON.stringify({ password: globalPass, path: `cards/${num}.html`, content, action })
         });
-        if(res.ok) { status.innerText = "✅ انجام شد"; loadList(); } else status.innerText = "❌ خطا";
+        if(res.ok) { status.innerText = "✅ انجام شد"; refreshList(); } else status.innerText = "❌ خطا";
     }
 </script>
 </body>
