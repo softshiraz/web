@@ -16,19 +16,21 @@
         /* Admin Panel Layout */
         #admin-panel { display: none; padding: 10px; max-width: 1600px; margin: auto; }
 
-        /* Grid Layout پیشرفته */
+        /* Grid Layout پیشرفته و کاملاً ریسپانسیو */
         .admin-grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: 15px;
         }
 
+        /* موبایل کوچک */
         @media (max-width: 480px) {
             .admin-grid { gap: 10px; padding: 8px; }
             .box { padding: 15px; }
             input, textarea, select, button { font-size: 14px; padding: 10px; }
         }
 
+        /* تبلت */
         @media (min-width: 768px) {
             .admin-grid {
                 grid-template-columns: 280px 1fr;
@@ -36,6 +38,7 @@
             .preview-sidebar { grid-column: 1 / -1; }
         }
 
+        /* لپ‌تاپ و دسکتاپ کوچک */
         @media (min-width: 1024px) {
             .admin-grid {
                 grid-template-columns: 320px 1fr 340px;
@@ -43,6 +46,7 @@
             .preview-sidebar { grid-column: unset; }
         }
 
+        /* دسکتاپ بزرگ */
         @media (min-width: 1400px) {
             .admin-grid { gap: 25px; padding: 20px; }
         }
@@ -111,28 +115,46 @@
         @media (min-width: 640px) {
             .form-grid { grid-template-columns: 1fr 1fr; }
         }
+        @media (min-width: 1024px) {
+            .form-grid { gap: 16px; }
+        }
 
-        /* Preview Sidebar - کاملاً ثابت و بدون مشکل در موبایل */
+        /* Preview Sidebar */
         .preview-container { text-align: center; }
         .card-preview-wrapper {
             perspective: 1000px;
             width: 100%;
-            max-width: 340px;
+            max-width: 320px;
             margin: 0 auto;
+            height: 520px;
+        }
+        @media (max-width: 480px) {
+            .card-preview-wrapper { 
+                max-width: 280px;
+                height: 480px; 
+            }
+            .p-img { height: 340px; }
+            .p-title { padding: 10px; font-size: 15px; }
+            .p-date { padding: 8px; font-size: 12px; }
+            .p-btn { padding: 12px; font-size: 15px; }
+        }
+        @media (max-width: 360px) {
+            .card-preview-wrapper { 
+                max-width: 260px;
+                height: 460px; 
+            }
+            .p-img { height: 320px; }
+            .p-title { padding: 8px; font-size: 14px; }
+            .p-date { padding: 7px; font-size: 11px; }
+            .p-btn { padding: 10px; font-size: 14px; }
         }
         .card-preview-box {
             width: 100%;
-            height: 520px; /* ارتفاع ثابت برای همه دستگاه‌ها */
+            height: 100%;
             position: relative;
             transform-style: preserve-3d;
             transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-        }
-        @media (max-width: 480px) {
-            .card-preview-box { height: 460px; }
         }
         .card-preview-box.flipped { transform: rotateY(180deg); }
         .card-front-preview, .card-back-preview {
@@ -141,55 +163,18 @@
             height: 100%;
             backface-visibility: hidden;
             background: #000;
+            border-radius: 15px;
+            overflow: hidden;
             border: 1px solid #444;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
             display: flex;
             flex-direction: column;
         }
         .card-back-preview { transform: rotateY(180deg); }
-
-        .p-img {
-            width: 100%;
-            height: 65%; /* 65% از ارتفاع کارت */
-            object-fit: cover;
-            flex-shrink: 0;
-        }
-        @media (max-width: 480px) {
-            .p-img { height: 60%; }
-        }
-
-        .p-title {
-            padding: 10px;
-            background: #111;
-            font-weight: bold;
-            color: var(--gold);
-            border-top: 1px solid #333;
-            font-size: 15px;
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .p-date {
-            padding: 8px;
-            font-size: 13px;
-            background: #000;
-            color: #ccc;
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .p-btn {
-            padding: 12px;
-            background: #111;
-            border-top: 1px solid #333;
-            font-weight: bold;
-            font-size: 15px;
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+        .p-img { width: 100%; height: 380px; object-fit: cover; flex-shrink: 0; }
+        .p-title { padding: 12px; background: #111; font-weight: bold; color: var(--gold); border-top: 1px solid #333; font-size: 16px; flex-shrink: 0; }
+        .p-date { padding: 10px; font-size: 13px; background: #000; color: #ccc; flex-shrink: 0; }
+        .p-btn { padding: 14px; background: #111; border-top: 1px solid #333; font-weight: bold; font-size: 16px; flex-shrink: 0; }
 
         .back-content {
             padding: 15px;
