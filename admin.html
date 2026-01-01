@@ -2,132 +2,139 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>پنل مدیریت هوشمند سافت شیراز</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پنل مدیریت سافت شیراز</title>
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/dist/font-face.css" rel="stylesheet">
     <style>
-        :root { --gold: #ffd700; --bg: #0e0e0f; --card: #1c1c1e; }
-        body { font-family: Vazirmatn; background: var(--bg); color: #fff; margin: 0; padding: 20px; }
-        .container { max-width: 800px; margin: auto; }
-        #login-page, #admin-page { background: var(--card); padding: 30px; border-radius: 20px; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
-        .hidden { display: none; }
-        input, textarea, select { width: 100%; padding: 12px; background: #000; border: 1px solid #333; color: #fff; border-radius: 10px; margin: 10px 0; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        .gold-btn { background: var(--gold); color: #000; }
-        .card-item { background: #2c2c2e; padding: 15px; border-radius: 10px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #444; }
-        .del-badge { background: #ff4444; color: #fff; padding: 5px 10px; border-radius: 5px; font-size: 12px; cursor: pointer; }
-        .refresh-btn { background: #444; color: #fff; margin-bottom: 20px; }
+        :root { --bg: #0e0e0f; --card: #1c1c1e; --gold: #ffd700; --text: #fff; --blue: #0037ff; --black: #000000; }
+        body { font-family: "Vazirmatn", sans-serif; background: var(--bg); color: var(--text); padding: 15px; direction: rtl; }
+        .container { max-width: 600px; margin: auto; background: var(--card); padding: 20px; border-radius: 15px; border: 1px solid #333; }
+        h2 { color: var(--gold); text-align: center; font-size: 20px; }
+        .field { margin-bottom: 12px; }
+        label { display: block; font-size: 12px; color: #888; margin-bottom: 4px; }
+        input, textarea, select { width: 100%; padding: 10px; background: #000; border: 1px solid #444; color: #fff; border-radius: 8px; box-sizing: border-box; font-family: inherit; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .btn-box { display: flex; gap: 10px; margin-top: 20px; }
+        button { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .save { background: var(--gold); color: #000; }
+        .del { background: #ff4444; color: #fff; }
+        #msg { margin-top: 15px; text-align: center; font-size: 14px; padding: 10px; border-radius: 8px; display: none; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div id="login-page">
-        <h2 style="text-align:center; color:var(--gold)">ورود به مدیریت</h2>
-        <input type="password" id="admin-pass" placeholder="رمز عبور را وارد کنید">
-        <button class="gold-btn" onclick="login()">ورود</button>
-        <p id="login-err" style="color:red; text-align:center"></p>
+    <h2>مدیریت اکران‌ها</h2>
+    
+    <div class="grid">
+        <div class="field"><label>رمز پنل (3339)</label><input type="password" id="pass"></div>
+        <div class="field"><label>شماره کارت (1 تا 50)</label><input type="number" id="num"></div>
     </div>
 
-    <div id="admin-page" class="hidden">
-        <div style="display:flex; justify-content:space-between; align-items:center">
-            <h2 style="color:var(--gold)">مدیریت کارت‌ها</h2>
-            <button onclick="logout()" style="width:auto; background:red; color:#fff">خروج</button>
-        </div>
-
-        <details style="background:#2c2c2e; padding:15px; border-radius:10px; margin-bottom:20px">
-            <summary style="cursor:pointer; font-weight:bold">افزودن / ویرایش کارت جدید +</summary>
-            <input type="number" id="num" placeholder="شماره کارت (مثلا 1)">
-            <input type="text" id="title" placeholder="نام انیمیشن">
-            <input type="text" id="time" placeholder="زمان اکران">
-            <input type="text" id="img" placeholder="لینک عکس (../web/png/1.png)">
-            <select id="t_status">
-                <option value="blue">فعال (آبی)</option>
-                <option value="black">تکمیل شده (مشکی)</option>
-            </select>
-            <textarea id="summary" placeholder="خلاصه داستان" rows="3"></textarea>
-            <button class="gold-btn" onclick="saveCard()">ذخیره کارت</button>
-        </details>
-
-        <button class="refresh-btn" onclick="loadCardList()">🔄 به‌روزرسانی لیست کارت‌ها</button>
-        <div id="card-list">در حال بارگذاری لیست...</div>
+    <div class="grid">
+        <div class="field"><label>نام فیلم</label><input type="text" id="title" placeholder="بچه‌های بد"></div>
+        <div class="field"><label>زمان (روز - ساعت)</label><input type="text" id="time" placeholder="چهارشنبه 10 دی - 16:00"></div>
     </div>
+
+    <div class="field"><label>لینک عکس پوستر</label><input type="text" id="img" placeholder="../web/png/17.png"></div>
+
+    <div class="grid">
+        <div class="field"><label>ژانر</label><input type="text" id="genre"></div>
+        <div class="field"><label>امتیاز</label><input type="text" id="rate"></div>
+    </div>
+
+    <div class="grid">
+        <div class="field"><label>رده سنی</label><input type="text" id="age"></div>
+        <div class="field"><label>مدت زمان</label><input type="text" id="duration"></div>
+    </div>
+
+    <div class="field"><label>خلاصه داستان</label><textarea id="summary" rows="3"></textarea></div>
+
+    <div class="field">
+        <label>وضعیت دکمه</label>
+        <select id="t_status">
+            <option value="blue">فعال (تهیه بلیط - آبی)</option>
+            <option value="black">تکمیل (ظرفیت تکمیل - مشکی)</option>
+        </select>
+    </div>
+
+    <div class="btn-box">
+        <button class="save" onclick="handleAction('save')">ذخیره کارت</button>
+        <button class="del" onclick="handleAction('delete')">حذف کارت</button>
+    </div>
+
+    <div id="msg"></div>
 </div>
 
 <script>
     const WORKER_URL = "https://admin.softshiraz.workers.dev/";
-    let currentPassword = "";
 
-    function login() {
-        const pass = document.getElementById('admin-pass').value;
-        if(pass === "3339") {
-            currentPassword = pass;
-            document.getElementById('login-page').classList.add('hidden');
-            document.getElementById('admin-page').classList.remove('hidden');
-            loadCardList();
-        } else {
-            document.getElementById('login-err').innerText = "رمز اشتباه است!";
-        }
-    }
-
-    function logout() { location.reload(); }
-
-    async function loadCardList() {
-        const listDiv = document.getElementById('card-list');
-        listDiv.innerHTML = "در حال خواندن اطلاعات از گیت‌هاب...";
-        
-        try {
-            const res = await fetch(WORKER_URL, {
-                method: "POST",
-                body: JSON.stringify({ password: currentPassword, action: "list" })
-            });
-            const files = await res.json();
-            
-            listDiv.innerHTML = "";
-            files.forEach(file => {
-                if(file.name.endsWith('.html')) {
-                    const item = document.createElement('div');
-                    item.className = 'card-item';
-                    item.innerHTML = `
-                        <span>📄 کارت شماره: <b>${file.name.replace('.html','')}</b></span>
-                        <div onclick="deleteCard('${file.name}')" class="del-badge">حذف</div>
-                    `;
-                    listDiv.appendChild(item);
-                }
-            });
-        } catch (e) { listDiv.innerHTML = "خطا در دریافت لیست."; }
-    }
-
-    async function saveCard() {
+    async function handleAction(action) {
+        const msg = document.getElementById('msg');
+        const pass = document.getElementById('pass').value;
         const num = document.getElementById('num').value;
-        const t_mode = document.getElementById('t_status').value;
-        const html = `
+
+        if(!pass || !num) { alert("رمز و شماره کارت الزامی است"); return; }
+
+        msg.style.display = "block";
+        msg.style.background = "#444";
+        msg.style.color = "#fff";
+        msg.innerText = "در حال برقراری ارتباط با ورکر...";
+
+        let finalContent = "";
+        
+        if(action === 'save') {
+            const t_mode = document.getElementById('t_status').value;
+            const t_color = t_mode === 'blue' ? '#0037ff' : '#000000';
+            const t_text = t_mode === 'blue' ? 'تهیه بلیط' : 'ظرفیت تکمیل شده';
+            const t_class = t_mode === 'blue' ? '' : 'disabled';
+
+            finalContent = `
 <div class="card-inner">
     <div class="card-front" data-admin-id="softshirazadmin2">
-        <div class="date-bar">${document.getElementById('title').value}</div>
-        <div class="img-bar"><img src="${document.getElementById('img').value}"></div>
-        <div class="title-bar">${document.getElementById('time').value}</div>
-        <div class="reserve-bar">
-            <a class="reserve-btn ${t_mode === 'black' ? 'disabled' : ''}" style="color:${t_mode === 'blue' ? '#0037ff' : '#000'} !important;">
-                ${t_mode === 'blue' ? 'تهیه بلیط' : 'ظرفیت تکمیل'}
-            </a>
+        <div class="date-bar" style="border-top-width: 0px;">${document.getElementById('title').value}</div>
+        <div class="img-bar"><img src="${document.getElementById('img').value}" alt="poster"></div> 
+        <div class="title-bar" style="border-top-width: 0px;">${document.getElementById('time').value}</div>
+        <div class="reserve-bar" style="border-top-width: 0px;">
+            <a class="reserve-btn ${t_class}" style="color: ${t_color} !important;">${t_text}</a>
         </div>
     </div>
-    <div class="card-back"><p>${document.getElementById('summary').value}</p></div>
+    <div class="card-back">
+        <p><strong>انیمیشن : </strong>${document.getElementById('title').value}</p>
+        <p><strong>ژانر : </strong>${document.getElementById('genre').value}</p>
+        <p><strong>امتیاز : </strong>${document.getElementById('rate').value}</p>
+        <p><strong>رده سنی : </strong>${document.getElementById('age').value}</p>
+        <p><strong>مدت زمان : </strong>${document.getElementById('duration').value}</p>
+        <p><strong>خلاصه : </strong>${document.getElementById('summary').value}</p>
+    </div>
 </div>`.trim();
+        }
 
-        await apiCall({ path: `cards/${num}.html`, content: btoa(unescape(encodeURIComponent(html))), action: "save" });
-    }
+        try {
+            const response = await fetch(WORKER_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    password: pass,
+                    path: `cards/${num}.html`,
+                    content: btoa(unescape(encodeURIComponent(finalContent))),
+                    action: action
+                })
+            });
 
-    async function deleteCard(fileName) {
-        if(!confirm(`آیا از حذف کارت ${fileName} مطمئن هستید؟`)) return;
-        await apiCall({ path: `cards/${fileName}`, action: "delete" });
-    }
+            const result = await response.json();
 
-    async function apiCall(data) {
-        data.password = currentPassword;
-        const res = await fetch(WORKER_URL, { method: "POST", body: JSON.stringify(data) });
-        if(res.ok) { alert("عملیات موفق"); loadCardList(); }
-        else { alert("خطا رخ داد"); }
+            if (response.ok) {
+                msg.style.background = "#1b5e20";
+                msg.innerText = action === 'delete' ? "✅ حذف شد!" : "✅ ذخیره شد!";
+            } else {
+                msg.style.background = "#b71c1c";
+                msg.innerText = "❌ خطا: " + (result.error || "خطای سرور");
+            }
+        } catch (e) {
+            msg.style.background = "#b71c1c";
+            msg.innerText = "❌ ارتباط با ورکر برقرار نشد. آدرس ورکر را چک کنید.";
+        }
     }
 </script>
 </body>
