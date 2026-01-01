@@ -2,167 +2,132 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>پنل مدیریت پیشرفته سافت شیراز</title>
+    <title>پنل مدیریت هوشمند سافت شیراز</title>
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/dist/font-face.css" rel="stylesheet">
     <style>
-        :root { --bg: #0e0e0f; --card: #1c1c1e; --gold: #ffd700; --text: #fff; --blue: #0037ff; --black: #000000; }
-        body { font-family: "Vazirmatn", sans-serif; background: var(--bg); color: var(--text); padding: 20px; direction: rtl; }
-        .admin-box { background: var(--card); border: 1px solid #333; padding: 25px; border-radius: 20px; max-width: 600px; margin: auto; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
-        h2 { color: var(--gold); text-align: center; margin-bottom: 20px; }
-        .row { display: flex; gap: 10px; margin-bottom: 10px; }
-        .row > div { flex: 1; }
-        input, textarea, select { width: 100%; padding: 10px; background: #000; border: 1px solid #444; color: #fff; border-radius: 8px; margin-top: 5px; box-sizing: border-box; }
-        label { font-size: 13px; color: #aaa; }
-        .btn-group { display: flex; gap: 10px; margin-top: 20px; }
-        button { flex: 1; padding: 12px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        .save-btn { background: var(--gold); color: #000; }
-        .del-btn { background: #ff4444; color: #fff; }
-        .status-msg { margin-top: 15px; text-align: center; font-size: 14px; }
-        .ticket-status { background: #2c2c2e; padding: 15px; border-radius: 10px; margin-top: 10px; border: 1px dashed #444; }
+        :root { --gold: #ffd700; --bg: #0e0e0f; --card: #1c1c1e; }
+        body { font-family: Vazirmatn; background: var(--bg); color: #fff; margin: 0; padding: 20px; }
+        .container { max-width: 800px; margin: auto; }
+        #login-page, #admin-page { background: var(--card); padding: 30px; border-radius: 20px; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
+        .hidden { display: none; }
+        input, textarea, select { width: 100%; padding: 12px; background: #000; border: 1px solid #333; color: #fff; border-radius: 10px; margin: 10px 0; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .gold-btn { background: var(--gold); color: #000; }
+        .card-item { background: #2c2c2e; padding: 15px; border-radius: 10px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #444; }
+        .del-badge { background: #ff4444; color: #fff; padding: 5px 10px; border-radius: 5px; font-size: 12px; cursor: pointer; }
+        .refresh-btn { background: #444; color: #fff; margin-bottom: 20px; }
     </style>
 </head>
 <body>
 
-<div class="admin-box">
-    <h2>مدیریت ایونت‌های سافت شیراز</h2>
-    
-    <div class="row">
-        <div>
-            <label>رمز پنل</label>
-            <input type="password" id="pass" placeholder="3339">
-        </div>
-        <div>
-            <label>شماره کارت</label>
-            <input type="number" id="num" placeholder="مثلاً 1">
-        </div>
+<div class="container">
+    <div id="login-page">
+        <h2 style="text-align:center; color:var(--gold)">ورود به مدیریت</h2>
+        <input type="password" id="admin-pass" placeholder="رمز عبور را وارد کنید">
+        <button class="gold-btn" onclick="login()">ورود</button>
+        <p id="login-err" style="color:red; text-align:center"></p>
     </div>
 
-    <div class="row">
-        <div>
-            <label>نام انیمیشن (روی کارت)</label>
-            <input type="text" id="title" placeholder="بچه‌های بد">
+    <div id="admin-page" class="hidden">
+        <div style="display:flex; justify-content:space-between; align-items:center">
+            <h2 style="color:var(--gold)">مدیریت کارت‌ها</h2>
+            <button onclick="logout()" style="width:auto; background:red; color:#fff">خروج</button>
         </div>
-        <div>
-            <label>زمان اکران</label>
-            <input type="text" id="time" placeholder="چهارشنبه 10 دی - ساعت 16:00">
-        </div>
+
+        <details style="background:#2c2c2e; padding:15px; border-radius:10px; margin-bottom:20px">
+            <summary style="cursor:pointer; font-weight:bold">افزودن / ویرایش کارت جدید +</summary>
+            <input type="number" id="num" placeholder="شماره کارت (مثلا 1)">
+            <input type="text" id="title" placeholder="نام انیمیشن">
+            <input type="text" id="time" placeholder="زمان اکران">
+            <input type="text" id="img" placeholder="لینک عکس (../web/png/1.png)">
+            <select id="t_status">
+                <option value="blue">فعال (آبی)</option>
+                <option value="black">تکمیل شده (مشکی)</option>
+            </select>
+            <textarea id="summary" placeholder="خلاصه داستان" rows="3"></textarea>
+            <button class="gold-btn" onclick="saveCard()">ذخیره کارت</button>
+        </details>
+
+        <button class="refresh-btn" onclick="loadCardList()">🔄 به‌روزرسانی لیست کارت‌ها</button>
+        <div id="card-list">در حال بارگذاری لیست...</div>
     </div>
-
-    <div class="row">
-        <div>
-            <label>لینک پوستر</label>
-            <input type="text" id="img" placeholder="../web/png/17.png">
-        </div>
-        <div>
-            <label>آیدی ادمین تلگرام</label>
-            <input type="text" id="admin" value="softshirazadmin2">
-        </div>
-    </div>
-
-    <div class="row">
-        <div>
-            <label>ژانر</label>
-            <input type="text" id="genre" placeholder="کمدی - ماجراجویی">
-        </div>
-        <div>
-            <label>امتیاز</label>
-            <input type="text" id="rate" placeholder="6.9">
-        </div>
-    </div>
-
-    <div class="row">
-        <div>
-            <label>رده سنی</label>
-            <input type="text" id="age" placeholder="همه سنین">
-        </div>
-        <div>
-            <label>مدت زمان</label>
-            <input type="text" id="duration" placeholder="100 دقیقه">
-        </div>
-    </div>
-
-    <label>خلاصه داستان</label>
-    <textarea id="summary" rows="3"></textarea>
-
-    <div class="ticket-status">
-        <label>وضعیت دکمه تهیه بلیط:</label>
-        <select id="t_status">
-            <option value="blue">فعال (آبی #0037ff)</option>
-            <option value="black">ظرفیت تکمیل (مشکی #000000)</option>
-        </select>
-    </div>
-
-    <div class="btn-group">
-        <button class="save-btn" onclick="sendToWorker('save')">ذخیره / آپدیت کارت</button>
-        <button class="del-btn" onclick="sendToWorker('delete')">حذف کامل کارت</button>
-    </div>
-
-    <div id="status" class="status-msg"></div>
 </div>
 
 <script>
     const WORKER_URL = "https://admin.softshiraz.workers.dev/";
+    let currentPassword = "";
 
-    async function sendToWorker(action) {
-        const status = document.getElementById('status');
-        const pass = document.getElementById('pass').value;
+    function login() {
+        const pass = document.getElementById('admin-pass').value;
+        if(pass === "3339") {
+            currentPassword = pass;
+            document.getElementById('login-page').classList.add('hidden');
+            document.getElementById('admin-page').classList.remove('hidden');
+            loadCardList();
+        } else {
+            document.getElementById('login-err').innerText = "رمز اشتباه است!";
+        }
+    }
+
+    function logout() { location.reload(); }
+
+    async function loadCardList() {
+        const listDiv = document.getElementById('card-list');
+        listDiv.innerHTML = "در حال خواندن اطلاعات از گیت‌هاب...";
+        
+        try {
+            const res = await fetch(WORKER_URL, {
+                method: "POST",
+                body: JSON.stringify({ password: currentPassword, action: "list" })
+            });
+            const files = await res.json();
+            
+            listDiv.innerHTML = "";
+            files.forEach(file => {
+                if(file.name.endsWith('.html')) {
+                    const item = document.createElement('div');
+                    item.className = 'card-item';
+                    item.innerHTML = `
+                        <span>📄 کارت شماره: <b>${file.name.replace('.html','')}</b></span>
+                        <div onclick="deleteCard('${file.name}')" class="del-badge">حذف</div>
+                    `;
+                    listDiv.appendChild(item);
+                }
+            });
+        } catch (e) { listDiv.innerHTML = "خطا در دریافت لیست."; }
+    }
+
+    async function saveCard() {
         const num = document.getElementById('num').value;
-        
-        if(!pass || !num) { status.innerText = "رمز و شماره کارت الزامی است"; return; }
-        
-        status.innerText = "در حال پردازش...";
-        status.style.color = "gold";
-
-        let htmlContent = "";
-        if(action === 'save') {
-            const t_mode = document.getElementById('t_status').value;
-            const t_color = t_mode === 'blue' ? '#0037ff' : '#000000';
-            const t_text = t_mode === 'blue' ? 'تهیه بلیط' : 'ظرفیت تکمیل شده';
-            const t_class = t_mode === 'blue' ? '' : 'disabled';
-
-            htmlContent = `
+        const t_mode = document.getElementById('t_status').value;
+        const html = `
 <div class="card-inner">
-    <div class="card-front" data-admin-id="${document.getElementById('admin').value}">
-        <div class="date-bar" style="border-top-width: 0px;">${document.getElementById('title').value}</div>
-        <div class="img-bar"><img src="${document.getElementById('img').value}" alt="Poster"></div> 
-        <div class="title-bar" style="border-top-width: 0px;">${document.getElementById('time').value}</div>
-        <div class="reserve-bar" style="border-top-width: 0px;">
-            <a class="reserve-btn ${t_class}" style="color: ${t_color} !important;">${t_text}</a>
+    <div class="card-front" data-admin-id="softshirazadmin2">
+        <div class="date-bar">${document.getElementById('title').value}</div>
+        <div class="img-bar"><img src="${document.getElementById('img').value}"></div>
+        <div class="title-bar">${document.getElementById('time').value}</div>
+        <div class="reserve-bar">
+            <a class="reserve-btn ${t_mode === 'black' ? 'disabled' : ''}" style="color:${t_mode === 'blue' ? '#0037ff' : '#000'} !important;">
+                ${t_mode === 'blue' ? 'تهیه بلیط' : 'ظرفیت تکمیل'}
+            </a>
         </div>
     </div>
-    <div class="card-back">
-        <p><strong>انیمیشن : </strong>${document.getElementById('title').value}</p>
-        <p><strong>ژانر : </strong>${document.getElementById('genre').value}</p>
-        <p><strong>امتیاز : </strong>${document.getElementById('rate').value}</p>
-        <p><strong>رده سنی : </strong>${document.getElementById('age').value}</p>
-        <p><strong>مدت زمان : </strong>${document.getElementById('duration').value}</p>
-        <p><strong>خلاصه : </strong>${document.getElementById('summary').value}</p>
-    </div>
+    <div class="card-back"><p>${document.getElementById('summary').value}</p></div>
 </div>`.trim();
-        }
 
-        try {
-            const response = await fetch(WORKER_URL, {
-                method: "POST",
-                body: JSON.stringify({
-                    password: pass,
-                    path: `cards/${num}.html`,
-                    content: btoa(unescape(encodeURIComponent(htmlContent))),
-                    action: action
-                })
-            });
+        await apiCall({ path: `cards/${num}.html`, content: btoa(unescape(encodeURIComponent(html))), action: "save" });
+    }
 
-            if (response.ok) {
-                status.style.color = "lime";
-                status.innerText = action === 'delete' ? "✅ کارت با موفقیت حذف شد" : "✅ تغییرات با موفقیت اعمال شد";
-            } else {
-                const err = await response.json();
-                status.style.color = "red";
-                status.innerText = "❌ خطا: " + (err.error || "نامشخص");
-            }
-        } catch (e) {
-            status.innerText = "❌ خطای ارتباطی";
-        }
+    async function deleteCard(fileName) {
+        if(!confirm(`آیا از حذف کارت ${fileName} مطمئن هستید؟`)) return;
+        await apiCall({ path: `cards/${fileName}`, action: "delete" });
+    }
+
+    async function apiCall(data) {
+        data.password = currentPassword;
+        const res = await fetch(WORKER_URL, { method: "POST", body: JSON.stringify(data) });
+        if(res.ok) { alert("عملیات موفق"); loadCardList(); }
+        else { alert("خطا رخ داد"); }
     }
 </script>
 </body>
