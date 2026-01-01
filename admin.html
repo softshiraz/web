@@ -108,7 +108,7 @@
             width: 100%;
             max-width: 300px;
             margin: 0 auto;
-            height: 480px;
+            height: 500px; /* کمی بیشتر برای جلوگیری از ناپدید شدن */
         }
         .card-preview-box {
             width: 100%;
@@ -131,14 +131,16 @@
             overflow: hidden;
             border: 1px solid #444;
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            display: flex;
+            flex-direction: column;
         }
         .card-back-preview {
             transform: rotateY(180deg);
         }
-        .p-img { width: 100%; height: 380px; object-fit: cover; }
-        .p-title { padding: 12px; background: #111; font-weight: bold; color: var(--gold); border-top: 1px solid #333; font-size: 16px; }
-        .p-date { padding: 10px; font-size: 13px; background: #000; color: #ccc; }
-        .p-btn { padding: 14px; background: #111; border-top: 1px solid #333; font-weight: bold; font-size: 16px; }
+        .p-img { width: 100%; height: 380px; object-fit: cover; flex-shrink: 0; }
+        .p-title { padding: 12px; background: #111; font-weight: bold; color: var(--gold); border-top: 1px solid #333; font-size: 16px; flex-shrink: 0; }
+        .p-date { padding: 10px; font-size: 13px; background: #000; color: #ccc; flex-shrink: 0; }
+        .p-btn { padding: 14px; background: #111; border-top: 1px solid #333; font-weight: bold; font-size: 16px; flex-shrink: 0; }
 
         /* پشت کارت در پیش‌نمایش */
         .back-content {
@@ -198,7 +200,15 @@
                 <h3 style="margin-top:0; color:var(--gold)">✏️ ویرایش اطلاعات</h3>
                 <div class="form-grid">
                     <div><label>شماره فایل</label><input type="number" id="num" oninput="updatePreview()"></div>
-                    <div><label>نام انیمیشن</label><input type="text" id="title" oninput="updatePreview()"></div>
+                    <div><label>نوع محتوا</label>
+                        <select id="content_type" onchange="updatePreview()">
+                            <option value="فیلم">فیلم</option>
+                            <option value="سریال">سریال</option>
+                            <option value="انیمه">انیمه</option>
+                            <option value="انیمیشن">انیمیشن</option>
+                        </select>
+                    </div>
+                    <div><label>نام</label><input type="text" id="title" oninput="updatePreview()"></div>
                     <div><label>تاریخ و زمان</label><input type="text" id="time" oninput="updatePreview()" placeholder="مثلا: ۱۰ دی - ۱۶:۰۰"></div>
                     <div><label>لینک پوستر</label><input type="text" id="img" oninput="updatePreview()"></div>
                     <div><label>ژانر</label><input type="text" id="genre" oninput="updatePreview()"></div>
@@ -212,7 +222,7 @@
                 <label>وضعیت اکران</label>
                 <select id="t_status" onchange="updatePreview()">
                     <option value="blue">فعال (آبی)</option>
-                    <option value="black">ظرفیت تکمیل (مشکی)</option>
+                    <option value="black">ظرفیت تکمیل شده (مشکی)</option>
                 </select>
 
                 <button class="save-btn" onclick="submit('save')">💾 ذخیره و انتشار نهایی</button>
@@ -228,15 +238,15 @@
                     <div class="card-preview-box" id="preview-card">
                         <!-- روی کارت -->
                         <div class="card-front-preview">
-                            <div id="p-title" class="p-title">نام انیمیشن</div>                            
                             <img src="" id="p-img" class="p-img" alt="پوستر">
+                            <div id="p-title" class="p-title">نام</div>
                             <div id="p-date" class="p-date">تاریخ اکران</div>
                             <div id="p-btn" class="p-btn" style="color:var(--blue)">تهیه بلیط</div>
                         </div>
                         <!-- پشت کارت -->
                         <div class="card-back-preview">
                             <div class="back-content" id="p-back">
-                                <p><strong>انیمیشن : </strong><span id="p-back-title">نام انیمیشن</span></p>
+                                <p><strong id="p-back-label">انیمیشن : </strong><span id="p-back-title">نام</span></p>
                                 <p><strong>ژانر : </strong><span id="p-back-genre">-</span></p>
                                 <p><strong>امتیاز : </strong><span id="p-back-rate">-</span></p>
                                 <p><strong>رده سنی : </strong><span id="p-back-age">-</span></p>
@@ -331,7 +341,18 @@
             const doc = new DOMParser().parseFromString(html, 'text/html');
            
             document.getElementById('num').value = path.replace('cards/','').replace('.html','');
-            document.getElementById('title').value = doc.querySelector('.date-bar')?.innerText || "";
+            
+            const titleText = doc.querySelector('.date-bar')?.innerText.trim() || "";
+            document.getElementById('title').value = titleText;
+
+            // تشخیص نوع محتوا بر اساس متن فعلی در پشت کارت
+            const backFirstP = doc.querySelector('.card-back p')?.innerText || "";
+            let detectedType = "انیمیشن";
+            if(backFirstP.includes("فیلم :")) detectedType = "فیلم";
+            else if(backFirstP.includes("سریال :")) detectedType = "سریال";
+            else if(backFirstP.includes("انیمه :")) detectedType = "انیمه";
+            document.getElementById('content_type').value = detectedType;
+
             document.getElementById('time').value = doc.querySelector('.title-bar')?.innerText || "";
             document.getElementById('img').value = doc.querySelector('img')?.src || "";
             const ps = doc.querySelectorAll('.card-back p');
@@ -340,14 +361,21 @@
             document.getElementById('age').value = ps[3]?.innerText.split(': ')[1] || "";
             document.getElementById('duration').value = ps[4]?.innerText.split(': ')[1] || "";
             document.getElementById('summary').value = ps[5]?.innerText.split(': ')[1] || "";
-            document.getElementById('t_status').value = doc.querySelector('.reserve-btn')?.classList.contains('disabled') ? 'black' : 'blue';
+
+            const isDisabled = doc.querySelector('.reserve-btn')?.classList.contains('disabled');
+            document.getElementById('t_status').value = isDisabled ? 'black' : 'blue';
+
             updatePreview();
             document.getElementById('status').innerText = "";
         }
 
         function updatePreview() {
-            document.getElementById('p-title').innerText = document.getElementById('title').value || "نام انیمیشن";
-            document.getElementById('p-back-title').innerText = document.getElementById('title').value || "نام انیمیشن";
+            const type = document.getElementById('content_type').value;
+            const titleVal = document.getElementById('title').value || "نام";
+
+            document.getElementById('p-title').innerText = titleVal;
+            document.getElementById('p-back-title').innerText = titleVal;
+            document.getElementById('p-back-label').innerText = type + " : ";
             document.getElementById('p-date').innerText = document.getElementById('time').value || "تاریخ اکران";
             document.getElementById('p-img').src = document.getElementById('img').value || "";
             document.getElementById('p-back-genre').innerText = document.getElementById('genre').value || "-";
@@ -368,6 +396,7 @@
 
         function clearForm() {
             ['num','title','time','img','genre','rate','age','duration','summary'].forEach(id => document.getElementById(id).value = "");
+            document.getElementById('content_type').value = "انیمیشن";
             document.getElementById('t_status').value = "blue";
             updatePreview();
             document.getElementById('preview-card').classList.remove('flipped');
@@ -391,6 +420,7 @@
             if(action === 'save') {
                 const t_mode = document.getElementById('t_status').value;
                 const t_color = t_mode === 'blue' ? '#0037ff' : '#000000';
+                const type = document.getElementById('content_type').value;
                 const html = `<div class="card-inner">
 <div class="card-front" data-admin-id="softshirazadmin2">
 <div class="date-bar" style="border-top-width: 0px;">${document.getElementById('title').value}</div>
@@ -399,7 +429,7 @@
 <div class="reserve-bar" style="border-top-width: 0px;"><a class="reserve-btn ${t_mode==='black'?'disabled':''}" style="color: ${t_color} !important;">${t_mode==='blue'?'تهیه بلیط':'ظرفیت تکمیل شده'}</a></div>
 </div>
 <div class="card-back">
-<p><strong>انیمیشن : </strong>${document.getElementById('title').value}</p>
+<p><strong>${type} : </strong>${document.getElementById('title').value}</p>
 <p><strong>ژانر : </strong>${document.getElementById('genre').value}</p>
 <p><strong>امتیاز : </strong>${document.getElementById('rate').value}</p>
 <p><strong>رده سنی : </strong>${document.getElementById('age').value}</p>
