@@ -101,22 +101,63 @@
             .form-grid { grid-template-columns: 1fr 1fr; }
         }
 
-        /* Preview Sidebar */
+        /* Preview Sidebar - کارت فلیپ واقعی */
         .preview-container { position: relative; top: unset; text-align: center; margin-top: 10px; }
+        .card-preview-wrapper {
+            perspective: 1000px;
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+            height: 480px;
+        }
         .card-preview-box {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+        .card-preview-box.flipped {
+            transform: rotateY(180deg);
+        }
+        .card-front-preview, .card-back-preview {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
             background: #000;
             border-radius: 15px;
             overflow: hidden;
             border: 1px solid #444;
-            width: 100%;
-            max-width: 300px;
-            margin: 0 auto;
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+        .card-back-preview {
+            transform: rotateY(180deg);
         }
         .p-img { width: 100%; height: 380px; object-fit: cover; }
         .p-title { padding: 12px; background: #111; font-weight: bold; color: var(--gold); border-top: 1px solid #333; font-size: 16px; }
         .p-date { padding: 10px; font-size: 13px; background: #000; color: #ccc; }
         .p-btn { padding: 14px; background: #111; border-top: 1px solid #333; font-weight: bold; font-size: 16px; }
+
+        /* پشت کارت در پیش‌نمایش */
+        .back-content {
+            padding: 15px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #ddd;
+            height: 100%;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+        .back-content p { margin: 8px 0; }
+
+        /* دکمه چرخاندن کارت */
+        .flip-hint {
+            margin-top: 15px;
+            font-size: 13px;
+            color: #888;
+        }
 
         /* Buttons */
         .save-btn { background: var(--gold); color: #000; width: 100%; margin-top: 15px; }
@@ -180,15 +221,32 @@
                 <div style="text-align:center; margin-top:15px; font-size:13px; color:#888;">📈 آمار کلیک‌ها به زودی در این بخش...</div>
             </div>
 
-            <!-- Preview -->
+            <!-- Preview با پشت کارت -->
             <div class="preview-sidebar preview-container box">
                 <h3 style="margin-top:0">👀 پیش‌نمایش زنده</h3>
-                <div class="card-preview-box">
-                    <div id="pre-img-div"><img src="" id="p-img" class="p-img" alt="پوستر"></div>
-                    <div id="p-title" class="p-title">نام انیمیشن</div>
-                    <div id="p-date" class="p-date">تاریخ اکران</div>
-                    <div id="p-btn" class="p-btn" style="color:var(--blue)">تهیه بلیط</div>
+                <div class="card-preview-wrapper" onclick="toggleFlip()">
+                    <div class="card-preview-box" id="preview-card">
+                        <!-- روی کارت -->
+                        <div class="card-front-preview">
+                            <div id="p-title" class="p-title">نام انیمیشن</div>                            
+                            <img src="" id="p-img" class="p-img" alt="پوستر">
+                            <div id="p-date" class="p-date">تاریخ اکران</div>
+                            <div id="p-btn" class="p-btn" style="color:var(--blue)">تهیه بلیط</div>
+                        </div>
+                        <!-- پشت کارت -->
+                        <div class="card-back-preview">
+                            <div class="back-content" id="p-back">
+                                <p><strong>انیمیشن : </strong><span id="p-back-title">نام انیمیشن</span></p>
+                                <p><strong>ژانر : </strong><span id="p-back-genre">-</span></p>
+                                <p><strong>امتیاز : </strong><span id="p-back-rate">-</span></p>
+                                <p><strong>رده سنی : </strong><span id="p-back-age">-</span></p>
+                                <p><strong>مدت زمان : </strong><span id="p-back-duration">-</span></p>
+                                <p><strong>خلاصه : </strong><span id="p-back-summary">-</span></p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                <p class="flip-hint">👆 روی کارت کلیک کنید تا پشت آن را ببینید</p>
                 <p style="font-size:12px; color:#666; margin-top:20px;">این پیش‌نمایش دقیقاً مشابه ظاهر سایت شماست.</p>
             </div>
         </div>
@@ -197,7 +255,7 @@
     <script>
         const WORKER_URL = "https://admin.softshiraz.workers.dev/";
         let globalPass = "";
-        let allFiles = []; // [{name, path, title}]
+        let allFiles = [];
 
         function login() {
             if(document.getElementById('admin-pass').value === "3339") {
@@ -216,11 +274,10 @@
                 .map(f => ({
                     name: f.name,
                     path: f.path,
-                    title: "" // بعداً پر می‌شه
+                    title: ""
                 }))
                 .sort((a,b) => (parseInt(a.name)||0) - (parseInt(b.name)||0));
 
-            // پر کردن عنوان‌ها برای جستجوی بهتر
             for(let file of allFiles) {
                 try {
                     const res = await fetch(`${WORKER_URL}?pass=${globalPass}&path=${file.path}`);
@@ -290,18 +347,30 @@
 
         function updatePreview() {
             document.getElementById('p-title').innerText = document.getElementById('title').value || "نام انیمیشن";
+            document.getElementById('p-back-title').innerText = document.getElementById('title').value || "نام انیمیشن";
             document.getElementById('p-date').innerText = document.getElementById('time').value || "تاریخ اکران";
             document.getElementById('p-img').src = document.getElementById('img').value || "";
+            document.getElementById('p-back-genre').innerText = document.getElementById('genre').value || "-";
+            document.getElementById('p-back-rate').innerText = document.getElementById('rate').value || "-";
+            document.getElementById('p-back-age').innerText = document.getElementById('age').value || "-";
+            document.getElementById('p-back-duration').innerText = document.getElementById('duration').value || "-";
+            document.getElementById('p-back-summary').innerText = document.getElementById('summary').value || "-";
+
             const mode = document.getElementById('t_status').value;
             const btn = document.getElementById('p-btn');
             btn.innerText = mode === 'blue' ? 'تهیه بلیط' : 'ظرفیت تکمیل شده';
             btn.style.color = mode === 'blue' ? 'var(--blue)' : '#555';
         }
 
+        function toggleFlip() {
+            document.getElementById('preview-card').classList.toggle('flipped');
+        }
+
         function clearForm() {
             ['num','title','time','img','genre','rate','age','duration','summary'].forEach(id => document.getElementById(id).value = "");
             document.getElementById('t_status').value = "blue";
             updatePreview();
+            document.getElementById('preview-card').classList.remove('flipped');
         }
 
         async function submit(action) {
@@ -347,7 +416,7 @@
 
             if(res.ok) {
                 status.innerText = "✅ با موفقیت انجام شد";
-                loadList(); // لیست و تعداد رو دوباره لود می‌کنه
+                loadList();
                 if(action === 'delete') clearForm();
             } else {
                 status.innerText = "❌ خطا در ارتباط با سرور";
