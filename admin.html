@@ -12,11 +12,11 @@
         #admin-panel { display: none; grid-template-columns: 320px 1fr 320px; gap: 20px; padding: 20px; max-width: 1500px; margin: auto; }
         @media (max-width: 1100px) { #admin-panel { grid-template-columns: 1fr; } }
         
-        .file-list { background: #000; height: 550px; overflow-y: auto; border-radius: 10px; border: 1px solid #444; margin-top: 10px; }
-        .file-item { padding: 12px; border-bottom: 1px solid #222; cursor: pointer; transition: 0.2s; }
+        .file-list { background: #000; height: 580px; overflow-y: auto; border-radius: 10px; border: 1px solid #444; }
+        .file-item { padding: 15px; border-bottom: 1px solid #222; cursor: pointer; transition: 0.2s; }
         .file-item:hover { background: #1a1a1a; }
-        .file-item .title { display: block; font-weight: bold; color: var(--gold); font-size: 14px; }
-        .file-item .info { display: flex; justify-content: space-between; font-size: 11px; color: #888; margin-top: 5px; }
+        .file-item b { color: var(--gold); display: block; margin-bottom: 5px; }
+        .file-item span { font-size: 11px; color: #888; }
         
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         input, textarea, select { width: 100%; padding: 10px; background: #000; border: 1px solid #444; color: #fff; border-radius: 8px; box-sizing: border-box; font-family: inherit; }
@@ -25,15 +25,14 @@
         button { padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.2s; font-family: inherit; width: 100%; }
         .save-btn { background: var(--gold); color: #000; margin-top: 15px; }
         .preview-card { background: #000; border-radius: 15px; overflow: hidden; border: 1px solid #444; width: 250px; margin: auto; }
-        .p-img { width: 100%; height: 320px; object-fit: cover; }
-        #status { margin-top: 10px; text-align: center; font-weight: bold; }
+        #status { margin-top: 10px; text-align: center; font-size: 13px; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <div id="login-page" style="display:flex; align-items:center; justify-content:center; height:100vh;">
     <div class="box" style="width:300px; text-align:center;">
-        <h2 style="color:var(--gold)">پنل ادمین</h2>
+        <h2 style="color:var(--gold)">پنل مدیریت</h2>
         <input type="password" id="admin-pass" placeholder="رمز ۳۳۳۹">
         <button class="save-btn" onclick="login()">ورود</button>
     </div>
@@ -41,43 +40,42 @@
 
 <div id="admin-panel">
     <div class="sidebar box">
-        <h3 style="margin:0 0 10px 0;">📂 لیست کارت‌ها</h3>
-        <input type="text" id="search" placeholder="🔍 جستجو نام انیمیشن..." oninput="filterFiles()" style="border-color:var(--gold);">
-        <button onclick="resetForm()" style="background:#2e7d32; color:#fff; margin-top:10px;">➕ ساخت کارت جدید</button>
+        <h3 style="margin:0 0 15px 0;">📂 لیست کارت‌ها</h3>
+        <button onclick="resetForm()" style="background:#2e7d32; color:#fff; margin-bottom:15px;">➕ کارت جدید</button>
         <div class="file-list" id="file-list">در حال دریافت...</div>
     </div>
 
     <div class="main-form box">
-        <h3 id="form-title" style="margin:0 0 15px 0; color:var(--gold)">✏️ ویرایش کارت</h3>
+        <h3 style="margin:0 0 15px 0; color:var(--gold)">✏️ ویرایش اطلاعات</h3>
         <div class="form-grid">
-            <div><label>شماره فایل</label><input type="number" id="num" oninput="livePre()"></div>
-            <div><label>نام انیمیشن</label><input type="text" id="title" oninput="livePre()"></div>
-            <div><label>زمان اکران</label><input type="text" id="time" oninput="livePre()"></div>
-            <div><label>لینک پوستر</label><input type="text" id="img" oninput="livePre()"></div>
+            <div><label>شماره فایل</label><input type="number" id="num" oninput="live()"></div>
+            <div><label>نام انیمیشن</label><input type="text" id="title" oninput="live()"></div>
+            <div><label>زمان اکران</label><input type="text" id="time" oninput="live()"></div>
+            <div><label>لینک پوستر</label><input type="text" id="img" oninput="live()"></div>
             <div><label>ژانر</label><input type="text" id="genre"></div>
             <div><label>امتیاز</label><input type="text" id="rate"></div>
             <div><label>رده سنی</label><input type="text" id="age"></div>
             <div><label>مدت زمان</label><input type="text" id="duration"></div>
         </div>
         <label style="margin-top:10px;">خلاصه داستان</label>
-        <textarea id="summary" rows="4" oninput="livePre()"></textarea>
+        <textarea id="summary" rows="4" oninput="live()"></textarea>
         
         <label style="margin-top:10px;">وضعیت بلیت</label>
-        <select id="t_status" onchange="livePre()">
+        <select id="t_status" onchange="live()">
             <option value="blue">فعال (آبی)</option>
-            <option value="black">ظرفیت تکمیل (مشکی)</option>
+            <option value="black">تکمیل (مشکی)</option>
         </select>
 
-        <button class="save-btn" onclick="sendData('save')">🚀 ذخیره و انتشار نهایی</button>
-        <button style="background:#d32f2f; color:#fff; margin-top:8px;" onclick="sendData('delete')">🗑️ حذف این کارت</button>
+        <button class="save-btn" onclick="send('save')">🚀 ذخیره و انتشار نهایی</button>
+        <button style="background:#d32f2f; color:#fff; margin-top:8px;" onclick="send('delete')">🗑️ حذف این کارت</button>
         <div id="status"></div>
     </div>
 
     <div class="preview box">
-        <h3 style="margin:0 0 15px 0; text-align:center;">👁️ پیش‌نمایش زنده</h3>
+        <h3 style="margin:0 0 15px 0; text-align:center;">👁️ پیش‌نمایش</h3>
         <div class="preview-card">
-            <img src="" id="pre-img" class="p-img">
-            <div id="pre-title" style="padding:10px; font-weight:bold; color:var(--gold);">نام انیمیشن</div>
+            <img src="" id="pre-img" style="width:100%; height:320px; object-fit:cover;">
+            <div id="pre-title" style="padding:10px; font-weight:bold; color:var(--gold); text-align:center;">نام انیمیشن</div>
             <div id="pre-time" style="font-size:12px; padding-bottom:10px; text-align:center;">زمان اکران</div>
             <div id="pre-btn" style="padding:12px; background:#111; text-align:center; border-top:1px solid #333;">تهیه بلیط</div>
         </div>
@@ -87,70 +85,56 @@
 
 <script>
     const API = "https://admin.softshiraz.workers.dev/";
-    let pass = "";
-    let filesData = []; // برای ذخیره نام فیلم‌ها جهت جستجو
+    let globalPass = "";
     let clickStats = {};
 
     function login() {
         if(document.getElementById('admin-pass').value === "3339") {
-            pass = "3339";
+            globalPass = "3339";
             document.getElementById('login-page').style.display = "none";
             document.getElementById('admin-panel').style.display = "grid";
             loadList();
-        } else alert("رمز اشتباه");
+        } else alert("رمز اشتباه است");
     }
 
     async function loadList() {
         const listDiv = document.getElementById('file-list');
-        listDiv.innerHTML = "در حال لود...";
+        listDiv.innerHTML = "<p style='padding:10px'>در حال لود لیست...</p>";
         try {
-            const res = await fetch(`${API}?pass=${pass}`);
+            const res = await fetch(`${API}?pass=${globalPass}`);
             const data = await res.json();
             clickStats = data.stats;
-            filesData = [];
-
-            // برای جستجو بر اساس نام فیلم، باید محتوای فایل‌ها را داشته باشیم.
-            // در اینجا لیست را لود می‌کنیم و فیلتر اولیه را نمایش می‌دهیم.
-            renderItems(data.files);
-        } catch (e) { listDiv.innerHTML = "خطا در دریافت لیست"; }
-    }
-
-    function renderItems(files) {
-        const listDiv = document.getElementById('file-list');
-        listDiv.innerHTML = "";
-        files.sort((a,b) => (parseInt(a.name)||0) - (parseInt(b.name)||0));
-        
-        files.forEach(f => {
-            if(f.name.endsWith('.html')) {
-                const id = f.name.replace('.html','');
-                const item = document.createElement('div');
-                item.className = 'file-item';
-                item.innerHTML = `<span class="title">کارت شماره ${id}</span>
-                                 <div class="info"><span>📂 فایل: ${f.name}</span> <span style="color:var(--gold)">🖱️ ${clickStats[id]||0} کلیک</span></div>`;
-                item.onclick = () => loadFile(f.path);
-                listDiv.appendChild(item);
-            }
-        });
+            listDiv.innerHTML = "";
+            
+            const files = data.files.sort((a,b) => (parseInt(a.name)||0) - (parseInt(b.name)||0));
+            files.forEach(f => {
+                if(f.name.endsWith('.html')) {
+                    const id = f.name.replace('.html','');
+                    const div = document.createElement('div');
+                    div.className = 'file-item';
+                    div.innerHTML = `<b>کارت شماره ${id}</b> <span>🖱️ ${clickStats[id]||0} کلیک ثبت شده</span>`;
+                    div.onclick = () => loadFile(f.path);
+                    listDiv.appendChild(div);
+                }
+            });
+        } catch (e) { listDiv.innerHTML = "خطا در برقراری ارتباط با سرور"; }
     }
 
     async function loadFile(path) {
         document.getElementById('status').innerText = "⌛ در حال باز کردن...";
         try {
-            const res = await fetch(`${API}?pass=${pass}&path=${path}`);
+            const res = await fetch(`${API}?pass=${globalPass}&path=${path}`);
             const data = await res.json();
-            // استفاده از روش ایمن‌تر برای دیکود کردن متون فارسی
-            const bytes = atob(data.content);
-            const decoder = new TextDecoder('utf-8');
-            const html = decoder.decode(new Uint8Array([...bytes].map(c => c.charCodeAt(0))));
             
-            const doc = new DOMParser().parseFromString(html, 'text/html');
+            // رفع خطای خواندن متون فارسی با روش UTF-8 هوشمند
+            const decodedContent = decodeURIComponent(escape(atob(data.content)));
+            const doc = new DOMParser().parseFromString(decodedContent, 'text/html');
             const id = path.replace('cards/','').replace('.html','');
             
             document.getElementById('num').value = id;
             document.getElementById('title').value = doc.querySelector('.date-bar')?.innerText || "";
             document.getElementById('time').value = doc.querySelector('.title-bar')?.innerText || "";
             document.getElementById('img').value = doc.querySelector('img')?.src || "";
-            
             const ps = doc.querySelectorAll('.card-back p');
             document.getElementById('genre').value = ps[1]?.innerText.replace('ژانر : ', '') || "";
             document.getElementById('rate').value = ps[2]?.innerText.replace('امتیاز : ', '') || "";
@@ -159,23 +143,15 @@
             document.getElementById('summary').value = ps[5]?.innerText.replace('خلاصه : ', '') || "";
             
             document.getElementById('click-info').innerText = `📊 آمار کلیک: ${clickStats[id] || 0}`;
-            document.getElementById('status').innerText = "✅ بارگذاری شد";
-            livePre();
-        } catch (e) { alert("خطا در خواندن فایل"); }
+            document.getElementById('status').innerText = "✅ فایل باز شد";
+            live();
+        } catch (e) { 
+            console.error(e);
+            document.getElementById('status').innerText = "❌ خطا در کدگشایی فارسی (UTF-8)"; 
+        }
     }
 
-    function filterFiles() {
-        const term = document.getElementById('search').value.toLowerCase();
-        // چون هنوز نام تمام فیلم‌ها را نداریم، اینجا فعلا بر اساس شماره فایل فیلتر می‌کند.
-        // راه حل بهتر: شماره کارت را جستجو کنید.
-        const filtered = filesData.length > 0 ? filesData.filter(f => f.movieName.includes(term)) : [];
-        const items = document.querySelectorAll('.file-item');
-        items.forEach(item => {
-            item.style.display = item.innerText.toLowerCase().includes(term) ? "block" : "none";
-        });
-    }
-
-    function livePre() {
+    function live() {
         document.getElementById('pre-title').innerText = document.getElementById('title').value || "نام انیمیشن";
         document.getElementById('pre-time').innerText = document.getElementById('time').value || "زمان اکران";
         document.getElementById('pre-img').src = document.getElementById('img').value;
@@ -187,13 +163,13 @@
     function resetForm() {
         ['num','title','time','img','genre','rate','age','duration','summary'].forEach(i => document.getElementById(i).value="");
         document.getElementById('status').innerText = "آماده برای کارت جدید";
-        livePre();
+        live();
     }
 
-    async function sendData(action) {
+    async function send(action) {
         const num = document.getElementById('num').value;
-        if(!num) return alert("شماره کارت؟");
-        document.getElementById('status').innerText = "🚀 در حال ارسال به گیت‌هاب...";
+        if(!num) return alert("شماره کارت الزامی است");
+        document.getElementById('status').innerText = "🚀 ارسال به گیت‌هاب...";
 
         let content = "";
         if(action === 'save') {
@@ -213,19 +189,20 @@
 <p><strong>مدت زمان : </strong>${document.getElementById('duration').value}</p>
 <p><strong>خلاصه : </strong>${document.getElementById('summary').value}</p>
 </div></div>`.trim();
-            const encoder = new TextEncoder();
-            const data = encoder.encode(html);
-            content = btoa(String.fromCharCode(...data));
+            // انکود صحیح متون فارسی برای گیت‌هاب
+            content = btoa(unescape(encodeURIComponent(html)));
         }
 
-        const res = await fetch(API, {
-            method: "POST",
-            body: JSON.stringify({ password: pass, path: `cards/${num}.html`, content, action })
-        });
-        if(res.ok) {
-            document.getElementById('status').innerText = "✅ با موفقیت انجام شد";
-            loadList();
-        } else { document.getElementById('status').innerText = "❌ خطا در گیت‌هاب"; }
+        try {
+            const res = await fetch(API, {
+                method: "POST",
+                body: JSON.stringify({ password: globalPass, path: `cards/${num}.html`, content, action })
+            });
+            if(res.ok) {
+                document.getElementById('status').innerText = "✅ موفقیت‌آمیز بود";
+                loadList();
+            } else { document.getElementById('status').innerText = "❌ خطای سرور"; }
+        } catch (e) { document.getElementById('status').innerText = "❌ خطای شبکه"; }
     }
 </script>
 </body>
