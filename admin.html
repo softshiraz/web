@@ -2,47 +2,144 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>پنل مدیریت هوشمند سافت شیراز</title>
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/dist/font-face.css" rel="stylesheet">
     <style>
-        :root { --bg: #0e0e0f; --card: #1c1c1e; --gold: #ffd700; --text: #fff; }
-        body { font-family: "Vazirmatn", sans-serif; background: var(--bg); color: var(--text); margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        #login-page { text-align: center; background: var(--card); padding: 40px; border-radius: 20px; border: 1px solid #333; width: 300px; }
-        #admin-panel { display: none; width: 95%; max-width: 1000px; grid-template-columns: 300px 1fr; gap: 20px; background: var(--card); padding: 20px; border-radius: 20px; border: 1px solid #333; margin: 20px; }
-        .file-list { background: #000; border-radius: 12px; padding: 10px; height: 450px; overflow-y: auto; border: 1px solid #444; }
-        .file-item { padding: 10px; border-bottom: 1px solid #222; cursor: pointer; display: flex; justify-content: space-between; font-size: 14px; transition: 0.2s; }
+        :root { --bg: #0e0e0f; --card: #1c1c1e; --gold: #ffd700; --text: #fff; --green: #2e7d32; --red: #ff4444; }
+        
+        body { 
+            font-family: "Vazirmatn", sans-serif; 
+            background: var(--bg); 
+            color: var(--text); 
+            margin: 0; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+        }
+
+        /* صفحه ورود */
+        #login-page { 
+            text-align: center; 
+            background: var(--card); 
+            padding: 30px; 
+            border-radius: 20px; 
+            border: 1px solid #333; 
+            width: 90%; 
+            max-width: 350px; 
+        }
+
+        /* پنل اصلی - ریسپانسیو */
+        #admin-panel { 
+            display: none; 
+            width: 95%; 
+            max-width: 1100px; 
+            background: var(--card); 
+            padding: 20px; 
+            border-radius: 20px; 
+            border: 1px solid #333; 
+            margin: 20px;
+            gap: 20px;
+        }
+
+        /* چیدمان در لپ‌تاپ */
+        @media (min-width: 992px) {
+            #admin-panel { display: none; grid-template-columns: 320px 1fr; }
+        }
+
+        /* چیدمان در تبلت و موبایل */
+        @media (max-width: 991px) {
+            #admin-panel { grid-template-columns: 1fr; }
+            .sidebar { order: 2; }
+            .main-form { order: 1; }
+        }
+
+        /* لیست فایل‌ها */
+        .file-list { 
+            background: #000; 
+            border-radius: 12px; 
+            padding: 10px; 
+            height: 400px; 
+            overflow-y: auto; 
+            border: 1px solid #444; 
+        }
+        .file-item { 
+            padding: 12px; 
+            border-bottom: 1px solid #222; 
+            cursor: pointer; 
+            display: flex; 
+            justify-content: space-between; 
+            font-size: 14px; 
+        }
         .file-item:hover { background: #1a1a1a; color: var(--gold); }
-        .form-area { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .full { grid-column: span 2; }
-        input, textarea, select { width: 100%; padding: 10px; background: #000; border: 1px solid #444; color: #fff; border-radius: 8px; box-sizing: border-box; font-family: inherit; }
-        label { font-size: 12px; color: #888; display: block; margin-bottom: 5px; }
-        button { padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.2s; }
-        .save-btn { background: var(--gold); color: #000; width: 100%; margin-top: 10px; }
-        .del-btn { background: #ff4444; color: #fff; width: 100%; margin-top: 5px; }
-        .add-new-btn { background: #2e7d32; color: #fff; width: 100%; margin-bottom: 10px; font-size: 14px; }
-        #status { margin-top: 10px; text-align: center; font-size: 13px; }
+
+        /* فرم */
+        .form-area { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 15px; 
+        }
+        .full { grid-column: 1 / -1; }
+
+        input, textarea, select { 
+            width: 100%; 
+            padding: 12px; 
+            background: #000; 
+            border: 1px solid #444; 
+            color: #fff; 
+            border-radius: 8px; 
+            box-sizing: border-box; 
+            font-family: inherit; 
+            font-size: 14px;
+        }
+
+        label { font-size: 12px; color: #888; display: block; margin-bottom: 5px; margin-top: 10px; }
+
+        button { 
+            padding: 14px; 
+            border: none; 
+            border-radius: 10px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            font-family: inherit;
+        }
+
+        .save-btn { background: var(--gold); color: #000; width: 100%; margin-top: 15px; }
+        .del-btn { background: var(--red); color: #fff; width: 100%; margin-top: 8px; }
+        .add-new-btn { background: var(--green); color: #fff; width: 100%; margin-bottom: 15px; }
+        
+        #status { 
+            margin-top: 15px; 
+            text-align: center; 
+            font-size: 14px; 
+            padding: 10px; 
+            border-radius: 8px; 
+        }
+        .success { background: rgba(46, 125, 50, 0.2); color: #81c784; }
+        .error { background: rgba(211, 47, 47, 0.2); color: #e57373; }
     </style>
 </head>
 <body>
 
 <div id="login-page">
-    <h2>ورود به پنل</h2>
-    <input type="password" id="admin-pass" placeholder="رمز عبور را وارد کنید">
-    <button class="save-btn" onclick="login()">ورود</button>
+    <h2 style="color:var(--gold)">ورود مدیریت</h2>
+    <input type="password" id="admin-pass" placeholder="رمز ۳۳۳۹ را وارد کنید">
+    <button class="save-btn" onclick="login()">ورود به پنل</button>
 </div>
 
 <div id="admin-panel">
     <div class="sidebar">
-        <h3 style="color:var(--gold); margin-top:0;">📂 لیست کارت‌ها</h3>
+        <h3 style="color:var(--gold); margin-top:0;">📂 کارت‌های ثبت شده</h3>
         <button class="add-new-btn" onclick="clearFormForNew()">➕ ساخت کارت جدید</button>
-        <button onclick="loadFileList()" style="width:100%; background:#222; color:#fff; margin-bottom:10px; font-size:11px;">🔄 به‌روزرسانی لیست</button>
         <div class="file-list" id="file-list">در حال بارگذاری...</div>
     </div>
 
     <div class="main-form">
-        <h3 style="color:var(--gold); margin-top:0;">✏️ ویرایش کارت <span id="current-file">جدید</span></h3>
+        <h3 style="color:var(--gold); margin-top:0;">✏️ جزئیات کارت: <span id="current-file" style="color:#fff">جدید</span></h3>
         <div class="form-area">
-            <div><label>شماره کارت (نام فایل)</label><input type="number" id="num" placeholder="مثلاً 51"></div>
+            <div><label>شماره کارت (فقط عدد)</label><input type="number" id="num"></div>
             <div><label>نام انیمیشن</label><input type="text" id="title"></div>
             <div><label>زمان اکران</label><input type="text" id="time"></div>
             <div><label>لینک پوستر</label><input type="text" id="img"></div>
@@ -50,17 +147,17 @@
             <div><label>امتیاز</label><input type="text" id="rate"></div>
             <div><label>رده سنی</label><input type="text" id="age"></div>
             <div><label>مدت زمان</label><input type="text" id="duration"></div>
-            <div class="full"><label>خلاصه داستان</label><textarea id="summary" rows="3"></textarea></div>
+            <div class="full"><label>خلاصه داستان</label><textarea id="summary" rows="4"></textarea></div>
             <div class="full">
-                <label>وضعیت دکمه</label>
+                <label>وضعیت دکمه تهیه بلیط</label>
                 <select id="t_status">
-                    <option value="blue">فعال (آبی)</option>
-                    <option value="black">تکمیل (ظرفیت تکمیل - مشکی)</option>
+                    <option value="blue">فعال (آبی - #0037ff)</option>
+                    <option value="black">تکمیل (مشکی - #000000)</option>
                 </select>
             </div>
         </div>
-        <button class="save-btn" onclick="submitForm('save')">ذخیره و انتشار</button>
-        <button class="del-btn" onclick="submitForm('delete')">حذف این کارت</button>
+        <button class="save-btn" onclick="submitForm('save')">ذخیره و انتشار نهایی</button>
+        <button class="del-btn" onclick="submitForm('delete')">حذف دائمی این کارت</button>
         <div id="status"></div>
     </div>
 </div>
@@ -76,45 +173,48 @@
             document.getElementById('login-page').style.display = "none";
             document.getElementById('admin-panel').style.display = "grid";
             loadFileList();
-        } else { alert("رمز اشتباه است"); }
+        } else { alert("رمز عبور صحیح نیست."); }
     }
 
-    // تابع خالی کردن فرم برای کارت جدید
     function clearFormForNew() {
-        document.getElementById('num').value = "";
-        document.getElementById('title').value = "";
-        document.getElementById('time').value = "";
-        document.getElementById('img').value = "";
-        document.getElementById('genre').value = "";
-        document.getElementById('rate').value = "";
-        document.getElementById('age').value = "";
-        document.getElementById('duration').value = "";
-        document.getElementById('summary').value = "";
+        const fields = ['num', 'title', 'time', 'img', 'genre', 'rate', 'age', 'duration', 'summary'];
+        fields.forEach(id => document.getElementById(id).value = "");
         document.getElementById('current-file').innerText = "جدید";
-        document.getElementById('status').innerText = "آماده برای ساخت کارت جدید";
+        document.getElementById('status').innerText = "آماده برای کارت جدید";
+        document.getElementById('status').className = "";
     }
 
     async function loadFileList() {
         const listDiv = document.getElementById('file-list');
-        listDiv.innerHTML = "در حال خواندن...";
+        listDiv.innerHTML = "در حال دریافت لیست...";
         try {
             const res = await fetch(`${WORKER_URL}?pass=${globalPass}`);
-            const files = await res.json();
+            let files = await res.json();
+            
+            // مرتب سازی از 1 تا 50 بر اساس نام فایل
+            files.sort((a, b) => {
+                const numA = parseInt(a.name) || 0;
+                const numB = parseInt(b.name) || 0;
+                return numA - numB;
+            });
+
             listDiv.innerHTML = "";
             files.forEach(file => {
                 if(file.name.endsWith('.html')) {
                     const item = document.createElement('div');
                     item.className = 'file-item';
-                    item.innerHTML = `<span>${file.name}</span> <span>👁️</span>`;
+                    item.innerHTML = `<span>کارت شماره ${file.name.replace('.html','')}</span> <span>⚙️</span>`;
                     item.onclick = () => loadFileContent(file.path);
                     listDiv.appendChild(item);
                 }
             });
-        } catch (e) { listDiv.innerHTML = "خطا در بارگذاری لیست"; }
+        } catch (e) { listDiv.innerHTML = "خطا در اتصال به گیت‌هاب"; }
     }
 
     async function loadFileContent(path) {
-        document.getElementById('status').innerText = "در حال لود اطلاعات...";
+        const status = document.getElementById('status');
+        status.innerText = "در حال بازخوانی اطلاعات...";
+        status.className = "";
         try {
             const res = await fetch(`${WORKER_URL}?pass=${globalPass}&path=${path}`);
             const data = await res.json();
@@ -134,28 +234,33 @@
             document.getElementById('duration').value = ps[4]?.innerText.replace('مدت زمان : ', '') || "";
             document.getElementById('summary').value = ps[5]?.innerText.replace('خلاصه : ', '') || "";
             
-            document.getElementById('status').innerText = "فایل لود شد.";
+            status.innerText = "اطلاعات با موفقیت بارگذاری شد.";
             document.getElementById('current-file').innerText = path;
-        } catch (e) { alert("خطا در لود فایل"); }
+        } catch (e) { status.innerText = "خطا در پردازش محتوای فایل"; }
     }
 
     async function submitForm(action) {
         const status = document.getElementById('status');
         const num = document.getElementById('num').value;
-        if(!num) return alert("شماره کارت را وارد کنید");
-        status.innerText = "در حال پردازش...";
+        if(!num) { alert("لطفا شماره کارت را وارد کنید"); return; }
+
+        status.innerText = "در حال ارسال تغییرات به سرور...";
+        status.className = "";
 
         let content = "";
         if(action === 'save') {
             const t_mode = document.getElementById('t_status').value;
-            content = btoa(unescape(encodeURIComponent(`
+            const t_color = t_mode === 'blue' ? '#0037ff' : '#000000';
+            const t_text = t_mode === 'blue' ? 'تهیه بلیط' : 'ظرفیت تکمیل شده';
+            
+            const html = `
 <div class="card-inner">
     <div class="card-front" data-admin-id="softshirazadmin2">
         <div class="date-bar" style="border-top-width: 0px;">${document.getElementById('title').value}</div>
         <div class="img-bar"><img src="${document.getElementById('img').value}" alt="poster"></div> 
         <div class="title-bar" style="border-top-width: 0px;">${document.getElementById('time').value}</div>
         <div class="reserve-bar" style="border-top-width: 0px;">
-            <a class="reserve-btn ${t_mode==='black'?'disabled':''}" style="color: ${t_mode==='blue'?'#0037ff':'#000000'} !important;">${t_mode==='blue'?'تهیه بلیط':'ظرفیت تکمیل شده'}</a>
+            <a class="reserve-btn ${t_mode==='black'?'disabled':''}" style="color: ${t_color} !important;">${t_text}</a>
         </div>
     </div>
     <div class="card-back">
@@ -166,7 +271,8 @@
         <p><strong>مدت زمان : </strong>${document.getElementById('duration').value}</p>
         <p><strong>خلاصه : </strong>${document.getElementById('summary').value}</p>
     </div>
-</div>`.trim())));
+</div>`.trim();
+            content = btoa(unescape(encodeURIComponent(html)));
         }
 
         try {
@@ -175,10 +281,18 @@
                 body: JSON.stringify({ password: globalPass, path: `cards/${num}.html`, content, action })
             });
             if(res.ok) {
-                status.innerText = "✅ موفقیت‌آمیز بود";
+                status.innerText = action === 'delete' ? "✅ فایل با موفقیت حذف شد" : "✅ کارت با موفقیت منتشر شد";
+                status.className = "success";
                 loadFileList();
-            } else { status.innerText = "❌ خطا در عملیات"; }
-        } catch (e) { status.innerText = "❌ خطا در شبکه"; }
+                if(action === 'delete') clearFormForNew();
+            } else { 
+                status.innerText = "❌ خطا در عملیات گیت‌هاب"; 
+                status.className = "error";
+            }
+        } catch (e) { 
+            status.innerText = "❌ خطای شبکه"; 
+            status.className = "error";
+        }
     }
 </script>
 </body>
