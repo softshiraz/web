@@ -88,8 +88,11 @@
         .file-item:hover { background: #1a1a1a; color: var(--gold); }
         .search-box { margin-bottom: 12px; }
 
+        /* آمار کارت‌ها */
+        .stats { margin: 10px 0; font-size: 14px; color: var(--gold); text-align: center; line-height: 1.6; }
+
         /* تعداد کارت‌ها و ID فعلی */
-        .cards-count { margin: 10px 0; font-size: 14px; color: var(--gold); text-align: center; }
+        .cards-count { margin: 8px 0; font-size: 14px; color: var(--gold); text-align: center; }
         .current-id { margin: 8px 0; font-size: 13px; color: #ccc; text-align: center; }
 
         /* Form Grid در موبایل */
@@ -165,6 +168,7 @@
         /* Buttons */
         .save-btn { background: var(--gold); color: #000; width: 100%; margin-top: 15px; }
         .del-btn { background: var(--red); color: #fff; width: 100%; margin-top: 8px; }
+        .dup-btn { background: #4caf50; color: #fff; width: 100%; margin-top: 8px; }
         .add-btn { background: var(--green); color: #fff; width: 100%; margin-bottom: 12px; }
 
         /* Status & Info */
@@ -190,6 +194,7 @@
             <!-- Sidebar -->
             <div class="sidebar box">
                 <h3 style="margin-top:0">📂 لیست کارت‌ها</h3>
+                <div class="stats" id="stats">در حال بارگذاری...</div>
                 <div class="cards-count" id="cards-count">تعداد کارت‌ها: ۰</div>
                 <div class="current-id" id="current-id">ID فعلی: -</div>
                 <input type="text" id="search" class="search-box" placeholder="🔍 جستجو نام یا شماره..." oninput="filterFiles()">
@@ -229,6 +234,7 @@
                 </select>
 
                 <button class="save-btn" onclick="submit('save')">💾 ذخیره و انتشار نهایی</button>
+                <button class="dup-btn" onclick="duplicateCard()">📋 تکراری ساختن کارت</button>
                 <button class="del-btn" onclick="submit('delete')">🗑️ حذف این کارت</button>
                 <div id="status"></div>
                 <div style="text-align:center; margin-top:15px; font-size:13px; color:#888;">📈 آمار کلیک‌ها به زودی در این بخش...</div>
@@ -271,6 +277,8 @@
         let allFiles = [];
         let currentAdminId = "-";
         let currentFilePath = "";
+        let activeCount = 0;
+        let soldOutCount = 0;
 
         function login() {
             if(document.getElementById('admin-pass').value === "3339") {
@@ -290,9 +298,13 @@
                     name: f.name,
                     path: f.path,
                     title: "",
-                    adminId: "-"
+                    adminId: "-",
+                    status: "blue" // پیش‌فرض
                 }))
                 .sort((a,b) => (parseInt(a.name.replace('.html',''))||0) - (parseInt(b.name.replace('.html',''))||0));
+
+            activeCount = 0;
+            soldOutCount = 0;
 
             for(let file of allFiles) {
                 try {
@@ -303,18 +315,35 @@
                     file.title = doc.querySelector('.date-bar')?.innerText.trim() || "";
                     const front = doc.querySelector('.card-front');
                     file.adminId = front ? (front.getAttribute('data-admin-id') || "-") : "-";
+
+                    const reserveBtn = doc.querySelector('.reserve-btn');
+                    const isDisabled = reserveBtn?.classList.contains('disabled');
+                    const btnText = reserveBtn?.innerText.trim();
+                    file.status = (isDisabled || btnText === 'ظرفیت تکمیل شده') ? 'black' : 'blue';
+
+                    if(file.status === 'blue') activeCount++;
+                    else soldOutCount++;
                 } catch(e) {
                     file.title = "";
                     file.adminId = "-";
+                    file.status = "blue";
                 }
             }
 
             renderList(allFiles);
             updateCardsCount();
+            updateStats();
         }
 
         function updateCardsCount() {
             document.getElementById('cards-count').innerText = `تعداد کارت‌ها: ${allFiles.length}`;
+        }
+
+        function updateStats() {
+            document.getElementById('stats').innerHTML = `
+                تعداد فعال: <strong style="color:var(--blue)">${activeCount}</strong><br>
+                تعداد تکمیل ظرفیت: <strong style="color:#777">${soldOutCount}</strong>
+            `;
         }
 
         function renderList(files) {
@@ -323,7 +352,8 @@
             files.forEach(f => {
                 const d = document.createElement('div');
                 d.className = 'file-item';
-                d.innerHTML = `<span>کارت ${f.name.replace('.html','')} ${f.title ? '– ' + f.title : ''} <small style="color:#777">(${f.adminId})</small></span> <span>⚙️</span>`;
+                const statusIcon = f.status === 'blue' ? '🔵' : '⚫';
+                d.innerHTML = `<span>${statusIcon} کارت ${f.name.replace('.html','')} ${f.title ? '– ' + f.title : ''} <small style="color:#777">(${f.adminId})</small></span> <span>⚙️</span>`;
                 d.onclick = () => loadFile(f.path, f.adminId);
                 list.appendChild(d);
             });
@@ -422,6 +452,20 @@
             document.getElementById('preview-card').classList.remove('flipped');
         }
 
+        function duplicateCard() {
+            if(!document.getElementById('num').value.trim()) {
+                alert("ابتدا یک کارت را انتخاب یا ذخیره کنید!");
+                return;
+            }
+
+            let currentNum = document.getElementById('num').value.trim();
+            let newNum = isNaN(currentNum) ? currentNum + "_copy" : (parseInt(currentNum) + 1).toString();
+
+            document.getElementById('num').value = newNum;
+            updatePreview();
+            document.getElementById('status').innerText = `کارت تکراری ساخته شد با نام فایل: ${newNum}.html — حالا ذخیره کنید`;
+        }
+
         async function submit(action) {
             if(action === 'delete') {
                 if(!confirm("مطمئنی می‌خوای این کارت رو برای همیشه حذف کنی؟")) return;
@@ -464,7 +508,6 @@
                 currentAdminId = adminId;
             }
 
-            // اگر نام فایل تغییر کرده باشد، اول فایل قبلی را حذف کن
             if(action === 'save' && currentFilePath && currentFilePath !== targetPath) {
                 const deleteOld = await fetch(WORKER_URL, {
                     method: "POST",
