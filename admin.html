@@ -2,166 +2,168 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>پنل مدیریت سافت شیراز</title>
+    <title>پنل مدیریت پیشرفته سافت شیراز</title>
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/dist/font-face.css" rel="stylesheet">
     <style>
-        :root { --bg: #0e0e0f; --card: #1c1c1e; --gold: #ffd700; --text: #fff; }
-        body {
-            font-family: "Vazirmatn", sans-serif;
-            background: var(--bg); color: var(--text);
-            display: flex; justify-content: center; align-items: center;
-            min-height: 100vh; margin: 0; padding: 20px;
-        }
-        .admin-box {
-            background: var(--card); border: 1px solid #333;
-            padding: 30px; border-radius: 20px; width: 100%; max-width: 500px;
-            box-shadow: 0 0 30px rgba(0,0,0,0.5);
-        }
-        h2 { color: var(--gold); text-align: center; margin-bottom: 25px; text-shadow: 0 0 10px rgba(255, 215, 0, 0.3); }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 8px; font-size: 14px; color: #ccc; }
-        input, select {
-            width: 100%; padding: 12px; background: #000; border: 1px solid #444;
-            color: #fff; border-radius: 10px; font-family: inherit; outline: none;
-            transition: 0.3s;
-        }
-        input:focus { border-color: var(--gold); box-shadow: 0 0 10px rgba(255, 215, 0, 0.2); }
-        
-        .checkbox-wrapper { display: flex; align-items: center; gap: 10px; cursor: pointer; }
-        .checkbox-wrapper input { width: auto; }
-        
-        button {
-            width: 100%; padding: 14px; background: var(--gold); color: #000;
-            border: none; border-radius: 12px; font-weight: 900; font-size: 16px;
-            cursor: pointer; margin-top: 20px; transition: 0.3s;
-        }
-        button:hover { background: #ffea00; transform: scale(1.02); }
-        button:disabled { background: #555; cursor: not-allowed; }
-        
-        #status { margin-top: 15px; text-align: center; font-size: 14px; min-height: 20px; }
-        .preview-link { text-align: center; margin-top: 15px; display: block; color: var(--gold); text-decoration: none; font-size: 13px; }
+        :root { --bg: #0e0e0f; --card: #1c1c1e; --gold: #ffd700; --text: #fff; --blue: #0037ff; --black: #000000; }
+        body { font-family: "Vazirmatn", sans-serif; background: var(--bg); color: var(--text); padding: 20px; direction: rtl; }
+        .admin-box { background: var(--card); border: 1px solid #333; padding: 25px; border-radius: 20px; max-width: 600px; margin: auto; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
+        h2 { color: var(--gold); text-align: center; margin-bottom: 20px; }
+        .row { display: flex; gap: 10px; margin-bottom: 10px; }
+        .row > div { flex: 1; }
+        input, textarea, select { width: 100%; padding: 10px; background: #000; border: 1px solid #444; color: #fff; border-radius: 8px; margin-top: 5px; box-sizing: border-box; }
+        label { font-size: 13px; color: #aaa; }
+        .btn-group { display: flex; gap: 10px; margin-top: 20px; }
+        button { flex: 1; padding: 12px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .save-btn { background: var(--gold); color: #000; }
+        .del-btn { background: #ff4444; color: #fff; }
+        .status-msg { margin-top: 15px; text-align: center; font-size: 14px; }
+        .ticket-status { background: #2c2c2e; padding: 15px; border-radius: 10px; margin-top: 10px; border: 1px dashed #444; }
     </style>
 </head>
 <body>
 
 <div class="admin-box">
-    <h2>🎬 مدیریت کارت‌های اکران</h2>
+    <h2>مدیریت ایونت‌های سافت شیراز</h2>
     
-    <div class="form-group">
-        <label>شماره کارت (مثلاً 1)</label>
-        <input type="number" id="cardNumber" placeholder="شماره فایل (1 تا 50)">
+    <div class="row">
+        <div>
+            <label>رمز پنل</label>
+            <input type="password" id="pass" placeholder="3339">
+        </div>
+        <div>
+            <label>شماره کارت</label>
+            <input type="number" id="num" placeholder="مثلاً 1">
+        </div>
     </div>
 
-    <div class="form-group">
-        <label>نام فیلم</label>
-        <input type="text" id="movieTitle" placeholder="مثلاً: Your Name">
+    <div class="row">
+        <div>
+            <label>نام انیمیشن (روی کارت)</label>
+            <input type="text" id="title" placeholder="بچه‌های بد">
+        </div>
+        <div>
+            <label>زمان اکران</label>
+            <input type="text" id="time" placeholder="چهارشنبه 10 دی - ساعت 16:00">
+        </div>
     </div>
 
-    <div class="form-group">
-        <label>زمان اکران</label>
-        <input type="text" id="dateTime" placeholder="مثلاً: جمعه ۲۵ آبان ساعت ۱۶:۰۰">
+    <div class="row">
+        <div>
+            <label>لینک پوستر</label>
+            <input type="text" id="img" placeholder="../web/png/17.png">
+        </div>
+        <div>
+            <label>آیدی ادمین تلگرام</label>
+            <input type="text" id="admin" value="softshirazadmin2">
+        </div>
     </div>
 
-    <div class="form-group">
-        <label>لینک پوستر (عکس)</label>
-        <input type="text" id="imageLink" placeholder="https://...">
+    <div class="row">
+        <div>
+            <label>ژانر</label>
+            <input type="text" id="genre" placeholder="کمدی - ماجراجویی">
+        </div>
+        <div>
+            <label>امتیاز</label>
+            <input type="text" id="rate" placeholder="6.9">
+        </div>
     </div>
 
-    <div class="form-group">
-        <label>آیدی ادمین پاسخگو (بدون @)</label>
-        <input type="text" id="adminId" value="softshirazadmin" placeholder="softshirazadmin">
+    <div class="row">
+        <div>
+            <label>رده سنی</label>
+            <input type="text" id="age" placeholder="همه سنین">
+        </div>
+        <div>
+            <label>مدت زمان</label>
+            <input type="text" id="duration" placeholder="100 دقیقه">
+        </div>
     </div>
 
-    <div class="form-group checkbox-wrapper">
-        <input type="checkbox" id="hasDiscount">
-        <label for="hasDiscount" style="margin:0; cursor:pointer;">این اکران تخفیف ویژه دارد؟</label>
+    <label>خلاصه داستان</label>
+    <textarea id="summary" rows="3"></textarea>
+
+    <div class="ticket-status">
+        <label>وضعیت دکمه تهیه بلیط:</label>
+        <select id="t_status">
+            <option value="blue">فعال (آبی #0037ff)</option>
+            <option value="black">ظرفیت تکمیل (مشکی #000000)</option>
+        </select>
     </div>
 
-    <button onclick="publishCard()" id="submitBtn">انتشار کارت</button>
-    <div id="status"></div>
-    <a href="./index.html" class="preview-link">بازگشت به صفحه اصلی سایت</a>
+    <div class="btn-group">
+        <button class="save-btn" onclick="sendToWorker('save')">ذخیره / آپدیت کارت</button>
+        <button class="del-btn" onclick="sendToWorker('delete')">حذف کامل کارت</button>
+    </div>
+
+    <div id="status" class="status-msg"></div>
 </div>
 
 <script>
-    // آدرس ورکری که ساختی
     const WORKER_URL = "https://admin.softshiraz.workers.dev/";
 
-    async function publishCard() {
-        const btn = document.getElementById('submitBtn');
+    async function sendToWorker(action) {
         const status = document.getElementById('status');
+        const pass = document.getElementById('pass').value;
+        const num = document.getElementById('num').value;
         
-        // دریافت مقادیر
-        const num = document.getElementById('cardNumber').value;
-        const title = document.getElementById('movieTitle').value;
-        const time = document.getElementById('dateTime').value;
-        const img = document.getElementById('imageLink').value;
-        const admin = document.getElementById('adminId').value;
-        const discount = document.getElementById('hasDiscount').checked;
+        if(!pass || !num) { status.innerText = "رمز و شماره کارت الزامی است"; return; }
+        
+        status.innerText = "در حال پردازش...";
+        status.style.color = "gold";
 
-        if (!num || !title || !time || !img) {
-            status.style.color = "#ff4444";
-            status.innerText = "لطفاً تمام فیلدها را پر کنید.";
-            return;
-        }
+        let htmlContent = "";
+        if(action === 'save') {
+            const t_mode = document.getElementById('t_status').value;
+            const t_color = t_mode === 'blue' ? '#0037ff' : '#000000';
+            const t_text = t_mode === 'blue' ? 'تهیه بلیط' : 'ظرفیت تکمیل شده';
+            const t_class = t_mode === 'blue' ? '' : 'disabled';
 
-        btn.disabled = true;
-        btn.innerText = "در حال پردازش...";
-        status.innerText = "";
-
-        // ساخت کد HTML دقیقاً منطبق بر قالب سایت شما
-        const htmlContent = `
+            htmlContent = `
 <div class="card-inner">
-    <div class="card-front" data-admin-id="${admin}">
-        <div class="discount-label ${discount ? '' : 'hidden'}">تخفیف ویژه</div>
-        <div class="img-bar">
-            <img src="${img}" alt="${title}" loading="lazy">
+    <div class="card-front" data-admin-id="${document.getElementById('admin').value}">
+        <div class="date-bar" style="border-top-width: 0px;">${document.getElementById('title').value}</div>
+        <div class="img-bar"><img src="${document.getElementById('img').value}" alt="Poster"></div> 
+        <div class="title-bar" style="border-top-width: 0px;">${document.getElementById('time').value}</div>
+        <div class="reserve-bar" style="border-top-width: 0px;">
+            <a class="reserve-btn ${t_class}" style="color: ${t_color} !important;">${t_text}</a>
         </div>
-        <div class="date-bar"><strong>${title}</strong></div>
-        <div class="title-bar">${time}</div>
-        <div class="reserve-bar"><a style="text-decoration:none; color:inherit;">تهیه بلیط</a></div>
     </div>
     <div class="card-back">
-        <h3>توضیحات اکران</h3>
-        <p><strong>فیلم:</strong> ${title}</p>
-        <p><strong>زمان:</strong> ${time}</p>
-        <p>برای رزرو و اطلاعات بیشتر روی دکمه تهیه بلیط کلیک کنید.</p>
+        <p><strong>انیمیشن : </strong>${document.getElementById('title').value}</p>
+        <p><strong>ژانر : </strong>${document.getElementById('genre').value}</p>
+        <p><strong>امتیاز : </strong>${document.getElementById('rate').value}</p>
+        <p><strong>رده سنی : </strong>${document.getElementById('age').value}</p>
+        <p><strong>مدت زمان : </strong>${document.getElementById('duration').value}</p>
+        <p><strong>خلاصه : </strong>${document.getElementById('summary').value}</p>
     </div>
 </div>`.trim();
-
-        // تبدیل محتوا به فرمت Base64 برای گیت‌هاب (با پشتیبانی از فارسی)
-        const base64Content = btoa(unescape(encodeURIComponent(htmlContent)));
+        }
 
         try {
             const response = await fetch(WORKER_URL, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
+                    password: pass,
                     path: `cards/${num}.html`,
-                    content: base64Content,
-                    message: `Update card ${num} via Admin Panel`
+                    content: btoa(unescape(encodeURIComponent(htmlContent))),
+                    action: action
                 })
             });
 
             if (response.ok) {
-                status.style.color = "#00ff00";
-                status.innerHTML = `✅ کارت شماره ${num} با موفقیت آپدیت شد!<br>تغییرات تا ۱ دقیقه دیگر اعمال می‌شود.`;
+                status.style.color = "lime";
+                status.innerText = action === 'delete' ? "✅ کارت با موفقیت حذف شد" : "✅ تغییرات با موفقیت اعمال شد";
             } else {
-                const errData = await response.json();
-                status.style.color = "#ff4444";
-                status.innerText = "❌ خطا: " + (errData.message || "مشکلی پیش آمد");
-                console.error(errData);
+                const err = await response.json();
+                status.style.color = "red";
+                status.innerText = "❌ خطا: " + (err.error || "نامشخص");
             }
-        } catch (error) {
-            status.style.color = "#ff4444";
-            status.innerText = "❌ خطای ارتباط با سرور";
-            console.error(error);
+        } catch (e) {
+            status.innerText = "❌ خطای ارتباطی";
         }
-
-        btn.disabled = false;
-        btn.innerText = "انتشار کارت";
     }
 </script>
-
 </body>
 </html>
