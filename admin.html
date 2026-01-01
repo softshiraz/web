@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>پنل مدیریت کارت‌ها - سافت شیراز</title>
+    <style>
+        body { font-family: Tahoma; background: #1a1a1a; color: white; padding: 20px; }
+        .form-container { max-width: 500px; margin: auto; background: #2a2a2a; padding: 20px; border-radius: 10px; }
+        input, textarea, button { width: 100%; margin-bottom: 10px; padding: 10px; border-radius: 5px; border: none; }
+        button { background: #ffd700; color: black; font-weight: bold; cursor: pointer; }
+        .note { font-size: 12px; color: #aaa; }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>افزودن/ویرایش کارت اکران</h2>
+        <input type="password" id="token" placeholder="GitHub Personal Access Token">
+        <input type="number" id="cardNumber" placeholder="شماره کارت (مثلاً 1)">
+        <input type="text" id="movieTitle" placeholder="نام فیلم (مثلاً Your Name)">
+        <input type="text" id="dateTime" placeholder="تاریخ و ساعت (مثلاً جمعه ساعت ۱۶)">
+        <input type="text" id="imageLink" placeholder="لینک مستقیم عکس پوستر">
+        <input type="text" id="adminId" placeholder="آیدی تلگرام ادمین (بدون @)">
+        
+        <label><input type="checkbox" id="hasDiscount"> دارای تخفیف است؟</label>
+        
+        <button onclick="uploadCard()">ذخیره و انتشار کارت</button>
+        <p id="status"></p>
+        <p class="note">نکته: پس از کلیک، حدود ۱ تا ۲ دقیقه طول می‌کشد تا تغییرات در سایت اصلی اعمال شود.</p>
+    </div>
+
+    <script>
+        async function uploadCard() {
+            const token = document.getElementById('token').value;
+            const num = document.getElementById('cardNumber').value;
+            const title = document.getElementById('movieTitle').value;
+            const time = document.getElementById('dateTime').value;
+            const img = document.getElementById('imageLink').value;
+            const admin = document.getElementById('adminId').value || 'softshirazadmin';
+            const discount = document.getElementById('hasDiscount').checked;
+            const status = document.getElementById('status');
+
+            if(!token || !num) { alert("توکن و شماره کارت الزامی است"); return; }
+
+            // ساختار HTML کارت منطبق با استایل سایت شما
+            const cardHTML = `
+<div class="card-inner">
+    <div class="card-front" data-admin-id="${admin}">
+        <div class="discount-label ${discount ? '' : 'hidden'}">تخفیف ویژه</div>
+        <div class="img-bar">
+            <img src="${img}" alt="${title}" loading="lazy">
+        </div>
+        <div class="date-bar"><strong>${title}</strong></div>
+        <div class="title-bar">${time}</div>
+        <div class="reserve-bar"><a style="text-decoration:none; color:inherit;">تهیه بلیط</a></div>
+    </div>
+    <div class="card-back">
+        <h3>توضیحات اکران</h3>
+        <p><strong>فیلم:</strong> ${title}</p>
+        <p><strong>زمان:</strong> ${time}</p>
+        <p>لطفاً برای رزرو صندلی روی دکمه تهیه بلیط کلیک کنید تا به پشتیبانی متصل شوید.</p>
+    </div>
+</div>`.trim();
+
+            const path = `cards/${num}.html`;
+            const url = `https://api.github.com/repos/softshiraz/web/contents/${path}`;
+
+            status.innerText = "در حال ارتباط با گیت‌هاب...";
+
+            try {
+                // چک کردن برای دریافت SHA (اگر فایل از قبل وجود داشته باشد برای آپدیت لازم است)
+                let sha = "";
+                const checkRes = await fetch(url, {
+                    headers: { "Authorization": `token ${token}` }
+                });
+                if (checkRes.ok) {
+                    const data = await checkRes.json();
+                    sha = data.sha;
+                }
+
+                // آپلود فایل
+                const res = await fetch(url, {
+                    method: "PUT",
+                    headers: {
+                        "Authorization": `token ${token}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        message: `Update card ${num}`,
+                        content: btoa(unescape(encodeURIComponent(cardHTML))), // کدگذاری صحیح فارسی
+                        sha: sha || undefined
+                    })
+                });
+
+                if (res.ok) {
+                    status.innerText = "✅ کارت با موفقیت آپدیت شد!";
+                    status.style.color = "lime";
+                } else {
+                    status.innerText = "❌ خطا در آپلود. توکن را چک کنید.";
+                    status.style.color = "red";
+                }
+            } catch (err) {
+                status.innerText = "❌ خطای شبکه.";
+                console.error(err);
+            }
+        }
+    </script>
+</body>
+</html>
