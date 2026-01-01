@@ -2,47 +2,115 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>پنل مدیریت کارت‌ها - سافت شیراز</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پنل مدیریت سافت شیراز</title>
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/dist/font-face.css" rel="stylesheet">
     <style>
-        body { font-family: Tahoma; background: #1a1a1a; color: white; padding: 20px; }
-        .form-container { max-width: 500px; margin: auto; background: #2a2a2a; padding: 20px; border-radius: 10px; }
-        input, textarea, button { width: 100%; margin-bottom: 10px; padding: 10px; border-radius: 5px; border: none; }
-        button { background: #ffd700; color: black; font-weight: bold; cursor: pointer; }
-        .note { font-size: 12px; color: #aaa; }
+        :root { --bg: #0e0e0f; --card: #1c1c1e; --gold: #ffd700; --text: #fff; }
+        body {
+            font-family: "Vazirmatn", sans-serif;
+            background: var(--bg); color: var(--text);
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; margin: 0; padding: 20px;
+        }
+        .admin-box {
+            background: var(--card); border: 1px solid #333;
+            padding: 30px; border-radius: 20px; width: 100%; max-width: 500px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+        }
+        h2 { color: var(--gold); text-align: center; margin-bottom: 25px; text-shadow: 0 0 10px rgba(255, 215, 0, 0.3); }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 8px; font-size: 14px; color: #ccc; }
+        input, select {
+            width: 100%; padding: 12px; background: #000; border: 1px solid #444;
+            color: #fff; border-radius: 10px; font-family: inherit; outline: none;
+            transition: 0.3s;
+        }
+        input:focus { border-color: var(--gold); box-shadow: 0 0 10px rgba(255, 215, 0, 0.2); }
+        
+        .checkbox-wrapper { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+        .checkbox-wrapper input { width: auto; }
+        
+        button {
+            width: 100%; padding: 14px; background: var(--gold); color: #000;
+            border: none; border-radius: 12px; font-weight: 900; font-size: 16px;
+            cursor: pointer; margin-top: 20px; transition: 0.3s;
+        }
+        button:hover { background: #ffea00; transform: scale(1.02); }
+        button:disabled { background: #555; cursor: not-allowed; }
+        
+        #status { margin-top: 15px; text-align: center; font-size: 14px; min-height: 20px; }
+        .preview-link { text-align: center; margin-top: 15px; display: block; color: var(--gold); text-decoration: none; font-size: 13px; }
     </style>
 </head>
 <body>
-    <div class="form-container">
-        <h2>افزودن/ویرایش کارت اکران</h2>
-        <input type="password" id="token" placeholder="GitHub Personal Access Token">
-        <input type="number" id="cardNumber" placeholder="شماره کارت (مثلاً 1)">
-        <input type="text" id="movieTitle" placeholder="نام فیلم (مثلاً Your Name)">
-        <input type="text" id="dateTime" placeholder="تاریخ و ساعت (مثلاً جمعه ساعت ۱۶)">
-        <input type="text" id="imageLink" placeholder="لینک مستقیم عکس پوستر">
-        <input type="text" id="adminId" placeholder="آیدی تلگرام ادمین (بدون @)">
-        
-        <label><input type="checkbox" id="hasDiscount"> دارای تخفیف است؟</label>
-        
-        <button onclick="uploadCard()">ذخیره و انتشار کارت</button>
-        <p id="status"></p>
-        <p class="note">نکته: پس از کلیک، حدود ۱ تا ۲ دقیقه طول می‌کشد تا تغییرات در سایت اصلی اعمال شود.</p>
+
+<div class="admin-box">
+    <h2>🎬 مدیریت کارت‌های اکران</h2>
+    
+    <div class="form-group">
+        <label>شماره کارت (مثلاً 1)</label>
+        <input type="number" id="cardNumber" placeholder="شماره فایل (1 تا 50)">
     </div>
 
-    <script>
-        async function uploadCard() {
-            const token = document.getElementById('token').value;
-            const num = document.getElementById('cardNumber').value;
-            const title = document.getElementById('movieTitle').value;
-            const time = document.getElementById('dateTime').value;
-            const img = document.getElementById('imageLink').value;
-            const admin = document.getElementById('adminId').value || 'softshirazadmin';
-            const discount = document.getElementById('hasDiscount').checked;
-            const status = document.getElementById('status');
+    <div class="form-group">
+        <label>نام فیلم</label>
+        <input type="text" id="movieTitle" placeholder="مثلاً: Your Name">
+    </div>
 
-            if(!token || !num) { alert("توکن و شماره کارت الزامی است"); return; }
+    <div class="form-group">
+        <label>زمان اکران</label>
+        <input type="text" id="dateTime" placeholder="مثلاً: جمعه ۲۵ آبان ساعت ۱۶:۰۰">
+    </div>
 
-            // ساختار HTML کارت منطبق با استایل سایت شما
-            const cardHTML = `
+    <div class="form-group">
+        <label>لینک پوستر (عکس)</label>
+        <input type="text" id="imageLink" placeholder="https://...">
+    </div>
+
+    <div class="form-group">
+        <label>آیدی ادمین پاسخگو (بدون @)</label>
+        <input type="text" id="adminId" value="softshirazadmin" placeholder="softshirazadmin">
+    </div>
+
+    <div class="form-group checkbox-wrapper">
+        <input type="checkbox" id="hasDiscount">
+        <label for="hasDiscount" style="margin:0; cursor:pointer;">این اکران تخفیف ویژه دارد؟</label>
+    </div>
+
+    <button onclick="publishCard()" id="submitBtn">انتشار کارت</button>
+    <div id="status"></div>
+    <a href="./index.html" class="preview-link">بازگشت به صفحه اصلی سایت</a>
+</div>
+
+<script>
+    // آدرس ورکری که ساختی
+    const WORKER_URL = "https://admin.softshiraz.workers.dev/";
+
+    async function publishCard() {
+        const btn = document.getElementById('submitBtn');
+        const status = document.getElementById('status');
+        
+        // دریافت مقادیر
+        const num = document.getElementById('cardNumber').value;
+        const title = document.getElementById('movieTitle').value;
+        const time = document.getElementById('dateTime').value;
+        const img = document.getElementById('imageLink').value;
+        const admin = document.getElementById('adminId').value;
+        const discount = document.getElementById('hasDiscount').checked;
+
+        if (!num || !title || !time || !img) {
+            status.style.color = "#ff4444";
+            status.innerText = "لطفاً تمام فیلدها را پر کنید.";
+            return;
+        }
+
+        btn.disabled = true;
+        btn.innerText = "در حال پردازش...";
+        status.innerText = "";
+
+        // ساخت کد HTML دقیقاً منطبق بر قالب سایت شما
+        const htmlContent = `
 <div class="card-inner">
     <div class="card-front" data-admin-id="${admin}">
         <div class="discount-label ${discount ? '' : 'hidden'}">تخفیف ویژه</div>
@@ -57,52 +125,43 @@
         <h3>توضیحات اکران</h3>
         <p><strong>فیلم:</strong> ${title}</p>
         <p><strong>زمان:</strong> ${time}</p>
-        <p>لطفاً برای رزرو صندلی روی دکمه تهیه بلیط کلیک کنید تا به پشتیبانی متصل شوید.</p>
+        <p>برای رزرو و اطلاعات بیشتر روی دکمه تهیه بلیط کلیک کنید.</p>
     </div>
 </div>`.trim();
 
-            const path = `cards/${num}.html`;
-            const url = `https://api.github.com/repos/softshiraz/web/contents/${path}`;
+        // تبدیل محتوا به فرمت Base64 برای گیت‌هاب (با پشتیبانی از فارسی)
+        const base64Content = btoa(unescape(encodeURIComponent(htmlContent)));
 
-            status.innerText = "در حال ارتباط با گیت‌هاب...";
+        try {
+            const response = await fetch(WORKER_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    path: `cards/${num}.html`,
+                    content: base64Content,
+                    message: `Update card ${num} via Admin Panel`
+                })
+            });
 
-            try {
-                // چک کردن برای دریافت SHA (اگر فایل از قبل وجود داشته باشد برای آپدیت لازم است)
-                let sha = "";
-                const checkRes = await fetch(url, {
-                    headers: { "Authorization": `token ${token}` }
-                });
-                if (checkRes.ok) {
-                    const data = await checkRes.json();
-                    sha = data.sha;
-                }
-
-                // آپلود فایل
-                const res = await fetch(url, {
-                    method: "PUT",
-                    headers: {
-                        "Authorization": `token ${token}`,
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        message: `Update card ${num}`,
-                        content: btoa(unescape(encodeURIComponent(cardHTML))), // کدگذاری صحیح فارسی
-                        sha: sha || undefined
-                    })
-                });
-
-                if (res.ok) {
-                    status.innerText = "✅ کارت با موفقیت آپدیت شد!";
-                    status.style.color = "lime";
-                } else {
-                    status.innerText = "❌ خطا در آپلود. توکن را چک کنید.";
-                    status.style.color = "red";
-                }
-            } catch (err) {
-                status.innerText = "❌ خطای شبکه.";
-                console.error(err);
+            if (response.ok) {
+                status.style.color = "#00ff00";
+                status.innerHTML = `✅ کارت شماره ${num} با موفقیت آپدیت شد!<br>تغییرات تا ۱ دقیقه دیگر اعمال می‌شود.`;
+            } else {
+                const errData = await response.json();
+                status.style.color = "#ff4444";
+                status.innerText = "❌ خطا: " + (errData.message || "مشکلی پیش آمد");
+                console.error(errData);
             }
+        } catch (error) {
+            status.style.color = "#ff4444";
+            status.innerText = "❌ خطای ارتباط با سرور";
+            console.error(error);
         }
-    </script>
+
+        btn.disabled = false;
+        btn.innerText = "انتشار کارت";
+    }
+</script>
+
 </body>
 </html>
