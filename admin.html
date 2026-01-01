@@ -48,7 +48,7 @@
 <div id="login-page">
     <div class="login-box">
         <h2 style="color:var(--gold)">ورود ادمین</h2>
-        <input type="password" id="admin-pass" placeholder="رمز ">
+        <input type="password" id="admin-pass" placeholder="رمز ۳۳۳۹">
         <button class="save-btn" onclick="login()" style="margin-top:20px">ورود به پنل</button>
     </div>
 </div>
@@ -84,134 +84,133 @@
 
         <button class="save-btn" onclick="submit('save')">💾 ذخیره و انتشار نهایی</button>
         <button class="del-btn" onclick="submit('delete')">🗑️ حذف این کارت</button>
-        <button class="save-btn" onclick="submit('update')">📝 ویرایش این کارت</button>
+        <div id="status" style="margin-top:10px; text-align:center"></div>
+        <div style="text-align:center; margin-top:10px; font-size:12px; color:#888;">📈 آمار کلیک‌ها به زودی در این بخش...</div>
     </div>
 
-    <div class="preview-sidebar box">
-        <h3>🖼️ پیش‌نمایش کارت</h3>
-        <div class="preview-container">
-            <div class="card-preview-box">
-                <img src="" alt="" class="p-img" id="p-img">
-                <div class="p-title" id="p-title"></div>
-                <div class="p-date" id="p-date"></div>
-                <button class="p-btn" id="p-btn">خرید بلیط</button>
-            </div>
+    <div class="preview-sidebar preview-container">
+        <h3 style="margin-top:0">👀 پیش‌نمایش زنده</h3>
+        <div class="card-preview-box">
+            <div id="pre-img-div"><img src="" id="p-img" class="p-img"></div>
+            <div id="p-title" class="p-title">نام انیمیشن</div>
+            <div id="p-date" class="p-date">تاریخ اکران</div>
+            <div id="p-btn" class="p-btn" style="color:var(--blue)">تهیه بلیط</div>
         </div>
+        <p style="font-size:11px; color:#666; margin-top:15px;">این پیش‌نمایش دقیقاً مشابه ظاهر سایت شماست.</p>
     </div>
 </div>
 
 <script>
-    const WORKER_URL = "https://admin.softshiraz.workers.dev/"; // URL کارگر کلودفلر
-    const CLOUDFLARE_API_URL = WORKER_URL + "get-password"; // مسیر API برای گرفتن رمز
+    const WORKER_URL = "https://admin.softshiraz.workers.dev/";
     let globalPass = "";
     let allFiles = [];
 
-    async function getPasswordFromCloudflare() {
-        // دریافت رمز از API
-        const res = await fetch(CLOUDFLARE_API_URL);
-        if (res.ok) {
-            const password = await res.text();
-            return password;
-        } else {
-            alert("خطا در دریافت رمز از کلودفلر");
-            return null;
-        }
-    }
-
-    async function login() {
-        const passwordFromCloudflare = await getPasswordFromCloudflare();
-
-        if (passwordFromCloudflare && document.getElementById('admin-pass').value === passwordFromCloudflare) {
-            globalPass = passwordFromCloudflare;
+    function login() {
+        if(document.getElementById('admin-pass').value === "3339") {
+            globalPass = "3339";
             document.getElementById('login-page').style.display = "none";
             document.getElementById('admin-panel').style.display = "grid";
             loadList();
-        } else {
-            alert("رمز اشتباه");
-        }
-    }
-
-    function filterFiles() {
-        const search = document.getElementById('search').value.toLowerCase();
-        const filtered = allFiles.filter(file => file.title.toLowerCase().includes(search));
-        displayFiles(filtered);
+        } else alert("رمز اشتباه");
     }
 
     async function loadList() {
-        const res = await fetch(`${WORKER_URL}getFileList`);
-        if (res.ok) {
-            allFiles = await res.json();
-            displayFiles(allFiles);
-        }
+        const res = await fetch(`${WORKER_URL}?pass=${globalPass}`);
+        allFiles = await res.json();
+        allFiles.sort((a,b) => (parseInt(a.name)||0) - (parseInt(b.name)||0));
+        renderList(allFiles);
     }
 
-    function displayFiles(files) {
+    function renderList(files) {
         const list = document.getElementById('file-list');
-        list.innerHTML = '';
-        files.forEach(file => {
-            const div = document.createElement('div');
-            div.className = 'file-item';
-            div.innerHTML = `${file.title}<span>شماره: ${file.num}</span>`;
-            div.onclick = () => loadFile(file);
-            list.appendChild(div);
+        list.innerHTML = "";
+        files.forEach(f => {
+            if(f.name.endsWith('.html')) {
+                const d = document.createElement('div');
+                d.className = 'file-item';
+                d.innerHTML = `<span>کارت ${f.name.replace('.html','')}</span> <span>⚙️</span>`;
+                d.onclick = () => loadFile(f.path);
+                list.appendChild(d);
+            }
         });
     }
 
-    function loadFile(file) {
-        document.getElementById('num').value = file.num;
-        document.getElementById('title').value = file.title;
-        document.getElementById('time').value = file.time;
-        document.getElementById('img').value = file.img;
-        document.getElementById('genre').value = file.genre;
-        document.getElementById('rate').value = file.rate;
-        document.getElementById('age').value = file.age;
-        document.getElementById('duration').value = file.duration;
-        document.getElementById('summary').value = file.summary;
-        document.getElementById('t_status').value = file.status;
+    function filterFiles() {
+        const term = document.getElementById('search').value.toLowerCase();
+        // در گیت‌هاب برای فیلتر بر اساس "نام فیلم" باید ابتدا تمام فایل‌ها لود شوند. 
+        // فعلا بر اساس شماره فایل فیلتر می‌کند
+        const filtered = allFiles.filter(f => f.name.includes(term));
+        renderList(filtered);
+    }
+
+    async function loadFile(path) {
+        document.getElementById('status').innerText = "در حال لود...";
+        const res = await fetch(`${WORKER_URL}?pass=${globalPass}&path=${path}`);
+        const data = await res.json();
+        const html = decodeURIComponent(escape(atob(data.content)));
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        
+        document.getElementById('num').value = path.replace('cards/','').replace('.html','');
+        document.getElementById('title').value = doc.querySelector('.date-bar')?.innerText || "";
+        document.getElementById('time').value = doc.querySelector('.title-bar')?.innerText || "";
+        document.getElementById('img').value = doc.querySelector('img')?.src || "";
+        const ps = doc.querySelectorAll('.card-back p');
+        document.getElementById('genre').value = ps[1]?.innerText.split(': ')[1] || "";
+        document.getElementById('rate').value = ps[2]?.innerText.split(': ')[1] || "";
+        document.getElementById('age').value = ps[3]?.innerText.split(': ')[1] || "";
+        document.getElementById('duration').value = ps[4]?.innerText.split(': ')[1] || "";
+        document.getElementById('summary').value = ps[5]?.innerText.split(': ')[1] || "";
         updatePreview();
     }
 
     function updatePreview() {
-        document.getElementById('p-title').innerText = document.getElementById('title').value;
-        document.getElementById('p-date').innerText = document.getElementById('time').value;
-        document.getElementById('p-img').src = document.getElementById('img').value;
-    }
-
-    async function submit(action) {
-        const data = {
-            num: document.getElementById('num').value,
-            title: document.getElementById('title').value,
-            time: document.getElementById('time').value,
-            img: document.getElementById('img').value,
-            genre: document.getElementById('genre').value,
-            rate: document.getElementById('rate').value,
-            age: document.getElementById('age').value,
-            duration: document.getElementById('duration').value,
-            summary: document.getElementById('summary').value,
-            status: document.getElementById('t_status').value
-        };
-
-        const res = await fetch(`${WORKER_URL}submit`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ action, data })
-        });
-
-        if (res.ok) {
-            alert(`${action} انجام شد.`);
-            loadList();
-        } else {
-            alert("خطا در انجام عملیات.");
-        }
+        document.getElementById('p-title').innerText = document.getElementById('title').value || "نام انیمیشن";
+        document.getElementById('p-date').innerText = document.getElementById('time').value || "تاریخ اکران";
+        document.getElementById('p-img').src = document.getElementById('img').value || "";
+        const mode = document.getElementById('t_status').value;
+        const btn = document.getElementById('p-btn');
+        btn.innerText = mode === 'blue' ? 'تهیه بلیط' : 'ظرفیت تکمیل شده';
+        btn.style.color = mode === 'blue' ? 'var(--blue)' : '#555';
     }
 
     function clearForm() {
-        document.querySelectorAll('#admin-panel input, #admin-panel textarea').forEach(input => input.value = '');
-        document.getElementById('p-title').innerText = '';
-        document.getElementById('p-date').innerText = '';
-        document.getElementById('p-img').src = '';
+        ['num','title','time','img','genre','rate','age','duration','summary'].forEach(id => document.getElementById(id).value = "");
+        updatePreview();
+    }
+
+    async function submit(action) {
+        const num = document.getElementById('num').value;
+        const status = document.getElementById('status');
+        status.innerText = "ارسال به گیت‌هاب...";
+        
+        let content = "";
+        if(action === 'save') {
+            const t_mode = document.getElementById('t_status').value;
+            const t_color = t_mode === 'blue' ? '#0037ff' : '#000000';
+            const html = `<div class="card-inner">
+<div class="card-front" data-admin-id="softshirazadmin2">
+<div class="date-bar" style="border-top-width: 0px;">${document.getElementById('title').value}</div>
+<div class="img-bar"><img src="${document.getElementById('img').value}" alt="p"></div> 
+<div class="title-bar" style="border-top-width: 0px;">${document.getElementById('time').value}</div>
+<div class="reserve-bar" style="border-top-width: 0px;"><a class="reserve-btn ${t_mode==='black'?'disabled':''}" style="color: ${t_color} !important;">${t_mode==='blue'?'تهیه بلیط':'ظرفیت تکمیل شده'}</a></div>
+</div>
+<div class="card-back">
+<p><strong>انیمیشن : </strong>${document.getElementById('title').value}</p>
+<p><strong>ژانر : </strong>${document.getElementById('genre').value}</p>
+<p><strong>امتیاز : </strong>${document.getElementById('rate').value}</p>
+<p><strong>رده سنی : </strong>${document.getElementById('age').value}</p>
+<p><strong>مدت زمان : </strong>${document.getElementById('duration').value}</p>
+<p><strong>خلاصه : </strong>${document.getElementById('summary').value}</p>
+</div></div>`.trim();
+            content = btoa(unescape(encodeURIComponent(html)));
+        }
+
+        const res = await fetch(WORKER_URL, {
+            method: "POST",
+            body: JSON.stringify({ password: globalPass, path: `cards/${num}.html`, content, action })
+        });
+        if(res.ok) { status.innerText = "✅ انجام شد"; loadList(); } else status.innerText = "❌ خطا";
     }
 </script>
-
 </body>
 </html>
