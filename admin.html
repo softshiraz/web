@@ -442,17 +442,10 @@
             document.getElementById('p-back-age').innerHTML = `<span class="back-label">رده سنی:</span> ${document.getElementById('age').value || "-" }`;
             document.getElementById('p-back-duration').innerHTML = `<span class="back-label">مدت زمان:</span> ${document.getElementById('duration').value || "-" }`;
             document.getElementById('p-back-synopsis').innerHTML = `<span class="back-label">خلاصه :</span> ${document.getElementById('summary').value || "-" }`;
-
-            const mode = document.getElementById('t_status').value;
-            const btnText = mode === 'blue' ? 'تهیه بلیط' : 'ظرفیت تکمیل شده';
-
+            
             // جلو کارت
             document.getElementById('p-reserve-text').innerHTML = btnText;
             document.getElementById('p-reserve-text').className = mode === 'blue' ? 'reserve-text-blue' : 'reserve-text-black';
-
-            // پشت کارت
-            document.getElementById('p-back-reserve-text').innerHTML = btnText;
-            document.getElementById('p-back-reserve-text').className = mode === 'blue' ? 'reserve-text-blue' : 'reserve-text-black';
 
             const discountMode = document.getElementById('discount').value;
             const discountEl = document.getElementById('p-discount');
@@ -522,9 +515,7 @@
     <div class="back-rating-bar"><span class="back-label">امتیاز:</span> ${document.getElementById('rate').value}</div>
     <div class="back-age-bar"><span class="back-label">رده سنی:</span> ${document.getElementById('age').value}</div>
     <div class="back-duration-bar"><span class="back-label">مدت زمان:</span> ${document.getElementById('duration').value}</div>
-    <div class="back-synopsis-bar"><span class="back-label">خلاصه :</span> ${document.getElementById('summary').value}</div>
-    <div class="back-reserve-bar">
-      <a class="reserve-btn" ${reserveColorClass}>${t_mode === 'blue' ? 'تهیه بلیط' : 'ظرفیت تکمیل شده'}</a>
+    <div class="back-synopsis-bar"><span class="back-label">خلاصه :</span> ${document.getElementById('summary').value}</div>    
     </div>
   </div>
 </div>`.trim();
