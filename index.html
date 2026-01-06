@@ -94,6 +94,9 @@
         --card-shadow-color: rgba(255,215,0,0.25);
         --card-title-bar-bg: var(--link-bg);
         --glow-color: rgba(255,215,0,0.5);
+        --bar-height: 40px;
+        --bar-padding-x: 15px;
+        --bar-font-size: 15px;
     }
     .light-mode {
         --color-primary: #4a90e2;
@@ -262,6 +265,8 @@
         padding: 0 20px;
         display: flex;
         justify-content: center;
+        position: relative;
+        z-index: 1;
     }
     .section-title-box {
         width: 280px;
@@ -285,6 +290,10 @@
         text-shadow: 0 0 10px var(--glow-color);
         letter-spacing: 2px;
     }
+    .light-mode .section-title-box h1 {
+        color: #4a90e2;
+        text-shadow: 0 0 10px rgba(74,144,226,0.6);
+    }
     @keyframes glowPulse {
         from { box-shadow: 0 0 20px var(--glow-color), inset 0 0 15px var(--glow-color); }
         to { box-shadow: 0 0 30px var(--glow-color), inset 0 0 20px var(--glow-color); }
@@ -301,73 +310,167 @@
     .movie-card {
         perspective:1000px;
         position: relative;
+        width: 280px;
+        margin: 0 auto;
     }
     .card-inner {
-        position:relative; width:280px; height:420px; cursor:pointer;
-        transition:transform 0.65s cubic-bezier(0.5, 1.25, 0.5, 1.25);
+        position:relative; width:100%; height:460px; cursor:pointer;
+        transition:transform 0.4s linear;
         transform-style:preserve-3d;
+        border-radius:16px;
     }
     .card-inner.flipped { transform:rotateY(180deg); }
     .card-front, .card-back {
-        position:absolute; top:0; left:0; width:100%; height:100%; border-radius:16px; overflow:hidden;
+        position:absolute; inset:0; border-radius:20px; overflow:hidden;
         backface-visibility:hidden; border:2px solid var(--card-border);
-        box-shadow:0 0 8px var(--card-shadow-color), inset 0 0 6px var(--card-shadow-color);
-        background:var(--card-bg); backdrop-filter:blur(10px);
-        transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+        box-shadow:0 8px 25px var(--card-shadow-color);
+        background:var(--card-bg); backdrop-filter:blur(12px);
+        transition: all 0.4s ease;
     }
-    .card-front { display:flex; flex-direction:column; position: relative; }
-    .img-bar { flex:1; overflow:hidden; }
-    .img-bar img { width:100%; height:100%; object-fit:cover; transition:transform 0.4s; }
-    /* حذف افکت بزرگ شدن هنگام هاور */
+    .card-front {
+        display:flex;
+        flex-direction:column;
+        padding: 12px;
+        gap: 10px;
+        justify-content: space-between;
+    }
+    .img-bar {
+        flex:1;
+        overflow:hidden;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        position: relative;
+    }
+    .light-mode .img-bar { box-shadow: 0 4px 15px rgba(74,144,226,0.2); }
+    .img-bar img { 
+        width:100%; 
+        height:100%; 
+        object-fit: cover; 
+        object-position: center;
+    }
+    .date-bar, .title-bar, .reserve-bar {
+        height: var(--bar-height);
+        line-height: var(--bar-height);
+        padding: 0 var(--bar-padding-x);
+        text-align: center;
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        font-size: var(--bar-font-size);
+        font-weight: bold;
+    }
     .date-bar {
-        height:52px !important; line-height:52px !important; padding:0 10px; text-align:center;
-        background: rgba(255,215,0,0.12);
+        background: rgb(0 0 0 / 75%);
         color: var(--accent-text);
-        font-size:19px !important; font-weight:900 !important;
-        letter-spacing:1.2px; text-shadow:0 0 14px var(--glow-color);
     }
     .light-mode .date-bar {
         background: rgba(74,144,226,0.25);
     }
-    .date-bar strong { font-size:21px !important; display:block; transform:translateY(1px); }
     .title-bar {
-        height:36px; line-height:36px; padding:0 10px; text-align:center;
-        background:var(--card-title-bar-bg);
-        border-top:1px solid var(--link-border);
-        color:var(--text-color); font-weight:600; font-size:15px;
+        background:rgb(255 255 255 / 7%);
+        color:var(--text-color);
     }
     .reserve-bar {
-        height:36px; line-height:36px; padding:0 10px; text-align:center;
-        background:var(--color-primary); color:var(--bg-color); font-weight:bold; cursor:pointer; transition:background 0.3s;
+        background:var(--color-primary);
+        color:var(--bg-color);
+        cursor:pointer;
+        box-shadow: 0 6px 20px rgba(255,215,0,0.45);
+        transition: background 0.3s, transform 0.2s;
     }
-    .reserve-bar:hover { background:#ffea00; }
-    .light-mode .reserve-bar { background: var(--color-primary); color: #ffffff; }
+    .light-mode .reserve-bar {
+        background: var(--color-primary);
+        color: #ffffff;
+        box-shadow: 0 6px 20px rgba(74,144,226,0.45);
+    }
+    .reserve-bar:hover {
+        background:#ffea00;
+        transform: translateY(-3px);
+    }
     .light-mode .reserve-bar:hover { background: #5a9ef0; }
+
+    /* پشت کارت - تغییرات جدید */
     .card-back {
-        transform:rotateY(180deg); padding:15px; color:var(--text-color); text-align:right;
-        font-size:14px; display:flex; flex-direction:column;
+        transform: rotateY(180deg);
+        display: flex;
+        flex-direction: column;
+        padding: 12px;
+        gap: 10px;
+        text-align: right; /* همه متن‌ها راست‌چین */
     }
-    .card-back h3, .card-back p strong { color:var(--color-primary); }
+    .back-name-bar,
+    .back-genre-bar,
+    .back-rating-bar,
+    .back-age-bar,
+    .back-duration-bar,
+    .back-synopsis-bar,
+    .back-reserve-bar {
+        height: var(--bar-height);
+        line-height: var(--bar-height);
+        padding: 0 12px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        background: rgb(255 255 255 / 7%); /* همه کادرها یک رنگ (مثل ژانر قبلی) */
+        color: var(--text-color);
+    }
+    .back-name-bar {
+        background: rgb(0 0 0 / 50%);
+        color: var(--accent-text);
+        font-weight: 900;
+    }
+    .back-synopsis-bar {
+        height: auto;
+        min-height: var(--bar-height);
+        padding: 12px;
+        line-height: 1.7;
+        overflow: hidden;
+    }
+    .back-reserve-bar {
+        background: var(--color-primary);
+        color: var(--bg-color);
+        cursor: pointer;
+        box-shadow: 0 6px 20px rgba(255,215,0,0.45);
+        transition: background 0.3s, transform 0.2s;
+        justify-content: center;
+    }
+    .light-mode .back-reserve-bar {
+        background: var(--color-primary);
+        color: #ffffff;
+        box-shadow: 0 6px 20px rgba(74,144,226,0.45);
+    }
+    .back-reserve-bar:hover {
+        background:#ffea00;
+        transform: translateY(-3px);
+    }
+    .light-mode .back-reserve-bar:hover { background: #5a9ef0; }
+
+    /* تیترها (نام، ژانر، ...) با رنگ طلایی */
+    .back-label {
+        color: var(--accent-text);
+        font-weight: bold;
+        margin-left: 8px;
+    }
+
     .card-front .discount-label {
         position: absolute;
-        top: 0;
-        right: 0;
+        top: 12px;
+        right: 12px;
         background: linear-gradient(135deg, #c084fc, #f472b6);
         color: white;
         font-weight: bold;
         font-size: 13px;
-        padding: 6px 12px;
-        border-radius: 0 0 0 12px;
-        box-shadow: 0 4px 12px rgba(192, 132, 252, 0.5);
+        padding: 8px 14px;
+        border-radius: 30px;
+        box-shadow: 0 4px 15px rgba(192, 132, 252, 0.6);
         z-index: 10;
-        letter-spacing: 0.5px;
-        text-shadow: 0 1px 2px rgba(0,0,0,0.4);
-        animation: pulse 2s infinite;
+        animation: float 3s ease-in-out infinite;
     }
-    @keyframes pulse {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.05); }
-        100% { transform: scale(1); }
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-6px); }
     }
     .discount-label.hidden { display: none; }
     #loading-overlay {
@@ -460,7 +563,7 @@
     </section>
 </main>
 <script>
-// تغییر تم
+// اسکریپت‌ها بدون تغییر
 const body = document.body;
 const themeToggle = document.getElementById('theme-toggle');
 let currentTheme = localStorage.getItem('theme');
@@ -503,7 +606,6 @@ prefersDark.addEventListener('change', (e) => {
 });
 initializeTheme();
 themeToggle.addEventListener('click', toggleTheme);
-
 // لودر
 const overlay = document.getElementById('loading-overlay');
 const minDuration = 5000;
@@ -519,7 +621,6 @@ window.addEventListener('load', () => {
         clearTimeout(maxTimeout);
     }, delay);
 });
-
 // لود کارت‌ها
 const container = document.getElementById("cards-container");
 let openCard = null;
@@ -539,7 +640,6 @@ async function loadCardsStrictly() {
     }
 }
 loadCardsStrictly();
-
 // رزرو بلیط
 document.addEventListener("click", function(e) {
     const reserveBtn = e.target.closest(".reserve-bar a");
@@ -561,7 +661,6 @@ document.addEventListener("click", function(e) {
     const encoded = encodeURIComponent(message);
     window.open(`https://t.me/${adminId}?text=${encoded}`, "_blank");
 });
-
 // فلیپ کارت + بستن با کلیک خارج
 document.addEventListener("click", function(e) {
     if (e.target.closest(".reserve-bar")) return;
@@ -572,12 +671,11 @@ document.addEventListener("click", function(e) {
         }
         cardInner.classList.toggle("flipped");
         openCard = cardInner.classList.contains("flipped") ? cardInner : null;
-    } else if (openCard) {
+    } else if (openCard && !e.target.closest(".movie-card")) {
         openCard.classList.remove("flipped");
         openCard = null;
     }
 });
-
 // منوی همبرگری
 const hamburger = document.getElementById('hamburger');
 const sideMenu = document.getElementById('side-menu');
@@ -602,7 +700,6 @@ menuClose.addEventListener('click', e => { e.stopPropagation(); closeMenu(); });
 backdrop.addEventListener('click', closeMenu);
 document.addEventListener('keydown', e => { if (e.key==='Escape') closeMenu(); });
 sideMenu.addEventListener('click', e => e.stopPropagation());
-
 // انیمیشن ذرات
 (() => {
   const canvas = document.createElement('canvas');
@@ -664,18 +761,15 @@ sideMenu.addEventListener('click', e => e.stopPropagation());
   init();
   frame();
 })();
-
 // نصب PWA
 let deferredPrompt;
 const installBtn = document.getElementById('install-button');
-
 window.addEventListener('beforeinstallprompt', (e) => {
   console.log('رویداد beforeinstallprompt فعال شد');
   e.preventDefault();
   deferredPrompt = e;
   installBtn.style.display = 'flex';
 });
-
 installBtn.addEventListener('click', async (e) => {
   e.stopPropagation();
   if (!deferredPrompt) {
@@ -691,7 +785,6 @@ installBtn.addEventListener('click', async (e) => {
   deferredPrompt = null;
   installBtn.style.display = 'none';
 });
-
 // ثبت Service Worker
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
