@@ -252,7 +252,7 @@
                     <div><label>رده سنی</label><input type="text" id="age" oninput="updatePreview()"></div>
                     <div><label>مدت زمان</label><input type="text" id="duration" oninput="updatePreview()" placeholder="مثلا: هر قسمت حدودا 50 دقیقه"></div>
                 </div>
-                <label>خلاصه داستان</label>
+                <label>خلاصه </label>
                 <textarea id="summary" rows="5" oninput="updatePreview()"></textarea>
 
                 <label>تخفیف ویژه</label>
@@ -291,7 +291,7 @@
                                 <div id="p-back-rating" class="back-rating-bar"><span class="back-label">امتیاز:</span> </div>
                                 <div id="p-back-age" class="back-age-bar"><span class="back-label">رده سنی:</span> </div>
                                 <div id="p-back-duration" class="back-duration-bar"><span class="back-label">مدت زمان:</span> </div>
-                                <div id="p-back-synopsis" class="back-synopsis-bar"><span class="back-label">خلاصه داستان:</span> </div>
+                                <div id="p-back-synopsis" class="back-synopsis-bar"><span class="back-label">خلاصه :</span> </div>
                             </div>
                         </div>
                     </div>
@@ -416,7 +416,7 @@
             document.getElementById('rate').value = doc.querySelector('.back-rating-bar')?.innerText.replace('امتیاز:', '').trim() || "";
             document.getElementById('age').value = doc.querySelector('.back-age-bar')?.innerText.replace('رده سنی:', '').trim() || "";
             document.getElementById('duration').value = doc.querySelector('.back-duration-bar')?.innerText.replace('مدت زمان:', '').trim() || "";
-            document.getElementById('summary').value = doc.querySelector('.back-synopsis-bar')?.innerText.replace('خلاصه داستان:', '').trim() || "";
+            document.getElementById('summary').value = doc.querySelector('.back-synopsis-bar')?.innerText.replace('خلاصه :', '').trim() || "";
             const discountLabel = doc.querySelector('.discount-label:not(.hidden)');
             document.getElementById('discount').value = discountLabel ? 'yes' : 'no';
             const reserveBtn = doc.querySelector('.back-reserve-bar a') || doc.querySelector('.reserve-bar a');
@@ -435,7 +435,7 @@
             document.getElementById('p-back-rating').innerHTML = `<span class="back-label">امتیاز:</span> ${document.getElementById('rate').value || "-" }`;
             document.getElementById('p-back-age').innerHTML = `<span class="back-label">رده سنی:</span> ${document.getElementById('age').value || "-" }`;
             document.getElementById('p-back-duration').innerHTML = `<span class="back-label">مدت زمان:</span> ${document.getElementById('duration').value || "-" }`;
-            document.getElementById('p-back-synopsis').innerHTML = `<span class="back-label">خلاصه داستان:</span> ${document.getElementById('summary').value || "-" }`;
+            document.getElementById('p-back-synopsis').innerHTML = `<span class="back-label">خلاصه :</span> ${document.getElementById('summary').value || "-" }`;
             const mode = document.getElementById('t_status').value;
             const btnText = mode === 'blue' ? 'تهیه بلیط' : 'ظرفیت تکمیل شده';
             document.getElementById('p-reserve-bar').innerHTML = btnText;
@@ -508,7 +508,7 @@
     <div class="back-rating-bar"><span class="back-label">امتیاز:</span> ${document.getElementById('rate').value}</div>
     <div class="back-age-bar"><span class="back-label">رده سنی:</span> ${document.getElementById('age').value}</div>
     <div class="back-duration-bar"><span class="back-label">مدت زمان:</span> ${document.getElementById('duration').value}</div>
-    <div class="back-synopsis-bar"><span class="back-label">خلاصه داستان:</span> ${document.getElementById('summary').value}</div>
+    <div class="back-synopsis-bar"><span class="back-label">خلاصه :</span> ${document.getElementById('summary').value}</div>
     <div class="back-reserve-bar">
       <a class="reserve-btn">${t_mode === 'blue' ? 'تهیه بلیط' : 'ظرفیت تکمیل شده'}</a>
     </div>
