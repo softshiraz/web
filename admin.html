@@ -8,7 +8,7 @@
     <style>
         :root { --bg: #0e0e0f; --card: #1c1c1e; --gold: #ffd700; --text: #fff; --green: #2e7d32; --red: #ff4444; --blue: #0037ff; }
         body { font-family: "Vazirmatn", sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; direction: rtl; min-height: 100vh; }
-      
+     
         /* Login Page */
         #login-page { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; padding: 20px; box-sizing: border-box; }
         .login-box { background: var(--card); padding: 30px; border-radius: 20px; border: 1px solid #333; width: 100%; max-width: 380px; text-align: center; }
@@ -156,7 +156,7 @@
         .p-img { flex: 1; width: 100%; object-fit: cover; border-radius: 12px; }
         .p-date-bar { height: 52px; line-height: 52px; padding: 0 6px; background: rgba(255,215,0,0.18); color: var(--gold); border-radius: 12px; font-size: 15px; font-weight: bold; text-align: center; box-shadow: 0 0 15px rgba(255,215,0,0.5); }
         .p-title-bar { height: 52px; line-height: 52px; padding: 0 6px; background: var(--link-bg); color: var(--text); border-radius: 12px; font-size: 15px; font-weight: bold; text-align: center; }
-        .p-reserve-bar { height: 52px; line-height: 52px; padding: 0 6px; background: var(--gold); color: #000; border-radius: 12px; font-size: 15px; font-weight: bold; text-align: center; }
+        .p-reserve-bar { height: 52px; line-height: 52px; padding: 0 6px; background: var(--gold); border-radius: 12px; font-size: 15px; font-weight: bold; text-align: center; }
         .back-content {
             display: flex;
             flex-direction: column;
@@ -189,7 +189,6 @@
         }
         .back-reserve-bar {
             background: var(--gold);
-            color: #000;
         }
         .back-label {
             color: var(--gold);
@@ -197,6 +196,11 @@
             margin-left: 8px;
         }
         .flip-hint { margin-top: 15px; font-size: 13px; color: #888; }
+
+        /* رنگ متن دکمه رزرو در پیش‌نمایش */
+        .reserve-text-blue { color: var(--blue); }
+        .reserve-text-black { color: #000; }
+
         /* Buttons */
         .save-btn { background: var(--gold); color: #000; width: 100%; margin-top: 15px; }
         .dup-btn { background: #4caf50; color: #fff; width: 100%; margin-top: 8px; }
@@ -254,13 +258,12 @@
                 </div>
                 <label>خلاصه </label>
                 <textarea id="summary" rows="5" oninput="updatePreview()"></textarea>
-
                 <label>تخفیف ویژه</label>
                 <select id="discount" onchange="updatePreview()">
                     <option value="no">خیر</option>
                     <option value="yes">بله - نمایش برچسب تخفیف و اضافه کردن به پیام</option>
                 </select>
-               
+              
                 <label>وضعیت اکران</label>
                 <select id="t_status" onchange="updatePreview()">
                     <option value="blue">فعال (آبی - تهیه بلیط)</option>
@@ -282,7 +285,9 @@
                             <div id="p-date-bar" class="p-date-bar"></div>
                             <img src="" id="p-img" class="p-img" alt="پوستر">
                             <div id="p-title-bar" class="p-title-bar"></div>
-                            <div id="p-reserve-bar" class="p-reserve-bar">تهیه بلیط</div>
+                            <div id="p-reserve-bar" class="p-reserve-bar">
+                                <span id="p-reserve-text">تهیه بلیط</span>
+                            </div>
                         </div>
                         <div class="card-back-preview">
                             <div class="back-content">
@@ -292,6 +297,7 @@
                                 <div id="p-back-age" class="back-age-bar"><span class="back-label">رده سنی:</span> </div>
                                 <div id="p-back-duration" class="back-duration-bar"><span class="back-label">مدت زمان:</span> </div>
                                 <div id="p-back-synopsis" class="back-synopsis-bar"><span class="back-label">خلاصه :</span> </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -405,7 +411,7 @@
             const data = await res.json();
             const html = decodeURIComponent(escape(atob(data.content)));
             const doc = new DOMParser().parseFromString(html, 'text/html');
-          
+         
             const fileName = path.split('/').pop().replace('.html', '');
             document.getElementById('num').value = fileName;
             const titleText = doc.querySelector('.back-name-bar')?.innerText.replace('نام:', '').trim() || doc.querySelector('.date-bar')?.innerText.trim() || "";
@@ -436,10 +442,17 @@
             document.getElementById('p-back-age').innerHTML = `<span class="back-label">رده سنی:</span> ${document.getElementById('age').value || "-" }`;
             document.getElementById('p-back-duration').innerHTML = `<span class="back-label">مدت زمان:</span> ${document.getElementById('duration').value || "-" }`;
             document.getElementById('p-back-synopsis').innerHTML = `<span class="back-label">خلاصه :</span> ${document.getElementById('summary').value || "-" }`;
+
             const mode = document.getElementById('t_status').value;
             const btnText = mode === 'blue' ? 'تهیه بلیط' : 'ظرفیت تکمیل شده';
-            document.getElementById('p-reserve-bar').innerHTML = btnText;
-            document.getElementById('p-back-reserve').innerHTML = btnText;
+
+            // جلو کارت
+            document.getElementById('p-reserve-text').innerHTML = btnText;
+            document.getElementById('p-reserve-text').className = mode === 'blue' ? 'reserve-text-blue' : 'reserve-text-black';
+
+            // پشت کارت
+            document.getElementById('p-back-reserve-text').innerHTML = btnText;
+            document.getElementById('p-back-reserve-text').className = mode === 'blue' ? 'reserve-text-blue' : 'reserve-text-black';
 
             const discountMode = document.getElementById('discount').value;
             const discountEl = document.getElementById('p-discount');
@@ -491,7 +504,8 @@
                 const hasDiscountClass = discountMode === 'yes' ? '' : 'hidden';
                 const adminId = document.getElementById('admin_id').value.trim() || "softshirazadmin2";
                 const t_mode = document.getElementById('t_status').value;
-               
+                const reserveColorClass = t_mode === 'blue' ? 'style="color:#0037ff"' : 'style="color:#000"';
+              
                 const html = `<div class="card-inner">
   <div class="card-front" data-admin-id="${adminId}">
     <div class="discount-label ${hasDiscountClass}">تخفیف ویژه!</div>
@@ -499,7 +513,7 @@
     <div class="img-bar"><img src="${document.getElementById('img').value}" alt="poster"></div>
     <div class="title-bar">${document.getElementById('time').value}</div>
     <div class="reserve-bar">
-      <a class="reserve-btn">${t_mode === 'blue' ? 'تهیه بلیط' : 'ظرفیت تکمیل شده'}</a>
+      <a class="reserve-btn" ${reserveColorClass}>${t_mode === 'blue' ? 'تهیه بلیط' : 'ظرفیت تکمیل شده'}</a>
     </div>
   </div>
   <div class="card-back">
@@ -510,7 +524,7 @@
     <div class="back-duration-bar"><span class="back-label">مدت زمان:</span> ${document.getElementById('duration').value}</div>
     <div class="back-synopsis-bar"><span class="back-label">خلاصه :</span> ${document.getElementById('summary').value}</div>
     <div class="back-reserve-bar">
-      <a class="reserve-btn">${t_mode === 'blue' ? 'تهیه بلیط' : 'ظرفیت تکمیل شده'}</a>
+      <a class="reserve-btn" ${reserveColorClass}>${t_mode === 'blue' ? 'تهیه بلیط' : 'ظرفیت تکمیل شده'}</a>
     </div>
   </div>
 </div>`.trim();
