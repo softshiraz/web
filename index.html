@@ -648,7 +648,7 @@ document.addEventListener("click", function(e) {
     if (reserveBtn.textContent.trim() !== "تهیه بلیط") return;
     const cardFront = reserveBtn.closest(".card-front");
     if (!cardFront) return;
-    const adminId = cardFront.dataset.adminId || "softshirazadmin";
+    const adminId = cardFront.dataset.adminId || "FLOKI0000";
     const movieName = (cardFront.querySelector(".date-bar")?.textContent || "نامشخص").trim();
     const dateTime = (cardFront.querySelector(".title-bar")?.textContent || "نامشخص").trim();
     const cardInner = reserveBtn.closest(".card-inner");
