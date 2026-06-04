@@ -2,106 +2,132 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>انتقال خودکار | لودینگ حرفه‌ای</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>پیش‌پردازنده حرفه‌ای | انتقال خودکار</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            user-select: none; /* جلوگیری از انتخاب متن در حین لودینگ */
         }
 
         body {
             min-height: 100vh;
-            background: radial-gradient(circle at 20% 30%, #0b0f1e, #04060f);
+            background: linear-gradient(145deg, #0a0f1f 0%, #03060c 100%);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: system-ui, 'Segoe UI', 'Tahoma', 'Roboto', sans-serif;
             padding: 1.5rem;
             position: relative;
             overflow-x: hidden;
         }
 
-        /* افکت دایره‌های متحرک پس‌زمینه (حرفه‌ای و بدون خارجی) */
+        /* زمینه پویا با نقاط نورانی (بدون منابع خارجی) */
         body::before {
             content: "";
             position: absolute;
-            width: 200%;
-            height: 200%;
-            top: -50%;
-            left: -50%;
-            background: radial-gradient(circle, rgba(70, 130, 200, 0.08) 0%, rgba(0, 0, 0, 0) 70%);
-            animation: slowDrift 28s infinite alternate ease-in-out;
+            inset: 0;
+            background-image: radial-gradient(circle at 20% 40%, rgba(56, 189, 248, 0.08) 1px, transparent 1px),
+                              radial-gradient(circle at 75% 85%, rgba(139, 92, 246, 0.08) 1px, transparent 1px);
+            background-size: 50px 50px, 80px 80px;
             pointer-events: none;
             z-index: 0;
         }
 
-        @keyframes slowDrift {
-            0% { transform: translate(0, 0) rotate(0deg); opacity: 0.5; }
-            100% { transform: translate(5%, 5%) rotate(5deg); opacity: 1; }
+        /* افکت نور متحرک */
+        .glow-orb {
+            position: absolute;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, rgba(59,130,246,0.2) 0%, rgba(139,92,246,0) 70%);
+            border-radius: 50%;
+            top: -20vh;
+            left: -20vw;
+            filter: blur(70px);
+            animation: floatOrb 18s infinite alternate ease-in-out;
+            z-index: 0;
+        }
+        .glow-orb2 {
+            position: absolute;
+            width: 60vw;
+            height: 60vw;
+            background: radial-gradient(circle, rgba(236,72,153,0.12) 0%, rgba(236,72,153,0) 70%);
+            border-radius: 50%;
+            bottom: -30vh;
+            right: -20vw;
+            filter: blur(90px);
+            animation: floatOrb2 22s infinite alternate ease-in-out;
+            z-index: 0;
+        }
+        @keyframes floatOrb {
+            0% { transform: translate(0, 0) scale(1); opacity: 0.5; }
+            100% { transform: translate(8%, 6%) scale(1.2); opacity: 0.9; }
+        }
+        @keyframes floatOrb2 {
+            0% { transform: translate(0, 0) scale(1); opacity: 0.4; }
+            100% { transform: translate(-5%, -8%) scale(1.3); opacity: 0.8; }
         }
 
-        /* کارت اصلی مینیمال و شیشه‌ای */
-        .glass-card {
+        /* کانتینر اصلی کارت شیشه‌ای (حرفه‌ای + ریسپانسیو) */
+        .loading-card {
             position: relative;
-            z-index: 2;
-            background: rgba(20, 25, 45, 0.6);
-            backdrop-filter: blur(16px);
-            border-radius: 3rem;
-            padding: 2.5rem 2rem;
+            z-index: 10;
+            max-width: 580px;
             width: 100%;
-            max-width: 540px;
+            background: rgba(15, 23, 42, 0.55);
+            backdrop-filter: blur(18px);
+            border-radius: 2.5rem;
+            padding: 2.2rem 1.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.4), 0 0 0 0.5px rgba(255, 255, 255, 0.05);
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
             text-align: center;
-            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
-            transition: transform 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
         }
-
-        .glass-card:hover {
+        .loading-card:hover {
             transform: scale(1.01);
-            box-shadow: 0 30px 55px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 35px 60px rgba(0, 0, 0, 0.5);
+            border-color: rgba(59, 130, 246, 0.3);
         }
 
-        /* اسپینر لودینگ مدرن (سه لایه) */
-        .spinner-wrapper {
+        /* اسپینر ترکیبی مدرن */
+        .spinner-container {
             margin-bottom: 1.8rem;
             display: flex;
             justify-content: center;
         }
-        .modern-spinner {
-            width: 80px;
-            height: 80px;
+        .neo-spinner {
+            width: 90px;
+            height: 90px;
             position: relative;
         }
-        .modern-spinner .ring {
+        .neo-spinner .orbit {
             position: absolute;
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            border: 3px solid transparent;
+            border: 2px solid transparent;
             border-top-color: #3b82f6;
-            border-right-color: #a855f7;
+            border-right-color: #8b5cf6;
             animation: spin 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
         }
-        .modern-spinner .ring:nth-child(2) {
-            width: 70%;
-            height: 70%;
-            top: 15%;
-            left: 15%;
+        .neo-spinner .orbit:nth-child(2) {
+            width: 72%;
+            height: 72%;
+            top: 14%;
+            left: 14%;
             border-top-color: #f97316;
-            border-right-color: #ec489a;
-            animation: spinReverse 1.5s linear infinite;
+            border-left-color: #ec489a;
+            animation: spin-reverse 1.6s linear infinite;
             animation-delay: 0.2s;
         }
-        .modern-spinner .ring:nth-child(3) {
-            width: 40%;
-            height: 40%;
-            top: 30%;
-            left: 30%;
+        .neo-spinner .orbit:nth-child(3) {
+            width: 44%;
+            height: 44%;
+            top: 28%;
+            left: 28%;
             border-top-color: #10b981;
-            border-left-color: #facc15;
+            border-right-color: #facc15;
             animation: spin 1s ease-in-out infinite;
             animation-delay: 0.4s;
         }
@@ -109,217 +135,269 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        @keyframes spinReverse {
+        @keyframes spin-reverse {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(-360deg); }
         }
 
-        /* تایپوگرافی و تایتل */
-        h2 {
+        /* عنوان و توضیحات */
+        h1 {
             font-size: 1.9rem;
-            font-weight: 600;
-            background: linear-gradient(135deg, #ffffff, #b9c8ff);
+            font-weight: 700;
+            background: linear-gradient(125deg, #fff, #b6d0ff, #a78bfa);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
             margin-bottom: 0.5rem;
             letter-spacing: -0.3px;
         }
-
-        .sub {
-            color: #a0b3d9;
+        .subhead {
+            color: #9ca8cf;
+            font-weight: 450;
+            font-size: 0.95rem;
             margin-bottom: 1.5rem;
-            font-size: 1rem;
-            font-weight: 400;
-            opacity: 0.9;
-        }
-
-        /* نمایش دامنه مقصد */
-        .target-site {
-            background: rgba(0, 0, 0, 0.45);
-            padding: 0.6rem 1.2rem;
-            border-radius: 60px;
+            border-bottom: 1px dashed rgba(255,255,255,0.15);
             display: inline-block;
-            margin: 0.8rem auto 1.5rem auto;
-            font-family: monospace;
-            font-size: 1.2rem;
-            font-weight: 500;
-            color: #bbd9ff;
-            border: 1px solid rgba(59,130,246,0.4);
-            backdrop-filter: blur(4px);
-            letter-spacing: 0.5px;
-            word-break: break-all;
+            padding-bottom: 0.3rem;
         }
 
-        /* نوار پیشرفت 10 ثانیه ای با انیمیشن نرم */
-        .progress-area {
-            margin: 1.8rem 0 1.2rem;
+        /* باکس مقصد */
+        .destination-badge {
+            background: rgba(0, 0, 0, 0.45);
+            padding: 0.6rem 1.4rem;
+            border-radius: 60px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0.5rem auto 1.5rem auto;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-weight: 500;
+            font-size: 1.1rem;
+            color: #c7e0ff;
+            border: 1px solid rgba(59,130,246,0.5);
+            backdrop-filter: blur(4px);
+            word-break: break-all;
+            max-width: 90%;
         }
-        .progress-label {
+        .destination-badge span:first-child {
+            font-size: 1.2rem;
+        }
+
+        /* پیشرفت مدرن */
+        .progress-area {
+            margin: 1.5rem 0 1.2rem;
+        }
+        .progress-info {
             display: flex;
             justify-content: space-between;
-            font-size: 0.85rem;
-            color: #cbd5f0;
-            margin-bottom: 0.5rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #b9c7e8;
+            margin-bottom: 0.6rem;
+            letter-spacing: 0.3px;
         }
-        .progress-bar-container {
+        .progress-track {
             background: rgba(0, 0, 0, 0.5);
-            border-radius: 50px;
+            border-radius: 40px;
             height: 8px;
             overflow: hidden;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.4);
         }
         .progress-fill {
             width: 0%;
             height: 100%;
-            background: linear-gradient(90deg, #3b82f6, #a855f7, #ec489a);
-            border-radius: 50px;
+            background: linear-gradient(90deg, #3b82f6, #c084fc, #f472b6);
+            border-radius: 40px;
             transition: width 10s linear;
-            box-shadow: 0 0 8px rgba(59,130,246,0.5);
+            box-shadow: 0 0 6px #3b82f6;
         }
 
-        /* شمارشگر معکوس */
-        .countdown-box {
+        /* شمارشگر لوکس */
+        .timer-block {
             background: rgba(0, 0, 0, 0.35);
             border-radius: 2rem;
-            padding: 0.6rem 1rem;
+            padding: 0.6rem 1.2rem;
             width: fit-content;
-            margin: 1rem auto 1.5rem;
-            font-weight: 500;
-            font-size: 1.3rem;
-            color: #f0f3ff;
-            backdrop-filter: blur(4px);
+            margin: 0.8rem auto 1.2rem;
             display: flex;
             align-items: baseline;
-            gap: 6px;
+            gap: 8px;
+            backdrop-filter: blur(5px);
+            border: 0.5px solid rgba(255,255,255,0.1);
         }
-        .countdown-number {
-            font-size: 2rem;
+        .timer-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #d9e2ff;
+        }
+        .timer-digits {
+            font-size: 2.2rem;
             font-weight: 800;
-            background: linear-gradient(145deg, #fff, #90caf9);
+            background: linear-gradient(140deg, #fff, #a5d8ff);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
-            margin: 0 4px;
             direction: ltr;
-            display: inline-block;
-            min-width: 48px;
-            text-shadow: 0 0 5px rgba(0,160,255,0.3);
+            min-width: 60px;
+            letter-spacing: 2px;
+            font-feature-settings: "tnum";
+            font-variant-numeric: tabular-nums;
         }
-        .countdown-text {
-            font-size: 1rem;
-            letter-spacing: 0.5px;
+        .timer-unit {
+            font-size: 0.9rem;
+            color: #bfd6ff;
         }
 
-        /* دکمه دستی (اختیاری) */
-        .manual-link {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.2);
+        /* دکمه اکشن دستی (مدرن) */
+        .action-btn {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(59, 130, 246, 0.5);
             color: #eef3ff;
-            padding: 0.65rem 1.8rem;
-            border-radius: 40px;
-            font-size: 0.9rem;
-            font-weight: 500;
+            padding: 0.7rem 1.8rem;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s ease;
-            margin-top: 0.8rem;
+            transition: all 0.25s ease;
+            margin-top: 0.6rem;
             backdrop-filter: blur(5px);
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 10px;
+            letter-spacing: 0.2px;
         }
-        .manual-link:hover {
-            background: rgba(59,130,246,0.4);
-            border-color: #3b82f6;
+        .action-btn:hover {
+            background: #3b82f6cc;
+            border-color: #fff;
             transform: translateY(-2px);
-            box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 20px -5px rgba(59,130,246,0.4);
         }
-        .manual-link:active {
+        .action-btn:active {
             transform: translateY(1px);
         }
 
-        footer {
+        /* فوتر کوچک */
+        .credits {
             margin-top: 1.8rem;
             font-size: 0.7rem;
-            color: #5f739b;
+            color: #5a6f9b;
             opacity: 0.7;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
         }
 
-        @media (max-width: 480px) {
-            .glass-card {
-                padding: 1.8rem 1.2rem;
+        /* کاملاً واکنش‌گرا برای موبایل */
+        @media (max-width: 550px) {
+            body {
+                padding: 1rem;
             }
-            h2 { font-size: 1.6rem; }
-            .modern-spinner { width: 65px; height: 65px; }
-            .target-site { font-size: 1rem; }
-            .countdown-number { font-size: 1.7rem; min-width: 40px; }
+            .loading-card {
+                padding: 1.5rem 1.2rem;
+                border-radius: 2rem;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            .neo-spinner {
+                width: 70px;
+                height: 70px;
+            }
+            .destination-badge {
+                font-size: 0.85rem;
+                padding: 0.4rem 1rem;
+            }
+            .timer-digits {
+                font-size: 1.8rem;
+                min-width: 48px;
+            }
+            .timer-block {
+                padding: 0.4rem 1rem;
+            }
+            .action-btn {
+                padding: 0.55rem 1.4rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        /* تنظیمات اضافی برای دستگاه‌های خیلی کوچک */
+        @media (max-width: 380px) {
+            .timer-digits {
+                font-size: 1.5rem;
+                min-width: 40px;
+            }
+            .subhead {
+                font-size: 0.8rem;
+            }
         }
     </style>
 </head>
 <body>
 
-<div class="glass-card">
-    <div class="spinner-wrapper">
-        <div class="modern-spinner">
-            <div class="ring"></div>
-            <div class="ring"></div>
-            <div class="ring"></div>
+<div class="glow-orb"></div>
+<div class="glow-orb2"></div>
+
+<div class="loading-card">
+    <div class="spinner-container">
+        <div class="neo-spinner">
+            <div class="orbit"></div>
+            <div class="orbit"></div>
+            <div class="orbit"></div>
         </div>
     </div>
 
-    <h2>در حال انتقال خودکار</h2>
-    <div class="sub">لطفاً شکیبا باشید، به مقصد هدایت می‌شوید</div>
+    <h1>درگاه انتقال حرفه‌ای</h1>
+    <div class="subhead">لطفاً تا تکمیل فرایند شکیبا باشید</div>
 
-    <div class="target-site">
-        🚀 Floch3.blogix.ir
+    <div class="destination-badge">
+        <span>🌐</span> Floch3.blogix.ir
+        <span>⚡</span>
     </div>
 
     <div class="progress-area">
-        <div class="progress-label">
-            <span>⏳ زمان باقی‌مانده</span>
-            <span>پیشرفت انتقال</span>
+        <div class="progress-info">
+            <span>⏳ پیشرفت انتقال</span>
+            <span id="progressPercent">۰٪</span>
         </div>
-        <div class="progress-bar-container">
-            <div class="progress-fill" id="progressFill"></div>
+        <div class="progress-track">
+            <div class="progress-fill" id="dynamicProgressFill"></div>
         </div>
     </div>
 
-    <div class="countdown-box">
-        <span class="countdown-text">⏱️ انتقال در</span>
-        <span class="countdown-number" id="countdownNumber">10</span>
-        <span class="countdown-text">ثانیه</span>
+    <div class="timer-block">
+        <span class="timer-label">⏱️ هدایت خودکار در</span>
+        <span class="timer-digits" id="countdownSeconds">10</span>
+        <span class="timer-unit">ثانیه</span>
     </div>
 
-    <button class="manual-link" id="redirectNowBtn">
+    <button class="action-btn" id="instantRedirectBtn">
         ✨ انتقال فوری به سایت مقصد
     </button>
-    <footer>
-        • هدایت خودکار پس از ۱۰ ثانیه • طراحی مدرن و سبک •
-    </footer>
+    <div class="credits">
+        <span>● طراحی پیشرفته و ریسپانسیو ●</span>
+    </div>
 </div>
 
 <script>
     (function() {
-        // ===== تنظیمات اصلی =====
-        const TARGET_URL = "https://Floch3.blogix.ir";   // مقصد نهایی
-        const REDIRECT_DELAY_SEC = 10;                  // 10 ثانیه
-
-        // المنت‌های DOM
-        const progressFillEl = document.getElementById('progressFill');
-        const countdownSpan = document.getElementById('countdownNumber');
-        const manualBtn = document.getElementById('redirectNowBtn');
-
-        // متغیرهای تایمر
+        // === تنظیمات اصلی ===
+        const DESTINATION = "https://Floch3.blogix.ir";
+        const DELAY_SEC = 10;          // 10 ثانیه
+        let isRedirected = false;
         let redirectTimeout = null;
         let countdownInterval = null;
-        let isRedirected = false;     // جلوگیری از اجرای چندباره
 
-        // تابع redirect نهایی + تمیزکاری
-        function performRedirect() {
+        // DOM elements
+        const countdownSpan = document.getElementById('countdownSeconds');
+        const progressFillEl = document.getElementById('dynamicProgressFill');
+        const percentSpan = document.getElementById('progressPercent');
+        const redirectBtn = document.getElementById('instantRedirectBtn');
+
+        // تابع redirect نهایی با پاکسازی و امنیت
+        function finalRedirect() {
             if (isRedirected) return;
             isRedirected = true;
 
-            // پاک کردن تایمرهای فعال
             if (redirectTimeout) {
                 clearTimeout(redirectTimeout);
                 redirectTimeout = null;
@@ -328,81 +406,80 @@
                 clearInterval(countdownInterval);
                 countdownInterval = null;
             }
-
-            // تغییر صفحه به مقصد
-            window.location.href = TARGET_URL;
+            // اعمال تغییر مکان
+            window.location.href = DESTINATION;
         }
 
-        // بروزرسانی شمارش معکوس روی صفحه
-        function updateCountdownDisplay(secondsLeft) {
+        // بروزرسانی شمارشگر و نمایش درصد (اختیاری برای هارمونی)
+        function updateCountdownUI(secondsLeft) {
             if (countdownSpan) {
                 countdownSpan.innerText = secondsLeft;
             }
-            // نمایش ظریف اگر به صفر رسید و هنوز ریدایرکت نشده بود، باز هم امن
+            // درصد پیشرفت بر اساس زمان سپری شده (0 تا 100)
+            let elapsedPercent = ((DELAY_SEC - secondsLeft) / DELAY_SEC) * 100;
+            elapsedPercent = Math.min(100, Math.max(0, elapsedPercent));
+            if (percentSpan) {
+                percentSpan.innerText = Math.floor(elapsedPercent) + '%';
+            }
+            // اگر ثانیه به صفر رسید و هنوز هدایت نشده
             if (secondsLeft <= 0 && !isRedirected) {
-                if (countdownSpan) countdownSpan.innerText = "0";
-                performRedirect();
+                finalRedirect();
             }
         }
 
-        // تنظیم شمارش معکوس و تایمر اصلی
-        function startRedirectSequence() {
-            // مقدار اولیه ثانیه باقی‌مانده
-            let secondsRemaining = REDIRECT_DELAY_SEC;
-            updateCountdownDisplay(secondsRemaining);
+        // راه اندازی شمارش معکوس و تایم‌اوت اصلی
+        function startRedirectTimer() {
+            let remaining = DELAY_SEC;
+            updateCountdownUI(remaining);
 
-            // 1) تایمر نهایی برای ریدایرکت دقیق بعد از 10 ثانیه
-            redirectTimeout = setTimeout(function() {
+            // تایمر اصلی برای redirect بعد از 10 ثانیه
+            redirectTimeout = setTimeout(() => {
                 if (!isRedirected) {
-                    performRedirect();
+                    finalRedirect();
                 }
-            }, REDIRECT_DELAY_SEC * 1000);
+            }, DELAY_SEC * 1000);
 
-            // 2) اینتروال شمارش معکوس در UI (هر ثانیه یکبار)
-            countdownInterval = setInterval(function() {
+            // شمارش معکوس هر 1 ثانیه
+            countdownInterval = setInterval(() => {
                 if (isRedirected) {
-                    // اگر از قبل ریدایرکت شده، اینتروال را متوقف کن
                     if (countdownInterval) clearInterval(countdownInterval);
                     return;
                 }
-                secondsRemaining--;
-                if (secondsRemaining >= 0) {
-                    updateCountdownDisplay(secondsRemaining);
+                remaining--;
+                if (remaining >= 0) {
+                    updateCountdownUI(remaining);
                 }
-                // در لحظه صفر شدن، اینتروال را خودمان پاک می‌کنیم (اما تابع redirect هم اجرا می‌شه)
-                if (secondsRemaining <= 0) {
-                    if (countdownInterval) {
-                        clearInterval(countdownInterval);
-                        countdownInterval = null;
-                    }
-                    // اگر تایم‌اوت هنوز اجرا نشده باشد اما شمارش به صفر رسیده باشد، امنیت بیشتر
-                    if (!isRedirected) {
-                        performRedirect();
-                    }
+                if (remaining <= 0) {
+                    if (countdownInterval) clearInterval(countdownInterval);
+                    // اگر به هر دلیل تایم‌اوت هنوز عمل نکرد، دستی انجام بده
+                    if (!isRedirected) finalRedirect();
                 }
             }, 1000);
         }
 
-        // راه‌اندازی نوار پیشرفت: استفاده از transition (10 ثانیه طول می‌کشد تا 0% -> 100%)
-        function startProgressBar() {
+        // شروع انیمیشن نوار پیشرفت (کاملاً هماهنگ با 10 ثانیه)
+        function startProgressAnimation() {
             if (progressFillEl) {
-                // تنظیم اولیه (اطمینان از صفر بودن)
+                // اطمینان از مقدار اولیه
                 progressFillEl.style.transition = "width 10s linear";
                 progressFillEl.style.width = "0%";
-                // فرصت رندر مجدد (force reflow) برای شروع روان transition
+                // force reflow
                 void progressFillEl.offsetWidth;
-                // شروع انیمیشن پر شدن تا 100% طی 10 ثانیه
+                // شروع به سمت 100%
                 progressFillEl.style.width = "100%";
             }
+            // درصد اولیه
+            if (percentSpan) percentSpan.innerText = "0%";
         }
 
-        // تابع ریدایرکت دستی با دکمه (با توقف تمام تایمرها و ریدایرکت فوری)
-        function manualRedirectHandler() {
+        // تابع ریدایرکت دستی (فوری و قطعی)
+        function manualRedirect() {
             if (isRedirected) return;
-            // نمایش حالت اکتیو برای جلوگیری از چندبار کلیک (اختیاری)
-            manualBtn.style.opacity = "0.7";
-            manualBtn.innerText = "🔄 در حال انتقال ...";
-            // تمیز کردن کامل و هدایت
+            // تغییر حالت دکمه برای بازخورد بهتر
+            redirectBtn.innerText = "🔄 در حال انتقال ...";
+            redirectBtn.style.opacity = "0.7";
+            redirectBtn.disabled = true;
+            // پاکسازی همه تایمرها
             if (redirectTimeout) {
                 clearTimeout(redirectTimeout);
                 redirectTimeout = null;
@@ -411,28 +488,30 @@
                 clearInterval(countdownInterval);
                 countdownInterval = null;
             }
-            // بلافاصله ریدایرکت
-            window.location.href = TARGET_URL;
+            // رفتن به مقصد
+            window.location.href = DESTINATION;
         }
 
-        // اطمینان از شروع فرآیند فقط پس از بارگذاری کامل DOM
+        // راه‌اندازی اولیه وقتی صفحه کامل بارگذاری شد
+        function init() {
+            startProgressAnimation();
+            startRedirectTimer();
+
+            if (redirectBtn) {
+                redirectBtn.addEventListener('click', manualRedirect);
+            }
+        }
+
+        // بررسی وضعیت بارگذاری DOM
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => {
-                startProgressBar();
-                startRedirectSequence();
-                if (manualBtn) manualBtn.addEventListener('click', manualRedirectHandler);
-            });
+            document.addEventListener('DOMContentLoaded', init);
         } else {
-            startProgressBar();
-            startRedirectSequence();
-            if (manualBtn) manualBtn.addEventListener('click', manualRedirectHandler);
+            init();
         }
 
-        // در صورت بروز هرگونه خطای نادر (مثل بسته شدن صفحه)، یک fallback ساده نیست،
-        // اما برای اطمینان از ریدایرکت اگر کاربر خیلی کند باشه، تایمر کار خودش رو میکنه.
-        // همچنین اگر مرورگر انتقال را مسدود نکند، موفق خواهد بود.
-        // اضافه کردن پشتیبانی از when visibility تغییر می‌کند (تاثیری ندارد ولی حرفه‌ای)
-        // نکته: همزمانی نوار پیشرفت با شمارشگر باعث تجربه چشمگیر می‌شود.
+        // یک fallback هوشمند: اگر کاربر برگه را در پس‌زمینه نگه داشت، تایمر همچنان کار می‌کند
+        // هیچ وابستگی خارجی نیست و همه چیز بومی است.
+        // همچنین برای اطمینان از نمایان شدن درصد و شمارش معکوس در همه حالات.
     })();
 </script>
 </body>
